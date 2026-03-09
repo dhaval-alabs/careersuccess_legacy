@@ -1,15 +1,12 @@
-/* Fonts loaded via next/font in layout.tsx (no render-blocking @import) */
-/* Inter: var(--font-inter) | Outfit: var(--font-outfit) */
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
 
 :root {
   /* Premium Sazai-Inspired Palette */
-  --brand-navy: #09263F;
-  --brand-navy-dark: #06192b;
-  --brand-green: #29e8a4;
-  --brand-green-glow: rgba(41, 232, 164, 0.2);
-  --brand-accent-yellow: #ffea79;
-  --brand-accent-blue: #9be9ff;
+  --brand-navy: #013368;
+  --brand-navy-dark: #001f3f;
+  --brand-green: #2ecc71;
+  --brand-green-glow: rgba(46, 204, 113, 0.2);
+  --brand-accent-yellow: #f1c40f;
   --brand-accent-red: #e74c3c;
   --brand-text: #1a202c;
   --brand-bg-light: #f7fafc;
@@ -187,24 +184,4 @@ h4 {
 
 .animate-marquee {
   animation: marquee 28s linear infinite;
-}
-
-/* Override Tailwind max-w-5xl to 80rem (default is 64rem) */
-.max-w-5xl {
-  max-width: 80rem !important;
-}
-
-/* Hide scrollbar but keep scrollability */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Alumni logo marquee (slower, more premium feel) */
-.animate-marquee-logos {
-  animation: marquee 40s linear infinite;
 }

@@ -153,6 +153,7 @@ export default function LeadCaptureForm({
                                     id="countryCode"
                                     defaultValue="+91"
                                     className={styles.selectSmall}
+                                    aria-label="Country code"
                                 >
                                     {COUNTRY_CODES.map(c => (
                                         <option key={c.code} value={c.code}>{c.code}</option>
