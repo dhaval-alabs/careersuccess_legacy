@@ -70,7 +70,7 @@ export default function Home() {
           NAVBAR
       ══════════════════════════════════════ */}
       <header className="sticky top-0 z-50 bg-white border-b border-[#D6ECEB] shadow-[0_2px_12px_rgba(0,169,157,0.06)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center">
           <a href="/" className="flex items-center gap-2 flex-shrink-0">
             <Image
               src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
@@ -80,45 +80,7 @@ export default function Home() {
               className="h-10 w-auto"
             />
           </a>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#4A6275]">
-            {["Overview", "Curriculum", "Placement", "FAQs"].map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} className="hover:text-[#29E8A4] transition-colors relative group">
-                {l}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-[#29E8A4] group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden md:flex items-center gap-3">
-            <a href="tel:9555525908" className="flex items-center gap-1.5 text-sm text-[#4A6275] hover:text-[#29E8A4] font-medium transition-colors">
-              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-              </svg>
-              9555525908
-            </a>
-            <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] text-sm font-bold px-5 py-2.5 rounded-lg transition-all shadow-[0_4px_14px_rgba(41,232,164,0.3)]">
-              Enroll Free →
-            </button>
-          </div>
-
-          <button className="md:hidden text-[#09263F]" onClick={() => setMobileOpen(!mobileOpen)}>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
-            </svg>
-          </button>
         </div>
-        {mobileOpen && (
-          <div className="md:hidden bg-white border-t border-[#E6F7F6] px-4 pb-5">
-            {["Overview", "Curriculum", "Placement", "FAQs"].map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileOpen(false)}
-                className="block py-3 text-sm font-medium text-[#4A6275] border-b border-[#F4FAFA] hover:text-[#29E8A4]">{l}</a>
-            ))}
-            <button onClick={() => { setIsEligibilityOpen(true); setMobileOpen(false); }} className="mt-4 w-full block bg-[#29E8A4] text-[#09263F] text-center font-bold py-3 rounded-xl shadow-[0_4px_14px_rgba(41,232,164,0.3)]">Enroll Free →</button>
-          </div>
-        )}
       </header>
 
       {/* ══════════════════════════════════════
@@ -505,6 +467,7 @@ export default function Home() {
       <footer className="bg-[#06192b] py-6 border-t border-white/5">
         <p className="text-center text-[#4A6275] text-xs">
           © {new Date().getFullYear()} AnalytixLabs. All rights reserved. &nbsp;|&nbsp;
+          <a href="tel:9555525908" className="hover:text-[#29E8A4] transition-colors">📞 9555525908</a> &nbsp;|&nbsp;
           Recordings are protected under copyright law and are the intellectual property of AnalytixLabs.
         </p>
       </footer>
