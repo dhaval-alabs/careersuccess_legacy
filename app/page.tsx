@@ -126,7 +126,7 @@ export default function Home() {
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
                 Data Science Course with
                 <br />
-                <span className="text-[#29E8A4]">Guaranteed Career Support</span>
+                <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Guaranteed Career Support</span>
               </h1>
 
               <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
@@ -207,7 +207,7 @@ export default function Home() {
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">
-                Everything You Need to Build a <span className="text-[#29E8A4]">Career in Data Science</span>
+                Everything You Need to Build a <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Career in Data Science</span>
               </h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto text-base leading-relaxed">
                 Built for working professionals and fresh graduates. A complete programme with real accountability, real classroom training, and a placement team that delivers. Rated 9.6/10 by 20,000+ past students.
@@ -239,7 +239,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <div>
                 <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
-                <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Industry-Designed Curriculum</h2>
+                <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Industry-Designed <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Curriculum</span></h2>
                 <p className="text-[#4A6275] max-w-md">6 deep-dive modules crafted with industry leaders to keep you ahead of the curve.</p>
               </div>
               <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 border-2 border-[#29E8A4] text-[#09263F] hover:bg-[#29E8A4] font-bold px-6 py-3 rounded-xl transition-all text-sm">
@@ -283,7 +283,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Flexibility First</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Three Ways to Learn. Transparent Pricing.</h2>
+              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Three Ways to Learn. <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Transparent</span> Pricing.</h2>
               <p className="text-[#4A6275] max-w-md mx-auto">Same syllabus, same faculty, same NASSCOM certification. Pick what fits your schedule and budget.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-5">
@@ -329,7 +329,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career-Backed Certification</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">Placement with Fee-Back Guarantee</h2>
+              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">Placement with <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Fee-Back</span> Guarantee</h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto text-base leading-relaxed">The only data science program in India that backs its training with a real financial commitment. We are invested in your success from day one.</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -437,7 +437,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Success Stories</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">Rated 9.6/10 by Our Alumni</h2>
+              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">Rated <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">9.6/10</span> by Our Alumni</h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto">Don't just take our word for it. Hear from those who've transformed their careers with us.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -471,7 +471,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="text-[#09263F] text-xs font-black uppercase tracking-widest bg-[#9BE9FF]/40 px-4 py-1.5 rounded-full">Your Credential</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-5">Earn an Industry-Recognised Certificate</h2>
+              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-5">Earn an <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Industry-Recognised</span> Certificate</h2>
               <p className="text-[#4A6275] leading-relaxed mb-7 text-sm">Complete all assignments and module case studies under our strict zero-plagiarism policy. Once evaluated by our faculty, your certificate is awarded, carrying NASSCOM credibility that employers recognise instantly.</p>
               <ul className="space-y-3">
                 {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Zero plagiarism policy strictly enforced", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
@@ -509,7 +509,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Simple 3-Step Process</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">How to Get Started</h2>
+              <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">How to Get <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Started</span></h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto">Your journey to becoming a Data Scientist starts here.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 relative">
@@ -552,7 +552,7 @@ export default function Home() {
               Limited Seats per batch
             </div>
             <h2 className="text-[#09263F] font-black text-4xl sm:text-6xl mb-8 leading-tight">
-              Ready to Join India's Most <span className="text-[#29E8A4]">Trusted</span> Data Science Institute?
+              Ready to Join India's Most <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Trusted</span> Data Science Institute?
             </h2>
             <p className="text-[#4A6275] text-lg sm:text-xl mb-12 font-medium leading-relaxed">
               Join 20,000+ graduates. Get NASSCOM certified. Land your dream role with our fee-back guarantee.

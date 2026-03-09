@@ -65,7 +65,7 @@ export default function FAQ() {
         <section id="faq" className={styles.faqSection}>
             <div className="container">
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Frequently Asked Questions</h2>
+                    <h2 className={styles.title}>Frequently <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent inline-block">Asked</span> Questions</h2>
                     <p className={styles.subtitle}>Find answers to the most common questions about our program and services.</p>
                 </div>
 
