@@ -28,6 +28,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            tailwind.config = {
+              theme: {
+                extend: {
+                  colors: {
+                    brand: {
+                      teal: "#29E8A4",
+                      navy: "#09263F",
+                    }
+                  }
+                }
+              }
+            }
+          `
+        }} />
+      </head>
       <body>
         {children}
       </body>
