@@ -186,3 +186,8 @@ h4 {
 .animate-marquee {
   animation: marquee 28s linear infinite;
 }
+
+/* Override Tailwind max-w-5xl to 80rem (default is 64rem) */
+.max-w-5xl {
+  max-width: 80rem !important;
+}
