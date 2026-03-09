@@ -1,0 +1,106 @@
+.main {
+  padding-bottom: 80px;
+  /* Space for sticky contact */
+}
+
+.introSection {
+  padding: var(--section-padding) 0;
+  text-align: center;
+}
+
+.introTitle {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.introBox {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.introText {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaSection {
+  padding: 8rem 0;
+  background-color: white;
+}
+
+.ctaBox {
+  text-align: center;
+  background: linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-navy-dark) 100%);
+  color: white;
+  padding: 6rem 4rem;
+  border-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(1, 51, 104, 0.25);
+}
+
+.ctaBox::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.ctaTitle {
+  color: white;
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.ctaText {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.4rem;
+  margin-bottom: 4rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.ctaActions {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+}
+
+
+
+.footer {
+  padding: 4rem 0;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .ctaActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .faqGrid {
+    grid-template-columns: 1fr;
+  }
+}

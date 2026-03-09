@@ -1,0 +1,100 @@
+.benefits {
+    padding: var(--section-padding) 0;
+    background-color: var(--brand-navy-dark);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle grid overlay */
+.benefits::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 6rem;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg);
+    padding: 4rem 2.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: left;
+}
+
+.card:hover {
+    transform: translateY(-15px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--brand-green);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: var(--brand-green);
+    display: block;
+}
+
+.cardTitle {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+    color: white;
+    font-weight: 700;
+}
+
+.cardDescription {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: 2.75rem;
+    }
+}
