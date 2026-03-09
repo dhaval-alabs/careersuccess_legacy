@@ -53,8 +53,8 @@
 }
 
 .active {
-    border-color: #00A99D;
-    box-shadow: 0 4px 24px rgba(0, 169, 157, 0.12);
+    border-color: #29E8A4;
+    box-shadow: 0 4px 24px rgba(41, 232, 164, 0.12);
 }
 
 .question {
@@ -74,7 +74,7 @@
 
 .icon {
     font-size: 1.25rem;
-    color: #00A99D;
+    color: #29E8A4;
     font-weight: 400;
     width: 28px;
     height: 28px;
@@ -87,7 +87,7 @@
 }
 
 .active .icon {
-    background: #00A99D;
+    background: #29E8A4;
     color: white;
     transform: rotate(45deg);
 }
@@ -146,4 +146,43 @@
     .answer {
         padding: 0 1.5rem 1.5rem;
     }
+}
+
+/* Color Variants */
+.itemYellow:hover {
+    border-color: rgba(255, 234, 121, 0.5);
+}
+
+.activeYellow {
+    border-color: #FFEA79;
+    box-shadow: 0 4px 24px rgba(255, 234, 121, 0.15);
+}
+
+.activeYellow .icon {
+    background: #FFEA79;
+    color: #09263F;
+}
+
+.iconYellow {
+    color: #FFD700;
+    background: #FFFBE6;
+}
+
+.itemBlue:hover {
+    border-color: rgba(155, 233, 255, 0.5);
+}
+
+.activeBlue {
+    border-color: #9BE9FF;
+    box-shadow: 0 4px 24px rgba(155, 233, 255, 0.15);
+}
+
+.activeBlue .icon {
+    background: #9BE9FF;
+    color: #09263F;
+}
+
+.iconBlue {
+    color: #00BFFF;
+    background: #E6FAFF;
 }

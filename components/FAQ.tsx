@@ -99,26 +99,33 @@ export default function FAQ() {
                 </div>
 
                 <div className={styles.accordion}>
-                    {faqData.map((item, idx) => (
-                        <div
-                            key={idx}
-                            className={`${styles.item} ${activeIndex === idx ? styles.active : ''}`}
-                        >
-                            <button
-                                className={styles.question}
-                                onClick={() => toggleAccordion(idx)}
-                                aria-expanded={activeIndex === idx}
+                    {faqData.map((item, idx) => {
+                        const colorType = idx % 3; // 0: Green, 1: Yellow, 2: Blue
+                        const itemClass = colorType === 1 ? styles.itemYellow : colorType === 2 ? styles.itemBlue : '';
+                        const activeClass = colorType === 1 ? styles.activeYellow : colorType === 2 ? styles.activeBlue : styles.active;
+                        const iconVariantClass = colorType === 1 ? styles.iconYellow : colorType === 2 ? styles.iconBlue : '';
+
+                        return (
+                            <div
+                                key={idx}
+                                className={`${styles.item} ${itemClass} ${activeIndex === idx ? activeClass : ''}`}
                             >
-                                <span>{item.question}</span>
-                                <span className={styles.icon}>{activeIndex === idx ? '−' : '+'}</span>
-                            </button>
-                            <div className={styles.answerWrapper}>
-                                <div className={styles.answer}>
-                                    {item.answer}
+                                <button
+                                    className={styles.question}
+                                    onClick={() => toggleAccordion(idx)}
+                                    aria-expanded={activeIndex === idx}
+                                >
+                                    <span>{item.question}</span>
+                                    <span className={`${styles.icon} ${iconVariantClass}`}>{activeIndex === idx ? '−' : '+'}</span>
+                                </button>
+                                <div className={styles.answerWrapper}>
+                                    <div className={styles.answer}>
+                                        {item.answer}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>

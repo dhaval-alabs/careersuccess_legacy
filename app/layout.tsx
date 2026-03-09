@@ -22,7 +22,7 @@ export default function RootLayout({
                 extend: {
                   colors: {
                     brand: {
-                      teal: "#00A99D",
+                      teal: "#29E8A4",
                       navy: "#09263F",
                     }
                   }

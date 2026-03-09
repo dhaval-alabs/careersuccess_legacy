@@ -46,7 +46,7 @@ function CheckItem({ text }: { text: string }) {
   return (
     <li className="flex items-start gap-3">
       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#E6F7F6] flex items-center justify-center mt-0.5">
-        <svg className="w-2.5 h-2.5 text-[#29E8A4]" viewBox="0 0 12 10" fill="none">
+        <svg className="w-2.5 h-2.5 text-[#00A99D]" viewBox="0 0 12 10" fill="none">
           <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
@@ -83,21 +83,21 @@ export default function Home() {
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#4A6275]">
             {["Overview", "Curriculum", "Placement", "FAQs"].map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} className="hover:text-[#29E8A4] transition-colors relative group">
+              <a key={l} href={`#${l.toLowerCase()}`} className="hover:text-[#00A99D] transition-colors relative group">
                 {l}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-[#29E8A4] group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-[#00A99D] group-hover:w-full transition-all duration-300" />
               </a>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <a href="tel:9555525908" className="flex items-center gap-1.5 text-sm text-[#4A6275] hover:text-[#29E8A4] font-medium transition-colors">
+            <a href="tel:9555525908" className="flex items-center gap-1.5 text-sm text-[#4A6275] hover:text-[#00A99D] font-medium transition-colors">
               <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
               9555525908
             </a>
-            <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] text-sm font-bold px-5 py-2.5 rounded-lg transition-all shadow-[0_4px_14px_rgba(41,232,164,0.3)]">
+            <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#00A99D] hover:bg-[#008F84] text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all shadow-[0_4px_14px_rgba(0,169,157,0.35)]">
               Enroll Free →
             </button>
           </div>
@@ -114,9 +114,9 @@ export default function Home() {
           <div className="md:hidden bg-white border-t border-[#E6F7F6] px-4 pb-5">
             {["Overview", "Curriculum", "Placement", "FAQs"].map((l) => (
               <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileOpen(false)}
-                className="block py-3 text-sm font-medium text-[#4A6275] border-b border-[#F4FAFA] hover:text-[#29E8A4]">{l}</a>
+                className="block py-3 text-sm font-medium text-[#4A6275] border-b border-[#F4FAFA] hover:text-[#00A99D]">{l}</a>
             ))}
-            <button onClick={() => { setIsEligibilityOpen(true); setMobileOpen(false); }} className="mt-4 w-full block bg-[#29E8A4] text-[#09263F] text-center font-bold py-3 rounded-xl shadow-[0_4px_14px_rgba(41,232,164,0.3)]">Enroll Free →</button>
+            <button onClick={() => { setIsEligibilityOpen(true); setMobileOpen(false); }} className="mt-4 w-full block bg-[#00A99D] text-white text-center font-bold py-3 rounded-xl">Enroll Free →</button>
           </div>
         )}
       </header>
@@ -124,14 +124,13 @@ export default function Home() {
       {/* ══════════════════════════════════════
           HERO — copy left | form right
       ══════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-white">
+      <section className="relative overflow-hidden bg-[#09263F]">
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-[#29E8A4]/10 -translate-y-1/3 translate-x-1/3 blur-[120px]" />
-          <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#9BE9FF]/15 blur-[100px]" />
-          <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] rounded-full bg-[#FFEA79]/10 blur-[80px]" />
-          <div className="absolute inset-0 opacity-[0.05]"
-            style={{ backgroundImage: "linear-gradient(#29E8A4 1px,transparent 1px),linear-gradient(90deg,#29E8A4 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-[#00A99D]/10 -translate-y-1/3 translate-x-1/3 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#0E3A5E]/80 translate-y-1/2 -translate-x-1/4 blur-2xl" />
+          <div className="absolute inset-0 opacity-[0.03]"
+            style={{ backgroundImage: "linear-gradient(#00A99D 1px,transparent 1px),linear-gradient(90deg,#00A99D 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_440px] gap-12 items-center">
@@ -139,14 +138,14 @@ export default function Home() {
           {/* LEFT: Copy */}
           <div>
             <div className="flex flex-wrap gap-3 mb-6">
-              <div className="inline-flex items-center gap-2 bg-[#29E8A4]/15 border border-[#29E8A4]/30 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+              <div className="inline-flex items-center gap-2 bg-[#00A99D]/15 border border-[#00A99D]/30 text-[#4DCFC7] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 1st March Noida
               </div>
-              <div className="inline-flex items-center gap-2 bg-[#9BE9FF]/20 border border-[#9BE9FF]/40 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+              <div className="inline-flex items-center gap-2 bg-[#FFEA79]/15 border border-[#FFEA79]/30 text-[#FFEA79] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -155,20 +154,20 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
+            <h1 className="text-white text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
               Certification Course
               <br />
-              <span className="text-[#29E8A4]">in Data Science</span>
+              <span className="text-[#00A99D]">in Data Science</span>
             </h1>
 
-            <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
+            <p className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
               An extensive industry-relevant Data Science course with Placement Assistance!
             </p>
 
             <div className="flex flex-wrap gap-2.5 mb-10">
               {TRUST_BADGES.map((b) => (
-                <span key={b} className="flex items-center gap-1.5 text-xs font-semibold text-[#4A6275] bg-[#F4FBFA] border border-[#D6ECEB] px-3.5 py-1.5 rounded-full">
-                  <svg className="w-3 h-3 text-[#29E8A4] flex-shrink-0" viewBox="0 0 12 10" fill="none">
+                <span key={b} className="flex items-center gap-1.5 text-xs font-semibold text-white/80 bg-white/8 border border-white/15 px-3.5 py-1.5 rounded-full">
+                  <svg className="w-3 h-3 text-[#00A99D] flex-shrink-0" viewBox="0 0 12 10" fill="none">
                     <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   {b}
@@ -179,12 +178,12 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-3 mb-12">
               <button
                 onClick={() => setIsEligibilityOpen(true)}
-                className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(41,232,164,0.3)] text-center"
+                className="bg-[#00A99D] hover:bg-[#008F84] text-white font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(0,169,157,0.4)] text-center"
               >
                 Check Your Eligibility →
               </button>
-              <a href="tel:9555525908" className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(255,234,121,0.4)]">
-                <svg className="w-4 h-4 text-[#09263F]" fill="currentColor" viewBox="0 0 20 20">
+              <a href="tel:9555525908" className="border border-white/20 text-white/80 hover:bg-white/8 font-semibold px-8 py-4 rounded-xl text-base transition-all text-center flex items-center justify-center gap-2">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
                 Talk to Our Learning Advisor
@@ -192,16 +191,13 @@ export default function Home() {
             </div>
 
             {/* Stats strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#D6ECEB] rounded-2xl overflow-hidden border border-[#D6ECEB]">
-              {STATS.map((s, idx) => {
-                const colors = ['text-[#29E8A4]', 'text-[#FFD700]', 'text-[#00BFFF]', 'text-[#29E8A4]'];
-                return (
-                  <div key={s.label} className="bg-white/60 px-4 py-4 text-center backdrop-blur-sm">
-                    <div className={`${colors[idx % 4]} font-black text-xl`}>{s.value}</div>
-                    <div className="text-[#4A6275]/70 text-xs mt-0.5">{s.label}</div>
-                  </div>
-                );
-              })}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10">
+              {STATS.map((s) => (
+                <div key={s.label} className="bg-white/5 px-4 py-4 text-center">
+                  <div className="text-[#00A99D] font-black text-xl">{s.value}</div>
+                  <div className="text-white/50 text-xs mt-0.5">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -219,12 +215,12 @@ export default function Home() {
       {/* ══════════════════════════════════════
           MARQUEE TRUST BAR
       ══════════════════════════════════════ */}
-      <div className="py-3 overflow-hidden" style={{ background: 'linear-gradient(90deg, #9BE9FF 0%, #29E8A4 50%, #9BE9FF 100%)' }}>
+      <div className="bg-[#00A99D] py-3 overflow-hidden">
         <div className="flex w-max gap-10 items-center animate-marquee">
           {[...Array(3)].flatMap((_, ri) =>
             ["Amazon", "Flipkart", "HDFC Bank", "Accenture", "TCS", "Infosys", "Deloitte", "IBM", "Wipro", "Cognizant", "Capgemini", "EY"].map((c, i) => (
-              <span key={`${ri}-${i}`} className="text-[#09263F]/80 font-black text-xs uppercase tracking-widest flex items-center gap-2 flex-shrink-0">
-                <span className="text-[#09263F]/30">◆</span> {c}
+              <span key={`${ri}-${i}`} className="text-white/90 font-black text-xs uppercase tracking-widest flex items-center gap-2 flex-shrink-0">
+                <span className="text-white/40">◆</span> {c}
               </span>
             ))
           )}
@@ -237,26 +233,20 @@ export default function Home() {
       <section id="overview" className="py-20 bg-[#F4FAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <span className="text-[#29E8A4] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
+            <span className="text-[#00A99D] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
             <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-3">
-              Everything You Need to Land<span className="text-[#29E8A4]"> Your Dream Role</span>
+              Everything You Need to Land<span className="text-[#00A99D]"> Your Dream Role</span>
             </h2>
             <p className="text-[#4A6275] max-w-xl mx-auto text-base">Built for working professionals and fresh graduates — a complete end-to-end program with real accountability.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {HIGHLIGHTS.map((h, idx) => {
-              const colorType = idx % 3;
-              const borderClass = colorType === 1 ? 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' : colorType === 2 ? 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' : 'hover:border-[#29E8A4] hover:shadow-[0_8px_32px_rgba(41,232,164,0.12)]';
-              const iconBgClass = colorType === 1 ? 'bg-[#FFFBE6] group-hover:bg-[#FFEA79]' : colorType === 2 ? 'bg-[#E6FAFF] group-hover:bg-[#9BE9FF]' : 'bg-[#E6F7F6] group-hover:bg-[#29E8A4]';
-
-              return (
-                <div key={h.title} className={`group bg-white border border-[#D6ECEB] rounded-2xl p-7 transition-all duration-300 ${borderClass}`}>
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-5 transition-colors duration-300 ${iconBgClass}`}>{h.icon}</div>
-                  <h3 className="font-black text-[#09263F] text-base mb-2">{h.title}</h3>
-                  <p className="text-[#4A6275] text-sm leading-relaxed">{h.desc}</p>
-                </div>
-              );
-            })}
+            {HIGHLIGHTS.map((h) => (
+              <div key={h.title} className="group bg-white border border-[#D6ECEB] rounded-2xl p-7 hover:border-[#00A99D] hover:shadow-[0_8px_32px_rgba(0,169,157,0.12)] transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-[#E6F7F6] group-hover:bg-[#00A99D] flex items-center justify-center text-xl mb-5 transition-colors duration-300">{h.icon}</div>
+                <h3 className="font-black text-[#09263F] text-base mb-2">{h.title}</h3>
+                <p className="text-[#4A6275] text-sm leading-relaxed">{h.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -268,40 +258,32 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <div>
-              <span className="text-[#29E8A4] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
+              <span className="text-[#00A99D] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Industry-Designed Curriculum</h2>
               <p className="text-[#4A6275] max-w-md">6 deep-dive modules crafted with industry leaders to keep you ahead of the curve.</p>
             </div>
-            <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 border-2 border-[#29E8A4] text-[#09263F] hover:bg-[#29E8A4] font-bold px-6 py-3 rounded-xl transition-all text-sm">
+            <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 border-2 border-[#00A99D] text-[#00A99D] hover:bg-[#00A99D] hover:text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
               Download Brochure →
             </button>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {MODULES.map((m, idx) => {
-              const modColors = [
-                { dot: '#29E8A4', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#29E8A4] hover:shadow-[0_8px_32px_rgba(41,232,164,0.10)]' },
-                { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' },
-                { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' },
-              ];
-              const c = modColors[idx % 3];
-              return (
-                <div key={m.num} className={`relative border border-[#D6ECEB] rounded-2xl p-7 bg-white transition-all duration-300 group overflow-hidden ${c.border}`}>
-                  <span className="absolute -top-2 -right-2 text-[80px] font-black text-[#F4FAFA] group-hover:text-[#E8F4F4] transition-colors select-none leading-none">{m.num}</span>
-                  <span className={`inline-block text-[10px] font-black uppercase tracking-widest ${c.tagText} ${c.tagBg} px-3 py-1 rounded-full mb-4`}>Module {m.num}</span>
-                  <h3 className="font-black text-[#09263F] text-base mb-4 leading-snug pr-6">{m.title}</h3>
-                  <ul className="space-y-2.5">
-                    {m.topics.map((t) => (
-                      <li key={t} className="flex items-center gap-2.5 text-sm text-[#4A6275]">
-                        <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center" style={{ background: c.dotBg }}>
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.dot }} />
-                        </span>
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+            {MODULES.map((m) => (
+              <div key={m.num} className="relative border border-[#D6ECEB] rounded-2xl p-7 bg-white hover:border-[#00A99D] hover:shadow-[0_8px_32px_rgba(0,169,157,0.10)] transition-all duration-300 group overflow-hidden">
+                <span className="absolute -top-2 -right-2 text-[80px] font-black text-[#F4FAFA] group-hover:text-[#E6F7F6] transition-colors select-none leading-none">{m.num}</span>
+                <span className="inline-block text-[10px] font-black uppercase tracking-widest text-[#00A99D] bg-[#E6F7F6] px-3 py-1 rounded-full mb-4">Module {m.num}</span>
+                <h3 className="font-black text-[#09263F] text-base mb-4 leading-snug pr-6">{m.title}</h3>
+                <ul className="space-y-2.5">
+                  {m.topics.map((t) => (
+                    <li key={t} className="flex items-center gap-2.5 text-sm text-[#4A6275]">
+                      <span className="w-4 h-4 rounded-full bg-[#E6F7F6] flex-shrink-0 flex items-center justify-center">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00A99D]" />
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -312,39 +294,40 @@ export default function Home() {
       <section className="py-20 bg-[#F4FAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <span className="text-[#29E8A4] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Flexibility First</span>
+            <span className="text-[#00A99D] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Flexibility First</span>
             <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Three Ways to Learn</h2>
             <p className="text-[#4A6275] max-w-md mx-auto">Pick the mode that fits your life — or blend them for maximum flexibility.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
-              { icon: "💻", title: "Live Online", tag: "Most Popular", accent: '#29E8A4', accentBg: '#E6F7F6', dark: true, desc: "Instructor-led live sessions from anywhere. Full LMS access + recordings included.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
-              { icon: "🏛️", title: "Classroom", tag: "In-Person", accent: '#FFB800', accentBg: '#FFFBE6', dark: false, desc: "Learn at our state-of-the-art centres in Noida, Gurgaon, and Bangalore.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
-              { icon: "🔀", title: "Blended", tag: "Flexible", accent: '#00BFFF', accentBg: '#E6FAFF', dark: false, desc: "Seamlessly mix online and classroom sessions as per your schedule.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
+              { icon: "💻", title: "Live Online", tag: "Most Popular", dark: true, desc: "Instructor-led live sessions from anywhere. Full LMS access + recordings included.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
+              { icon: "🏛️", title: "Classroom", tag: "In-Person", dark: false, desc: "Learn at our state-of-the-art centres in Noida, Gurgaon, and Bangalore.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
+              { icon: "🔀", title: "Blended", tag: "Flexible", dark: false, desc: "Seamlessly mix online and classroom sessions as per your schedule.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
             ].map((m) => (
-              <div key={m.title} className={`rounded-2xl p-8 border transition-all duration-300 group ${m.dark ? "bg-[#09263F] border-[#0E3A5E] hover:shadow-[0_12px_40px_rgba(9,38,63,0.3)]" : "bg-white border-[#D6ECEB] hover:shadow-lg"}`} style={!m.dark ? { ['--hover-border' as string]: m.accent } : {}}>
+              <div key={m.title} className={`rounded-2xl p-8 border transition-all duration-300 group ${m.dark ? "bg-[#09263F] border-[#0E3A5E] hover:shadow-[0_12px_40px_rgba(9,38,63,0.3)]" : "bg-white border-[#D6ECEB] hover:border-[#00A99D] hover:shadow-[0_8px_32px_rgba(0,169,157,0.10)]"}`}>
                 <div className="flex items-start justify-between mb-6">
                   <span className="text-3xl">{m.icon}</span>
-                  <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.accentBg, color: '#09263F' }}>{m.tag}</span>
+                  <span className={`text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full ${m.dark ? "bg-[#00A99D]/20 text-[#4DCFC7]" : "bg-[#E6F7F6] text-[#00A99D]"}`}>{m.tag}</span>
                 </div>
                 <h3 className={`font-black text-xl mb-3 ${m.dark ? "text-white" : "text-[#09263F]"}`}>{m.title}</h3>
                 <p className={`text-sm leading-relaxed mb-5 ${m.dark ? "text-white/60" : "text-[#4A6275]"}`}>{m.desc}</p>
                 <ul className="space-y-2 mb-6">
                   {m.features.map((f) => (
                     <li key={f} className={`flex items-center gap-2 text-xs font-medium ${m.dark ? "text-white/70" : "text-[#4A6275]"}`}>
-                      <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 12 10" fill="none" style={{ color: m.accent }}>
+                      <svg className="w-3.5 h-3.5 text-[#00A99D] flex-shrink-0" viewBox="0 0 12 10" fill="none">
                         <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       {f}
                     </li>
                   ))}
                 </ul>
+                <button onClick={() => setIsEligibilityOpen(true)} className="text-xs font-bold inline-flex items-center gap-1.5 text-[#00A99D]">Enroll in this mode →</button>
               </div>
             ))}
           </div>
           {/* Demo Signup Button - Centered below cards */}
           <div className="mt-12 text-center">
-            <button onClick={() => setIsDemoOpen(true)} className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-bold px-10 py-5 rounded-xl transition-all shadow-[0_8px_24px_rgba(41,232,164,0.3)] text-lg">
+            <button onClick={() => setIsDemoOpen(true)} className="bg-[#00A99D] hover:bg-[#008F84] text-white font-bold px-10 py-5 rounded-xl transition-all shadow-[0_8px_24px_rgba(0,169,157,0.3)] text-lg">
               Signup for a Demo
             </button>
           </div>
@@ -357,7 +340,7 @@ export default function Home() {
       <section id="placement" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <span className="text-[#29E8A4] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Guarantee</span>
+            <span className="text-[#00A99D] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Guarantee</span>
             <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-3">We're Invested in Your Success</h2>
             <p className="text-[#4A6275] max-w-xl mx-auto">The only data science program in India that backs its training with a real financial guarantee.</p>
           </div>
@@ -365,31 +348,31 @@ export default function Home() {
 
             {/* Guarantee card */}
             <div className="relative rounded-2xl overflow-hidden bg-[#09263F] p-9">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#29E8A4]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00A99D]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
               <div className="relative">
-                <span className="inline-block bg-[#29E8A4] text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified — Job Guarantee</span>
+                <span className="inline-block bg-[#00A99D] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified — Job Guarantee</span>
                 <h3 className="text-white font-black text-2xl mb-1">Get Placed.</h3>
-                <h3 className="text-[#29E8A4] font-black text-2xl mb-5">Or Get 50% Back.</h3>
+                <h3 className="text-[#00A99D] font-black text-2xl mb-5">Or Get 50% Back.</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-7">Meet the eligibility criteria and if you're not placed in a qualifying role with the assured minimum package within 6 months — we refund 50% of your fee. No questions asked.</p>
                 <ul className="space-y-3 mb-8">
                   {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-white/70">
-                      <svg className="w-4 h-4 text-[#29E8A4] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
+                      <svg className="w-4 h-4 text-[#00A99D] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                         <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       {i}
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => setIsEligibilityOpen(true)} className="inline-block bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-black px-7 py-3.5 rounded-xl transition-all shadow-[0_6px_20px_rgba(41,232,164,0.4)] text-sm">
-                  Check Your Eligibility →
+                <button onClick={() => setIsEligibilityOpen(true)} className="inline-block bg-[#00A99D] hover:bg-[#008F84] text-white font-black px-7 py-3.5 rounded-xl transition-all shadow-[0_6px_20px_rgba(0,169,157,0.4)] text-sm">
+                  Apply for Job Guarantee →
                 </button>
               </div>
             </div>
 
             {/* Placement readiness card */}
             <div className="rounded-2xl border-2 border-[#D6ECEB] p-9 bg-[#F4FAFA]">
-              <span className="inline-block bg-[#FFFBE6] text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">All Courses — Placement Readiness</span>
+              <span className="inline-block bg-[#E6F7F6] text-[#00A99D] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">All Courses — Placement Readiness</span>
               <h3 className="text-[#09263F] font-black text-2xl mb-5">2-Month Industry-Focused<br />Placement Module</h3>
               <p className="text-[#4A6275] text-sm leading-relaxed mb-7">A dedicated module that bridges the gap between learning and landing the right job — included in all courses.</p>
               <ul className="space-y-4">
@@ -430,7 +413,7 @@ export default function Home() {
       <section className="py-20 bg-[#F4FAFA]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="text-[#09263F] text-xs font-black uppercase tracking-widest bg-[#9BE9FF]/40 px-4 py-1.5 rounded-full">Your Credential</span>
+            <span className="text-[#00A99D] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Your Credential</span>
             <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-5">Earn an Industry-Recognised Certificate</h2>
             <p className="text-[#4A6275] leading-relaxed mb-7 text-sm">Complete all assignments and module case studies under our strict zero-plagiarism policy. Once evaluated by our faculty, your certificate is awarded — carrying NASSCOM credibility that employers recognise instantly.</p>
             <ul className="space-y-3">
@@ -470,34 +453,34 @@ export default function Home() {
       {/* ══════════════════════════════════════
           BOTTOM CTA
       ══════════════════════════════════════ */}
-      <section className="py-20 bg-white relative overflow-hidden">
+      <section className="py-20 bg-[#09263F] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#29E8A4]/10 blur-[100px] rounded-full" />
-          <div className="absolute inset-0 opacity-[0.05]"
-            style={{ backgroundImage: "linear-gradient(#29E8A4 1px,transparent 1px),linear-gradient(90deg,#29E8A4 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#00A99D]/10 blur-3xl rounded-full" />
+          <div className="absolute inset-0 opacity-[0.03]"
+            style={{ backgroundImage: "linear-gradient(#00A99D 1px,transparent 1px),linear-gradient(90deg,#00A99D 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-[#29E8A4]/15 border border-[#29E8A4]/30 text-[#29E8A4] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#29E8A4] animate-pulse" />
+          <div className="inline-flex items-center gap-2 bg-[#00A99D]/15 border border-[#00A99D]/30 text-[#4DCFC7] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00A99D] animate-pulse" />
             Limited Seats Per Batch
           </div>
-          <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mb-4 leading-tight">
-            Ready to Launch Your<br /><span className="text-[#29E8A4]">Data Science Career?</span>
+          <h2 className="text-white font-black text-3xl sm:text-4xl mb-4 leading-tight">
+            Ready to Launch Your<br /><span className="text-[#00A99D]">Data Science Career?</span>
           </h2>
-          <p className="text-[#4A6275] text-base mb-10 max-w-lg mx-auto">Join 10,000+ alumni who transformed their careers with AnalytixLabs. Enroll today or speak to a counsellor — completely free.</p>
+          <p className="text-white/60 text-base mb-10 max-w-lg mx-auto">Join 10,000+ alumni who transformed their careers with AnalytixLabs. Enroll today or speak to a counsellor — completely free.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => setIsEligibilityOpen(true)}
-              className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-black px-10 py-4 rounded-xl transition-all shadow-[0_8px_30px_rgba(41,232,164,0.3)] text-base"
+              className="bg-[#00A99D] hover:bg-[#008F84] text-white font-black px-10 py-4 rounded-xl transition-all shadow-[0_8px_30px_rgba(0,169,157,0.4)] text-base"
             >
               Check Your Eligibility →
             </button>
             <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
-              className="bg-[#F4FBFA] hover:bg-[#E6F7F6] border border-[#D6ECEB] text-[#09263F] font-semibold px-10 py-4 rounded-xl transition-all text-base flex items-center justify-center gap-2">
+              className="bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-10 py-4 rounded-xl transition-all text-base">
               💬 Chat on WhatsApp
             </a>
           </div>
-          <p className="text-[#4A6275]/60 text-xs mt-8">📍 Centres in Noida · Gurgaon · Bangalore &nbsp;|&nbsp; 📞 9555525908</p>
+          <p className="text-white/30 text-xs mt-8">📍 Centres in Noida · Gurgaon · Bangalore &nbsp;|&nbsp; 📞 9555525908</p>
         </div>
       </section>
 
@@ -514,7 +497,7 @@ export default function Home() {
         <a href="tel:9555525908" className="flex-1 flex items-center justify-center gap-1.5 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-sm">📞 Call</a>
         <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-sm">💬 Chat</a>
-        <button onClick={() => setIsEligibilityOpen(true)} className="flex-1 bg-[#29E8A4] text-[#09263F] font-black py-3 rounded-xl text-sm text-center">Check Eligibility</button>
+        <button onClick={() => setIsEligibilityOpen(true)} className="flex-1 bg-[#00A99D] text-white font-black py-3 rounded-xl text-sm text-center">Check Eligibility</button>
       </div>
 
       {/* Modals */}
