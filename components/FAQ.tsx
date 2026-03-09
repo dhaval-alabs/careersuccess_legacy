@@ -5,81 +5,52 @@ import styles from './FAQ.module.css';
 
 const faqData = [
     {
+        question: "How much does the data science course cost?",
+        answer: "Fees depend on your learning mode. Classroom: ₹68,440. Live Online: ₹59,000. Blended eLearning: ₹53,100 (all inclusive of taxes). The syllabus, faculty, and NASSCOM certification are identical across all three. 0% interest EMI is available, and you can pay in up to 3 instalments. The full programme runs 700+ hours over 8 months."
+    },
+    {
+        question: "Does this course come with a placement guarantee?",
+        answer: "Yes. For NASSCOM-certified courses, we offer a placement commitment with a 50% fee-back guarantee. Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum annual package within 6 months of certification, 50% of your fee is refunded. Every student also goes through an 8-week Placement Readiness Programme with mock interviews, resume reviews, and simulated recruitment drives."
+    },
+    {
+        question: "What is the eligibility for this data science course?",
+        answer: "There is no strict eligibility barrier. The course is designed for absolute beginners with no prior coding or technical background. Graduates from any stream (engineering, commerce, arts, science) can enrol. Working professionals looking to transition into data science are equally welcome. Our learning advisors can help you evaluate your profile before you commit."
+    },
+    {
+        question: "What subjects are covered in the syllabus?",
+        answer: "11 modules across 700+ hours: Excel, SQL, Power BI, Python, R (optional), Applied Statistics, Predictive Modelling, Machine Learning, NLP, Model Deployment/MLOps, and Generative AI. You also complete 6 capstone projects and 20+ graded assignments using real business datasets. Download the brochure for the full topic-wise breakdown."
+    },
+    {
+        question: "What certification do I receive?",
+        answer: "Two certifications: an Advanced Certification from AnalytixLabs and a certification from NASSCOM FutureSkills Prime (a Government of India initiative backed by MeitY). Both are widely recognised by employers. Certification is awarded after completing all assessments (case studies, MCQs, and viva) within the course timeline. Two attempts per assessment."
+    },
+    {
+        question: "Do you offer classroom training near me?",
+        answer: "Yes. Classroom batches run at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, instructor-led, hands-on. Most institutes have gone fully online. We haven't, because face-to-face mentorship produces noticeably better outcomes. If you're not near a centre, the Interactive Live Online mode gives you the same faculty and real-time interaction."
+    },
+    {
+        question: "Can I do this course while working full-time?",
+        answer: "Absolutely. Most of our students are working professionals. Live online batches run on weekday evenings and weekends. Classroom sessions have weekend options too. Blended eLearning gives maximum flexibility. Plan for about 8-10 hours per week for self-study alongside classes. All sessions are recorded and available on your LMS for a full year."
+    },
+    {
+        question: "What salary can I expect after completing this?",
+        answer: "Entry-level data science roles in India typically pay ₹6-10 LPA. Mid-level: ₹12-20 LPA. Senior roles go beyond ₹25 LPA. Common titles include Data Scientist, ML Engineer, BI Analyst, and Analytics Consultant. Our alumni work at companies like Amazon, Flipkart, HDFC Bank, Accenture, Deloitte, and many others."
+    },
+    {
+        question: "Does this course cover AI and machine learning?",
+        answer: "Yes. Machine learning is a core part of the curriculum: supervised/unsupervised learning, ensemble methods, time series, and NLP. The programme also includes a dedicated Generative AI module covering prompt engineering and Gen AI for Excel, SQL, Power BI, and Python."
+    },
+    {
+        question: "Why should I choose AnalytixLabs over other institutes?",
+        answer: "We've been training professionals in data science, AI, and analytics since 2011. 20,000+ candidates trained, 100,000+ training hours delivered, and a 9.6 average student rating. Unlike most institutes that operate purely online, we run genuine classroom batches in three cities. Curriculum co-developed with NASSCOM FutureSkills Prime."
+    },
+    {
+        question: "How does this compare to a PG or master's degree in data science?",
+        answer: "A PG or master's typically runs 1-2 years and costs ₹2-5 lakhs or more. Our programme covers the same core skill set in 8 months at a fraction of the cost. The key difference: our curriculum is industry-designed, not academic. You work on real business projects and get dedicated placement support."
+    },
+    {
         question: "What if I miss a class?",
-        answer: (
-            <>
-                <p>Don't worry! You will always get a recording for the class in your Learning Management System (LMS) account. Have a look at that and reach out to the faculty in case of doubts. All our live classes are recorded for self-study purpose and future reference, and these can also be accessed through our LMS. Hence, in case you miss a class, you can refer to the video recording and then reach out to the faculty during their doubts clearing time or ask your question at the beginning of the subsequent class.</p>
-                <p>You can also repeat any class you want in the next one year after your course completion. Batch change policies will, however, apply in this case.</p>
-                <p>Please note that in case you are not able to complete your course within one year of course validity, due to reasons at your end, limited support might be available post the completion of one year.</p>
-            </>
-        )
-    },
-    {
-        question: "What if I share my learning account details with my friend?",
-        answer: "The sharing of LMS login credentials is unauthorized, and as a security measure, if the LMS is accessed by multiple places, it will flag in the system and your access to LMS can be terminated."
-    },
-    {
-        question: "Do this data scientist course with placement assistance come with a placement guarantee?",
-        answer: (
-            <>
-                <p>We provide both placement guarantee programs and placement assistance programs, depending on the course you choose.</p>
-                <p><strong>For NASSCOM Certified Courses:</strong> These come with a Job Guarantee, along with a 50% Fee Refund and Minimum Package Assurance. If you are unable to secure a qualifying role with the assured minimum annual package within 6 months of certification (after meeting the stipulated requirements), 50% of your course fee will be refunded.</p>
-                <p><strong>For other courses:</strong> While they do not include a placement guarantee, they feature a comprehensive 2-month, industry-focused placement readiness module. This module strengthens both technical and soft skills through interview preparation, practice tests, case studies, simulated recruitment drives, and mock interviews with industry experts—helping you gain the confidence and skills needed to land the right opportunity.</p>
-            </>
-        )
-    },
-    {
-        question: "Can I download the recordings?",
-        answer: (
-            <>
-                <p>No. Our recordings can be accessed through your account on LMS or stream them live online at any point in time though.</p>
-                <p>Recordings are an integral part of AnalytixLabs' intellectual property by Suo Jure. The downloading/distribution of these recordings in anyway is strictly prohibited and illegal as they are protected under the copyright act. In case a student is found doing the same, it will lead to an immediate and permanent suspension in the services, access to all the learning resources will be blocked, the course fee will be forfeited and the institute will have all the rights to take strict legal action against the individual.</p>
-            </>
-        )
-    },
-    {
-        question: "How do I get the course certificate?",
-        answer: (
-            <>
-                <p>As part of the course, students get weekly assignments and module-wise case studies. Once all your submissions are received and evaluated well (without any plagiarism), the certificate shall be awarded. Without fairly submissions and evaluation of the assignments and projects no certificate shall be issued.</p>
-                <p>Please note that in case you are not able to complete the course within the one-year validity, AnalytixLabs might hold a mock interview/viva, apart from your submissions, before issuing the certificate.</p>
-            </>
-        )
-    },
-    {
-        question: "For how long are class recordings and LMS access available?",
-        answer: (
-            <>
-                <p>LMS and course access are available for one year. If needed, you can also repeat any number of classes you want in the next one year after course completion. Batch change policies will, however, apply in this case.</p>
-                <p>This is valid for AnalytixLabs content. In the case of this co-branded global data scientist certification course, the general duration of access to partner content is limited to 6 months.</p>
-                <p>In case required because any genuine reasons, the recordings access can be extended further for up to 1 year post the completion of one-year validity. Please note that given the constant changes in the Analytics industry, our courses continue to be upgraded and hence old courses might no longer hold relevance. Hence, we do not promise lifetime access just for marketing purposes.</p>
-            </>
-        )
-    },
-    {
-        question: "Do you offer Data Science Courses in Bangalore?",
-        answer: "Yes, AnalytixLabs offers one of the best Data Science Courses in Bangalore in various learning formats namely, Classroom, Fully interactive live online, and self-paced blended eLearning. Our Data Science Course in Bangalore with placement support will help you receive expert guidance on resume building, interview preparation and how to apply for relevant job roles also."
-    },
-    {
-        question: "Is there a data science course near me?",
-        answer: "Our data science courses have online and offline learning modes. If you are looking for a learning center near you, we have learning centers at Noida, Gurgaon and Bangalore. To learn from any other location, enroll for our online or blended learning modes."
-    },
-    {
-        question: "Is this the best institute for data science in India?",
-        answer: "AnalytixLabs is voted as one of the top data science institutes in India. Our learning approach and industry-relevant projects included in the course modules has helped us position this course as one of the best data science course with placement guarantee. While the term best maybe relative and subject to opinions, we offer an agile data science training opportunity that helps our students earn certificates in data science specialization. Our data science and business analytics courses are our signature learning modules offering an intuitive learning experience."
-    },
-    {
-        question: "Is this an online data science course?",
-        answer: (
-            <>
-                <p>We have three learning modes:</p>
-                <ul>
-                    <li>Interactive online data science course program</li>
-                    <li>Classroom and Bootcamp course program</li>
-                    <li>Blended learning mode where we offer flexibility to mix the above two modes as per your convenience.</li>
-                </ul>
-            </>
-        )
+        answer: "Every live session is recorded and available on your LMS within 24 hours. Review the recording and raise questions with faculty during office hours or at the start of the next class. You can also repeat any class with a subsequent batch within one year of enrolment."
     }
 ];
 
