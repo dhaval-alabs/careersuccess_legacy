@@ -191,3 +191,13 @@ h4 {
 .max-w-5xl {
   max-width: 80rem !important;
 }
+
+/* Hide scrollbar but keep scrollability */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
