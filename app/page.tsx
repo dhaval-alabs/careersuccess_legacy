@@ -51,7 +51,7 @@ function CheckItem({ text }: { text: string }) {
   return (
     <li className="flex items-start gap-3">
       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#E6F7F6] flex items-center justify-center mt-0.5">
-        <svg className="w-2.5 h-2.5 text-[#239bf5]" viewBox="0 0 12 10" fill="none">
+        <svg className="w-2.5 h-2.5 text-[#29E8A4]" viewBox="0 0 12 10" fill="none">
           <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
@@ -102,7 +102,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-wrap gap-3 mb-6">
-                <div className="inline-flex items-center gap-2 bg-[#239bf5]/15 border border-[#239bf5]/30 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+                <div className="inline-flex items-center gap-2 bg-[#29E8A4]/15 border border-[#29E8A4]/30 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -126,7 +126,7 @@ export default function Home() {
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
                 Data Science Course with
                 <br />
-                <span className="text-[#239bf5]">Guaranteed Career Support</span>
+                <span className="text-[#29E8A4]">Guaranteed Career Support</span>
               </h1>
 
               <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
@@ -162,7 +162,7 @@ export default function Home() {
               {/* Stats strip */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#D6ECEB] rounded-2xl overflow-hidden border border-[#D6ECEB]">
                 {STATS.map((s, idx) => {
-                  const colors = ['text-[#239bf5]', 'text-[#FFD700]', 'text-[#00BFFF]', 'text-[#239bf5]'];
+                  const colors = ['text-[#29E8A4]', 'text-[#FFD700]', 'text-[#00BFFF]', 'text-[#29E8A4]'];
                   return (
                     <div key={s.label} className="bg-white/60 px-4 py-4 text-center backdrop-blur-sm">
                       <div className={`${colors[idx % 4]} font-black text-xl`}>{s.value}</div>
@@ -207,7 +207,7 @@ export default function Home() {
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">
-                Everything You Need to Build a <span className="text-[#239bf5]">Career in Data Science</span>
+                Everything You Need to Build a <span className="text-[#29E8A4]">Career in Data Science</span>
               </h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto text-base leading-relaxed">
                 Built for working professionals and fresh graduates. A complete programme with real accountability, real classroom training, and a placement team that delivers. Rated 9.6/10 by 20,000+ past students.
@@ -216,8 +216,8 @@ export default function Home() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {HIGHLIGHTS.map((h, idx) => {
                 const colorType = idx % 3;
-                const borderClass = colorType === 1 ? 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' : colorType === 2 ? 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' : 'hover:border-[#239bf5] hover:shadow-[0_8px_32px_rgba(35,155,245,0.12)]';
-                const iconBgClass = colorType === 1 ? 'bg-[#FFFBE6] group-hover:bg-[#FFEA79]' : colorType === 2 ? 'bg-[#E6FAFF] group-hover:bg-[#9BE9FF]' : 'bg-[#E6F3FF] group-hover:bg-[#239bf5]';
+                const borderClass = colorType === 1 ? 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' : colorType === 2 ? 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' : 'hover:border-[#29E8A4] hover:shadow-[0_8px_32px_rgba(41,232,164,0.12)]';
+                const iconBgClass = colorType === 1 ? 'bg-[#FFFBE6] group-hover:bg-[#FFEA79]' : colorType === 2 ? 'bg-[#E6FAFF] group-hover:bg-[#9BE9FF]' : 'bg-[#E6F7F6] group-hover:bg-[#29E8A4]';
 
                 return (
                   <div key={h.title} className={`group bg-white border border-[#D6ECEB] rounded-2xl p-7 transition-all duration-300 ${borderClass}`}>
@@ -249,7 +249,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {MODULES.map((m, idx) => {
                 const modColors = [
-                  { dot: '#239bf5', dotBg: '#E6F3FF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F3FF]', border: 'hover:border-[#239bf5] hover:shadow-[0_8px_32px_rgba(35,155,245,0.10)]' },
+                  { dot: '#29E8A4', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#29E8A4] hover:shadow-[0_8px_32px_rgba(41,232,164,0.10)]' },
                   { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' },
                   { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' },
                 ];
@@ -289,7 +289,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-5">
               {[
                 { icon: "🏛️", title: "Classroom & Bootcamp", tag: "In-Person", price: "₹68,440", accent: '#FFB800', accentBg: '#FFFBE6', dark: false, desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
-                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#239bf5', accentBg: '#E6F3FF', dark: true, desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
+                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', dark: true, desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
                 { icon: "🔀", title: "Blended eLearning", tag: "Flexible", price: "₹53,100", accent: '#00BFFF', accentBg: '#E6FAFF', dark: false, desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals with unpredictable schedules.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
               ].map((m) => (
                 <div key={m.title} className={`rounded-2xl p-8 border transition-all duration-300 group ${m.dark ? "bg-[#09263F] border-[#0E3A5E] hover:shadow-[0_12px_40px_rgba(9,38,63,0.3)]" : "bg-white border-[#D6ECEB] hover:shadow-lg"}`} style={!m.dark ? { ['--hover-border' as string]: m.accent } : {}}>
@@ -298,7 +298,7 @@ export default function Home() {
                     <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.accentBg, color: '#09263F' }}>{m.tag}</span>
                   </div>
                   <h3 className={`font-black text-xl mb-1 ${m.dark ? "text-white" : "text-[#09263F]"}`}>{m.title}</h3>
-                  <div className={`text-lg font-black mb-3 text-[#239bf5]`}>{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
+                  <div className={`text-lg font-black mb-3 ${m.dark ? "text-[#29E8A4]" : "text-[#239bf5]"}`}>{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
                   <p className={`text-sm leading-relaxed mb-5 ${m.dark ? "text-white/60" : "text-[#4A6275]"}`}>{m.desc}</p>
                   <ul className="space-y-2 mb-6">
                     {m.features.map((f) => (
@@ -338,9 +338,9 @@ export default function Home() {
               <div className="relative rounded-3xl overflow-hidden bg-[#09263F] p-9">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#29E8A4]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="relative">
-                  <span className="inline-block bg-[#239bf5]/15 text-[#239bf5] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
+                  <span className="inline-block bg-[#29E8A4] text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
                   <h3 className="text-white font-black text-2xl mb-1">Get Placed.</h3>
-                  <h3 className="text-[#239bf5] font-black text-2xl mb-5">Or Get 50% Back.</h3>
+                  <h3 className="text-[#29E8A4] font-black text-2xl mb-5">Or Get 50% Back.</h3>
                   <p className="text-white/60 text-sm leading-relaxed mb-7">Complete the programme, meet the requirements, and if you're not placed in a qualifying role with the assured minimum package within 6 months of certification, we refund 50% of your course fee.</p>
                   <ul className="space-y-3 mb-8">
                     {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
@@ -375,7 +375,7 @@ export default function Home() {
                   ].map((item) => (
                     <div key={item.t} className="flex gap-4">
                       <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm border border-[#D6ECEB]">
-                        <svg className="w-5 h-5 text-[#239bf5]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="w-5 h-5 text-[#29E8A4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
@@ -552,7 +552,7 @@ export default function Home() {
               Limited Seats per batch
             </div>
             <h2 className="text-[#09263F] font-black text-4xl sm:text-6xl mb-8 leading-tight">
-              Ready to Join India's Most <span className="text-[#239bf5]">Trusted</span> Data Science Institute?
+              Ready to Join India's Most <span className="text-[#29E8A4]">Trusted</span> Data Science Institute?
             </h2>
             <p className="text-[#4A6275] text-lg sm:text-xl mb-12 font-medium leading-relaxed">
               Join 20,000+ graduates. Get NASSCOM certified. Land your dream role with our fee-back guarantee.

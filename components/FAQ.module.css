@@ -53,8 +53,8 @@
 }
 
 .active {
-    border-color: #239bf5;
-    box-shadow: 0 4px 24px rgba(35, 155, 245, 0.12);
+    border-color: #29E8A4;
+    box-shadow: 0 4px 24px rgba(41, 232, 164, 0.12);
 }
 
 .question {
@@ -74,7 +74,7 @@
 
 .icon {
     font-size: 1.25rem;
-    color: #239bf5;
+    color: #29E8A4;
     font-weight: 400;
     width: 28px;
     height: 28px;
@@ -82,12 +82,12 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #E6F3FF;
+    background: #E6F7F6;
     transition: all 0.3s;
 }
 
 .active .icon {
-    background: #239bf5;
+    background: #29E8A4;
     color: white;
     transform: rotate(45deg);
 }
