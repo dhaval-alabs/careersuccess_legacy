@@ -201,3 +201,8 @@ h4 {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Alumni logo marquee (slower, more premium feel) */
+.animate-marquee-logos {
+  animation: marquee 40s linear infinite;
+}

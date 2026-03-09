@@ -369,40 +369,41 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Alumni strip */}
-          <div className="mt-12 rounded-2xl border border-[#D6ECEB] bg-[#F4FAFA] px-0 py-7">
+          {/* Alumni strip — auto-sliding marquee */}
+          <div className="mt-12 rounded-2xl border border-[#D6ECEB] bg-[#F4FAFA] px-0 py-7 overflow-hidden">
             <p className="text-center text-xs font-black uppercase tracking-widest text-[#9BBAC0] mb-6">Our Alumni Work At</p>
-            {/* Scroll container with gradient masks */}
+            {/* Marquee with gradient masks */}
             <div className="relative">
               {/* Left gradient fade */}
-              <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #F4FAFA, transparent)' }} />
+              <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #F4FAFA 40%, transparent)' }} />
               {/* Right gradient fade */}
-              <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #F4FAFA, transparent)' }} />
-              {/* Scrollable logos row */}
-              <div className="flex items-center gap-10 overflow-x-auto px-8 pb-1 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {[
-                  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-                  { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flipkart_logo_1.svg" },
-                  { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
-                  { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
-                  { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" },
-                  { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
-                  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg" },
-                  { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
-                  { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/3/38/Cognizant_logo_2022.svg" },
-                  { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" },
-                ].map((c) => (
-                  <div key={c.name} className="flex-shrink-0 flex items-center justify-center h-9 hover:scale-105 transition-transform">
-                    <Image
-                      src={c.url}
-                      alt={c.name}
-                      width={120}
-                      height={36}
-                      className="h-8 w-auto object-contain"
-                      unoptimized
-                    />
-                  </div>
-                ))}
+              <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #F4FAFA 40%, transparent)' }} />
+              {/* Auto-scrolling track */}
+              <div className="flex w-max gap-12 items-center animate-marquee-logos">
+                {[...Array(3)].flatMap((_, ri) =>
+                  [
+                    { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
+                    { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/d/da/Flipkart_logo_%282026%29.svg" },
+                    { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
+                    { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
+                    { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/TCS_Logo.svg" },
+                    { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
+                    { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/0/05/Logo_of_Deloitte.svg" },
+                    { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Wipro_new_logo.svg" },
+                    { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Cognizant_logo_2022.svg" },
+                    { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Infosys_logo.svg" },
+                  ].map((c, i) => (
+                    <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-9">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.url}
+                        alt={c.name}
+                        className="h-7 w-auto object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
