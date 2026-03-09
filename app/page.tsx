@@ -137,23 +137,31 @@ export default function Home() {
 
           {/* LEFT: Copy */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-[#00A99D]/15 border border-[#00A99D]/30 text-[#4DCFC7] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00A99D] animate-pulse" />
-              NASSCOM Certified Program
+            <div className="flex flex-wrap gap-3 mb-6">
+              <div className="inline-flex items-center gap-2 bg-[#00A99D]/15 border border-[#00A99D]/30 text-[#4DCFC7] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                1st March Noida
+              </div>
+              <div className="inline-flex items-center gap-2 bg-[#FFEA79]/15 border border-[#FFEA79]/30 text-[#FFEA79] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                15th March Gurgaon
+              </div>
             </div>
 
             <h1 className="text-white text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
-              Data Science
+              Certification Course
               <br />
-              <span className="text-[#00A99D]">Specialization</span>
-              <br />
-              <span className="text-white/75 text-3xl sm:text-4xl font-bold">Course</span>
+              <span className="text-[#00A99D]">in Data Science</span>
             </h1>
 
             <p className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
-              Master Python, ML, Deep Learning & BI under India's most trusted faculty.
-              Get <span className="text-white font-semibold">job guaranteed</span> or receive{" "}
-              <span className="text-[#00A99D] font-semibold">50% of your fee back</span>.
+              An extensive industry-relevant Data Science course with Placement Assistance!
             </p>
 
             <div className="flex flex-wrap gap-2.5 mb-10">
