@@ -70,7 +70,7 @@ function StatCard({ icon, label, primary, secondary, delay }: { icon: React.Reac
     return (
         <div style={{
             display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
-            padding: "36px 24px", flex: 1, minWidth: 200,
+            padding: "36px 24px", flex: 1, minWidth: 140,
             opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(18px)",
             transition: "opacity 0.55s ease, transform 0.55s ease",
             position: "relative"
@@ -145,19 +145,19 @@ export default function CourseInfoSection() {
                 </div>
 
                 {/* 5-Column Single Row Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-8 lg:py-12 gap-8 lg:gap-0">
+                <div className="grid grid-cols-2 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-8 lg:py-12 gap-8 lg:gap-0">
                     
-                    {/* Column 1: Upcoming Batches (Stacked) */}
-                    <div className="flex flex-col h-full lg:px-6 lg:border-r border-[#dde8f4]">
+                    {/* Column 1: Upcoming Batches (Stacked on desktop, Side-by-side on mobile) */}
+                    <div className="col-span-2 lg:col-span-1 flex flex-col h-full lg:px-6 lg:border-r border-[#dde8f4]">
                         <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96", textAlign: "center" }}>Upcoming Batches</p>
-                        <div className="flex flex-col gap-3 justify-center flex-grow">
+                        <div className="grid grid-cols-2 lg:flex lg:flex-col gap-3 justify-center flex-grow">
                             <BatchCard date="1st" month="March" city="Noida" color="#d4f5e9" textColor="#1a3d2b" pinColor="#2e7d5e" />
                             <BatchCard date="15th" month="March" city="Gurgaon" color="#fef5c8" textColor="#3d3010" pinColor="#9a7c0a" />
                         </div>
                     </div>
 
                     {/* Column 2: Classes Info */}
-                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<CalendarIcon />}
                             label="Classes × Hours"
@@ -168,7 +168,7 @@ export default function CourseInfoSection() {
                     </div>
 
                     {/* Column 3: Self-Study Info */}
-                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<CodeIcon />}
                             label="Self-Study Hours"
@@ -179,7 +179,7 @@ export default function CourseInfoSection() {
                     </div>
 
                     {/* Column 4: Placement Info */}
-                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<PeopleIcon />}
                             label="Placement Readiness"
@@ -190,7 +190,7 @@ export default function CourseInfoSection() {
                     </div>
 
                     {/* Column 5: Program Fee */}
-                    <div className="lg:px-8 flex flex-col justify-center bg-rgba(0,174,239,0.02)">
+                    <div className="col-span-1 lg:px-8 flex flex-col justify-center bg-rgba(0,174,239,0.02)">
                         <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96", textAlign: "center" }}>Program Fee</p>
                         <div className="flex flex-col items-center text-center">
                             <FeeIcon />
