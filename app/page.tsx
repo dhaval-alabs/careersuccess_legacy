@@ -6,7 +6,6 @@ import LeadCaptureForm from "../components/forms/LeadCaptureForm";
 import Modal from "../components/Modal";
 import FAQ from "../components/FAQ";
 import CourseInfoSection from "../components/CourseInfoSection";
-import Navbar from "../components/Navbar";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -73,7 +72,6 @@ export default function Home() {
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
       <main id="main-content">
-        <Navbar />
 
         {/* ══════════════════════════════════════
           HERO - copy left | form right
@@ -99,7 +97,8 @@ export default function Home() {
                   alt="AnalytixLabs"
                   width={180}
                   height={40}
-                  className="h-9 sm:h-10 w-auto"
+                  className="w-auto"
+                  style={{ height: '3.5rem' }}
                   priority
                 />
                 <div className="w-px h-8 bg-[#D6ECEB]" />
@@ -108,7 +107,8 @@ export default function Home() {
                   alt="Nasscom Futureskills"
                   width={160}
                   height={40}
-                  className="h-8 sm:h-9 w-auto"
+                  className="w-auto"
+                  style={{ height: '5.25rem' }}
                   priority
                 />
               </div>

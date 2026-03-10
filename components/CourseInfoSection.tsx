@@ -126,7 +126,7 @@ export default function CourseInfoSection() {
                 fontFamily: "'DM Sans', sans-serif",
                 background: "linear-gradient(135deg, #f0f6fd 0%, #ffffff 60%, #f5fbff 100%)",
                 border: "1px solid #dde8f4", borderRadius: 20,
-                margin: "0 auto", maxWidth: 1100,
+                margin: "0 auto", maxWidth: 1600,
                 padding: "10px 0 0",
                 boxShadow: "0 4px 32px rgba(0,120,200,0.07)",
                 overflow: "hidden",
@@ -144,68 +144,67 @@ export default function CourseInfoSection() {
                     }}>Course Overview</span>
                 </div>
 
-                {/* Stats row */}
-                <div className="stats-row" style={{ display: "flex", alignItems: "stretch", padding: "10px 16px 0" }}>
-                    <StatCard
-                        icon={<CalendarIcon />}
-                        label="No. of Classes × Hours"
-                        primary="60 × 3 = <span style='color:#1a2b4a'>180 hrs</span>"
-                        secondary="+ 45 hours e-learning"
-                        delay={150}
-                    />
-                    <div className="divider-line" />
-                    <StatCard
-                        icon={<CodeIcon />}
-                        label="Self-Study Hours"
-                        primary="425 <span style='font-size:18px;color:#1a2b4a'>(8–10 hrs/week)</span>"
-                        secondary="43 Assignments &amp; Projects"
-                        delay={280}
-                    />
-                    <div className="divider-line" />
-                    <StatCard
-                        icon={<PeopleIcon />}
-                        label="Placement Readiness Program"
-                        primary="8 Weeks"
-                        secondary="Post Certification"
-                        delay={410}
-                    />
-                </div>
-
-                {/* Divider */}
-                <div style={{ height: 1, background: "linear-gradient(to right, transparent, #c8ddf0 30%, #c8ddf0 70%, transparent)", margin: "8px 32px 0" }} />
-
-                {/* Bottom row: batches + fee */}
-                <div className="bottom-row" style={{
-                    display: "flex", alignItems: "center", gap: 0,
-                    padding: "24px 40px 28px", background: "rgba(0,174,239,0.03)"
-                }}>
-                    {/* Batches */}
-                    <div style={{ flex: 1 }}>
-                        <p style={{ margin: "0 0 14px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96" }}>Upcoming Batches</p>
-                        <div className="batch-row" style={{ display: "flex", gap: 12 }}>
+                {/* 5-Column Single Row Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-8 lg:py-12 gap-8 lg:gap-0">
+                    
+                    {/* Column 1: Upcoming Batches (Stacked) */}
+                    <div className="flex flex-col h-full lg:px-6 lg:border-r border-[#dde8f4]">
+                        <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96", textAlign: "center" }}>Upcoming Batches</p>
+                        <div className="flex flex-col gap-3 justify-center flex-grow">
                             <BatchCard date="1st" month="March" city="Noida" color="#d4f5e9" textColor="#1a3d2b" pinColor="#2e7d5e" />
                             <BatchCard date="15th" month="March" city="Gurgaon" color="#fef5c8" textColor="#3d3010" pinColor="#9a7c0a" />
                         </div>
                     </div>
 
-                    {/* Vertical divider */}
-                    <div style={{ width: 1, alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, #c8ddf0, transparent)", margin: "0 40px" }} />
+                    {/* Column 2: Classes Info */}
+                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                        <StatCard
+                            icon={<CalendarIcon />}
+                            label="Classes × Hours"
+                            primary="60 × 3 = <span style='color:#1a2b4a'>180 hrs</span>"
+                            secondary="+ 45 hours e-learning"
+                            delay={150}
+                        />
+                    </div>
 
-                    {/* Fee */}
-                    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                        <p style={{ margin: "0 0 14px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96" }}>Program Fee</p>
-                        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                    {/* Column 3: Self-Study Info */}
+                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                        <StatCard
+                            icon={<CodeIcon />}
+                            label="Self-Study Hours"
+                            primary="425 <span style='font-size:18px;color:#1a2b4a'>(8–10/wk)</span>"
+                            secondary="43 Assignments &amp; Projects"
+                            delay={280}
+                        />
+                    </div>
+
+                    {/* Column 4: Placement Info */}
+                    <div className="lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                        <StatCard
+                            icon={<PeopleIcon />}
+                            label="Placement Readiness"
+                            primary="8 Weeks"
+                            secondary="Post Certification"
+                            delay={410}
+                        />
+                    </div>
+
+                    {/* Column 5: Program Fee */}
+                    <div className="lg:px-8 flex flex-col justify-center bg-rgba(0,174,239,0.02)">
+                        <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96", textAlign: "center" }}>Program Fee</p>
+                        <div className="flex flex-col items-center text-center">
                             <FeeIcon />
-                            <div>
-                                <p style={{ margin: 0, fontSize: 28, fontWeight: 900, color: "#00AEEF", lineHeight: 1 }}>
-                                    ₹53,100<span style={{ fontSize: 16, fontWeight: 600, color: "#6b7a96" }}>/- onwards*</span>
+                            <div className="mt-4">
+                                <p style={{ margin: 0, fontSize: 32, fontWeight: 900, color: "#00AEEF", lineHeight: 1 }}>
+                                    ₹53,100<span style={{ fontSize: 16, fontWeight: 600, color: "#6b7a96" }}>/-*</span>
                                 </p>
-                                <p style={{ margin: "6px 0 0", fontSize: 13, color: "#6b7a96", fontWeight: 500 }}>
-                                    0% interest EMI available · Starting ₹6,387/month
+                                <p style={{ margin: "10px 0 0", fontSize: 13, color: "#6b7a96", fontWeight: 500, lineHeight: 1.4 }}>
+                                    0% EMI available<br/>Starts ₹6,387/month
                                 </p>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
