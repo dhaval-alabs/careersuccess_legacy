@@ -17,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'AnalytixLabs | Data Science Specialization',
-  description: 'Launch your career with India\'s top-rated Data Science certification program — NASSCOM certified, with Job Guarantee.',
+  title: 'Data Science Course with Guaranteed Career Support | AnalytixLabs',
+  description: '700+ hours. 11 modules. Classroom + online. NASSCOM-FutureSkills Prime certified. Placement with Fee-Back Guarantee.',
 };
 
 export default function RootLayout({
