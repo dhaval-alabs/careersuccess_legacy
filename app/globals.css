@@ -213,3 +213,14 @@ h4 {
 .animate-marquee-logos {
   animation: marquee 40s linear infinite;
 }
+/* BottomCTA — ambient blob animation */
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, -20px) scale(1.06); }
+}
+
+/* StatsBar utility classes */
+.stats-card-teal  { background-color: #29E8A4; }
+.stats-card-yellow { background-color: #F5C842; }
+.stats-card-blue  { background-color: #239bf5; }
+.stats-card-navy  { background-color: #09263F; }

@@ -119,7 +119,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
           </span>
           <h2
             className="font-extrabold leading-tight tracking-tight mb-3"
-            style={{ fontSize: "clamp(2rem,4vw,3rem)", color: navy }}
+            style={{ fontFamily: "var(--font-outfit)", fontSize: "clamp(2rem,4vw,3rem)", color: navy }}
           >
             Three Ways to Learn.<br />
             <span style={{ color: teal }}>Transparent</span> Pricing.
@@ -185,7 +185,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
               {/* Title */}
               <h3
                 className="font-bold text-lg leading-snug mb-0"
-                style={{ color: navy }}
+                style={{ fontFamily: "var(--font-outfit)", color: navy }}
               >
                 {c.title}
               </h3>
@@ -194,7 +194,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
               <div className="mt-4 mb-1.5">
                 <span
                   className="font-extrabold tracking-tight leading-none"
-                  style={{ fontSize: "2.4rem", color: navy }}
+                  style={{ fontFamily: "var(--font-outfit)", fontSize: "2.4rem", color: navy }}
                 >
                   {c.price}
                 </span>

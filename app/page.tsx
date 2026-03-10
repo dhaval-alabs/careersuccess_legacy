@@ -6,15 +6,13 @@ import LeadCaptureForm from "../components/forms/LeadCaptureForm";
 import Modal from "../components/Modal";
 import FAQ from "../components/FAQ";
 import CourseInfoSection from "../components/CourseInfoSection";
+import LearningModes from "../components/LearningModes";
+import HowToEnrol from "../components/HowToEnrol";
+import BottomCTA from "../components/BottomCTA";
+import StatsBar from "../components/StatsBar";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const STATS = [
-  { value: "20,000+", label: "Candidates Trained" },
-  { value: "50+", label: "Companies Hired From Us" },
-  { value: "9.6/10", label: "Avg Student Rating" },
-  { value: "12+", label: "Years of Excellence" },
-];
 
 const TRUST_BADGES = [
   "Classroom + Live Online + Recordings",
@@ -152,17 +150,7 @@ export default function Home() {
               </div>
 
               {/* Stats strip */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[#D6ECEB] rounded-2xl overflow-hidden border border-[#D6ECEB]">
-                {STATS.map((s, idx) => {
-                  const colors = ['text-[#29E8A4]', 'text-[#FFD700]', 'text-[#00BFFF]', 'text-[#29E8A4]'];
-                  return (
-                    <div key={s.label} className="bg-white/60 px-4 py-4 text-center backdrop-blur-sm">
-                      <div className={`${colors[idx % 4]} font-black text-xl`}>{s.value}</div>
-                      <div className="text-[#4A6275]/70 text-xs mt-0.5">{s.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
+              <StatsBar />
             </div>
 
             {/* RIGHT: Lead Capture Form */}
@@ -228,7 +216,7 @@ export default function Home() {
                 Download Brochure →
               </button>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 [&>*:last-child]:md:col-start-2 [&>*:last-child]:lg:col-start-auto">
               {MODULES.map((m, idx) => {
                 const modColors = [
                   { dot: '#29E8A4', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#29E8A4] hover:shadow-[0_8px_32px_rgba(41,232,164,0.10)]' },
@@ -261,48 +249,7 @@ export default function Home() {
         {/* ══════════════════════════════════════
           LEARNING MODES
       ══════════════════════════════════════ */}
-        <section className="py-20 bg-[#F4FAFA]">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-14">
-              <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Flexibility First</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Three Ways to Learn. <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Transparent</span> Pricing.</h2>
-              <p className="text-[#4A6275] max-w-md mx-auto">Same syllabus, same faculty, same NASSCOM certification. Pick what fits your schedule and budget.</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-5">
-              {[
-                { icon: "🏛️", title: "Classroom & Bootcamp", tag: "In-Person", price: "₹68,440", accent: '#FFB800', accentBg: '#FFFBE6', desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
-                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', gradient: true, desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
-                { icon: "🔀", title: "Blended eLearning", tag: "Flexible", price: "₹53,100", accent: '#00BFFF', accentBg: '#E6FAFF', desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals with unpredictable schedules.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
-              ].map((m) => (
-                <div key={m.title} className="rounded-2xl p-8 border transition-all duration-300 group bg-white border-[#D6ECEB] hover:shadow-lg hover:border-[#29E8A4]" style={m.gradient ? { background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' } : {}}>
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="text-3xl">{m.icon}</span>
-                    <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.tag === 'Most Popular' ? '#79f4c8' : m.accentBg, color: '#09263F' }}>{m.tag}</span>
-                  </div>
-                  <h3 className="font-black text-[#09263F] text-xl mb-1">{m.title}</h3>
-                  <div className="text-lg font-black mb-3 text-[#239bf5]">{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
-                  <p className="text-sm leading-relaxed mb-5 text-[#4A6275]">{m.desc}</p>
-                  <ul className="space-y-2 mb-6">
-                    {m.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-xs font-medium text-[#4A6275]">
-                        <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 12 10" fill="none" style={{ color: m.accent }}>
-                          <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-            {/* Demo Signup Button - Centered below cards */}
-            <div className="mt-12 text-center">
-              <button onClick={() => setIsDemoOpen(true)} className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-bold px-10 py-5 rounded-xl transition-all shadow-[0_8px_24px_rgba(41,232,164,0.3)] text-lg">
-                Signup for a Demo →
-              </button>
-            </div>
-          </div>
-        </section>
+        <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
 
         {/* ══════════════════════════════════════
           PLACEMENT GUARANTEE
@@ -480,7 +427,7 @@ export default function Home() {
                 Original work policy ensures every certificate reflects genuine capability. Both certifications are widely recognised by employers across India. The NASSCOM-FutureSkills Prime certification is backed by the Ministry of Electronics & IT, Government of India, making it one of the most credible data science certifications available today.
               </p>
               <ul className="space-y-3">
-                {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Zero plagiarism policy strictly enforced", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
+                {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Original work policy — every certificate reflects genuine capability", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
               </ul>
               <button
                 onClick={() => setIsEligibilityOpen(true)}
@@ -513,42 +460,11 @@ export default function Home() {
             </div>
           </div>
         </section>
-
+ 
         {/* ══════════════════════════════════════
           HOW TO ENROL
       ══════════════════════════════════════ */}
-        <section className="py-20 bg-white">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-16">
-              <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Simple 3-Step Process</span>
-              <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Getting <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Started</span> is Simple</h2>
-              <p className="text-[#4A6275] max-w-md mx-auto">Your journey to a data science career in three simple steps.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { title: "Step 1: Talk to Us", desc: "Fill the form or call us directly. A learning advisor will understand your goals and recommend the right mode.", color: '#29E8A4', bg: '#E6F7F6' },
-                { title: "Step 2: Reserve Your Seat", desc: "Pick your batch and centre. Batches run in Noida, Gurgaon, and Bangalore, or join live online sessions.", color: '#FFEA79', bg: '#FFFBE6' },
-                { title: "Step 3: Start Learning", desc: "LMS access and batch confirmation within 24 hours. 0% EMI and flexible instalment options available.", color: '#9BE9FF', bg: '#E6FAFF' }
-              ].map((step, i) => (
-                <div key={i} className="relative z-10 bg-white border border-[#D6ECEB] p-8 rounded-3xl text-center shadow-lg transition-all hover:border-current" style={{ color: step.color }}>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6 font-black text-lg" style={{ background: step.bg, color: '#09263F' }}>{`0${i + 1}`}</div>
-                  <h4 className="text-[#09263F] font-black text-xl mb-3">{step.title}</h4>
-                  <p className="text-[#4A6275] text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-12 text-center bg-[#09263F] rounded-3xl p-12">
-              <h2 className="text-white font-black text-3xl sm:text-5xl mb-6">Ready to Start?</h2>
-              <p className="text-white/80 text-lg mb-12 max-w-2xl mx-auto">
-                Join 20,000+ professionals who trained with AnalytixLabs. Check your eligibility or talk to a learning advisor. No commitment, no pressure.
-              </p>
-              <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#29E8A4] text-[#09263F] font-bold px-10 py-5 rounded-full text-lg hover:bg-[#24d193] transition-all shadow-xl">
-                Check Eligibility →
-              </button>
-            </div>
-          </div>
-        </section>
+        <HowToEnrol onOpenEligibility={() => setIsEligibilityOpen(true)} />
 
         {/* ══════════════════════════════════════
           FAQs: Harmonized V7
@@ -558,50 +474,7 @@ export default function Home() {
         {/* ══════════════════════════════════════
           BOTTOM CTA
       ══════════════════════════════════════ */}
-        <section className="py-20 bg-white relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#29E8A4]/10 blur-[100px] rounded-full" />
-            <div className="absolute inset-0 opacity-[0.05]"
-              style={{ backgroundImage: "linear-gradient(#29E8A4 1px,transparent 1px),linear-gradient(90deg,#29E8A4 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
-          </div>
-          <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 bg-[#29E8A4]/15 border border-[#29E8A4]/30 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#29E8A4] animate-pulse" />
-              Limited Seats per batch
-            </div>
-            <h2 className="text-[#09263F] font-black text-4xl sm:text-6xl mb-8 leading-tight">
-              Ready to Join India's Most <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Trusted</span> Data Science Institute?
-            </h2>
-            <p className="text-[#4A6275] text-lg sm:text-xl mb-12 font-medium leading-relaxed">
-              Join 20,000+ graduates. Get NASSCOM certified. Land your dream role with our fee-back guarantee.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={() => setIsEligibilityOpen(true)}
-                className="w-full sm:w-auto bg-gradient-to-r from-[#9BE9FF] to-[#29E8A4] text-[#09263F] px-12 py-5 rounded-full font-black text-xl hover:shadow-[0_20px_40px_rgba(41,232,164,0.4)] transition-all transform hover:-translate-y-1 shadow-[0_20px_40px_rgba(155,233,255,0.3)] flex items-center justify-center gap-3 group"
-              >
-                Start Your Career Transformation
-                <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-            </div>
-            <div className="mt-12 flex flex-wrap justify-center gap-8 opacity-60">
-              <div className="text-center">
-                <div className="text-[#09263F] font-black text-xl">20,000+</div>
-                <div className="text-[#4A6275] text-[10px] font-bold uppercase tracking-widest">Trained</div>
-              </div>
-              <div className="text-center">
-                <div className="text-[#09263F] font-black text-xl">9.6/10</div>
-                <div className="text-[#4A6275] text-[10px] font-bold uppercase tracking-widest">Avg Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="text-[#09263F] font-black text-xl">12+ Yrs</div>
-                <div className="text-[#4A6275] text-[10px] font-bold uppercase tracking-widest">Excellence</div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <BottomCTA onOpenEligibility={() => setIsEligibilityOpen(true)} />
 
         {/* FOOTER */}
         <footer className="bg-[#06192b] py-6 border-t border-white/5">
