@@ -220,7 +220,7 @@ h4 {
 }
 
 /* StatsBar utility classes */
-.stats-card-teal  { background-color: #29E8A4; }
-.stats-card-yellow { background-color: #F5C842; }
-.stats-card-blue  { background-color: #239bf5; }
-.stats-card-navy  { background-color: #09263F; }
+.stats-card-teal  { background-color: #E6F7F6; }
+.stats-card-yellow { background-color: #FFFBE6; }
+.stats-card-blue  { background-color: #E6FAFF; }
+.stats-card-navy  { background-color: #E6F7F6; }
