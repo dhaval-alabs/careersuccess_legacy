@@ -25,7 +25,7 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
   const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="px-6 py-6 pb-20" style={{ background: "#f0faf8" }}>
+    <section className="px-6 py-6 pb-20">
       <div
         ref={ref}
         className="max-w-5xl mx-auto relative overflow-hidden text-center"

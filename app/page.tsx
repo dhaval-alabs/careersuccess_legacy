@@ -429,34 +429,36 @@ export default function Home() {
               <ul className="space-y-3">
                 {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Original work policy — every certificate reflects genuine capability", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
               </ul>
+            </div>
+            <div className="flex flex-col items-center gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
+                  <Image
+                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg"
+                    alt="NASSCOM Certification"
+                    width={440}
+                    height={308}
+                    className="w-full h-auto rounded-lg"
+                  />
+                  <p className="text-[#09263F] font-bold text-xs mt-3 text-center">NASSCOM FutureSkills Prime</p>
+                </div>
+                <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
+                  <Image
+                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg"
+                    alt="AnalytixLabs Certification"
+                    width={440}
+                    height={308}
+                    className="w-full h-auto rounded-lg"
+                  />
+                  <p className="text-[#09263F] font-bold text-xs mt-3 text-center">AnalytixLabs Advanced Certificate</p>
+                </div>
+              </div>
               <button
                 onClick={() => setIsEligibilityOpen(true)}
-                className="mt-10 bg-[#09263F] text-white font-bold px-8 py-4 rounded-xl text-sm hover:bg-[#1a3a5a] transition-all flex items-center gap-2 group shadow-lg"
+                className="bg-[#09263F] text-white font-bold px-10 py-4 rounded-xl text-base hover:bg-[#1a3a5a] transition-all flex items-center gap-2 group shadow-xl"
               >
                 Check Your Eligibility →
               </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-              <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
-                <Image
-                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg"
-                  alt="NASSCOM Certification"
-                  width={440}
-                  height={308}
-                  className="w-full h-auto rounded-lg"
-                />
-                <p className="text-[#09263F] font-bold text-xs mt-3 text-center">NASSCOM FutureSkills Prime</p>
-              </div>
-              <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
-                <Image
-                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg"
-                  alt="AnalytixLabs Certification"
-                  width={440}
-                  height={308}
-                  className="w-full h-auto rounded-lg"
-                />
-                <p className="text-[#09263F] font-bold text-xs mt-3 text-center">AnalytixLabs Advanced Certificate</p>
-              </div>
             </div>
           </div>
         </section>

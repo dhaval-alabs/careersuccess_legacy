@@ -112,8 +112,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         {/* Header */}
         <div className="text-center mb-14">
           <span
-            className="inline-block text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-4"
-            style={{ background: `${teal}22`, color: teal, border: `1px solid ${teal}44` }}
+            className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full inline-block mb-4"
           >
             FLEXIBILITY FIRST
           </span>
@@ -122,7 +121,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
             style={{ fontSize: "clamp(2rem,4vw,3rem)", color: navy }}
           >
             Three Ways to Learn.<br />
-            <span style={{ color: teal }}>Transparent</span> Pricing.
+            <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent inline-block">Transparent</span> Pricing.
           </h2>
           <p className="text-sm max-w-md mx-auto" style={{ color: "#4A6275" }}>
             Same syllabus, same faculty, same NASSCOM certification. Pick what fits your schedule and budget.
@@ -136,9 +135,9 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
               key={c.title}
               style={{
                 background: c.featured
-                  ? "linear-gradient(145deg, #cef9e8 0%, #eafdf5 45%, #f5fffb 100%)"
+                  ? "linear-gradient(135deg, #FFFEE6 0%, #E6F7FF 100%)"
                   : "#fff",
-                border: c.featured ? `2px solid ${teal}88` : "1.5px solid #e0eeeb",
+                border: c.featured ? `2px solid #239bf5` : "1.5px solid #e0eeeb",
                 borderRadius: 20,
                 padding: "32px 28px",
                 display: "flex",
@@ -220,18 +219,6 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                 ))}
               </ul>
 
-              {/* CTA */}
-              <button
-                className="w-full py-3.5 rounded-xl font-bold text-sm tracking-wide"
-                style={{
-                  background: c.featured ? teal : navy,
-                  color: c.featured ? navy : "#fff",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Check Your Eligibility →
-              </button>
             </div>
           ))}
         </div>
