@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         hostname: 'upload.wikimedia.org',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.analytixlabs.co.in',
+        pathname: '/**',
+      },
     ],
   },
 };
