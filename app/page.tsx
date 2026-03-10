@@ -16,8 +16,7 @@ const STATS = [
 ];
 
 const TRUST_BADGES = [
-  "NASSCOM-FutureSkills Prime Certified",
-  "Classroom + Live Online",
+  "Classroom + Live Online + Recordings",
   "Placement with Fee-Back Guarantee",
   "1-Year LMS Access",
 ];
@@ -89,39 +88,28 @@ export default function Home() {
 
             {/* LEFT: Copy */}
             <div>
-              {/* Logo inside hero */}
-              <div className="mb-8">
+              {/* Logos inside hero */}
+              <div className="mb-10 flex items-center gap-6 sm:gap-8">
                 <Image
                   src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
                   alt="AnalytixLabs"
                   width={180}
                   height={40}
-                  className="h-10 w-auto"
+                  className="h-9 sm:h-10 w-auto"
+                  priority
+                />
+                <div className="w-px h-8 bg-[#D6ECEB]" />
+                <Image
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry-removebg.webp"
+                  alt="Nasscom Futureskills"
+                  width={160}
+                  height={40}
+                  className="h-8 sm:h-9 w-auto"
                   priority
                 />
               </div>
 
-              <div className="flex flex-wrap gap-3 mb-6">
-                <div className="inline-flex items-center gap-2 bg-[#29E8A4]/15 border border-[#29E8A4]/30 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  NASSCOM-FutureSkills Prime Certified
-                </div>
-                <div className="inline-flex items-center gap-2 bg-[#FFEA79]/20 border border-[#FFEA79]/40 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  </svg>
-                  Classroom + Live Online
-                </div>
-                <div className="inline-flex items-center gap-2 bg-[#9BE9FF]/20 border border-[#9BE9FF]/40 text-[#09263F] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  Placement with Fee-Back Guarantee
-                </div>
-              </div>
+              {/* Removed badges above H1 */}
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-black leading-[1.1] mb-5 tracking-tight">
                 Data Science Course with
@@ -129,7 +117,7 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Guaranteed Career Support</span>
               </h1>
 
-              <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[520px]">
+              <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[620px]">
                 700+ hours. 11 modules. Classroom + online. NASSCOM-FutureSkills Prime certified. And a placement team that stays with you until you land the right role.
               </p>
 
@@ -295,7 +283,7 @@ export default function Home() {
                 <div key={m.title} className="rounded-2xl p-8 border transition-all duration-300 group bg-white border-[#D6ECEB] hover:shadow-lg hover:border-[#29E8A4]" style={m.gradient ? { background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' } : {}}>
                   <div className="flex items-start justify-between mb-6">
                     <span className="text-3xl">{m.icon}</span>
-                    <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.accentBg, color: '#09263F' }}>{m.tag}</span>
+                    <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.tag === 'Most Popular' ? '#79f4c8' : m.accentBg, color: '#09263F' }}>{m.tag}</span>
                   </div>
                   <h3 className="font-black text-[#09263F] text-xl mb-1">{m.title}</h3>
                   <div className="text-lg font-black mb-3 text-[#239bf5]">{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
@@ -316,7 +304,7 @@ export default function Home() {
             {/* Demo Signup Button - Centered below cards */}
             <div className="mt-12 text-center">
               <button onClick={() => setIsDemoOpen(true)} className="bg-[#29E8A4] hover:bg-[#24d193] text-[#09263F] font-bold px-10 py-5 rounded-xl transition-all shadow-[0_8px_24px_rgba(41,232,164,0.3)] text-lg">
-                Signup for a Demo
+                Signup for a Demo →
               </button>
             </div>
           </div>
@@ -338,7 +326,7 @@ export default function Home() {
               <div className="relative rounded-3xl overflow-hidden p-9 border border-[#D6ECEB] shadow-lg" style={{ background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' }}>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#29E8A4]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="relative">
-                  <span className="inline-block bg-[#29E8A4]/20 text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
+                  <span className="inline-block bg-[#79f4c8] text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
                   <h3 className="text-4xl font-black text-[#09263F] mb-4 font-outfit">Get Placed. Or Get 50% Back.</h3>
                   <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">
                     Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum package within 6 months of certification, we refund 50% of your course fee.
@@ -434,7 +422,7 @@ export default function Home() {
         {/* ══════════════════════════════════════
           TESTIMONIALS
       ══════════════════════════════════════ */}
-        <section className="py-20 bg-white">
+        <section className="py-12 bg-white">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Success Stories</span>
@@ -500,6 +488,12 @@ export default function Home() {
               <ul className="space-y-3">
                 {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Zero plagiarism policy strictly enforced", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
               </ul>
+              <button
+                onClick={() => setIsEligibilityOpen(true)}
+                className="mt-10 bg-[#09263F] text-white font-bold px-8 py-4 rounded-xl text-sm hover:bg-[#1a3a5a] transition-all flex items-center gap-2 group shadow-lg"
+              >
+                Check Your Eligibility →
+              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
@@ -539,12 +533,12 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { title: "Step 1: Talk to Us", desc: "Fill the form or call us directly. A learning advisor will understand your goals and recommend the right mode." },
-                { title: "Step 2: Reserve Your Seat", desc: "Pick your batch and centre. Batches run in Noida, Gurgaon, and Bangalore, or join live online sessions." },
-                { title: "Step 3: Start Learning", desc: "LMS access and batch confirmation within 24 hours. 0% EMI and flexible instalment options available." }
+                { title: "Step 1: Talk to Us", desc: "Fill the form or call us directly. A learning advisor will understand your goals and recommend the right mode.", color: '#29E8A4', bg: '#E6F7F6' },
+                { title: "Step 2: Reserve Your Seat", desc: "Pick your batch and centre. Batches run in Noida, Gurgaon, and Bangalore, or join live online sessions.", color: '#FFEA79', bg: '#FFFBE6' },
+                { title: "Step 3: Start Learning", desc: "LMS access and batch confirmation within 24 hours. 0% EMI and flexible instalment options available.", color: '#9BE9FF', bg: '#E6FAFF' }
               ].map((step, i) => (
-                <div key={i} className="relative z-10 bg-white border border-[#D6ECEB] p-8 rounded-3xl text-center shadow-lg hover:border-[#29E8A4] transition-all">
-                  <div className="w-12 h-12 bg-[#F4FBFA] border border-[#29E8A4]/30 text-[#09263F] rounded-full flex items-center justify-center mx-auto mb-6 font-black text-lg">{`0${i + 1}`}</div>
+                <div key={i} className="relative z-10 bg-white border border-[#D6ECEB] p-8 rounded-3xl text-center shadow-lg transition-all hover:border-current" style={{ color: step.color }}>
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6 font-black text-lg" style={{ background: step.bg, color: '#09263F' }}>{`0${i + 1}`}</div>
                   <h4 className="text-[#09263F] font-black text-xl mb-3">{step.title}</h4>
                   <p className="text-[#4A6275] text-sm leading-relaxed">{step.desc}</p>
                 </div>

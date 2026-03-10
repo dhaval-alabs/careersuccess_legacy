@@ -74,7 +74,7 @@ html,
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--brand-text);
-  background: linear-gradient(135deg, #FEFBE5 0%, #E6FBF1 50%, #ECFAFE 100%);
+  background: linear-gradient(135deg, #FEFBE5 0%, #E6FBF1 50%, #A8ECFF 100%);
   background-attachment: fixed;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;

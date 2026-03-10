@@ -58,7 +58,7 @@ export default function FAQ() {
 
     return (
         <section id="faq" className="py-20 bg-white">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
                 <div className="text-center mb-14">
                     <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Support</span>
                     <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Frequently <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Asked</span> Questions</h2>
