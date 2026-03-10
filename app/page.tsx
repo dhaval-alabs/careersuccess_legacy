@@ -289,10 +289,10 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-5">
               {[
                 { icon: "🏛️", title: "Classroom & Bootcamp", tag: "In-Person", price: "₹68,440", accent: '#FFB800', accentBg: '#FFFBE6', desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
-                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
+                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', gradient: true, desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
                 { icon: "🔀", title: "Blended eLearning", tag: "Flexible", price: "₹53,100", accent: '#00BFFF', accentBg: '#E6FAFF', desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals with unpredictable schedules.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
               ].map((m) => (
-                <div key={m.title} className="rounded-2xl p-8 border transition-all duration-300 group bg-white border-[#D6ECEB] hover:shadow-lg hover:border-[#29E8A4]">
+                <div key={m.title} className="rounded-2xl p-8 border transition-all duration-300 group bg-white border-[#D6ECEB] hover:shadow-lg hover:border-[#29E8A4]" style={m.gradient ? { background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' } : {}}>
                   <div className="flex items-start justify-between mb-6">
                     <span className="text-3xl">{m.icon}</span>
                     <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.accentBg, color: '#09263F' }}>{m.tag}</span>
@@ -335,7 +335,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-6">
 
               {/* Guarantee card */}
-              <div className="relative rounded-3xl overflow-hidden bg-white p-9 border border-[#D6ECEB] shadow-lg">
+              <div className="relative rounded-3xl overflow-hidden p-9 border border-[#D6ECEB] shadow-lg" style={{ background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' }}>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#29E8A4]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="relative">
                   <span className="inline-block bg-[#29E8A4]/20 text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
