@@ -48,7 +48,7 @@ const BENEFITS = [
     icon: '👥',
     title: 'Mentorship That Continues After Class',
     description:
-      'Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. Regular interactions so you're never stuck.',
+      "Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. Regular interactions so you're never stuck.",
     accentColor: '#e11d48',
     bgFrom: '#FFF1F2',
     bgTo: '#FDF2F8',

@@ -64,6 +64,7 @@ function CheckItem({ text }: { text: string }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function Home() {
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, FormEvent } from 'react';
 import { createLeadAction } from '../../app/actions/leads';
 
 const INDIA_CITIES = [
@@ -40,7 +40,7 @@ export default function LeadCaptureForm({
   const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormState({ success: false, error: '' });
 
