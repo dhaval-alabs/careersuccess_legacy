@@ -403,15 +403,15 @@ export default function Home() {
                   {[...Array(3)].flatMap((_, ri) =>
                     [
                       { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-                      { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/d/da/Flipkart_logo_%282026%29.svg" },
+                      { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg" },
                       { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
                       { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
-                      { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/TCS_Logo.svg" },
+                      { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg" },
                       { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
-                      { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/0/05/Logo_of_Deloitte.svg" },
-                      { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Wipro_new_logo.svg" },
-                      { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Cognizant_logo_2022.svg" },
-                      { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Infosys_logo.svg" },
+                      { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg" },
+                      { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
+                      { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" },
+                      { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg" },
                     ].map((c, i) => (
                       <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-9">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
