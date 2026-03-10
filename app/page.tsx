@@ -5,6 +5,7 @@ import Image from "next/image";
 import LeadCaptureForm from "../components/forms/LeadCaptureForm";
 import Modal from "../components/Modal";
 import FAQ from "../components/FAQ";
+import CourseInfoSection from "../components/CourseInfoSection";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -173,19 +174,9 @@ export default function Home() {
         </section>
 
         {/* ══════════════════════════════════════
-          MARQUEE TRUST BAR
+          COURSE OVERVIEW SECTION
       ══════════════════════════════════════ */}
-        <div className="py-3 overflow-hidden" style={{ background: 'linear-gradient(90deg, #9BE9FF 0%, #29E8A4 50%, #9BE9FF 100%)' }}>
-          <div className="flex w-max gap-10 items-center animate-marquee">
-            {[...Array(3)].flatMap((_, ri) =>
-              ["Amazon", "Flipkart", "HDFC Bank", "Accenture", "TCS", "Infosys", "Deloitte", "IBM", "Wipro", "Cognizant", "Capgemini", "EY"].map((c, i) => (
-                <span key={`${ri}-${i}`} className="text-[#09263F]/80 font-black text-xs uppercase tracking-widest flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[#09263F]/30">◆</span> {c}
-                </span>
-              ))
-            )}
-          </div>
-        </div>
+        <CourseInfoSection />
 
         {/* ══════════════════════════════════════
           WHY ANALYTIXLABS
