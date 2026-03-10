@@ -65,14 +65,14 @@ export default function FAQ() {
                     <p className="text-[#4A6275] max-w-md mx-auto">Common Questions</p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4 items-start">
                     {FAQ_DATA.map((faq, i) => (
                         <div key={i} className={`border rounded-2xl transition-all duration-300 ${openIndex === i ? 'border-[#29E8A4] bg-[#F4FBFA]' : 'border-[#E6F0F7] bg-white hover:border-[#239bf5]/30'}`}>
                             <button
                                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                                 className="w-full text-left px-6 py-5 flex items-center justify-between gap-4"
                             >
-                                <h4 className="font-bold text-[#09263F] text-sm sm:text-base leading-snug">{faq.question}</h4>
+                                <h4 className="font-bold text-[#09263F] text-sm leading-snug">{faq.question}</h4>
                                 <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openIndex === i ? 'bg-[#29E8A4] text-[#09263F]' : 'bg-[#F0F7FF] text-[#239bf5]'}`}>
                                     <svg className={`w-3 h-3 transition-transform duration-300 ${openIndex === i ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />

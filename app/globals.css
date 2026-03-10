@@ -19,7 +19,7 @@
   --brand-bg-light: #f7fafc;
 
   /* Layout & Spacing */
-  --container-max: 1400px;
+  --container-max: 1600px;
   --section-padding: 6rem;
   --border-radius-lg: 32px;
   --border-radius-md: 20px;
@@ -74,7 +74,8 @@ html,
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--brand-text);
-  background-color: white;
+  background: linear-gradient(135deg, #FEFBE5 0%, #E6FBF1 50%, #ECFAFE 100%);
+  background-attachment: fixed;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }

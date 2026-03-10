@@ -85,7 +85,7 @@ export default function Home() {
               style={{ backgroundImage: "linear-gradient(#29E8A4 1px,transparent 1px),linear-gradient(90deg,#29E8A4 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_440px] gap-12 items-center">
+          <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_500px] gap-12 items-center">
 
             {/* LEFT: Copy */}
             <div>
@@ -174,7 +174,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT: Lead Capture Form */}
-            <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.3)] overflow-hidden">
+            <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
               <LeadCaptureForm
                 title="Get Free Career Counselling"
                 sourceName="PPC_Hero_V8"
@@ -203,7 +203,7 @@ export default function Home() {
           WHY ANALYTIXLABS
       ══════════════════════════════════════ */}
         <section id="overview" className="py-20 bg-[#F4FAFA]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-5xl mt-4 mb-4">
@@ -235,7 +235,7 @@ export default function Home() {
           CURRICULUM
       ══════════════════════════════════════ */}
         <section id="curriculum" className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <div>
                 <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
@@ -280,7 +280,7 @@ export default function Home() {
           LEARNING MODES
       ══════════════════════════════════════ */}
         <section className="py-20 bg-[#F4FAFA]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Flexibility First</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Three Ways to Learn. <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Transparent</span> Pricing.</h2>
@@ -288,21 +288,21 @@ export default function Home() {
             </div>
             <div className="grid md:grid-cols-3 gap-5">
               {[
-                { icon: "🏛️", title: "Classroom & Bootcamp", tag: "In-Person", price: "₹68,440", accent: '#FFB800', accentBg: '#FFFBE6', dark: false, desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
-                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', dark: true, desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
-                { icon: "🔀", title: "Blended eLearning", tag: "Flexible", price: "₹53,100", accent: '#00BFFF', accentBg: '#E6FAFF', dark: false, desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals with unpredictable schedules.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
+                { icon: "🏛️", title: "Classroom & Bootcamp", tag: "In-Person", price: "₹68,440", accent: '#FFB800', accentBg: '#FFFBE6', desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.", features: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"] },
+                { icon: "💻", title: "Interactive Live Online", tag: "Most Popular", price: "₹59,000", accent: '#29E8A4', accentBg: '#E6F7F6', desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.", features: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"] },
+                { icon: "🔀", title: "Blended eLearning", tag: "Flexible", price: "₹53,100", accent: '#00BFFF', accentBg: '#E6FAFF', desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals with unpredictable schedules.", features: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"] },
               ].map((m) => (
-                <div key={m.title} className={`rounded-2xl p-8 border transition-all duration-300 group ${m.dark ? "bg-[#09263F] border-[#0E3A5E] hover:shadow-[0_12px_40px_rgba(9,38,63,0.3)]" : "bg-white border-[#D6ECEB] hover:shadow-lg"}`} style={!m.dark ? { ['--hover-border' as string]: m.accent } : {}}>
+                <div key={m.title} className="rounded-2xl p-8 border transition-all duration-300 group bg-white border-[#D6ECEB] hover:shadow-lg hover:border-[#29E8A4]">
                   <div className="flex items-start justify-between mb-6">
                     <span className="text-3xl">{m.icon}</span>
                     <span className="text-[10px] font-black uppercase tracking-wide px-3 py-1 rounded-full" style={{ background: m.accentBg, color: '#09263F' }}>{m.tag}</span>
                   </div>
-                  <h3 className={`font-black text-xl mb-1 ${m.dark ? "text-white" : "text-[#09263F]"}`}>{m.title}</h3>
-                  <div className={`text-lg font-black mb-3 ${m.dark ? "text-[#29E8A4]" : "text-[#239bf5]"}`}>{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
-                  <p className={`text-sm leading-relaxed mb-5 ${m.dark ? "text-white/60" : "text-[#4A6275]"}`}>{m.desc}</p>
+                  <h3 className="font-black text-[#09263F] text-xl mb-1">{m.title}</h3>
+                  <div className="text-lg font-black mb-3 text-[#239bf5]">{m.price} <span className="text-[10px] font-medium opacity-70">(incl. taxes)</span></div>
+                  <p className="text-sm leading-relaxed mb-5 text-[#4A6275]">{m.desc}</p>
                   <ul className="space-y-2 mb-6">
                     {m.features.map((f) => (
-                      <li key={f} className={`flex items-center gap-2 text-xs font-medium ${m.dark ? "text-white/70" : "text-[#4A6275]"}`}>
+                      <li key={f} className="flex items-center gap-2 text-xs font-medium text-[#4A6275]">
                         <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 12 10" fill="none" style={{ color: m.accent }}>
                           <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -326,7 +326,7 @@ export default function Home() {
           PLACEMENT GUARANTEE
       ══════════════════════════════════════ */}
         <section id="placement" className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Assurance</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">We're Invested in Your <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Success</span></h2>
@@ -335,18 +335,17 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-6">
 
               {/* Guarantee card */}
-              <div className="relative rounded-3xl overflow-hidden bg-[#09263F] p-9">
+              <div className="relative rounded-3xl overflow-hidden bg-white p-9 border border-[#D6ECEB] shadow-lg">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#29E8A4]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="relative">
-                  <span className="inline-block bg-[#29E8A4] text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
-                  <h3 className="text-xl font-black text-[#09263F] mb-4">NASSCOM-FutureSkills Prime Certified. Career-Backed.</h3>
-                  <div className="text-5xl font-black text-[#239bf5] mb-4">Get Placed. Or Get 50% Back.</div>
-                  <p className="text-[#4A6275] text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-medium">
+                  <span className="inline-block bg-[#29E8A4]/20 text-[#09263F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
+                  <h3 className="text-4xl font-black text-[#09263F] mb-4 font-outfit">Get Placed. Or Get 50% Back.</h3>
+                  <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">
                     Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum package within 6 months of certification, we refund 50% of your course fee.
                   </p>
                   <ul className="space-y-3 mb-8">
                     {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-white/70">
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4A6275]">
                         <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                           <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -354,7 +353,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => setIsEligibilityOpen(true)} className="w-full bg-white text-[#09263F] font-bold py-4 rounded-xl hover:bg-[#F3FAF9] transition-all flex items-center justify-center gap-2 group">
+                  <button onClick={() => setIsEligibilityOpen(true)} className="w-full bg-[#09263F] text-white font-bold py-4 rounded-xl hover:bg-[#1a3a5a] transition-all flex items-center justify-center gap-2 group">
                     Check Your Eligibility
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -436,7 +435,7 @@ export default function Home() {
           TESTIMONIALS
       ══════════════════════════════════════ */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Success Stories</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Rated <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">9.6/10</span> by Our Alumni</h2>
@@ -531,7 +530,7 @@ export default function Home() {
           HOW TO ENROL
       ══════════════════════════════════════ */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <span className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Simple 3-Step Process</span>
               <h2 className="text-[#09263F] font-black text-3xl sm:text-4xl mt-4 mb-2">Getting <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent">Started</span> is Simple</h2>
@@ -544,8 +543,8 @@ export default function Home() {
                 { title: "Step 2: Reserve Your Seat", desc: "Pick your batch and centre. Batches run in Noida, Gurgaon, and Bangalore, or join live online sessions." },
                 { title: "Step 3: Start Learning", desc: "LMS access and batch confirmation within 24 hours. 0% EMI and flexible instalment options available." }
               ].map((step, i) => (
-                <div key={i} className="relative z-10 bg-white border border-[#D6ECEB] p-8 rounded-3xl text-center shadow-sm">
-                  <div className="w-12 h-12 bg-[#09263F] text-white rounded-full flex items-center justify-center mx-auto mb-6 font-black text-lg">{`0${i + 1}`}</div>
+                <div key={i} className="relative z-10 bg-white border border-[#D6ECEB] p-8 rounded-3xl text-center shadow-lg hover:border-[#29E8A4] transition-all">
+                  <div className="w-12 h-12 bg-[#F4FBFA] border border-[#29E8A4]/30 text-[#09263F] rounded-full flex items-center justify-center mx-auto mb-6 font-black text-lg">{`0${i + 1}`}</div>
                   <h4 className="text-[#09263F] font-black text-xl mb-3">{step.title}</h4>
                   <p className="text-[#4A6275] text-sm leading-relaxed">{step.desc}</p>
                 </div>
@@ -591,7 +590,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setIsEligibilityOpen(true)}
-                className="w-full sm:w-auto bg-[#09263F] text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-[#1a3a5a] transition-all transform hover:-translate-y-1 shadow-[0_20px_40px_rgba(9,38,63,0.2)] flex items-center justify-center gap-3 group"
+                className="w-full sm:w-auto bg-gradient-to-r from-[#9BE9FF] to-[#29E8A4] text-[#09263F] px-12 py-5 rounded-full font-black text-xl hover:shadow-[0_20px_40px_rgba(41,232,164,0.4)] transition-all transform hover:-translate-y-1 shadow-[0_20px_40px_rgba(155,233,255,0.3)] flex items-center justify-center gap-3 group"
               >
                 Start Your Career Transformation
                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
