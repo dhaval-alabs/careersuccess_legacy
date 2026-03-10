@@ -6,6 +6,7 @@ import LeadCaptureForm from "../components/forms/LeadCaptureForm";
 import Modal from "../components/Modal";
 import FAQ from "../components/FAQ";
 import CourseInfoSection from "../components/CourseInfoSection";
+import Navbar from "../components/Navbar";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -71,6 +72,7 @@ export default function Home() {
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
       <main id="main-content">
+        <Navbar />
 
         {/* ══════════════════════════════════════
           HERO - copy left | form right
