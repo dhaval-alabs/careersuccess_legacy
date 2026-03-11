@@ -354,7 +354,9 @@ export default function Home() {
         {/* MOBILE STICKY */}
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-2xl">
           <a href="tel:9555525908" className="flex-1 flex items-center justify-center py-3 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs">📞 Call</a>
-          <button onClick={() => setIsEligibilityOpen(true)} className="flex-[2] bg-[#1DE5B5] text-[#09263F] font-bold py-3 rounded-xl text-xs">Check Eligibility</button>
+          <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+            className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-xs">💬 Chat</a>
+          <button onClick={() => setIsEligibilityOpen(true)} className="flex-1 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-xs">Check Eligibility</button>
         </div>
 
         {/* MODALS */}
