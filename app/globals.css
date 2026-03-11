@@ -10,8 +10,8 @@
   /* Premium Sazai-Inspired Palette */
   --brand-navy: #09263F;
   --brand-navy-dark: #06192b;
-  --brand-green: #29e8a4;
-  --brand-green-glow: rgba(41, 232, 164, 0.2);
+  --brand-green: #1DE5B5;
+  --brand-green-glow: rgba(29, 229, 181, 0.2);
   --brand-accent-yellow: #ffea79;
   --brand-accent-blue: #9be9ff;
   --brand-accent-red: #e74c3c;
@@ -220,7 +220,7 @@ h4 {
 }
 
 /* StatsBar utility classes */
-.stats-card-teal  { background-color: #E6F7F6; }
+.stats-card-teal  { background-color: #1DE5B5; }
 .stats-card-yellow { background-color: #FFFBE6; }
 .stats-card-blue  { background-color: #E6FAFF; }
 .stats-card-navy  { background-color: #E6F7F6; }

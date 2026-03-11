@@ -26,7 +26,7 @@ interface LeadCaptureFormProps {
 const inputCls = `
   w-full px-4 py-3 rounded-xl border border-[#D6ECEB] bg-white
   text-[#09263F] text-sm placeholder-[#9BBAC0]
-  focus:outline-none focus:ring-2 focus:ring-[#29E8A4]/40 focus:border-[#29E8A4]
+  focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
   transition-all duration-200
 `.trim();
 
@@ -89,11 +89,11 @@ export default function LeadCaptureForm({
     return (
       <div className="px-8 py-12 flex flex-col items-center text-center">
         <div className="w-16 h-16 rounded-full bg-[#E6F7F6] flex items-center justify-center mb-5">
-          <svg className="w-8 h-8 text-[#29E8A4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="font-display font-black text-[#09263F] text-xl mb-2">Inquiry Received!</h3>
+        <h3 className="font-display font-bold text-[#09263F] text-xl mb-2">Inquiry Received!</h3>
         <p className="text-[#4A6275] text-sm leading-relaxed max-w-xs">
           Our career advisor will contact you within 24 hours to discuss your goals.
         </p>
@@ -107,7 +107,7 @@ export default function LeadCaptureForm({
 
       {/* Header */}
       <div className="mb-6">
-        <h3 className="font-display font-black text-[#09263F] text-xl mb-1">{title}</h3>
+        <h3 className="font-display font-bold text-[#09263F] text-xl mb-1">{title}</h3>
         <p className="text-[#4A6275] text-sm">Fill the form below to connect with our experts.</p>
       </div>
 
@@ -165,10 +165,10 @@ export default function LeadCaptureForm({
               name="countryCode" id="countryCode"
               defaultValue="+91"
               aria-label="Country code"
-              className="w-20 flex-shrink-0 px-2 py-3 rounded-xl border border-[#D6ECEB] bg-white
-                         text-[#09263F] text-sm font-semibold
-                         focus:outline-none focus:ring-2 focus:ring-[#29E8A4]/40 focus:border-[#29E8A4]
-                         transition-all duration-200 cursor-pointer"
+               className="w-20 flex-shrink-0 px-2 py-3 rounded-xl border border-[#D6ECEB] bg-white
+                          text-[#09263F] text-sm font-semibold
+                          focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
+                          transition-all duration-200 cursor-pointer"
             >
               {COUNTRY_CODES.map((c) => (
                 <option key={c.code} value={c.code}>{c.label}</option>
@@ -188,8 +188,8 @@ export default function LeadCaptureForm({
           <div className="mt-0.5 flex-shrink-0">
             <input
               type="checkbox" id="consent" name="consent" required
-              className="w-4 h-4 rounded border-[#D6ECEB] text-[#29E8A4]
-                         focus:ring-[#29E8A4]/40 accent-[#29E8A4] cursor-pointer"
+              className="w-4 h-4 rounded border-[#D6ECEB] text-[#1DE5B5]
+                         focus:ring-[#1DE5B5]/40 accent-[#1DE5B5] cursor-pointer"
             />
           </div>
           <label htmlFor="consent" className="text-[0.72rem] text-[#4A6275] leading-relaxed cursor-pointer">
@@ -198,7 +198,7 @@ export default function LeadCaptureForm({
               Privacy Policy
             </a>{' '}
             and consent to being contacted by AnalytixLabs.{' '}
-            <span className="text-[#29E8A4] font-semibold">No Spam ❤️ We promise.</span>
+            <span className="text-[#1DE5B5] font-semibold">No Spam ❤️ We promise.</span>
           </label>
         </div>
 
@@ -206,10 +206,10 @@ export default function LeadCaptureForm({
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-[#29E8A4] hover:bg-[#24d193] disabled:opacity-60
-                     text-[#09263F] font-black py-4 rounded-xl text-sm
-                     transition-all duration-200 shadow-[0_8px_24px_rgba(41,232,164,0.3)]
-                     hover:shadow-[0_8px_32px_rgba(41,232,164,0.45)]
+          className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] disabled:opacity-60
+                     text-[#09263F] font-bold py-4 rounded-xl text-sm
+                     transition-all duration-200 shadow-[0_8px_24px_rgba(29,229,181,0.3)]
+                     hover:shadow-[0_8px_32px_rgba(29,229,181,0.45)]
                      hover:-translate-y-px active:translate-y-0
                      flex items-center justify-center gap-2"
         >

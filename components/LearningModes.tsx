@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const navy  = "#09263F";
-const teal  = "#29E8A4";
+const teal  = "#1DE5B5"; // New primary
 const blue  = "#239bf5";
 const yellow = "#F5C842";
 
@@ -71,14 +71,13 @@ const BlendedIcon = () => (
 
 const cards = [
   {
-    tag: "IN-PERSON",
-    Icon: ClassroomIcon,
-    title: "Classroom & Bootcamp",
-    price: "₹68,440",
-    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
-    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
-    featured: false,
-    tagColor: navy,
+    tag: "FLEXIBLE",
+    Icon: BlendedIcon,
+    title: "Blended eLearning",
+    price: "₹53,100",
+    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals.",
+    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
+    tagColor: blue,
   },
   {
     tag: "MOST POPULAR",
@@ -87,18 +86,16 @@ const cards = [
     price: "₹59,000",
     desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
-    featured: true,
     tagColor: teal,
   },
   {
-    tag: "FLEXIBLE",
-    Icon: BlendedIcon,
-    title: "Blended eLearning",
-    price: "₹53,100",
-    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals.",
-    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
-    featured: false,
-    tagColor: blue,
+    tag: "IN-PERSON",
+    Icon: ClassroomIcon,
+    title: "Classroom & Bootcamp",
+    price: "₹68,440",
+    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
+    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
+    tagColor: navy,
   },
 ];
 
@@ -112,16 +109,16 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         {/* Header */}
         <div className="text-center mb-14">
           <span
-            className="text-[#239bf5] text-xs font-black uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full inline-block mb-4"
+            className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full inline-block mb-4"
           >
             FLEXIBILITY FIRST
           </span>
           <h2
-            className="font-extrabold leading-tight tracking-tight mb-3"
+            className="font-bold leading-tight tracking-tight mb-3"
             style={{ fontSize: "clamp(2rem,4vw,3rem)", color: navy }}
           >
             Three Ways to Learn.<br />
-            <span className="bg-gradient-to-r from-[#29E8A4] to-[#45c8f1] bg-clip-text text-transparent inline-block">Transparent</span> Pricing.
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent inline-block">Transparent</span> Pricing.
           </h2>
           <p className="text-sm max-w-md mx-auto" style={{ color: "#4A6275" }}>
             Same syllabus, same faculty, same NASSCOM certification. Pick what fits your schedule and budget.
@@ -129,52 +126,37 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         </div>
 
         {/* Cards */}
-        <div ref={ref} className="grid md:grid-cols-3 gap-4 items-stretch">
+        <div ref={ref} className="grid md:grid-cols-3 gap-6 items-stretch">
           {cards.map((c, i) => (
             <div
               key={c.title}
+              className="group"
               style={{
-                background: c.featured
-                  ? "linear-gradient(135deg, #FFFEE6 0%, #E6F7FF 100%)"
-                  : "#fff",
-                border: c.featured ? `2px solid #239bf5` : "1.5px solid #e0eeeb",
-                borderRadius: 20,
+                background: "rgb(244 250 250 / 1)",
+                border: "1.5px solid #e0eeeb",
+                borderRadius: 24,
                 padding: "32px 28px",
                 display: "flex",
                 flexDirection: "column",
                 opacity: visible ? 1 : 0,
-                transform: visible
-                  ? c.featured ? "scale(1.03)" : "translateY(0)"
-                  : "translateY(28px)",
+                transform: visible ? "translateY(0)" : "translateY(28px)",
                 transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
-                boxShadow: c.featured
-                  ? `0 20px 56px ${teal}28, 0 4px 16px ${teal}18`
-                  : "0 4px 24px rgba(9,38,63,0.07)",
+                boxShadow: "0 4px 24px rgba(9,38,63,0.05)",
                 position: "relative",
                 overflow: "hidden",
               }}
             >
-              {/* Radial highlight on featured card */}
-              {c.featured && (
-                <div style={{
-                  position: "absolute", top: -50, right: -50,
-                  width: 200, height: 200,
-                  background: `radial-gradient(circle, ${teal}40 0%, transparent 70%)`,
-                  pointerEvents: "none",
-                }} />
-              )}
-
               {/* Icon + tag row */}
               <div className="flex justify-between items-start mb-6">
-                <div style={{ filter: "drop-shadow(0 3px 8px rgba(0,120,200,0.18))" }}>
+                <div style={{ filter: "drop-shadow(0 3px 8px rgba(0,120,200,0.12))" }}>
                   <c.Icon />
                 </div>
                 <span
-                  className="text-[9px] font-extrabold tracking-[0.14em] px-3 py-1 rounded-full"
+                  className="text-[9px] font-bold tracking-[0.14em] px-3 py-1 rounded-full"
                   style={{
-                    background: c.featured ? teal : `${c.tagColor}18`,
-                    color: c.featured ? navy : c.tagColor,
-                    border: c.featured ? "none" : `1px solid ${c.tagColor}44`,
+                    background: `${c.tagColor}18`,
+                    color: c.tagColor,
+                    border: `1px solid ${c.tagColor}44`,
                   }}
                 >
                   {c.tag}
@@ -192,7 +174,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
               {/* Price */}
               <div className="mt-4 mb-1.5">
                 <span
-                  className="font-extrabold tracking-tight leading-none"
+                  className="font-bold tracking-tight leading-none"
                   style={{ fontSize: "2.4rem", color: navy }}
                 >
                   {c.price}
@@ -219,6 +201,14 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                 ))}
               </ul>
 
+              {/* Button added back with hero style */}
+              <button
+                onClick={onOpenDemo}
+                className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-4 py-3.5 rounded-xl text-sm transition-all shadow-[0_4px_12px_rgba(29,229,181,0.2)] text-center mt-auto"
+              >
+                Check Your Eligibility →
+              </button>
+
             </div>
           ))}
         </div>
@@ -232,8 +222,8 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         <div className="text-center mt-6">
           <button
             onClick={onOpenDemo}
-            className="font-semibold text-sm px-8 py-3.5 rounded-full"
-            style={{ background: navy, color: teal, border: "none", cursor: "pointer" }}
+            className="font-bold text-sm px-8 py-3.5 rounded-full transition-all hover:opacity-90"
+            style={{ background: navy, color: "#1DE5B5", border: "none", cursor: "pointer", boxShadow: "0 8px 24px rgba(9,38,63,0.2)" }}
           >
             Signup for a Demo →
           </button>
