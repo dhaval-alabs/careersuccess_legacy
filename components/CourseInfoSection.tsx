@@ -161,8 +161,8 @@ export default function CourseInfoSection() {
                         <StatCard
                             icon={<CalendarIcon />}
                             label="Classes × Hours"
-                            primary="60 × 3 = <span style='color:#1a2b4a'>180 hrs</span>"
-                            secondary="+ 45 hours e-learning"
+                            primary="65 × 3 = <span style='color:#1a2b4a'>195 hrs</span>"
+                            secondary="+ 20 hours e-learning"
                             delay={150}
                         />
                     </div>
@@ -172,8 +172,8 @@ export default function CourseInfoSection() {
                         <StatCard
                             icon={<CodeIcon />}
                             label="Self-Study Hours"
-                            primary="425 <span style='font-size:18px;color:#1a2b4a'>(8–10/wk)</span>"
-                            secondary="43 Assignments &amp; Projects"
+                            primary="422 <span style='font-size:18px;color:#1a2b4a'>(8–10/wk)</span>"
+                            secondary="38 hours of Assessments"
                             delay={280}
                         />
                     </div>

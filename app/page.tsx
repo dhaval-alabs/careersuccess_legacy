@@ -134,13 +134,13 @@ export default function Home() {
                 Classroom. Online. Blended. 700 Hours. Placement + Fee-Back Guarantee. Industry & Govt. Accredited Certificate.
               </p>
 
-              <div className="flex flex-wrap gap-2.5 mb-10">
-                {TRUST_BADGES.map((b) => (
-                  <span key={b} className="flex items-center gap-1.5 text-xs font-semibold text-[#4A6275] bg-[#F4FBFA] border border-[#D6ECEB] px-3.5 py-1.5 rounded-full">
-                    <svg className="w-3 h-3 text-[#239bf5] flex-shrink-0" viewBox="0 0 12 10" fill="none">
-                      <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10">
+                {["Classroom", "Online", "Blended", "675 Hours", "Placement + Fee-Back Guarantee", "Industry & Govt. Accredited Certificate"].map((item) => (
+                  <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
+                    <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
+                      <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    {b}
+                    {item}
                   </span>
                 ))}
               </div>
@@ -202,7 +202,7 @@ export default function Home() {
                   {[...Array(3)].flatMap((_, ri) =>
                     ALUMNI_COMPANIES.map((c, i) => (
                       <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-9">
-                        <img src={c.url} alt={c.name} className="h-7 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" loading="lazy" />
+                        <img src={c.url} alt={c.name} className="h-7 w-auto object-contain opacity-100 transition-opacity" loading="lazy" />
                       </div>
                     ))
                   )}
