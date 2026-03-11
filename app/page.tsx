@@ -44,16 +44,16 @@ const MODULES = [
 ];
 
 const ALUMNI_COMPANIES = [
-  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-  { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg" },
-  { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
-  { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
-  { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg" },
-  { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
-  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg" },
-  { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
-  { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" },
-  { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg" },
+  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", h: "h-8" },
+  { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg", h: "h-11" },
+  { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg", h: "h-9" },
+  { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg", h: "h-8" },
+  { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg", h: "h-11" },
+  { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg", h: "h-9" },
+  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg", h: "h-9" },
+  { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg", h: "h-11" },
+  { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg", h: "h-8" },
+  { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg", h: "h-8" },
 ];
 
 const TESTIMONIALS = [
@@ -223,8 +223,8 @@ export default function Home() {
                 <div className="flex w-max gap-12 items-center animate-marquee-logos">
                   {[...Array(3)].flatMap((_, ri) =>
                     ALUMNI_COMPANIES.map((c, i) => (
-                      <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-9">
-                        <img src={c.url} alt={c.name} className="h-7 w-auto object-contain opacity-100 transition-opacity" loading="lazy" />
+                      <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-12">
+                        <img src={c.url} alt={c.name} className={`${c.h || 'h-8'} w-auto object-contain opacity-100 transition-opacity`} loading="lazy" />
                       </div>
                     ))
                   )}
