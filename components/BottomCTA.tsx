@@ -60,7 +60,11 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         }} />
 
         {/* Pill */}
-        <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-7 relative">
+        <span
+          className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-7 relative"
+          style={{ background: `${teal}18`, border: `1px solid ${teal}44`, color: teal }}
+        >
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: teal, display: "inline-block" }} />
           LIMITED SEATS PER BATCH
         </span>
 
