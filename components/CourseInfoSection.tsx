@@ -70,7 +70,7 @@ function StatCard({ icon, label, primary, secondary, delay }: { icon: React.Reac
     return (
         <div style={{
             display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
-            padding: "36px 24px", flex: 1, minWidth: 140,
+            padding: "24px 24px", flex: 1, minWidth: 140,
             opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(18px)",
             transition: "opacity 0.55s ease, transform 0.55s ease",
             position: "relative"
@@ -110,7 +110,7 @@ export default function CourseInfoSection() {
     }, []);
 
     return (
-        <section className="relative -mt-8 mb-12 px-4 sm:px-6">
+        <section className="relative -mt-8 mb-8 px-4 sm:px-6">
             <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap');
         .divider-line { width: 1px; background: linear-gradient(to bottom, transparent, #d0dae8, transparent); align-self: stretch; margin: 20px 0; }
@@ -127,7 +127,7 @@ export default function CourseInfoSection() {
                 background: "linear-gradient(135deg, #f0f6fd 0%, #ffffff 60%, #f5fbff 100%)",
                 border: "1px solid #dde8f4", borderRadius: 20,
                 margin: "0 auto", maxWidth: 1600,
-                padding: "10px 0 0",
+                padding: "8px 0 0",
                 boxShadow: "0 4px 32px rgba(0,120,200,0.07)",
                 overflow: "hidden",
                 opacity: sectionVisible ? 1 : 0,
@@ -136,7 +136,7 @@ export default function CourseInfoSection() {
             }}>
 
                 {/* Top label */}
-                <div style={{ textAlign: "center", padding: "20px 0 6px" }}>
+                <div style={{ textAlign: "center", padding: "12px 0 4px" }}>
                     <span style={{
                         display: "inline-block", background: "#e8f4fd", color: "#00AEEF",
                         fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
@@ -145,7 +145,7 @@ export default function CourseInfoSection() {
                 </div>
 
                 {/* 5-Column Single Row Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-8 lg:py-12 gap-8 lg:gap-0">
+                <div className="grid grid-cols-2 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-6 lg:py-8 gap-8 lg:gap-0">
                     
                     {/* Column 1: Upcoming Batches (Stacked on desktop, Side-by-side on mobile) */}
                     <div className="col-span-2 lg:col-span-1 flex flex-col h-full lg:px-6 lg:border-r border-[#dde8f4]">

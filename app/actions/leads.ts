@@ -13,6 +13,7 @@ interface LeadEntry {
     gclid?: string
     source_keyword?: string
     page_url?: string
+    typeFilter?: string
 }
 
 export async function createLeadAction(data: LeadEntry) {
@@ -54,6 +55,7 @@ export async function createLeadAction(data: LeadEntry) {
                     { "Attribute": "mx_gclid", "Value": data.gclid || "" },
                     { "Attribute": "mx_Keyword", "Value": data.source_keyword || "" },
                     { "Attribute": "mx_Page_Url", "Value": data.page_url || "" },
+                    { "Attribute": "mx_Type_Filter", "Value": data.typeFilter || "" },
                     { "Attribute": "mx_terms_and_condition", "Value": "true" }
                 ];
 

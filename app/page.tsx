@@ -163,7 +163,7 @@ export default function Home() {
             </div>
 
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm title="Get Free Career Counselling" sourceName="PPC_Hero_V8" buttonText="Download Brochure" />
+              <LeadCaptureForm title="Get Free Career Counselling" sourceName="Hero Section Form" typeFilter="PPC_downloadBrochure" buttonText="Download Brochure" />
             </div>
           </div>
         </section>
@@ -366,13 +366,13 @@ export default function Home() {
 
         {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm title="Check Your Eligibility" sourceName="PPC_CheckEligibility_V8" buttonText="Check Eligibility →" />
+          <LeadCaptureForm title="Check Your Eligibility" sourceName="Check Your Eligibility Modal" typeFilter="PPC_CheckEligibility" buttonText="Check Eligibility →" />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
-          <LeadCaptureForm title="Download Brochure" sourceName="PPC_downloadBrochure_V8" buttonText="Download Now →" />
+          <LeadCaptureForm title="Download Brochure" sourceName="Download Brochure Modal" typeFilter="PPC_downloadBrochure" buttonText="Download Now →" />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
-          <LeadCaptureForm title="Signup for a Demo" sourceName="PPC_signUpForDemo" buttonText="Signup for a Demo" />
+          <LeadCaptureForm title="Signup for a Demo" sourceName="Signup for a Demo Modal" typeFilter="PPC_signUpForDemo" buttonText="Signup for a Demo" />
         </Modal>
 
       </main>

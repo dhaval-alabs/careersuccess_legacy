@@ -20,6 +20,7 @@ interface LeadCaptureFormProps {
   sourceName?: string;
   buttonText?: string;
   title?: string;
+  typeFilter?: string;
 }
 
 /* Shared input className */
@@ -36,6 +37,7 @@ export default function LeadCaptureForm({
   sourceName  = 'Hero Section',
   buttonText  = 'Request Free Counselling →',
   title       = 'Get Free Career Counselling',
+  typeFilter,
 }: LeadCaptureFormProps) {
   const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
@@ -72,6 +74,7 @@ export default function LeadCaptureForm({
       gclid,
       source_keyword,
       page_url:       typeof window !== 'undefined' ? window.location.href : undefined,
+      typeFilter,
     };
 
     startTransition(async () => {
