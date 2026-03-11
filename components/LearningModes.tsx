@@ -193,7 +193,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
               </p>
 
               {/* Bullets */}
-              <ul className="space-y-2 mb-7 list-none p-0 m-0">
+              <ul className="space-y-2 mb-2 list-none p-0 m-0">
                 {c.bullets.map(b => (
                   <li key={b} className="flex items-center gap-2 text-[13px]" style={{ color: "#2d5466" }}>
                     <span style={{ color: teal, fontWeight: 700 }}>✓</span>{b}
@@ -201,29 +201,21 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                 ))}
               </ul>
 
-              {/* Button added back with hero style */}
-              <button
-                onClick={onOpenDemo}
-                className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-4 py-3.5 rounded-xl text-sm transition-all shadow-[0_4px_12px_rgba(29,229,181,0.2)] text-center mt-auto"
-              >
-                Check Your Eligibility →
-              </button>
-
             </div>
           ))}
         </div>
 
         {/* Footer note */}
-        <p className="text-center mt-7 text-xs" style={{ color: "#7aaea6" }}>
+        <p className="text-center mt-10 text-xs" style={{ color: "#7aaea6" }}>
           All modes share the same curriculum, faculty &amp; NASSCOM-FutureSkills Prime certification.
         </p>
 
         {/* Demo CTA */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-10">
           <button
             onClick={onOpenDemo}
-            className="font-bold text-sm px-8 py-3.5 rounded-full transition-all hover:opacity-90"
-            style={{ background: navy, color: "#1DE5B5", border: "none", cursor: "pointer", boxShadow: "0 8px 24px rgba(9,38,63,0.2)" }}
+            className="font-bold text-base px-12 py-4 rounded-xl transition-all hover:opacity-90 hover:-translate-y-1 shadow-[0_8px_24px_rgba(29,229,181,0.3)] inline-flex items-center gap-2"
+            style={{ background: teal, color: navy, border: "none", cursor: "pointer" }}
           >
             Signup for a Demo →
           </button>
