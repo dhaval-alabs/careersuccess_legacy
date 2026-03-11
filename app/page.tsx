@@ -156,7 +156,7 @@ export default function Home() {
                     {item}
                   </span>
                 ))}
-                <div className="w-full h-0 lg:hidden" />
+                <div className="basis-full h-0" />
                 {["Placement + Fee-Back Guarantee", "Industry & Govt. Accredited Certificate"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
