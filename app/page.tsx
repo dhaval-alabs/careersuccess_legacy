@@ -130,12 +130,17 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Guaranteed Career Support</span>
               </h1>
 
-              <p className="text-[#4A6275] text-base sm:text-lg leading-relaxed mb-8 max-w-[620px]">
-                Classroom. Online. Blended. 700 Hours. Placement + Fee-Back Guarantee. Industry & Govt. Accredited Certificate.
-              </p>
-
-              <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10">
-                {["Classroom", "Online", "Blended", "675 Hours", "Placement + Fee-Back Guarantee", "Industry & Govt. Accredited Certificate"].map((item) => (
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
+                {["Classroom", "Online", "Blended", "675 Hours"].map((item) => (
+                  <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
+                    <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
+                      <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {item}
+                  </span>
+                ))}
+                <div className="w-full h-0 lg:hidden" />
+                {["Placement + Fee-Back Guarantee", "Industry & Govt. Accredited Certificate"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                       <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
