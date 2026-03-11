@@ -93,11 +93,10 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
   const [lineRef, lineVisible] = useVisible(0.3);
 
   return (
-    <section className="py-20 px-6" style={{ background: "#fff" }}>
+    <section className="py-10 px-6" style={{ background: "#fff" }}>
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="inline-block text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-4"
-            style={{ background: `${navy}10`, color: navy }}>
+        <div className="text-center mb-10">
+          <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
             SIMPLE 3-STEP PROCESS
           </span>
           <h2 className="font-extrabold leading-tight tracking-tight mb-3"

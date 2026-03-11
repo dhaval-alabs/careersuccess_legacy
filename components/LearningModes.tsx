@@ -103,13 +103,13 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
   const [ref, visible] = useVisible();
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-10 px-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <span
-            className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full inline-block mb-4"
+            className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4"
           >
             FLEXIBILITY FIRST
           </span>
@@ -211,7 +211,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         </p>
 
         {/* Demo CTA */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-6">
           <button
             onClick={onOpenDemo}
             className="font-bold text-base px-12 py-4 rounded-xl transition-all hover:opacity-90 hover:-translate-y-1 shadow-[0_8px_24px_rgba(29,229,181,0.3)] inline-flex items-center gap-2"

@@ -166,10 +166,10 @@ export default function Home() {
         <CourseInfoSection />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
-        <section id="overview" className="py-20 bg-[#F4FAFA]">
+        <section id="overview" className="py-10 bg-[#F4FAFA]">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-14">
-              <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Why AnalytixLabs</span>
+            <div className="text-center mb-10">
+              <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7]">Why AnalytixLabs</span>
               <h2 className="text-[#09263F] font-bold text-3xl sm:text-5xl mt-4 mb-4">
                 Everything You Need to Build a <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Career in Data Science</span>
               </h2>
@@ -194,7 +194,7 @@ export default function Home() {
 
             {/* Alumni Marquee moved inside Why AnalytixLabs */}
             <div className="rounded-2xl border border-[#D6ECEB] bg-white/50 backdrop-blur-sm px-0 py-8 overflow-hidden">
-              <p className="text-center text-xs font-bold uppercase tracking-widest text-[#9BBAC0] mb-6">Our Alumni Work At</p>
+              <p className="text-center text-sm font-bold uppercase tracking-widest text-[#1a2b4a] mb-8">Our Alumni Work At</p>
               <div className="relative">
                 <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #F4FAFA 40%, transparent)' }} />
                 <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #F4FAFA 40%, transparent)' }} />
@@ -213,10 +213,10 @@ export default function Home() {
         </section>
 
         {/* CAREER ASSURANCE */}
-        <section id="placement" className="py-20 bg-white">
+        <section id="placement" className="py-10 bg-white">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-14">
-              <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Assurance</span>
+            <div className="text-center mb-10">
+              <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7]">Career Assurance</span>
               <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">We're Invested in Your <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Success</span></h2>
               <p className="text-[#4A6275] max-w-2xl mx-auto">One of the few data science programmes in India that puts real money behind its placement commitment.</p>
             </div>
@@ -258,11 +258,11 @@ export default function Home() {
 
         <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
 
-        <section id="curriculum" className="py-20 bg-white">
+        <section id="curriculum" className="py-10 bg-white">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
               <div>
-                <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
+                <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7]">What You'll Learn</span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">What You'll Learn Across <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span></h2>
                 <p className="text-[#4A6275] max-w-2xl">11 modules covering analytics, data science, ML, and AI. Curriculum designed with NASSCOM-FutureSkills Prime.</p>
               </div>
@@ -290,13 +290,13 @@ export default function Home() {
         </section>
 
         {/* COMBINED CERTIFICATE & TESTIMONIALS */}
-        <section className="py-24 bg-[#f0faf8]">
+        <section className="py-12 bg-[#f0faf8]">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="grid md:grid-cols-2 gap-16 items-start">
               
               {/* LEFT: Certificate info */}
               <div className="flex flex-col">
-                <span className="text-[#09263F] text-xs font-bold uppercase tracking-widest bg-[#1DE5B5]/20 px-4 py-1.5 rounded-full self-start mb-6">Your Credential</span>
+                <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] self-start mb-6">Your Credential</span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-6">Earn an <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Industry-Recognised</span> Certificate</h2>
                 <p className="text-[#4A6275] text-base leading-relaxed mb-10 pr-4">
                   The NASSCOM-FutureSkills Prime certification is backed by MeitY, Government of India, making it one of the most credible data science credentials today.
@@ -318,7 +318,7 @@ export default function Home() {
 
               {/* RIGHT: Success Stories */}
               <div className="flex flex-col">
-                <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full self-start mb-6">Success Stories</span>
+                <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] self-start mb-6">Success Stories</span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-10">Rated <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">9.6/10</span> by Our Alumni</h2>
                 
                 <div className="space-y-6">

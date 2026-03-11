@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const navy = "#09263F";
-const teal = "#29E8A4";
+const teal = "#1DE5B5";
 
 function useVisible(threshold = 0.25) {
   const ref = useRef<HTMLDivElement>(null);
@@ -25,14 +25,14 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
   const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="px-6 py-6 pb-20">
+    <section className="px-6 py-6 pb-14">
       <div
         ref={ref}
         className="max-w-5xl mx-auto relative overflow-hidden text-center"
         style={{
           background: navy,
           borderRadius: 28,
-          padding: "72px 48px",
+          padding: "48px 48px",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(40px)",
           transition: "opacity 0.7s ease, transform 0.7s ease",
@@ -60,17 +60,13 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         }} />
 
         {/* Pill */}
-        <span
-          className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-7 relative"
-          style={{ background: `${teal}18`, border: `1px solid ${teal}44`, color: teal }}
-        >
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: teal, display: "inline-block" }} />
+        <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-7 relative">
           LIMITED SEATS PER BATCH
         </span>
 
         {/* Heading */}
         <h2
-          className="font-black text-white relative mb-5 leading-tight"
+          className="font-bold text-white relative mb-5 leading-tight"
           style={{
             fontSize: "clamp(2rem,5vw,3.6rem)",
             letterSpacing: "-0.04em",
