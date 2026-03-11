@@ -119,7 +119,24 @@ export default function Home() {
           <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_500px] gap-12 items-center">
             <div>
               <div className="mb-10 flex items-center gap-6 sm:gap-8">
-                <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" alt="AnalytixLabs" width={180} height={40} className="w-auto h-[3.5rem]" priority />
+                <div className="flex-shrink-0">
+                  {/* Mobile Mobile Icon */}
+                  <Image 
+                    src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp" 
+                    alt="AnalytixLabs Icon" 
+                    width={48} height={48} 
+                    className="w-auto h-[3rem] sm:hidden" 
+                    priority 
+                  />
+                  {/* Desktop Logo */}
+                  <Image 
+                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" 
+                    alt="AnalytixLabs" 
+                    width={180} height={40} 
+                    className="w-auto h-[3.5rem] hidden sm:block" 
+                    priority 
+                  />
+                </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" alt="Nasscom Futureskills" width={160} height={40} className="w-auto h-[5.25rem]" priority />
               </div>
