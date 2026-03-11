@@ -23,8 +23,8 @@ const TRUST_BADGES = [
 const HIGHLIGHTS = [
   { icon: "🏅", title: "NASSCOM-FutureSkills Prime Certified", desc: "Globally recognised certification supported by MeitY, Government of India. The definitive mark of industry trust." },
   { icon: "🔒", title: "Placement with Fee-Back Guarantee", desc: "Complete the programme and meet the requirements. If you're not placed within 6 months, we refund 50% of your fee. Minimum annual package assured." },
-  { icon: "🏛️", title: "Real Classroom + Flexible Learning", desc: "Learn in-person in Noida, Gurgaon, or Bangalore. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
   { icon: "🎥", title: "Live + Recorded Classes", desc: "Attend live instructor-led sessions or rewatch anytime via your personal LMS. 1 year of access included." },
+  { icon: "🏛️", title: "Real Classroom + Flexible Learning", desc: "Learn in-person in Noida, Gurgaon, or Bangalore. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
   { icon: "🤖", title: "Generative AI in the Curriculum", desc: "Not an afterthought. Prompt engineering and Gen AI for Excel, SQL, Power BI, and Python are part of the core syllabus." },
   { icon: "🤝", title: "Mentorship Beyond the Class", desc: "Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. You're never stuck." },
 ];
@@ -41,6 +41,41 @@ const MODULES = [
   { num: "09", title: "Generative AI", topics: ["Prompt engineering", "Gen AI for Excel/SQL/Power BI/Python", "Gen AI for ML workflows"] },
   { num: "10", title: "Capstone Projects", topics: ["6 real-world projects", "Banking & E-commerce", "Portfolio building"] },
   { num: "11", title: "Placement Readiness (8 weeks)", topics: ["Resume building", "Mock interviews", "Case study practice", "Simulated recruitment drives"] },
+];
+
+const ALUMNI_COMPANIES = [
+  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
+  { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg" },
+  { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
+  { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
+  { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg" },
+  { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
+  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg" },
+  { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
+  { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" },
+  { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg" },
+];
+
+const TESTIMONIALS = [
+  {
+    name: "Piyush Ganar",
+    role: "Director of Operations",
+    company: "Kenty.AI",
+    extra: "Class of 2012, IIM Ahmedabad",
+    text: "The course material is very easy to understand and the case studies were based on real-time business problems. What I love most about AnalytixLabs is that they never operated like a typical commercial enterprise but more like a temple for learning."
+  },
+  {
+    name: "Raajeev Kumar Sahu",
+    role: "Senior Manager, Data Science",
+    company: "FinTech Startup",
+    text: "The course was very structured and gave real-world problems to practice. It also boosted my skills to start participating in hackathons. The placement team was very well organised and connected to industry leaders."
+  },
+  {
+    name: "Surbhi Sultania",
+    role: "Analytics Manager",
+    company: "Mastercard Data & Services",
+    text: "AnalytixLabs is a one-stop solution if you want to break into the field of analytics. The faculty brings years of industry experience and the support continues well beyond the course."
+  }
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -71,11 +106,8 @@ export default function Home() {
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
       <main id="main-content">
 
-        {/* ══════════════════════════════════════
-          HERO - copy left | form right
-      ══════════════════════════════════════ */}
+        {/* HERO SECTION */}
         <section className="relative overflow-hidden bg-white">
-          {/* Background */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-[#1DE5B5]/10 -translate-y-1/3 translate-x-1/3 blur-[120px]" />
             <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#9BE9FF]/15 blur-[100px]" />
@@ -85,33 +117,12 @@ export default function Home() {
           </div>
 
           <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_500px] gap-12 items-center">
-
-            {/* LEFT: Copy */}
             <div>
-              {/* Logos inside hero */}
               <div className="mb-10 flex items-center gap-6 sm:gap-8">
-                <Image
-                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
-                  alt="AnalytixLabs"
-                  width={180}
-                  height={40}
-                  className="w-auto"
-                  style={{ height: '3.5rem' }}
-                  priority
-                />
+                <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" alt="AnalytixLabs" width={180} height={40} className="w-auto h-[3.5rem]" priority />
                 <div className="w-px h-8 bg-[#D6ECEB]" />
-                <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry-removebg.webp"
-                  alt="Nasscom Futureskills"
-                  width={160}
-                  height={40}
-                  className="w-auto"
-                  style={{ height: '5.25rem' }}
-                  priority
-                />
+                <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry-removebg.webp" alt="Nasscom Futureskills" width={160} height={40} className="w-auto h-[5.25rem]" priority />
               </div>
-
-              {/* Removed badges above H1 */}
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
                 Data Science Course with
@@ -135,12 +146,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-12">
-                <button
-                  onClick={() => setIsEligibilityOpen(true)}
-                  className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] text-center"
-                >
-                  Check Your Eligibility →
-                </button>
+                <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] text-center">Check Your Eligibility →</button>
                 <a href="tel:9555525908" className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(255,234,121,0.4)]">
                   <svg className="w-4 h-4 text-[#09263F]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
@@ -148,30 +154,18 @@ export default function Home() {
                   Talk to Our Learning Advisor
                 </a>
               </div>
-
-              {/* Stats strip */}
               <StatsBar />
             </div>
 
-            {/* RIGHT: Lead Capture Form */}
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm
-                title="Get Free Career Counselling"
-                sourceName="PPC_Hero_V8"
-                buttonText="Download Brochure"
-              />
+              <LeadCaptureForm title="Get Free Career Counselling" sourceName="PPC_Hero_V8" buttonText="Download Brochure" />
             </div>
           </div>
         </section>
 
-        {/* ══════════════════════════════════════
-          COURSE OVERVIEW SECTION
-      ══════════════════════════════════════ */}
         <CourseInfoSection />
 
-        {/* ══════════════════════════════════════
-          WHY ANALYTIXLABS
-      ══════════════════════════════════════ */}
+        {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-20 bg-[#F4FAFA]">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
@@ -183,12 +177,11 @@ export default function Home() {
                 Built for working professionals and fresh graduates. A complete programme with real accountability, real classroom training, and a placement team that delivers. Rated 9.6/10 by 20,000+ past students.
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
               {HIGHLIGHTS.map((h, idx) => {
                 const colorType = idx % 3;
                 const borderClass = colorType === 1 ? 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' : colorType === 2 ? 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' : 'hover:border-[#1DE5B5] hover:shadow-[0_8px_32px_rgba(29,229,181,0.12)]';
                 const iconBgClass = colorType === 1 ? 'bg-[#FFFBE6] group-hover:bg-[#FFEA79]' : colorType === 2 ? 'bg-[#E6FAFF] group-hover:bg-[#9BE9FF]' : 'bg-[#E6F7F6] group-hover:bg-[#1DE5B5]';
-
                 return (
                   <div key={h.title} className={`group bg-white border border-[#D6ECEB] rounded-2xl p-7 transition-all duration-300 ${borderClass}`}>
                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-5 transition-colors duration-300 ${iconBgClass}`}>{h.icon}</div>
@@ -198,109 +191,18 @@ export default function Home() {
                 );
               })}
             </div>
-          </div>
-        </section>
 
-        {/* ══════════════════════════════════════
-          PLACEMENT GUARANTEE
-      ══════════════════════════════════════ */}
-        <section id="placement" className="py-20 bg-white">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-14">
-              <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Assurance</span>
-              <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">We're Invested in Your <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Success</span></h2>
-              <p className="text-[#4A6275] max-w-2xl mx-auto">One of the few data science programmes in India that puts real money behind its placement commitment.</p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-
-              {/* Guarantee card */}
-              <div className="relative rounded-3xl overflow-hidden p-9 border border-[#D6ECEB] shadow-lg" style={{ background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' }}>
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#1DE5B5]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-                <div className="relative">
-                  <span className="inline-block bg-[#79f4c8] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
-                  <h3 className="text-4xl font-bold text-[#09263F] mb-4 font-outfit">Get Placed. Or Get 50% Back.</h3>
-                  <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">
-                    Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum package within 6 months of certification, we refund 50% of your course fee.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4A6275]">
-                        <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
-                          <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                  <button onClick={() => setIsEligibilityOpen(true)} className="w-full bg-[#09263F] text-white font-bold py-4 rounded-xl hover:bg-[#1a3a5a] transition-all flex items-center justify-center gap-2 group">
-                    Check Your Eligibility
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Assistance card */}
-              <div className="rounded-3xl bg-[#F4FAFA] p-9 border border-[#D6ECEB]">
-                <span className="inline-block bg-[#D6ECEB] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">Global Recognition</span>
-                <h3 className="text-[#09263F] font-bold text-2xl mb-1">A Certificate That</h3>
-                <h3 className="text-[#239bf5] font-bold text-2xl mb-5">Employers Recognise.</h3>
-                <p className="text-[#4A6275] text-sm leading-relaxed mb-8">Not just another piece of paper. You earn a co-branded certificate with NASSCOM FutureSkills Prime (a Government of India initiative) instantly validating your skills to top recruiters.</p>
-                <div className="space-y-5">
-                  {[
-                    { t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." },
-                    { t: "Applied Projects", d: "Portfolio of 6 capstone projects using real-world business data." },
-                    { t: "Placement Readiness", d: "8 weeks of mock interviews, resume reviews, and case study practice." },
-                  ].map((item) => (
-                    <div key={item.t} className="flex gap-4">
-                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm border border-[#D6ECEB]">
-                        <svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-[#09263F]">{item.t}</h4>
-                        <p className="text-xs text-[#4A6275] mt-1">{item.d}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Alumni strip: auto-sliding marquee */}
-            <div className="mt-12 rounded-2xl border border-[#D6ECEB] bg-[#F4FAFA] px-0 py-7 overflow-hidden">
+            {/* Alumni Marquee moved inside Why AnalytixLabs */}
+            <div className="rounded-2xl border border-[#D6ECEB] bg-white/50 backdrop-blur-sm px-0 py-8 overflow-hidden">
               <p className="text-center text-xs font-bold uppercase tracking-widest text-[#9BBAC0] mb-6">Our Alumni Work At</p>
-              {/* Marquee with gradient masks */}
               <div className="relative">
-                {/* Left gradient fade */}
                 <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #F4FAFA 40%, transparent)' }} />
-                {/* Right gradient fade */}
                 <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #F4FAFA 40%, transparent)' }} />
-                {/* Auto-scrolling track */}
                 <div className="flex w-max gap-12 items-center animate-marquee-logos">
                   {[...Array(3)].flatMap((_, ri) =>
-                    [
-                      { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-                      { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg" },
-                      { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg" },
-                      { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" },
-                      { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg" },
-                      { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
-                      { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg" },
-                      { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
-                      { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" },
-                      { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg" },
-                    ].map((c, i) => (
+                    ALUMNI_COMPANIES.map((c, i) => (
                       <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-9">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={c.url}
-                          alt={c.name}
-                          className="h-7 w-auto object-contain"
-                          loading="lazy"
-                        />
+                        <img src={c.url} alt={c.name} className="h-7 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" loading="lazy" />
                       </div>
                     ))
                   )}
@@ -310,47 +212,74 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ══════════════════════════════════════
-          LEARNING MODES
-      ══════════════════════════════════════ */}
+        {/* CAREER ASSURANCE */}
+        <section id="placement" className="py-20 bg-white">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
+            <div className="text-center mb-14">
+              <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Career Assurance</span>
+              <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">We're Invested in Your <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Success</span></h2>
+              <p className="text-[#4A6275] max-w-2xl mx-auto">One of the few data science programmes in India that puts real money behind its placement commitment.</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="relative rounded-3xl overflow-hidden p-9 border border-[#D6ECEB] shadow-lg" style={{ background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' }}>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#1DE5B5]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+                <div className="relative">
+                  <span className="inline-block bg-[#79f4c8] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
+                  <h3 className="text-4xl font-bold text-[#09263F] mb-4 font-outfit">Get Placed. Or Get 50% Back.</h3>
+                  <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">Complete the programme, meet the requirements, and if you're not placed in a qualifying role within 6 months, we refund 50% of your course fee.</p>
+                  <ul className="space-y-3 mb-8">
+                    {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4A6275]">
+                        <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        {i}
+                      </li>
+                    ))}
+                  </ul>
+                  <button onClick={() => setIsEligibilityOpen(true)} className="w-full bg-[#09263F] text-white font-bold py-4 rounded-xl hover:bg-[#1a3a5a] transition-all flex items-center justify-center gap-2 group">Check Eligibility <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></button>
+                </div>
+              </div>
+              <div className="rounded-3xl bg-[#F4FAFA] p-9 border border-[#D6ECEB]">
+                <span className="inline-block bg-[#D6ECEB] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">Global Recognition</span>
+                <h3 className="text-[#09263F] font-bold text-2xl mb-1">A Certificate That</h3>
+                <h3 className="text-[#239bf5] font-bold text-2xl mb-5">Employers Recognise.</h3>
+                <p className="text-[#4A6275] text-sm leading-relaxed mb-8">Not just another piece of paper. You earn a co-branded certificate with NASSCOM FutureSkills Prime instantly validating your skills.</p>
+                <div className="space-y-5">
+                  {[{ t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." }, { t: "Applied Projects", d: "Portfolio of 6 capstone projects using real-world business data." }, { t: "Placement Readiness", d: "8 weeks of mock interviews and resume reviews." }].map((item) => (
+                    <div key={item.t} className="flex gap-4">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm border border-[#D6ECEB]"><svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
+                      <div><h4 className="text-sm font-bold text-[#09263F]">{item.t}</h4><p className="text-xs text-[#4A6275] mt-1">{item.d}</p></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
 
-        {/* ══════════════════════════════════════
-          CURRICULUM
-      ══════════════════════════════════════ */}
         <section id="curriculum" className="py-20 bg-white">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
               <div>
                 <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">What You'll Learn</span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">What You'll Learn Across <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span></h2>
-                <p className="text-[#4A6275] max-w-2xl">11 modules covering analytics, data science, machine learning, and generative AI. Curriculum designed with NASSCOM-FutureSkills Prime to match what the industry actually hires for.</p>
+                <p className="text-[#4A6275] max-w-2xl">11 modules covering analytics, data science, ML, and AI. Curriculum designed with NASSCOM-FutureSkills Prime.</p>
               </div>
-              <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl transition-all text-base shadow-[0_8px_24px_rgba(29,229,181,0.2)]">
-                Download Brochure →
-              </button>
+              <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl transition-all shadow-[0_8px_24px_rgba(29,229,181,0.2)]">Download Brochure →</button>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 [&>*:last-child]:md:col-start-2 [&>*:last-child]:lg:col-start-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {MODULES.map((m, idx) => {
-                const modColors = [
-                  { dot: '#1DE5B5', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#1DE5B5] hover:shadow-[0_8px_32px_rgba(29,229,181,0.10)]' },
-                  { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' },
-                  { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' },
-                ];
+                const modColors = [{ dot: '#1DE5B5', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#1DE5B5] hover:shadow-[0_8px_32px_rgba(29,229,181,0.10)]' }, { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' }, { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' }];
                 const c = modColors[idx % 3];
                 return (
                   <div key={m.num} className={`relative border border-[#D6ECEB] rounded-2xl p-7 bg-white transition-all duration-300 group overflow-hidden ${c.border}`}>
-                    <span className="absolute -top-2 -right-2 text-[80px] font-bold text-[#F4FAFA] group-hover:text-[#E8F4F4] transition-colors select-none leading-none">{m.num}</span>
+                    <span className="absolute -top-2 -right-2 text-[80px] font-bold text-[#F4FAFA] group-hover:text-[#E8F4F4] select-none leading-none">{m.num}</span>
                     <span className={`inline-block text-[10px] font-bold uppercase tracking-widest ${c.tagText} ${c.tagBg} px-3 py-1 rounded-full mb-4`}>Module {m.num}</span>
                     <h3 className="font-bold text-[#09263F] text-base mb-4 leading-snug pr-6">{m.title}</h3>
                     <ul className="space-y-2.5">
                       {m.topics.map((t) => (
-                        <li key={t} className="flex items-center gap-2.5 text-sm text-[#4A6275]">
-                          <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center" style={{ background: c.dotBg }}>
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.dot }} />
-                          </span>
-                          {t}
-                        </li>
+                        <li key={t} className="flex items-center gap-2.5 text-sm text-[#4A6275]"><span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center" style={{ background: c.dotBg }}><span className="w-1.5 h-1.5 rounded-full" style={{ background: c.dot }} /></span>{t}</li>
                       ))}
                     </ul>
                   </div>
@@ -360,163 +289,83 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ══════════════════════════════════════
-          TESTIMONIALS
-      ══════════════════════════════════════ */}
-        <section className="py-12 bg-white">
+        {/* COMBINED CERTIFICATE & TESTIMONIALS */}
+        <section className="py-24 bg-[#f0faf8]">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-16">
-              <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full">Success Stories</span>
-              <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">Rated <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">9.6/10</span> by Our Alumni</h2>
-              <p className="text-[#4A6275] max-w-md mx-auto">What Our Alumni Say</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Piyush Ganar",
-                  role: "Director of Operations",
-                  company: "Kenty.AI",
-                  extra: "Class of 2012, IIM Ahmedabad",
-                  text: "The course material is very easy to understand and the case studies were based on real-time business problems. What I love most about AnalytixLabs is that they never operated like a typical commercial enterprise but more like a temple for learning."
-                },
-                {
-                  name: "Raajeev Kumar Sahu",
-                  role: "Senior Manager, Data Science",
-                  company: "FinTech Startup",
-                  text: "The course was very structured and gave real-world problems to practice. It also boosted my skills to start participating in hackathons. The placement team was very well organised and connected to industry leaders."
-                },
-                {
-                  name: "Surbhi Sultania",
-                  role: "Analytics Manager",
-                  company: "Mastercard Data & Services",
-                  text: "AnalytixLabs is a one-stop solution if you want to break into the field of analytics. The faculty brings years of industry experience and the support continues well beyond the course."
-                }
-              ].map((t, i) => (
-                <div key={i} className="bg-white p-8 rounded-3xl shadow-lg border border-[#E6F0F7] flex flex-col">
-                  <div className="text-[#1DE5B5] text-4xl font-serif mb-4">"</div>
-                  <p className="text-[#4A6275] text-sm italic leading-relaxed mb-8 flex-grow">
-                    {t.text}
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1DE5B5]/20 to-[#239bf5]/20 flex items-center justify-center font-bold text-[#239bf5]">
-                      {t.name.split(' ').map(n => n[0]).join('')}
+            <div className="grid md:grid-cols-2 gap-16 items-start">
+              
+              {/* LEFT: Certificate info */}
+              <div className="flex flex-col">
+                <span className="text-[#09263F] text-xs font-bold uppercase tracking-widest bg-[#1DE5B5]/20 px-4 py-1.5 rounded-full self-start mb-6">Your Credential</span>
+                <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-6">Earn an <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Industry-Recognised</span> Certificate</h2>
+                <p className="text-[#4A6275] text-base leading-relaxed mb-10 pr-4">
+                  The NASSCOM-FutureSkills Prime certification is backed by MeitY, Government of India, making it one of the most credible data science credentials today.
+                </p>
+                <div className="flex flex-col items-center gap-10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+                    <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
+                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" />
+                      <p className="text-[#09263F] font-bold text-sm mt-4 text-center">NASSCOM FutureSkills Prime</p>
                     </div>
-                    <div>
-                      <div className="text-sm font-bold text-[#09263F]">{t.name}</div>
-                      <div className="text-[10px] text-[#4A6275] font-bold uppercase tracking-wider">{t.role}</div>
-                      <div className="text-[10px] text-[#239bf5] font-black">{t.company}</div>
-                      {t.extra && <div className="text-[9px] text-[#4A6275] mt-0.5">{t.extra}</div>}
+                    <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
+                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" />
+                      <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Advanced AI Certificate</p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════
-          CERTIFICATE
-      ══════════════════════════════════════ */}
-        <section className="py-20 bg-[#F4FAFA]">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-[#09263F] text-xs font-bold uppercase tracking-widest bg-[#9BE9FF]/40 px-4 py-1.5 rounded-full">Your Credential</span>
-              <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">Earn an <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Industry-Recognised</span> Certificate</h2>
-              <p className="text-[#4A6275] max-w-2xl mx-auto mb-12">
-                Original work policy ensures every certificate reflects genuine capability. Both certifications are widely recognised by employers across India. The NASSCOM-FutureSkills Prime certification is backed by the Ministry of Electronics & IT, Government of India, making it one of the most credible data science certifications available today.
-              </p>
-              <ul className="space-y-3">
-                {["Weekly assignments + module case studies", "Rigorously evaluated by industry experts", "Original work policy — every certificate reflects genuine capability", "Shareable on LinkedIn, NASSCOM portal & job boards", "Lifetime validity. Your credential never expires"].map((i) => <CheckItem key={i} text={i} />)}
-              </ul>
-            </div>
-            <div className="flex flex-col items-center gap-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
-                  <Image
-                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg"
-                    alt="NASSCOM Certification"
-                    width={440}
-                    height={308}
-                    className="w-full h-auto rounded-lg"
-                  />
-                  <p className="text-[#09263F] font-bold text-xs mt-3 text-center">NASSCOM FutureSkills Prime</p>
-                </div>
-                <div className="bg-white p-4 rounded-xl shadow-lg border border-[#D6ECEB]">
-                  <Image
-                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg"
-                    alt="AnalytixLabs Certification"
-                    width={440}
-                    height={308}
-                    className="w-full h-auto rounded-lg"
-                  />
-                  <p className="text-[#09263F] font-bold text-xs mt-3 text-center">AnalytixLabs Advanced Certificate</p>
+                  <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#09263F] text-white font-bold px-12 py-4.5 rounded-xl text-lg hover:bg-[#1a3a5a] transition-all shadow-2xl">Check Your Eligibility →</button>
                 </div>
               </div>
-              <button
-                onClick={() => setIsEligibilityOpen(true)}
-                className="bg-[#09263F] text-white font-bold px-10 py-4 rounded-xl text-base hover:bg-[#1a3a5a] transition-all flex items-center gap-2 group shadow-xl"
-              >
-                Check Your Eligibility →
-              </button>
+
+              {/* RIGHT: Success Stories */}
+              <div className="flex flex-col">
+                <span className="text-[#239bf5] text-xs font-bold uppercase tracking-widest bg-[#E6F7F6] px-4 py-1.5 rounded-full self-start mb-6">Success Stories</span>
+                <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-10">Rated <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">9.6/10</span> by Our Alumni</h2>
+                
+                <div className="space-y-6">
+                  {TESTIMONIALS.map((t, i) => (
+                    <div key={i} className="bg-white p-7 rounded-3xl shadow-sm border border-[#E6F0F7] flex flex-col hover:shadow-md transition-shadow">
+                      <p className="text-[#4A6275] text-[13px] italic leading-relaxed mb-6">"{t.text}"</p>
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#1DE5B5]/20 to-[#239bf5]/20 flex items-center justify-center font-bold text-[#239bf5] text-sm">
+                          {t.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-[#09263F]">{t.name}</div>
+                          <div className="text-[10px] text-[#4A6275] font-bold uppercase tracking-wider">{t.role} @ {t.company}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
- 
-        {/* ══════════════════════════════════════
-          HOW TO ENROL
-      ══════════════════════════════════════ */}
+
         <HowToEnrol onOpenEligibility={() => setIsEligibilityOpen(true)} />
-
-        {/* ══════════════════════════════════════
-          FAQs: Harmonized V7
-      ══════════════════════════════════════ */}
         <FAQ />
-
-        {/* ══════════════════════════════════════
-          BOTTOM CTA
-      ══════════════════════════════════════ */}
         <BottomCTA onOpenEligibility={() => setIsEligibilityOpen(true)} />
 
-        {/* FOOTER */}
-        <footer className="bg-[#06192b] py-6 border-t border-white/5">
-          <p className="text-center text-[#4A6275] text-xs">
-            &copy; {new Date().getFullYear()} AnalytixLabs. All rights reserved. &nbsp;|&nbsp;
-            Recordings are protected under copyright law and are the intellectual property of AnalytixLabs.
-          </p>
+        <footer className="bg-[#06192b] py-8 border-t border-white/5">
+          <p className="text-center text-[#4A6275] text-xs">&copy; {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.</p>
         </footer>
 
-        {/* STICKY MOBILE BAR */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-          <a href="tel:9555525908" className="flex-1 flex items-center justify-center gap-1.5 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-sm">📞 Call</a>
-          <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-sm">💬 Chat</a>
-          <button onClick={() => setIsEligibilityOpen(true)} className="flex-1 bg-[#1DE5B5] text-[#09263F] font-bold py-3 rounded-xl text-sm text-center">Check Eligibility</button>
+        {/* MOBILE STICKY */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-2xl">
+          <a href="tel:9555525908" className="flex-1 flex items-center justify-center py-3 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs">📞 Call</a>
+          <button onClick={() => setIsEligibilityOpen(true)} className="flex-[2] bg-[#1DE5B5] text-[#09263F] font-bold py-3 rounded-xl text-xs">Check Eligibility</button>
         </div>
 
-        {/* Modals */}
+        {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm
-            title="Check Your Eligibility"
-            sourceName="PPC_CheckEligibility_V8"
-            buttonText="Check Eligibility →"
-          />
+          <LeadCaptureForm title="Check Your Eligibility" sourceName="PPC_CheckEligibility_V8" buttonText="Check Eligibility →" />
         </Modal>
-
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
-          <LeadCaptureForm
-            title="Download Brochure"
-            sourceName="PPC_downloadBrochure_V8"
-            buttonText="Download Now →"
-          />
+          <LeadCaptureForm title="Download Brochure" sourceName="PPC_downloadBrochure_V8" buttonText="Download Now →" />
         </Modal>
-
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
-          <LeadCaptureForm
-            title="Signup for a Demo"
-            sourceName="PPC_signUpForDemo"
-            buttonText="Signup for a Demo"
-          />
+          <LeadCaptureForm title="Signup for a Demo" sourceName="PPC_signUpForDemo" buttonText="Signup for a Demo" />
         </Modal>
 
       </main>
