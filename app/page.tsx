@@ -121,7 +121,7 @@ export default function Home() {
               <div className="mb-10 flex items-center gap-6 sm:gap-8">
                 <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" alt="AnalytixLabs" width={180} height={40} className="w-auto h-[3.5rem]" priority />
                 <div className="w-px h-8 bg-[#D6ECEB]" />
-                <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry-removebg.webp" alt="Nasscom Futureskills" width={160} height={40} className="w-auto h-[5.25rem]" priority />
+                <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" alt="Nasscom Futureskills" width={160} height={40} className="w-auto h-[5.25rem]" priority />
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
