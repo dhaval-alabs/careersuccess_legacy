@@ -118,14 +118,14 @@ export default function Home() {
 
           <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 py-16 lg:py-24 grid lg:grid-cols-[1fr_500px] gap-12 items-center">
             <div>
-              <div className="mb-10 flex items-center gap-6 sm:gap-8">
+              <div className="mb-10 flex items-center gap-4 sm:gap-8">
                 <div className="flex-shrink-0">
                   {/* Mobile Mobile Icon */}
                   <Image 
                     src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp" 
                     alt="AnalytixLabs Icon" 
                     width={48} height={48} 
-                    className="w-auto h-[3rem] sm:hidden" 
+                    className="w-auto h-[4.5rem] sm:hidden" 
                     priority 
                   />
                   {/* Desktop Logo */}
