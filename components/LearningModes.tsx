@@ -103,7 +103,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
   const [ref, visible] = useVisible();
 
   return (
-    <section className="py-20 px-6" style={{ background: "#f0faf8" }}>
+    <section className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
