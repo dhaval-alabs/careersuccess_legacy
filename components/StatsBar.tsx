@@ -6,29 +6,29 @@ const stats = [
     value: 20000,
     suffix: "+",
     label: "Candidates Trained",
-    bg: "#E6F7F6", // Pastel Green
+    bg: "#29E8A4",
     text: "#09263F",
   },
   {
     value: 50,
     suffix: "+",
     label: "Companies Hired From Us",
-    bg: "#FFFBE6", // Pastel Yellow
+    bg: "#F5C842",
     text: "#09263F",
   },
   {
     value: 9.6,
     suffix: "/10",
     label: "Avg Student Rating",
-    bg: "#E6FAFF", // Pastel Blue
+    bg: "#239bf5",
     text: "#09263F",
   },
   {
     value: 12,
     suffix: "+",
     label: "Years of Excellence",
-    bg: "#E6F7F6", // Pastel Green
-    text: "#09263F",
+    bg: "#09263F",
+    text: "#29E8A4",
   },
 ];
 
@@ -87,7 +87,7 @@ function StatCard({
         className="font-display font-extrabold leading-none tracking-tight"
         style={{
           color: stat.text,
-          fontSize: "2.5rem",
+          fontSize: "clamp(2.4rem, 4vw, 3.5rem)",
           letterSpacing: "-0.03em",
         }}
       >

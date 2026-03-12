@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const navy = "#09263F";
-const teal = "#1DE5B5";
+const teal = "#29E8A4";
 
 function useVisible(threshold = 0.25) {
   const ref = useRef<HTMLDivElement>(null);
@@ -25,14 +25,14 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
   const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="px-6 py-6 pb-14">
+    <section className="px-6 py-6 pb-20" style={{ background: "#f0faf8" }}>
       <div
         ref={ref}
         className="max-w-5xl mx-auto relative overflow-hidden text-center"
         style={{
           background: navy,
           borderRadius: 28,
-          padding: "48px 48px",
+          padding: "72px 48px",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(40px)",
           transition: "opacity 0.7s ease, transform 0.7s ease",
@@ -70,8 +70,9 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
 
         {/* Heading */}
         <h2
-          className="font-bold text-white relative mb-5 leading-tight"
+          className="font-black text-white relative mb-5 leading-tight"
           style={{
+            fontFamily: "var(--font-outfit)",
             fontSize: "clamp(2rem,5vw,3.6rem)",
             letterSpacing: "-0.04em",
           }}
@@ -109,7 +110,7 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         <div className="flex justify-center gap-12 mt-12 relative">
           {[["20,000+", "TRAINED"], ["9.6/10", "AVG RATING"], ["12+ Yrs", "EXCELLENCE"]].map(([val, lbl]) => (
             <div key={lbl} className="text-center">
-              <div className="font-extrabold leading-none mb-1" style={{ fontSize: "1.5rem", color: teal, letterSpacing: "-0.03em" }}>{val}</div>
+              <div className="font-extrabold leading-none mb-1" style={{ fontFamily: "var(--font-outfit)", fontSize: "1.5rem", color: teal, letterSpacing: "-0.03em" }}>{val}</div>
               <div className="text-[10px] font-semibold tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.35)" }}>{lbl}</div>
             </div>
           ))}

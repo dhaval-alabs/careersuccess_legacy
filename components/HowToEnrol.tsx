@@ -93,14 +93,15 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
   const [lineRef, lineVisible] = useVisible(0.3);
 
   return (
-    <section className="py-10 px-6" style={{ background: "#fff" }}>
+    <section className="py-20 px-6" style={{ background: "#fff" }}>
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
+        <div className="text-center mb-16">
+          <span className="inline-block text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-4"
+            style={{ background: `${navy}10`, color: navy }}>
             SIMPLE 3-STEP PROCESS
           </span>
           <h2 className="font-extrabold leading-tight tracking-tight mb-3"
-            style={{ fontSize: "clamp(2rem,4vw,3rem)", color: navy }}>
+            style={{ fontFamily: "var(--font-outfit)", fontSize: "clamp(2rem,4vw,3rem)", color: navy }}>
             Getting <span style={{ color: teal }}>Started</span> is Simple
           </h2>
           <p className="text-sm" style={{ color: "#4A6275" }}>
@@ -144,7 +145,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
                 {/* Watermark number */}
                 <span style={{
                   position: "absolute", top: -10, right: 12,
-                  fontWeight: 900,
+                  fontFamily: "var(--font-outfit)", fontWeight: 900,
                   fontSize: "5rem", color: `${s.accent}14`,
                   lineHeight: 1, userSelect: "none", pointerEvents: "none",
                   letterSpacing: "-0.05em",
@@ -154,8 +155,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
                   STEP {s.num}
                 </span>
                 <h3 className="font-bold text-lg leading-snug mb-2.5"
-                  style={{ color: navy }}
-                >
+                  style={{ fontFamily: "var(--font-outfit)", color: navy }}>
                   {s.title}
                 </h3>
                 <p className="text-[13px] leading-relaxed m-0" style={{ color: "#4A6275" }}>
@@ -182,7 +182,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
           }} />
 
           <h3 className="font-extrabold text-white mb-3 relative"
-            style={{ fontSize: "clamp(1.6rem,3vw,2.4rem)", letterSpacing: "-0.03em" }}>
+            style={{ fontFamily: "var(--font-outfit)", fontSize: "clamp(1.6rem,3vw,2.4rem)", letterSpacing: "-0.03em" }}>
             Ready to Start?
           </h3>
           <p className="text-sm mb-8 relative max-w-lg mx-auto" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>

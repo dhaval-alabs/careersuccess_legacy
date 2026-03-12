@@ -180,7 +180,13 @@ export default function Home() {
             </div>
 
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm title="Get Free Career Counselling" sourceName="Hero Section Form" typeFilter="PPC_downloadBrochure" buttonText="Download Brochure" />
+              <LeadCaptureForm 
+                title="Get Free Career Counselling" 
+                sourceName="Hero Section Form" 
+                typeFilter="PPC_downloadBrochure" 
+                buttonText="Download Brochure"
+                thankYouPath="/thankyou-download-brochure"
+              />
             </div>
           </div>
         </section>
@@ -280,9 +286,9 @@ export default function Home() {
 
         <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
 
-        <section id="curriculum" className="py-10 bg-white">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <section id="curriculum" className="py-24 px-6 bg-white">
+          <div className="max-w-7xl mx-auto flex flex-col items-center">
+            <div className="text-center mb-16 max-w-3xl">
               <div>
                 <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7]">What You'll Learn</span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">What You'll Learn Across <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span></h2>
@@ -290,7 +296,7 @@ export default function Home() {
               </div>
               <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl transition-all shadow-[0_8px_24px_rgba(29,229,181,0.2)]">Download Brochure →</button>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
               {MODULES.map((m, idx) => {
                 const modColors = [{ dot: '#1DE5B5', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#1DE5B5] hover:shadow-[0_8px_32px_rgba(29,229,181,0.10)]' }, { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' }, { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' }];
                 const c = modColors[idx % 3];
@@ -319,9 +325,11 @@ export default function Home() {
               {/* LEFT: Certificate info */}
               <div className="flex flex-col">
                 <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] self-start mb-6">Your Credential</span>
-                <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-6">Earn an <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Industry-Recognised</span> Certificate</h2>
+                <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-6">
+                  Industry Recognized Certification
+                </h2>
                 <p className="text-[#4A6275] text-base leading-relaxed mb-10 pr-4">
-                  The NASSCOM-FutureSkills Prime certification is backed by MeitY, Government of India, making it one of the most credible data science credentials today.
+                  AnalytixLabs is a NASSCOM-FutureSkills Prime accredited training partner. Upon successful completion of the programme, you will receive a dual certification that is recognized by top global recruiters and Fortune 500 companies.
                 </p>
                 <div className="flex flex-col items-center gap-10">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
@@ -383,13 +391,31 @@ export default function Home() {
 
         {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm title="Check Your Eligibility" sourceName="Check Your Eligibility Modal" typeFilter="PPC_CheckEligibility" buttonText="Check Eligibility →" />
+          <LeadCaptureForm 
+            title="Check Your Eligibility" 
+            sourceName="Check Your Eligibility Modal" 
+            typeFilter="PPC_CheckEligibility" 
+            buttonText="Check Eligibility →"
+            thankYouPath="/thankyou-check-your-eligibility"
+          />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
-          <LeadCaptureForm title="Download Brochure" sourceName="Download Brochure Modal" typeFilter="PPC_downloadBrochure" buttonText="Download Now →" />
+          <LeadCaptureForm 
+            title="Download Brochure" 
+            sourceName="Download Brochure Modal" 
+            typeFilter="PPC_downloadBrochure" 
+            buttonText="Download Now →"
+            thankYouPath="/thankyou-download-brochure"
+          />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
-          <LeadCaptureForm title="Signup for a Demo" sourceName="Signup for a Demo Modal" typeFilter="PPC_signUpForDemo" buttonText="Signup for a Demo" />
+          <LeadCaptureForm 
+            title="Signup for a Demo" 
+            sourceName="Signup for a Demo Modal" 
+            typeFilter="PPC_signUpForDemo" 
+            buttonText="Signup for a Demo"
+            thankYouPath="/thankyou-signup"
+          />
         </Modal>
 
       </main>

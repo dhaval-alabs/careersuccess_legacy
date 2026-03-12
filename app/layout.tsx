@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect } from 'react';
+import { captureUtmParams } from '../utils/captureUtm';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter, Outfit } from 'next/font/google';
@@ -16,18 +20,31 @@ const outfit = Outfit({
   variable: '--font-outfit',
 });
 
-export const metadata: Metadata = {
-  title: 'Data Science Course with Guaranteed Career Support | AnalytixLabs',
-  description: '700+ hours. 11 modules. Classroom + online. NASSCOM-FutureSkills Prime certified. Placement with Fee-Back Guarantee.',
-};
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  useEffect(() => {
+    captureUtmParams();
+  }, []);
+
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <head>
+        {/* Google Tag Manager (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-783236209"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-783236209');
+            `,
+          }}
+        />
+      </head>
       <body>
         {children}
       </body>

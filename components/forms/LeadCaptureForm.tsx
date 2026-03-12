@@ -1,7 +1,10 @@
 'use client';
 
-import { useState, useTransition, FormEvent } from 'react';
+import { useState, useTransition, FormEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { createLeadAction } from '../../app/actions/leads';
+import { initBehaviourTracking, recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
+import { getStoredUtm } from '../../utils/captureUtm';
 
 const INDIA_CITIES = [
   'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Faridabad',
@@ -17,10 +20,11 @@ const COUNTRY_CODES = [
 ];
 
 interface LeadCaptureFormProps {
-  sourceName?: string;
-  buttonText?: string;
-  title?: string;
-  typeFilter?: string;
+  sourceName?:    string;
+  buttonText?:    string;
+  title?:         string;
+  typeFilter?:    string;
+  thankYouPath?: string; // Path to redirect to after success
 }
 
 /* Shared input className */
@@ -38,28 +42,23 @@ export default function LeadCaptureForm({
   buttonText  = 'Request Free Counselling →',
   title       = 'Get Free Career Counselling',
   typeFilter,
+  thankYouPath = '/thankyou-check-your-eligibility',
 }: LeadCaptureFormProps) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
+
+  useEffect(() => {
+    initBehaviourTracking();
+  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormState({ success: false, error: '' });
 
     const formData = new FormData(e.currentTarget);
-
-    let gclid: string | undefined;
-    let source_keyword: string | undefined;
-    if (typeof window !== 'undefined') {
-      try {
-        const raw = sessionStorage.getItem('current_utms');
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          gclid = parsed.gclid;
-          source_keyword = parsed.keyword;
-        }
-      } catch { /* ignore */ }
-    }
+    const utms = getStoredUtm();
+    const behaviour = getBehaviourSnapshot();
 
     const data = {
       name:           formData.get('name')        as string,
@@ -71,16 +70,25 @@ export default function LeadCaptureForm({
       session_id:     typeof window !== 'undefined'
                         ? sessionStorage.getItem('alabs_session_id') || undefined
                         : undefined,
-      gclid,
-      source_keyword,
       page_url:       typeof window !== 'undefined' ? window.location.href : undefined,
       typeFilter,
+      ...utms,
+      ...behaviour,
     };
 
     startTransition(async () => {
       const result = await createLeadAction(data);
       if (result.success) {
-        setFormState({ success: true, error: '' });
+        if (thankYouPath) {
+          const params = new URLSearchParams({
+            email: data.email,
+            name:  data.name,
+            phone: data.mobile,
+          });
+          router.push(`${thankYouPath}?${params.toString()}`);
+        } else {
+          setFormState({ success: true, error: '' });
+        }
       } else {
         setFormState({ success: false, error: result.error || 'Something went wrong. Please try again.' });
       }
@@ -131,6 +139,7 @@ export default function LeadCaptureForm({
             required maxLength={50}
             placeholder="e.g. Rahul Sharma"
             className={inputCls}
+            onFocus={() => recordFirstField('name')}
           />
         </div>
 
@@ -143,6 +152,7 @@ export default function LeadCaptureForm({
               required maxLength={75}
               placeholder="you@email.com"
               className={inputCls}
+              onFocus={() => recordFirstField('email')}
             />
           </div>
           <div>
@@ -151,6 +161,7 @@ export default function LeadCaptureForm({
               name="city" id="city"
               required defaultValue=""
               className={inputCls + ' cursor-pointer'}
+              onFocus={() => recordFirstField('city')}
             >
               <option value="" disabled>Select City...</option>
               {INDIA_CITIES.map((city) => (
@@ -182,6 +193,7 @@ export default function LeadCaptureForm({
               required pattern="[0-9]{10}" maxLength={10}
               placeholder="10-digit mobile number"
               className={inputCls + ' flex-1'}
+              onFocus={() => recordFirstField('mobile')}
             />
           </div>
         </div>
