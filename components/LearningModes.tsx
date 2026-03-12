@@ -112,9 +112,9 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         {/* Header */}
         <div className="text-center mb-14">
           <span
-            className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4"
+            className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4"
           >
-            FLEXIBILITY FIRST
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">FLEXIBILITY FIRST</span>
           </span>
           <h2
             className="font-extrabold leading-tight tracking-tight mb-3"
