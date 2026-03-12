@@ -70,6 +70,8 @@ export async function POST(req: NextRequest) {
       { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${body.form_source}` }
     ];
 
+    console.log('LeadSquared Payload:', JSON.stringify(payload, null, 2));
+
     const response = await fetch(CRM_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -78,8 +80,13 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('LeadSquared error:', errorText);
-      return NextResponse.json({ success: false, error: 'Webinar registration failed' }, { status: 500 });
+      console.error('LeadSquared error status:', response.status);
+      console.error('LeadSquared error data:', errorText);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'LeadSquared submission failed',
+        details: errorText.substring(0, 200) 
+      }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });

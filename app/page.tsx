@@ -287,21 +287,32 @@ export default function Home() {
         <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
 
         <section id="curriculum" className="py-24 px-6 bg-white">
-          <div className="max-w-7xl mx-auto flex flex-col items-center">
-            <div className="text-center mb-16 max-w-3xl">
-              <div>
-                <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7]">What You'll Learn</span>
-                <h2 className="text-[#09263F] font-bold text-3xl sm:text-4xl mt-4 mb-2">What You'll Learn Across <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span></h2>
-                <p className="text-[#4A6275] max-w-2xl">11 modules covering analytics, data science, ML, and AI. Curriculum designed with NASSCOM-FutureSkills Prime.</p>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-16">
+              <div className="max-w-3xl">
+                <span className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">What You'll Learn</span>
+                <h2 className="text-[#09263F] font-bold text-4xl sm:text-5xl leading-tight mb-4">
+                  What You'll Learn Across <br />
+                  <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span>
+                </h2>
+                <p className="text-[#4A6275] text-lg leading-relaxed">
+                  11 modules covering analytics, data science, ML, and AI. <br className="hidden md:block" />
+                  Curriculum designed with NASSCOM-FutureSkills Prime.
+                </p>
               </div>
-              <button onClick={() => setIsBrochureOpen(true)} className="flex-shrink-0 inline-flex items-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl transition-all shadow-[0_8px_24px_rgba(29,229,181,0.2)]">Download Brochure →</button>
+              <button 
+                onClick={() => setIsBrochureOpen(true)} 
+                className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex-shrink-0"
+              >
+                Download Brochure →
+              </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {MODULES.map((m, idx) => {
                 const modColors = [{ dot: '#1DE5B5', dotBg: '#E6F7F6', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6F7F6]', border: 'hover:border-[#1DE5B5] hover:shadow-[0_8px_32px_rgba(29,229,181,0.10)]' }, { dot: '#FFB800', dotBg: '#FFFBE6', tagText: 'text-[#09263F]', tagBg: 'bg-[#FFFBE6]', border: 'hover:border-[#FFEA79] hover:shadow-[0_8px_32px_rgba(255,234,121,0.15)]' }, { dot: '#00BFFF', dotBg: '#E6FAFF', tagText: 'text-[#09263F]', tagBg: 'bg-[#E6FAFF]', border: 'hover:border-[#9BE9FF] hover:shadow-[0_8px_32px_rgba(155,233,255,0.15)]' }];
                 const c = modColors[idx % 3];
                 return (
-                  <div key={m.num} className={`relative border border-[#D6ECEB] rounded-2xl p-7 bg-white transition-all duration-300 group overflow-hidden ${c.border}`}>
+                  <div key={m.num} className={`relative border border-[#D6ECEB] rounded-2xl p-8 bg-white transition-all duration-300 group overflow-hidden ${c.border} h-full`}>
                     <span className="absolute -top-2 -right-2 text-[80px] font-bold text-[#F4FAFA] group-hover:text-[#E8F4F4] select-none leading-none">{m.num}</span>
                     <span className={`inline-block text-[10px] font-bold uppercase tracking-widest ${c.tagText} ${c.tagBg} px-3 py-1 rounded-full mb-4`}>Module {m.num}</span>
                     <h3 className="font-bold text-[#09263F] text-base mb-4 leading-snug pr-6">{m.title}</h3>
@@ -342,7 +353,12 @@ export default function Home() {
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Advanced AI Certificate</p>
                     </div>
                   </div>
-                  <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#09263F] text-white font-bold px-12 py-4.5 rounded-xl text-lg hover:bg-[#1a3a5a] transition-all shadow-2xl">Check Your Eligibility →</button>
+                  <button 
+                    onClick={() => setIsEligibilityOpen(true)} 
+                    className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)]"
+                  >
+                    Check Your Eligibility →
+                  </button>
                 </div>
               </div>
 

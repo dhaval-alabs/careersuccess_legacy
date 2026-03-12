@@ -88,22 +88,13 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
 
         {/* CTA */}
         <button
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
           onClick={onOpenEligibility}
-          className="relative inline-flex items-center gap-2 font-extrabold text-sm px-10 py-4 rounded-full"
-          style={{
-            background: hovered ? "#1dd68e" : teal,
-            color: navy,
-            border: "none",
-            cursor: "pointer",
-            letterSpacing: "0.02em",
-            boxShadow: hovered ? `0 0 56px ${teal}80` : `0 0 28px ${teal}44`,
-            transition: "all 0.25s ease",
-            transform: hovered ? "scale(1.04)" : "scale(1)",
-          }}
+          className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_20px_40px_rgba(29,229,181,0.4)] flex items-center gap-3 active:scale-95 group"
         >
-          Start Your Career Transformation →
+          Check Your Eligibility
+          <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
         </button>
 
         {/* Stats row */}

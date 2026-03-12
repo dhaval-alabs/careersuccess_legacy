@@ -112,8 +112,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         {/* Header */}
         <div className="text-center mb-14">
           <span
-            className="inline-block text-[10px] font-bold tracking-[0.14em] px-4 py-1.5 rounded-full mb-4"
-            style={{ background: `${teal}22`, color: teal, border: `1px solid ${teal}44` }}
+            className="inline-block bg-[#e8f4fd] text-[#00AEEF] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4"
           >
             FLEXIBILITY FIRST
           </span>
@@ -153,6 +152,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                   : "0 4px 24px rgba(9,38,63,0.07)",
                 position: "relative",
                 overflow: "hidden",
+                height: "100%",
               }}
             >
               {/* Radial highlight on featured card */}
@@ -220,18 +220,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                 ))}
               </ul>
 
-              {/* CTA */}
-              <button
-                className="w-full py-3.5 rounded-xl font-bold text-sm tracking-wide"
-                style={{
-                  background: c.featured ? teal : navy,
-                  color: c.featured ? navy : "#fff",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Check Your Eligibility →
-              </button>
+              {/* CTA Removed as requested */}
             </div>
           ))}
         </div>
@@ -245,8 +234,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         <div className="text-center mt-6">
           <button
             onClick={onOpenDemo}
-            className="font-semibold text-sm px-8 py-3.5 rounded-full"
-            style={{ background: navy, color: teal, border: "none", cursor: "pointer" }}
+            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block"
           >
             Signup for a Demo →
           </button>
