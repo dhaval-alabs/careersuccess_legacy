@@ -22,9 +22,15 @@ export async function createLeadAction(data: LeadEntry) {
         // This keeps the logic centralized in the API route which can be used by other parts if needed
         // and ensures we follow the new implementation instructions.
         // In server actions, we need an absolute URL for fetch. 
-        // We attempt to find the base URL from env or default to localhost for dev.
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL 
-            || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+        
+        if (!baseUrl) {
+            const { headers } = await import('next/headers');
+            const headersList = await headers();
+            const host = headersList.get('host');
+            const protocol = host?.includes('localhost') ? 'http' : 'https';
+            baseUrl = `${protocol}://${host}`;
+        }
         
         const response = await fetch(`${baseUrl}/api/submit-lead`, {
             method: 'POST',

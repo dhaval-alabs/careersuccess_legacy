@@ -121,7 +121,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
             style={{ fontFamily: "var(--font-outfit)", fontSize: "clamp(2rem,4vw,3rem)", color: navy }}
           >
             Three Ways to Learn.<br />
-            <span style={{ color: teal }}>Transparent</span> Pricing.
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Transparent Pricing.</span>
           </h2>
           <p className="text-sm max-w-md mx-auto" style={{ color: "#4A6275" }}>
             Same syllabus, same faculty, same NASSCOM certification. Pick what fits your schedule and budget.
@@ -134,36 +134,24 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
             <div
               key={c.title}
               style={{
-                background: c.featured
-                  ? "linear-gradient(145deg, #cef9e8 0%, #eafdf5 45%, #f5fffb 100%)"
-                  : "#fff",
-                border: c.featured ? `2px solid ${teal}88` : "1.5px solid #e0eeeb",
+                background: "#fff",
+                border: "1.5px solid #e0eeeb",
                 borderRadius: 20,
                 padding: "32px 28px",
                 display: "flex",
                 flexDirection: "column",
                 opacity: visible ? 1 : 0,
                 transform: visible
-                  ? c.featured ? "scale(1.03)" : "translateY(0)"
-                  : "translateY(28px)",
+                    ? "translateY(0)"
+                    : "translateY(28px)",
                 transition: `opacity 0.5s ease ${i * 0.12}s, transform 0.5s ease ${i * 0.12}s`,
-                boxShadow: c.featured
-                  ? `0 20px 56px ${teal}28, 0 4px 16px ${teal}18`
-                  : "0 4px 24px rgba(9,38,63,0.07)",
+                boxShadow: "0 4px 24px rgba(9,38,63,0.07)",
                 position: "relative",
                 overflow: "hidden",
                 height: "100%",
               }}
             >
-              {/* Radial highlight on featured card */}
-              {c.featured && (
-                <div style={{
-                  position: "absolute", top: -50, right: -50,
-                  width: 200, height: 200,
-                  background: `radial-gradient(circle, ${teal}40 0%, transparent 70%)`,
-                  pointerEvents: "none",
-                }} />
-              )}
+              {/* Radial highlight removed for uniformity */}
 
               {/* Icon + tag row */}
               <div className="flex justify-between items-start mb-6">
@@ -173,9 +161,9 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
                 <span
                   className="text-[9px] font-extrabold tracking-[0.14em] px-3 py-1 rounded-full"
                   style={{
-                    background: c.featured ? teal : `${c.tagColor}18`,
-                    color: c.featured ? navy : c.tagColor,
-                    border: c.featured ? "none" : `1px solid ${c.tagColor}44`,
+                    background: `${c.tagColor}18`,
+                    color: c.tagColor,
+                    border: `1px solid ${c.tagColor}44`,
                   }}
                 >
                   {c.tag}
@@ -234,7 +222,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         <div className="text-center mt-6">
           <button
             onClick={onOpenDemo}
-            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block"
+            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
           >
             Signup for a Demo →
           </button>
