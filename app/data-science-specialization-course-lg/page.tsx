@@ -136,7 +136,7 @@ export default function Home() {
                   {/* Desktop Logo */}
                   <Image 
                     src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" 
-                    alt="AnalytixLabs" 
+                    alt="AnalytixLabs - Data Science Training Institute" 
                     width={180} height={40} 
                     className="w-auto h-[3.5rem] hidden sm:block" 
                     priority 
@@ -146,7 +146,7 @@ export default function Home() {
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image 
                   src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" 
-                  alt="Nasscom Futureskills" 
+                  alt="Nasscom Futureskills - Ministry of Electronics and Information Technology" 
                   width={160} height={40} 
                   className="w-auto h-[5.25rem]" 
                   priority 
@@ -297,7 +297,7 @@ export default function Home() {
               </div>
               <div className="rounded-3xl bg-[#F4FAFA] p-9 border border-[#D6ECEB]">
                 <span className="inline-block bg-[#D6ECEB] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">Global Recognition</span>
-                <h3 className="text-[#09263F] font-bold text-2xl mb-1">A Certificate That</h3>
+                <h2 className="text-[#09263F] font-bold text-2xl mb-1">A Certificate That</h2>
                 <h3 className="text-[#239bf5] font-bold text-2xl mb-5">Employers Recognise.</h3>
                 <p className="text-[#4A6275] text-sm leading-relaxed mb-8">Not just another piece of paper. You earn a co-branded certificate with NASSCOM FutureSkills Prime instantly validating your skills.</p>
                 <div className="space-y-5">
