@@ -87,15 +87,14 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         </p>
 
         {/* CTA */}
-        <button
-          onClick={onOpenEligibility}
-          className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center gap-3 active:scale-95 group"
-        >
-          Check Your Eligibility
-          <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={onOpenEligibility}
+            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95 mx-auto"
+          >
+            Check Your Eligibility →
+          </button>
+        </div>
 
         {/* Stats row */}
         <div className="flex justify-center gap-12 mt-12 relative">

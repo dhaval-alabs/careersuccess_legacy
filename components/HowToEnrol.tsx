@@ -190,7 +190,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
           </p>
           <button 
             onClick={onOpenEligibility}
-            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
+            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
           >
             Check Your Eligibility →
           </button>
