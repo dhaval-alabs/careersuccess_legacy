@@ -118,7 +118,7 @@ export default function LeadCaptureForm({
 
       {/* Header */}
       <div className="mb-6">
-        <h3 className="font-display font-bold text-[#09263F] text-xl mb-1">{title}</h3>
+        <h2 className="font-display font-bold text-[#09263F] text-xl mb-1">{title}</h2>
         <p className="text-[#4A6275] text-sm">Fill the form below to connect with our experts.</p>
       </div>
 

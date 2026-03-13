@@ -1,11 +1,9 @@
-'use client';
-
-import { useEffect } from 'react';
 import { captureUtmParams } from '../utils/captureUtm';
 import './globals.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Outfit } from 'next/font/google';
+import { useEffect } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,15 +19,23 @@ const outfit = Outfit({
   variable: '--font-outfit',
 });
 
+export const metadata: Metadata = {
+  title: "Data Science Specialization Course | AnalytixLabs",
+  description: "Accelerate your career with our Data Science Specialization Course. NASSCOM-FutureSkills Prime Certified program with placement guarantee.",
+};
+
+function ClientInit() {
+  useEffect(() => {
+    captureUtmParams();
+  }, []);
+  return null;
+}
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    captureUtmParams();
-  }, []);
-
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
@@ -48,6 +54,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
+        <ClientInit />
         {children}
       </body>
     </html>
