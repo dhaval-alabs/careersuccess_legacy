@@ -1,9 +1,8 @@
-import { captureUtmParams } from '../utils/captureUtm';
 import './globals.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Outfit } from 'next/font/google';
-import { useEffect } from 'react';
+import ClientInit from '../components/ClientInit';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,13 +22,6 @@ export const metadata: Metadata = {
   title: "Data Science Specialization Course | AnalytixLabs",
   description: "Accelerate your career with our Data Science Specialization Course. NASSCOM-FutureSkills Prime Certified program with placement guarantee.",
 };
-
-function ClientInit() {
-  useEffect(() => {
-    captureUtmParams();
-  }, []);
-  return null;
-}
 
 export default function RootLayout({
   children,
