@@ -221,10 +221,10 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
         {/* Demo CTA */}
         <div className="text-center mt-6">
           <button 
-            onClick={onOpenEligibility}
+            onClick={onOpenDemo}
             className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
           >
-            Check Your Eligibility →
+            Signup for a Demo →
           </button>
         </div>
       </div>
