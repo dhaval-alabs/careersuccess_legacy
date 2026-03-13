@@ -31,6 +31,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['careersuccess.analytixlabs.co.in'],
+    },
+  },
 };
 
 export default nextConfig;
