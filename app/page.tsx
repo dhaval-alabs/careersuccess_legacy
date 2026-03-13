@@ -168,9 +168,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-12">
-                <button onClick={() => setIsEligibilityOpen(true)} className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] text-center">Check Your Eligibility →</button>
-                <a href="tel:9555525908" className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(255,234,121,0.4)]">
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <button 
+                  onClick={() => setIsEligibilityOpen(true)} 
+                  className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
+                >
+                  Check Your Eligibility →
+                </button>
+                <a 
+                  href="tel:9555525908" 
+                  className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_4px_14px_rgba(255,234,121,0.4)] text-center flex items-center justify-center gap-2 active:scale-95"
+                >
                   <svg className="w-4 h-4 text-[#09263F]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
@@ -264,7 +272,15 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => setIsEligibilityOpen(true)} className="w-full bg-[#09263F] text-white font-bold py-4 rounded-xl hover:bg-[#1a3a5a] transition-all flex items-center justify-center gap-2 group">Check Eligibility <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></button>
+                  <button 
+                    onClick={() => setIsEligibilityOpen(true)} 
+                    className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center justify-center gap-2 group active:scale-95"
+                  >
+                    Check Eligibility 
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </button>
                 </div>
               </div>
               <div className="rounded-3xl bg-[#F4FAFA] p-9 border border-[#D6ECEB]">

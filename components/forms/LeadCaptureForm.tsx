@@ -222,11 +222,11 @@ export default function LeadCaptureForm({
           type="submit"
           disabled={isPending}
           className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] disabled:opacity-60
-                     text-[#09263F] font-bold py-4 rounded-xl text-sm
-                     transition-all duration-200 shadow-[0_8px_24px_rgba(29,229,181,0.3)]
-                     hover:shadow-[0_8px_32px_rgba(29,229,181,0.45)]
+                     text-[#09263F] font-bold py-4.5 rounded-xl text-lg
+                     transition-all duration-200 shadow-[0_8px_30px_rgba(29,229,181,0.3)]
+                     hover:shadow-[0_8px_40px_rgba(29,229,181,0.45)]
                      hover:-translate-y-px active:translate-y-0
-                     flex items-center justify-center gap-2"
+                     flex items-center justify-center gap-2 active:scale-95"
         >
           {isPending ? (
             <>

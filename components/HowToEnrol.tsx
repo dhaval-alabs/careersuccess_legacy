@@ -188,10 +188,11 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
           <p className="text-sm mb-8 relative max-w-lg mx-auto" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
             Join 20,000+ professionals who trained with AnalytixLabs. Check your eligibility or talk to a learning advisor. No commitment, no pressure.
           </p>
-          <button onClick={onOpenEligibility}
-            className="font-bold text-sm px-10 py-4 rounded-full relative"
-            style={{ background: teal, color: navy, border: "none", cursor: "pointer", boxShadow: `0 0 32px ${teal}44` }}>
-            Check Eligibility →
+          <button 
+            onClick={onOpenEligibility}
+            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
+          >
+            Check Your Eligibility →
           </button>
         </div>
       </div>
