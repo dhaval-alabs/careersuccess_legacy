@@ -62,9 +62,9 @@ export default function ThankYouPage({ heading, subCopy, conversionId, isBrochur
           <Image
             src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
             alt="NASSCOM"
-            width={60}
-            height={42}
-            style={{ objectFit: 'contain', borderRadius: '4px' }}
+            width={260}
+            height={50}
+            style={{ objectFit: 'contain', width: '260px', height: 'auto' }}
           />
         </div>
       </header>
