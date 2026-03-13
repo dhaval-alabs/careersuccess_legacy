@@ -42,6 +42,8 @@ export async function POST(req: NextRequest) {
 
       // CTA Source
       { Attribute: 'mx_Lead_Source_CTA',       Value: body.form_source },
+      { Attribute: 'Source',                  Value: body.form_source },
+      { Attribute: 'mx_TypeFilter',           Value: body.typeFilter || '' },
 
       // UTM Parameters
       { Attribute: 'mx_UTM_Source',            Value: body.utm_source || '' },
