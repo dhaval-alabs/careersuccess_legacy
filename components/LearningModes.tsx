@@ -71,14 +71,14 @@ const BlendedIcon = () => (
 
 const cards = [
   {
-    tag: "IN-PERSON",
-    Icon: ClassroomIcon,
-    title: "Classroom & Bootcamp",
-    price: "₹68,440",
-    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
-    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
+    tag: "FLEXIBLE",
+    Icon: BlendedIcon,
+    title: "Blended eLearning",
+    price: "₹53,100",
+    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals.",
+    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
     featured: false,
-    tagColor: navy,
+    tagColor: blue,
   },
   {
     tag: "MOST POPULAR",
@@ -88,15 +88,15 @@ const cards = [
     desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
-    tagColor: teal,
+    tagColor: blue,
   },
   {
-    tag: "FLEXIBLE",
-    Icon: BlendedIcon,
-    title: "Blended eLearning",
-    price: "₹53,100",
-    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals.",
-    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
+    tag: "IN-PERSON",
+    Icon: ClassroomIcon,
+    title: "Classroom & Bootcamp",
+    price: "₹68,440",
+    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
+    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
     tagColor: blue,
   },
@@ -134,7 +134,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
             <div
               key={c.title}
               style={{
-                background: "#fff",
+                background: "rgba(255, 255, 255, 0.7)",
                 border: "1.5px solid #e0eeeb",
                 borderRadius: 20,
                 padding: "32px 28px",
