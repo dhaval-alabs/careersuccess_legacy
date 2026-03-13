@@ -3,14 +3,17 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import dynamic from 'next/dynamic';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
 import Modal from "../../components/Modal";
-import FAQ from "../../components/FAQ";
-import CourseInfoSection from "../../components/CourseInfoSection";
-import LearningModes from "../../components/LearningModes";
-import HowToEnrol from "../../components/HowToEnrol";
-import BottomCTA from "../../components/BottomCTA";
 import StatsBar from "../../components/StatsBar";
+
+// Dynamic imports for below-the-fold components
+const FAQ = dynamic(() => import("../../components/FAQ"), { ssr: true });
+const CourseInfoSection = dynamic(() => import("../../components/CourseInfoSection"), { ssr: true });
+const LearningModes = dynamic(() => import("../../components/LearningModes"), { ssr: true });
+const HowToEnrol = dynamic(() => import("../../components/HowToEnrol"), { ssr: true });
+const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: true });
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -128,6 +131,7 @@ export default function Home() {
                     width={48} height={48} 
                     className="w-auto h-[4.5rem] sm:hidden" 
                     priority 
+                    sizes="(max-width: 640px) 48px, 0px"
                   />
                   {/* Desktop Logo */}
                   <Image 
@@ -136,10 +140,18 @@ export default function Home() {
                     width={180} height={40} 
                     className="w-auto h-[3.5rem] hidden sm:block" 
                     priority 
+                    sizes="(min-width: 640px) 180px, 0px"
                   />
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
-                <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" alt="Nasscom Futureskills" width={160} height={40} className="w-auto h-[5.25rem]" priority />
+                <Image 
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" 
+                  alt="Nasscom Futureskills" 
+                  width={160} height={40} 
+                  className="w-auto h-[5.25rem]" 
+                  priority 
+                  sizes="160px"
+                />
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
@@ -366,11 +378,23 @@ export default function Home() {
                 <div className="flex flex-col items-center gap-10">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
-                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" />
+                      <Image 
+                        src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" 
+                        alt="NASSCOM Certification" 
+                        width={600} height={420} 
+                        className="w-full h-auto rounded-lg shadow-sm"
+                        sizes="(max-width: 768px) 100vw, 300px"
+                      />
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">NASSCOM FutureSkills Prime</p>
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
-                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" />
+                      <Image 
+                        src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" 
+                        alt="AnalytixLabs Certification" 
+                        width={600} height={420} 
+                        className="w-full h-auto rounded-lg shadow-sm"
+                        sizes="(max-width: 768px) 100vw, 300px"
+                      />
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Advanced AI Certificate</p>
                     </div>
                   </div>

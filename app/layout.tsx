@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { captureUtmParams } from '../utils/captureUtm';
 import './globals.css';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter, Outfit } from 'next/font/google';
 
 const inter = Inter({
@@ -33,17 +34,18 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
         {/* Google Tag Manager (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-783236209"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-783236209');
-            `,
-          }}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-783236209"
+          strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-783236209');
+          `}
+        </Script>
       </head>
       <body>
         {children}
