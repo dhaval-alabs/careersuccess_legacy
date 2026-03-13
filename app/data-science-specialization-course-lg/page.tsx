@@ -8,12 +8,12 @@ import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
 import Modal from "../../components/Modal";
 import StatsBar from "../../components/StatsBar";
 
-// Dynamic imports for below-the-fold components
-const FAQ = dynamic(() => import("../../components/FAQ"), { ssr: true });
-const CourseInfoSection = dynamic(() => import("../../components/CourseInfoSection"), { ssr: true });
-const LearningModes = dynamic(() => import("../../components/LearningModes"), { ssr: true });
-const HowToEnrol = dynamic(() => import("../../components/HowToEnrol"), { ssr: true });
-const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: true });
+// Dynamic imports for below-the-fold components (reduced hydration cost)
+const FAQ = dynamic(() => import("../../components/FAQ"), { ssr: false });
+const CourseInfoSection = dynamic(() => import("../../components/CourseInfoSection"), { ssr: false });
+const LearningModes = dynamic(() => import("../../components/LearningModes"), { ssr: false });
+const HowToEnrol = dynamic(() => import("../../components/HowToEnrol"), { ssr: false });
+const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: false });
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -112,10 +112,10 @@ export default function Home() {
 
         {/* HERO SECTION */}
         <section className="relative overflow-hidden bg-white">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-[#1DE5B5]/10 -translate-y-1/3 translate-x-1/3 blur-[120px]" />
-            <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#9BE9FF]/15 blur-[100px]" />
-            <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] rounded-full bg-[#FFEA79]/10 blur-[80px]" />
+          <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#1DE5B5]/5 -translate-y-1/3 translate-x-1/3 blur-[80px]" />
+            <div className="absolute top-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-[#9BE9FF]/8 blur-[70px]" />
+            <div className="absolute bottom-[-10%] right-[10%] w-[300px] h-[300px] rounded-full bg-[#FFEA79]/5 blur-[60px]" />
             <div className="absolute inset-0 opacity-[0.05]"
               style={{ backgroundImage: "linear-gradient(#1DE5B5 1px,transparent 1px),linear-gradient(90deg,#1DE5B5 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
           </div>
