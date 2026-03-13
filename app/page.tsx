@@ -321,7 +321,7 @@ export default function Home() {
               </div>
               <button 
                 onClick={() => setIsBrochureOpen(true)} 
-                className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex-shrink-0"
+                className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex-shrink-0 active:scale-95"
               >
                 Download Brochure →
               </button>
@@ -376,7 +376,7 @@ export default function Home() {
                   </div>
                   <button 
                     onClick={() => setIsEligibilityOpen(true)} 
-                    className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)]"
+                    className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                   >
                     Check Your Eligibility →
                   </button>

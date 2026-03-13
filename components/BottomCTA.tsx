@@ -89,7 +89,7 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         {/* CTA */}
         <button
           onClick={onOpenEligibility}
-          className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_20px_40px_rgba(29,229,181,0.4)] flex items-center gap-3 active:scale-95 group"
+          className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4.5 rounded-xl text-lg transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center gap-3 active:scale-95 group"
         >
           Check Your Eligibility
           <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
