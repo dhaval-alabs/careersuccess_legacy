@@ -6,28 +6,28 @@ const stats = [
     value: 20000,
     suffix: "+",
     label: "Candidates Trained",
-    bg: "#29E8A4",
+    bg: "#29E8A480",
     text: "#09263F",
   },
   {
     value: 50,
     suffix: "+",
     label: "Companies Hired From Us",
-    bg: "#F5C842",
+    bg: "#F5C84280",
     text: "#09263F",
   },
   {
     value: 9.6,
     suffix: "/10",
     label: "Avg Student Rating",
-    bg: "#239bf5",
+    bg: "#239bf580",
     text: "#09263F",
   },
   {
     value: 12,
     suffix: "+",
     label: "Years of Excellence",
-    bg: "#09263F",
+    bg: "#09263F80",
     text: "#29E8A4",
   },
 ];
@@ -68,7 +68,7 @@ function StatCard({
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center px-8 py-10 rounded-2xl overflow-hidden group cursor-default select-none"
+      className="relative flex flex-col items-center justify-center px-8 py-10 rounded-2xl overflow-hidden group cursor-default select-none border border-[#09263F10]"
       style={{
         backgroundColor: stat.bg,
         opacity: triggered ? 1 : 0,
@@ -87,7 +87,7 @@ function StatCard({
         className="font-display font-extrabold leading-none tracking-tight"
         style={{
           color: stat.text,
-          fontSize: "clamp(2.4rem, 4vw, 3.5rem)",
+          fontSize: "clamp(2rem, 4vw, 2.5rem)",
           letterSpacing: "-0.03em",
         }}
       >
