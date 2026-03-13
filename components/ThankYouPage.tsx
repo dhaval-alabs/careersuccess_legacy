@@ -60,7 +60,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, isBrochur
           />
           <div style={{ width: '1px', height: '30px', background: '#D6ECEB' }} />
           <Image
-            src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg"
+            src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
             alt="NASSCOM"
             width={60}
             height={42}
@@ -170,7 +170,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, isBrochur
             <h3 style={cardTitle}>Chat on WhatsApp</h3>
             <p style={cardBody}>Connect with our counsellor instantly on WhatsApp.</p>
             <a href={`https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${WA_MESSAGE}`}
-               target="_blank" rel="noopener noreferrer" style={btnWhatsapp}>
+              target="_blank" rel="noopener noreferrer" style={btnWhatsapp}>
               Chat Now
             </a>
           </div>
