@@ -1,7 +1,7 @@
 // Migrated Landing Page
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
@@ -105,6 +105,21 @@ export default function Home() {
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky after scrolling 400px
+      if (window.scrollY > 400) {
+        setShowSticky(true);
+      } else {
+        setShowSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
@@ -442,12 +457,27 @@ export default function Home() {
           <p className="text-center text-[#4A6275] text-xs">&copy; {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.</p>
         </footer>
 
-        {/* MOBILE STICKY */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-2xl">
-          <a href="tel:9555525908" className="flex-1 flex items-center justify-center py-3 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs">📞 Call</a>
-          <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
-            className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-xs">💬 Chat</a>
-          <button onClick={() => setIsEligibilityOpen(true)} className="flex-1 border border-[#D6ECEB] text-[#09263F] font-bold py-3 rounded-xl text-xs">Check Eligibility</button>
+        {/* UNIVERSAL STICKY BAR */}
+        <div 
+          className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-all duration-500 transform ${
+            showSticky ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+          }`}
+        >
+          <div className="max-w-[1600px] mx-auto w-full flex gap-3">
+            <a href="tel:9555525908" className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors">
+              📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9555525908
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+              className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors">
+              💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp
+            </a>
+            <button 
+              onClick={() => setIsEligibilityOpen(true)} 
+              className="flex-1 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all shadow-[0_4px_12px_rgba(29,229,181,0.2)]"
+            >
+              Check Eligibility
+            </button>
+          </div>
         </div>
 
         {/* MODALS */}
