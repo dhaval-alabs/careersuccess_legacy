@@ -111,12 +111,17 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+      const curriculumSection = document.getElementById('curriculum');
       
-      // Calculate scroll percentage (0 to 1)
-      const progress = Math.min(scrollY / (documentHeight - windowHeight), 1);
-      setScrollProgress(progress);
+      if (curriculumSection) {
+        const curriculumOffset = curriculumSection.offsetTop;
+        const windowHeight = window.innerHeight;
+        
+        // Progress reaches 1.0 when the START of the curriculum section is reached
+        // Calculate progress from 0 (top) to curriculumOffset
+        const progress = Math.min(scrollY / (curriculumOffset - windowHeight / 2), 1);
+        setScrollProgress(progress);
+      }
 
       // Show sticky after scrolling 400px
       if (scrollY > 400) {
@@ -483,18 +488,21 @@ export default function Home() {
             <button 
               onClick={() => setIsEligibilityOpen(true)} 
               className={`flex-1 relative overflow-hidden border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 bg-white ${
-                scrollProgress >= 0.6 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : ''
+                scrollProgress >= 0.8 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : ''
               }`}
             >
-              {/* Progressive Fill Layer */}
+              {/* Progressive Fill Layer with Gradual Opacity */}
               <div 
-                className="absolute inset-0 bg-[#1DE5B5] transition-transform duration-300 origin-left"
-                style={{ transform: `scaleX(${scrollProgress})` }}
+                className="absolute inset-0 bg-[#1DE5B5] transition-all duration-300 origin-left"
+                style={{ 
+                  transform: `scaleX(${scrollProgress})`,
+                  opacity: scrollProgress * 1.1 // Becomes fully opaque faster than it fills
+                }}
               />
               <span className="relative z-10">Check Eligibility</span>
               
-              {/* Glow Animation Mask */}
-              {scrollProgress >= 0.6 && (
+              {/* Glow Animation Mask - Triggers near the target */}
+              {scrollProgress >= 0.8 && (
                 <div className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none" />
               )}
             </button>
