@@ -146,13 +146,13 @@ export default function CourseInfoSection() {
 
                 {/* 5-Column Single Row Grid */}
                 <div className="grid grid-cols-2 lg:grid-cols-5 items-stretch px-4 sm:px-8 py-6 lg:py-8 gap-8 lg:gap-0">
-                    
+
                     {/* Column 1: Upcoming Batches (Stacked on desktop, Side-by-side on mobile) */}
                     <div className="col-span-2 lg:col-span-1 flex flex-col h-full lg:px-6 lg:border-r border-[#dde8f4]">
                         <p style={{ margin: "0 0 16px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#6b7a96", textAlign: "center" }}>Upcoming Batches</p>
                         <div className="grid grid-cols-2 lg:flex lg:flex-col gap-3 justify-center flex-grow">
-                            <BatchCard date="1st" month="March" city="Noida" color="#d4f5e9" textColor="#1a3d2b" pinColor="#2e7d5e" />
-                            <BatchCard date="15th" month="March" city="Gurgaon" color="#fef5c8" textColor="#3d3010" pinColor="#9a7c0a" />
+                            <BatchCard date="29th" month="March" city="Gurgaon" color="#fef5c8" textColor="#3d3010" pinColor="#9a7c0a" />
+                            <BatchCard date="12th" month="April" city="Noida" color="#d4f5e9" textColor="#1a3d2b" pinColor="#2e7d5e" />
                         </div>
                     </div>
 
@@ -199,7 +199,7 @@ export default function CourseInfoSection() {
                                     ₹53,100<span style={{ fontSize: 16, fontWeight: 600, color: "#6b7a96" }}>/-*</span>
                                 </p>
                                 <p style={{ margin: "10px 0 0", fontSize: 13, color: "#6b7a96", fontWeight: 500, lineHeight: 1.4 }}>
-                                    0% EMI available<br/>Starts ₹6,387/month
+                                    0% EMI available<br />Starts ₹6,387/month
                                 </p>
                             </div>
                         </div>
