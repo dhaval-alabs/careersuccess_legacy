@@ -107,6 +107,7 @@ export default function Home() {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [hasPassedCurriculum, setHasPassedCurriculum] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,11 +117,20 @@ export default function Home() {
       if (curriculumSection) {
         const curriculumOffset = curriculumSection.offsetTop;
         const windowHeight = window.innerHeight;
+        const targetPoint = curriculumOffset - windowHeight / 2;
         
-        // Progress reaches 1.0 when the START of the curriculum section is reached
-        // Calculate progress from 0 (top) to curriculumOffset
-        const progress = Math.min(scrollY / (curriculumOffset - windowHeight / 2), 1);
-        setScrollProgress(progress);
+        // Calculate raw progress relative to curriculum (0 to 1)
+        const rawProgress = Math.min(scrollY / targetPoint, 1);
+        
+        // 0-10% deadzone: No color change (effective progress 0)
+        // 10-100%: Interpolate colors (effective progress 0 to 1)
+        let effectiveProgress = 0;
+        if (rawProgress > 0.1) {
+          effectiveProgress = (rawProgress - 0.1) / 0.9;
+        }
+        
+        setScrollProgress(effectiveProgress);
+        setHasPassedCurriculum(scrollY > targetPoint);
       }
 
       // Show sticky after scrolling 400px
@@ -134,6 +144,43 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Color Interpolation Helper: White -> Very Light Yellow -> Lemon -> Light Mint -> Green (#1DE5B5)
+  const getProgressiveColor = (progress: number) => {
+    if (progress <= 0) return 'rgba(255, 255, 255, 1)';
+    
+    // progress: 0 to 1
+    // Color targets: 
+    // hsl(60, 100%, 98%) -- Very Light Yellow
+    // hsl(65, 95%, 85%)  -- Lemon
+    // hsl(140, 75%, 90%) -- Light Mint
+    // rgb(29, 229, 181) -- Final Green
+    
+    const opacity = Math.min(progress * 1.5, 1); // Opacity increases faster than color
+    
+    if (progress < 0.33) {
+      // White to Very Light Yellow
+      const f = progress / 0.33;
+      const r = 255;
+      const g = 255;
+      const b = 255 - (255 - 240) * f;
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    } else if (progress < 0.66) {
+      // Light Yellow to Lemon/Mint
+      const f = (progress - 0.33) / 0.33;
+      const r = 255 - (255 - 200) * f;
+      const g = 255;
+      const b = 240 - (240 - 240) * f; // Keep blue low for greener/yellower
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    } else {
+      // Mint to Final Green (29, 229, 181)
+      const f = (progress - 0.66) / 0.34;
+      const r = 200 - (200 - 29) * f;
+      const g = 255 - (255 - 229) * f;
+      const b = 240 - (240 - 181) * f;
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+  };
 
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
@@ -487,24 +534,14 @@ export default function Home() {
             </a>
             <button 
               onClick={() => setIsEligibilityOpen(true)} 
-              className={`flex-1 relative overflow-hidden border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 bg-white ${
-                scrollProgress >= 0.8 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : ''
+              className={`flex-1 relative overflow-hidden border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 ${
+                hasPassedCurriculum ? 'animate-breathing-glow shadow-[0_0_25px_rgba(29,229,181,0.6)] border-[#1DE5B5]' : (scrollProgress > 0.8 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : '')
               }`}
+              style={{ 
+                backgroundColor: hasPassedCurriculum ? '#1DE5B5' : getProgressiveColor(scrollProgress)
+              }}
             >
-              {/* Progressive Fill Layer with Gradual Opacity */}
-              <div 
-                className="absolute inset-0 bg-[#1DE5B5] transition-all duration-300 origin-left"
-                style={{ 
-                  transform: `scaleX(${scrollProgress})`,
-                  opacity: scrollProgress * 1.1 // Becomes fully opaque faster than it fills
-                }}
-              />
               <span className="relative z-10">Check Eligibility</span>
-              
-              {/* Glow Animation Mask - Triggers near the target */}
-              {scrollProgress >= 0.8 && (
-                <div className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none" />
-              )}
             </button>
           </div>
         </div>
