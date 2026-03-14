@@ -102,7 +102,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
           </span>
           <h2 className="font-extrabold leading-tight tracking-tight mb-3"
             style={{ fontFamily: "var(--font-outfit)", fontSize: "clamp(2rem,4vw,3rem)", color: navy }}>
-            Getting <span style={{ color: teal }}>Started</span> is Simple
+            Getting <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Started</span> is Simple
           </h2>
           <p className="text-sm" style={{ color: "#4A6275" }}>
             Your journey to a data science career in three simple steps.
