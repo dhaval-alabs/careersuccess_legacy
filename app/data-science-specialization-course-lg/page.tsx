@@ -129,7 +129,7 @@ export default function Home() {
                     src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp" 
                     alt="AnalytixLabs Icon" 
                     width={48} height={48} 
-                    className="w-auto h-[4.5rem] sm:hidden" 
+                    className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain" 
                     priority 
                     sizes="(max-width: 640px) 48px, 0px"
                   />
@@ -148,9 +148,9 @@ export default function Home() {
                   src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" 
                   alt="Nasscom Futureskills - Ministry of Electronics and Information Technology" 
                   width={160} height={40} 
-                  className="w-auto h-[5.25rem]" 
+                  className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain" 
                   priority 
-                  sizes="160px"
+                  sizes="(max-width: 640px) 260px, 160px"
                 />
               </div>
 
@@ -161,7 +161,7 @@ export default function Home() {
               </h1>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
-                {["Classroom", "Online", "Blended", "675 Hours"].map((item) => (
+                {["Classroom", "Online", "Blended"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                       <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
