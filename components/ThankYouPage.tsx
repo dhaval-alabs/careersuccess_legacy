@@ -12,7 +12,7 @@ interface ThankYouProps {
   isBrochureDownload?: boolean;
 }
 
-const WEBINAR_URL = 'https://us06web.zoom.us/webinar/register/1117706174998/WN_6E7nUME2RlKyG0a8N0qXEQ#/registration';
+const WEBINAR_URL = 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
 const BROCHURE_PDF_URL = 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
 const PHONE_NUMBER = '919555525908';
 const WA_MESSAGE = encodeURIComponent(
