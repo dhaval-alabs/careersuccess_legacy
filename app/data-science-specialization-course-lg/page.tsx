@@ -48,16 +48,16 @@ const MODULES = [
 ];
 
 const ALUMNI_COMPANIES = [
-  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", h: "h-8" },
-  { name: "Flipkart", url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flipkart_logo_%282026%29.svg", h: "h-11" },
-  { name: "HDFC Bank", url: "https://upload.wikimedia.org/wikipedia/commons/2/28/HDFC_Bank_Logo.svg", h: "h-9" },
-  { name: "Accenture", url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg", h: "h-8" },
-  { name: "TCS", url: "https://upload.wikimedia.org/wikipedia/commons/9/9b/TATA_Consultancy_Services_Logo.svg", h: "h-11" },
-  { name: "IBM", url: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg", h: "h-9" },
-  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg", h: "h-9" },
-  { name: "Wipro", url: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg", h: "h-11" },
-  { name: "Cognizant", url: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg", h: "h-8" },
-  { name: "Infosys", url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Infosys_Technologies_logo.svg", h: "h-8" },
+  { name: "Amazon", url: "/images/alumni/amazon.svg", h: "h-8", width: 120, height: 32 },
+  { name: "Flipkart", url: "/images/alumni/flipkart.svg", h: "h-11", width: 140, height: 44 },
+  { name: "HDFC Bank", url: "/images/alumni/hdfc.svg", h: "h-9", width: 120, height: 36 },
+  { name: "Accenture", url: "/images/alumni/accenture.svg", h: "h-8", width: 120, height: 32 },
+  { name: "TCS", url: "/images/alumni/tcs.svg", h: "h-11", width: 120, height: 44 },
+  { name: "IBM", url: "/images/alumni/ibm.svg", h: "h-9", width: 100, height: 36 },
+  { name: "Deloitte", url: "/images/alumni/deloitte.svg", h: "h-9", width: 120, height: 36 },
+  { name: "Wipro", url: "/images/alumni/wipro.svg", h: "h-11", width: 120, height: 44 },
+  { name: "Cognizant", url: "/images/alumni/cognizant.svg", h: "h-8", width: 140, height: 32 },
+  { name: "Infosys", url: "/images/alumni/infosys.svg", h: "h-8", width: 120, height: 32 },
 ];
 
 const TESTIMONIALS = [
@@ -327,7 +327,13 @@ export default function Home() {
                   {[...Array(3)].flatMap((_, ri) =>
                     ALUMNI_COMPANIES.map((c, i) => (
                       <div key={`${ri}-${i}`} className="flex-shrink-0 flex items-center justify-center h-12">
-                        <img src={c.url} alt={c.name} className={`${c.h || 'h-8'} w-auto object-contain opacity-100 transition-opacity`} loading="lazy" />
+                        <Image 
+                          src={c.url} 
+                          alt={c.name} 
+                          width={c.width}
+                          height={c.height}
+                          className={`${c.h || 'h-8'} w-auto object-contain opacity-100 transition-opacity`} 
+                        />
                       </div>
                     ))
                   )}

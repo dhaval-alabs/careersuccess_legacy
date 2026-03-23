@@ -212,6 +212,7 @@ h4 {
 /* Alumni logo marquee (slower, more premium feel) */
 .animate-marquee-logos {
   animation: marquee 40s linear infinite;
+  will-change: transform;
 }
 /* BottomCTA — ambient blob animation */
 @keyframes blobFloat {
