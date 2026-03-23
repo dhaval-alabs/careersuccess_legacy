@@ -48,16 +48,16 @@ const MODULES = [
 ];
 
 const ALUMNI_COMPANIES = [
-  { name: "Amazon", url: "/images/alumni/amazon.svg", h: "h-8", width: 120, height: 32 },
-  { name: "Flipkart", url: "/images/alumni/flipkart.svg", h: "h-11", width: 140, height: 44 },
-  { name: "HDFC Bank", url: "/images/alumni/hdfc.svg", h: "h-9", width: 120, height: 36 },
-  { name: "Accenture", url: "/images/alumni/accenture.svg", h: "h-8", width: 120, height: 32 },
-  { name: "TCS", url: "/images/alumni/tcs.svg", h: "h-11", width: 120, height: 44 },
-  { name: "IBM", url: "/images/alumni/ibm.svg", h: "h-9", width: 100, height: 36 },
-  { name: "Deloitte", url: "/images/alumni/deloitte.svg", h: "h-9", width: 120, height: 36 },
-  { name: "Wipro", url: "/images/alumni/wipro.svg", h: "h-11", width: 120, height: 44 },
-  { name: "Cognizant", url: "/images/alumni/cognizant.svg", h: "h-8", width: 140, height: 32 },
-  { name: "Infosys", url: "/images/alumni/infosys.svg", h: "h-8", width: 120, height: 32 },
+  { name: "Amazon", url: "/lp/images/alumni/amazon.svg", h: "h-8", width: 120, height: 32 },
+  { name: "Flipkart", url: "/lp/images/alumni/flipkart.svg", h: "h-11", width: 140, height: 44 },
+  { name: "HDFC Bank", url: "/lp/images/alumni/hdfc.svg", h: "h-9", width: 120, height: 36 },
+  { name: "Accenture", url: "/lp/images/alumni/accenture.svg", h: "h-8", width: 120, height: 32 },
+  { name: "TCS", url: "/lp/images/alumni/tcs.svg", h: "h-11", width: 120, height: 44 },
+  { name: "IBM", url: "/lp/images/alumni/ibm.svg", h: "h-9", width: 100, height: 36 },
+  { name: "Deloitte", url: "/lp/images/alumni/deloitte.svg", h: "h-9", width: 120, height: 36 },
+  { name: "Wipro", url: "/lp/images/alumni/wipro.svg", h: "h-11", width: 120, height: 44 },
+  { name: "Cognizant", url: "/lp/images/alumni/cognizant.svg", h: "h-8", width: 140, height: 32 },
+  { name: "Infosys", url: "/lp/images/alumni/infosys.svg", h: "h-8", width: 120, height: 32 },
 ];
 
 const TESTIMONIALS = [
