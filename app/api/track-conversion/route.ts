@@ -58,7 +58,17 @@ export async function POST(req: NextRequest) {
       }
     )
 
-    const data = await response.json()
+    let data
+    try {
+      data = await response.json()
+    } catch (e) {
+      const text = await response.text()
+      console.error('Google Ads API non-JSON response:', text)
+      return NextResponse.json(
+        { error: 'Google Ads API returned non-JSON', detail: text.substring(0, 500) },
+        { status: 500 }
+      )
+    }
 
     if (!response.ok) {
       console.error('Google Ads API error:', JSON.stringify(data))
@@ -95,11 +105,18 @@ async function getAccessToken(): Promise<string> {
     }),
   })
 
-  const data = await res.json()
+  let data
+  try {
+    data = await res.json()
+  } catch (e) {
+    const text = await res.text()
+    console.error('OAuth token non-JSON response:', text)
+    throw new Error(`OAuth API returned non-JSON: ${text.substring(0, 200)}`)
+  }
 
-  if (!data.access_token) {
+  if (!res.ok || !data.access_token) {
     console.error('OAuth token error:', JSON.stringify(data))
-    throw new Error('Failed to get access token')
+    throw new Error(`Failed to get access token: ${JSON.stringify(data)}`)
   }
 
   return data.access_token
