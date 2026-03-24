@@ -56,8 +56,16 @@ export async function POST(req: NextRequest) {
         'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
       }
     })
-    const listData = await listRes.json()
-    console.log('Accessible customers:', JSON.stringify(listData))
+    const listText = await listRes.text()
+    console.log('listAccessibleCustomers status:', listRes.status)
+    console.log('listAccessibleCustomers raw response:', listText.substring(0, 500))
+
+    let listData = {}
+    try {
+      listData = JSON.parse(listText)
+    } catch (e) {
+      console.warn('listAccessibleCustomers returned non-JSON')
+    }
 
     const response = await fetch(
       `https://googleads.googleapis.com/v17/customers/${CONVERSION_ID}:uploadClickConversions`,
