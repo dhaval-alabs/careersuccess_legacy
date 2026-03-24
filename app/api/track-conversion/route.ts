@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CONVERSION_ID = '4064995850'
+const MCC_ID = '8910137241'
 
 const CONVERSION_MAP: Record<string, string> = {
   lp_submit_lead_primary: '7546926404',
@@ -19,8 +20,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const conversionLabel = CONVERSION_MAP[ctaName]
-    if (!conversionLabel) {
+    const conversionActionId = CONVERSION_MAP[ctaName]
+    if (!conversionActionId) {
       return NextResponse.json(
         { error: `Unknown ctaName: ${ctaName}` },
         { status: 400 }
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
       conversions: [
         {
           gclid,
-          conversion_action: `customers/${CONVERSION_ID}/conversionActions/${conversionLabel}`,
+          conversion_action: `customers/${CONVERSION_ID}/conversionActions/${conversionActionId}`,
           conversion_date_time: new Date()
             .toISOString()
             .replace('T', ' ')
@@ -45,28 +46,6 @@ export async function POST(req: NextRequest) {
       partial_failure: true,
     }
 
-    const checkUrl = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}`
-    console.log('Checking customer resource:', checkUrl)
-    // Debug: List accessible customers to see what this token can "see"
-    const listUrl = `https://googleads.googleapis.com/v17/customers:listAccessibleCustomers`
-    console.log('Listing accessible customers:', listUrl)
-    const listRes = await fetch(listUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-      }
-    })
-    const listText = await listRes.text()
-    console.log('listAccessibleCustomers status:', listRes.status)
-    console.log('listAccessibleCustomers raw response:', listText.substring(0, 500))
-
-    let listData = {}
-    try {
-      listData = JSON.parse(listText)
-    } catch (e) {
-      console.warn('listAccessibleCustomers returned non-JSON')
-    }
-
     const response = await fetch(
       `https://googleads.googleapis.com/v17/customers/${CONVERSION_ID}:uploadClickConversions`,
       {
@@ -74,7 +53,7 @@ export async function POST(req: NextRequest) {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-          'login-customer-id': CONVERSION_ID,
+          'login-customer-id': MCC_ID,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
