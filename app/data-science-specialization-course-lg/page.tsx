@@ -1,7 +1,7 @@
 // Migrated Landing Page
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
@@ -108,6 +108,35 @@ export default function Home() {
   const [showSticky, setShowSticky] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [hasPassedCurriculum, setHasPassedCurriculum] = useState(false);
+
+  // ─── Conversion Tracking ─────────────────────────────────────────────────────
+  const gclidRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const gclid = params.get('gclid')
+    if (gclid) {
+      sessionStorage.setItem('gclid', gclid)
+      gclidRef.current = gclid
+    } else {
+      gclidRef.current = sessionStorage.getItem('gclid')
+    }
+  }, [])
+
+  async function fireConversion(ctaName: string) {
+    const gclid = gclidRef.current || sessionStorage.getItem('gclid')
+    if (!gclid) return
+    try {
+      await fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ctaName, gclid }),
+      })
+    } catch (e) {
+      console.error('Conversion tracking failed:', e)
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────────
 
   useEffect(() => {
     const handleScroll = () => {
@@ -283,6 +312,7 @@ export default function Home() {
                 typeFilter="PPC_downloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
+                onSuccess={() => fireConversion('lp_download_brochure')}
               />
             </div>
           </div>
@@ -560,6 +590,7 @@ export default function Home() {
             typeFilter="PPC_CheckEligibility" 
             buttonText="Check Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
+            onSuccess={() => fireConversion('lp_submit_lead_primary')}
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
@@ -569,6 +600,7 @@ export default function Home() {
             typeFilter="PPC_downloadBrochure" 
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
+            onSuccess={() => fireConversion('lp_download_brochure')}
           />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
@@ -578,6 +610,7 @@ export default function Home() {
             typeFilter="signUpForDemo" 
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
+            onSuccess={() => fireConversion('lp_book_demo')}
           />
         </Modal>
 

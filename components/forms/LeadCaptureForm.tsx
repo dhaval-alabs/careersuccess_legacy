@@ -20,11 +20,12 @@ const COUNTRY_CODES = [
 ];
 
 interface LeadCaptureFormProps {
-  sourceName?:    string;
-  buttonText?:    string;
-  title?:         string;
-  typeFilter?:    string;
-  thankYouPath?: string; // Path to redirect to after success
+  sourceName?:   string;
+  buttonText?:   string;
+  title?:        string;
+  typeFilter?:   string;
+  thankYouPath?: string;
+  onSuccess?:    () => void;
 }
 
 /* Shared input className */
@@ -43,6 +44,7 @@ export default function LeadCaptureForm({
   title       = 'Get Free Career Counselling',
   typeFilter,
   thankYouPath = '/thankyou-check-your-eligibility',
+  onSuccess,
 }: LeadCaptureFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -79,6 +81,7 @@ export default function LeadCaptureForm({
     startTransition(async () => {
       const result = await createLeadAction(data);
       if (result.success) {
+        onSuccess?.()
         if (thankYouPath) {
           const params = new URLSearchParams({
             email: data.email,
