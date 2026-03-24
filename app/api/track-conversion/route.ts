@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 const CONVERSION_ID = '783236209'
 
 const CONVERSION_MAP: Record<string, string> = {
-  lp_submit_lead_primary: 'N79JCMTq044cEPH4vPUC',
-  lp_book_demo: 'cruTCPjB3o4cEPH4vPUC',
-  lp_download_brochure: 'tnf-CMrS3o4cEPH4vPUC',
+  lp_submit_lead_primary: '7546926404',
+  lp_book_demo: '7547101432',
+  lp_download_brochure: '7547103562',
 }
 
 export async function POST(req: NextRequest) {
