@@ -47,6 +47,18 @@ export async function POST(req: NextRequest) {
 
     const checkUrl = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}`
     console.log('Checking customer resource:', checkUrl)
+    // Debug: List accessible customers to see what this token can "see"
+    const listUrl = `https://googleads.googleapis.com/v17/customers:listAccessibleCustomers`
+    console.log('Listing accessible customers:', listUrl)
+    const listRes = await fetch(listUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+      }
+    })
+    const listData = await listRes.json()
+    console.log('Accessible customers:', JSON.stringify(listData))
+
     const response = await fetch(
       `https://googleads.googleapis.com/v17/customers/${CONVERSION_ID}:uploadClickConversions`,
       {
