@@ -45,22 +45,26 @@ export async function POST(req: NextRequest) {
       partial_failure: true,
     }
 
+    const checkUrl = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}`
+    console.log('Checking customer resource:', checkUrl)
+    const checkRes = await fetch(checkUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+      }
+    })
+    console.log('Customer resource status:', checkRes.status)
+    if (checkRes.status === 404) {
+      const checkText = await checkRes.text()
+      return NextResponse.json({ 
+        error: 'Customer ID not found (404)', 
+        detail: checkText.substring(0, 200),
+        customerId: CONVERSION_ID 
+      }, { status: 404 })
+    }
+
     const url = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}:uploadClickConversions`
     console.log('Sending request to Google Ads API:', url)
-    console.log('Payload:', JSON.stringify(payload, null, 2))
-
-    const response = await fetch(
-      url,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      }
-    )
 
     const responseText = await response.text()
     let data
