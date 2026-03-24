@@ -58,14 +58,18 @@ export async function POST(req: NextRequest) {
       }
     )
 
+    const responseText = await response.text()
     let data
     try {
-      data = await response.json()
+      data = JSON.parse(responseText)
     } catch (e) {
-      const text = await response.text()
-      console.error('Google Ads API non-JSON response:', text)
+      console.error('Google Ads API non-JSON response:', responseText)
       return NextResponse.json(
-        { error: 'Google Ads API returned non-JSON', detail: text.substring(0, 500) },
+        { 
+          error: 'Google Ads API returned non-JSON', 
+          detail: responseText.substring(0, 500),
+          status: response.status 
+        },
         { status: 500 }
       )
     }
@@ -79,7 +83,6 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, result: data })
-
   } catch (err: any) {
     console.error('track-conversion error:', err)
     return NextResponse.json(
@@ -105,13 +108,13 @@ async function getAccessToken(): Promise<string> {
     }),
   })
 
+  const resText = await res.text()
   let data
   try {
-    data = await res.json()
+    data = JSON.parse(resText)
   } catch (e) {
-    const text = await res.text()
-    console.error('OAuth token non-JSON response:', text)
-    throw new Error(`OAuth API returned non-JSON: ${text.substring(0, 200)}`)
+    console.error('OAuth token non-JSON response:', resText)
+    throw new Error(`OAuth API returned non-JSON (Status ${res.status}): ${resText.substring(0, 200)}`)
   }
 
   if (!res.ok || !data.access_token) {
