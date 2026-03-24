@@ -45,8 +45,12 @@ export async function POST(req: NextRequest) {
       partial_failure: true,
     }
 
+    const url = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}:uploadClickConversions`
+    console.log('Sending request to Google Ads API:', url)
+    console.log('Payload:', JSON.stringify(payload, null, 2))
+
     const response = await fetch(
-      `https://googleads.googleapis.com/v16/customers/${CONVERSION_ID}:uploadClickConversions`,
+      url,
       {
         method: 'POST',
         headers: {
