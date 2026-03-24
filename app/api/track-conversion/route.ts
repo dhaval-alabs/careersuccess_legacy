@@ -70,10 +70,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, result: data })
 
-  } catch (err) {
+  } catch (err: any) {
     console.error('track-conversion error:', err)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error', 
+        message: err.message,
+        stack: err.stack 
+      },
       { status: 500 }
     )
   }
