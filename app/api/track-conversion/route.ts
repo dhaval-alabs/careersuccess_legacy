@@ -47,33 +47,14 @@ export async function POST(req: NextRequest) {
 
     const checkUrl = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}`
     console.log('Checking customer resource:', checkUrl)
-    const checkRes = await fetch(checkUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-      }
-    })
-    console.log('Customer resource status:', checkRes.status)
-    if (checkRes.status === 404) {
-      const checkText = await checkRes.text()
-      return NextResponse.json({ 
-        error: 'Customer ID not found (404)', 
-        detail: checkText.substring(0, 200),
-        customerId: CONVERSION_ID 
-      }, { status: 404 })
-    }
-
-    const url = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}:uploadClickConversions`
-    console.log('Sending request to Google Ads API:', url)
-    console.log('Payload:', JSON.stringify(payload, null, 2))
-
     const response = await fetch(
-      url,
+      `https://googleads.googleapis.com/v17/customers/${CONVERSION_ID}:uploadClickConversions`,
       {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+          'login-customer-id': CONVERSION_ID,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
@@ -108,11 +89,7 @@ export async function POST(req: NextRequest) {
   } catch (err: any) {
     console.error('track-conversion error:', err)
     return NextResponse.json(
-      { 
-        error: 'Internal server error', 
-        message: err.message,
-        stack: err.stack 
-      },
+      { error: 'Internal server error', message: err.message },
       { status: 500 }
     )
   }
@@ -135,12 +112,10 @@ async function getAccessToken(): Promise<string> {
   try {
     data = JSON.parse(resText)
   } catch (e) {
-    console.error('OAuth token non-JSON response:', resText)
-    throw new Error(`OAuth API returned non-JSON (Status ${res.status}): ${resText.substring(0, 200)}`)
+    throw new Error(`OAuth API returned non-JSON: ${resText.substring(0, 100)}`)
   }
 
   if (!res.ok || !data.access_token) {
-    console.error('OAuth token error:', JSON.stringify(data))
     throw new Error(`Failed to get access token: ${JSON.stringify(data)}`)
   }
 
