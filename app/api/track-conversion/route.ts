@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await fetch(
-      `https://googleads.googleapis.com/v17/customers/${CONVERSION_ID}:uploadClickConversions`,
+      `https://googleads.googleapis.com/v16/customers/${CONVERSION_ID}:uploadClickConversions`,
       {
         method: 'POST',
         headers: {
@@ -67,10 +67,10 @@ export async function POST(req: NextRequest) {
     } catch (e) {
       console.error('Google Ads API non-JSON response:', responseText)
       return NextResponse.json(
-        { 
-          error: 'Google Ads API returned non-JSON', 
+        {
+          error: 'Google Ads API returned non-JSON',
           detail: responseText.substring(0, 500),
-          status: response.status 
+          status: response.status
         },
         { status: 500 }
       )
