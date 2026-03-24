@@ -65,6 +65,20 @@ export async function POST(req: NextRequest) {
 
     const url = `https://googleads.googleapis.com/v18/customers/${CONVERSION_ID}:uploadClickConversions`
     console.log('Sending request to Google Ads API:', url)
+    console.log('Payload:', JSON.stringify(payload, null, 2))
+
+    const response = await fetch(
+      url,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      }
+    )
 
     const responseText = await response.text()
     let data
