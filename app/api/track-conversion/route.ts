@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const CONVERSION_ID = '4064995850'
-const MCC_ID = '8910137241'
+const GOOGLE_ADS_CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
+const GOOGLE_ADS_MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
 const CONVERSION_MAP: Record<string, string> = {
   lp_submit_lead_primary: '7546926404',
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       conversions: [
         {
           gclid,
-          conversion_action: `customers/${CONVERSION_ID}/conversionActions/${conversionActionId}`,
+          conversion_action: `customers/${GOOGLE_ADS_CUSTOMER_ID}/conversionActions/${conversionActionId}`,
           conversion_date_time: new Date()
             .toISOString()
             .replace('T', ' ')
@@ -47,13 +47,13 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await fetch(
-      `https://googleads.googleapis.com/v16/customers/${CONVERSION_ID}:uploadClickConversions`,
+      `https://googleads.googleapis.com/v23/customers/${GOOGLE_ADS_CUSTOMER_ID}:uploadClickConversions`,
       {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-          'login-customer-id': MCC_ID,
+          'login-customer-id': GOOGLE_ADS_MCC_ID,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
