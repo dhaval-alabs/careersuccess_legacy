@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useTransition, FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { createLeadAction } from '../../app/actions/leads';
 import { initBehaviourTracking, recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
@@ -46,7 +45,6 @@ export default function LeadCaptureForm({
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
 }: LeadCaptureFormProps) {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
 
@@ -88,7 +86,7 @@ export default function LeadCaptureForm({
             name:  data.name,
             phone: data.mobile,
           });
-          router.push(`${thankYouPath}?${params.toString()}`);
+          window.location.href = `${thankYouPath}?${params.toString()}`;
         } else {
           setFormState({ success: true, error: '' });
         }
