@@ -311,7 +311,7 @@ export default function Home() {
                 sourceName="PPC_downloadBrochure" 
                 typeFilter="PPC_downloadBrochure" 
                 buttonText="Download Brochure"
-                thankYouPath="/thankyou-download-brochure"
+                thankYouPath="/lp/thankyou-download-brochure"
                 onSuccess={() => fireConversion('lp_download_brochure')}
               />
             </div>
@@ -589,7 +589,7 @@ export default function Home() {
             sourceName="PPC_CheckEligibility" 
             typeFilter="PPC_CheckEligibility" 
             buttonText="Check Eligibility →"
-            thankYouPath="/thankyou-check-your-eligibility"
+            thankYouPath="/lp/thankyou-check-your-eligibility"
             onSuccess={() => fireConversion('lp_submit_lead_primary')}
           />
         </Modal>
@@ -599,7 +599,7 @@ export default function Home() {
             sourceName="PPC_downloadBrochure" 
             typeFilter="PPC_downloadBrochure" 
             buttonText="Download Now →"
-            thankYouPath="/thankyou-download-brochure"
+            thankYouPath="/lp/thankyou-download-brochure"
             onSuccess={() => fireConversion('lp_download_brochure')}
           />
         </Modal>
@@ -609,7 +609,7 @@ export default function Home() {
             sourceName="PPC_signUpForDemo" 
             typeFilter="signUpForDemo" 
             buttonText="Signup for a Demo"
-            thankYouPath="/thankyou-signup"
+            thankYouPath="/lp/thankyou-signup"
             onSuccess={() => fireConversion('lp_book_demo')}
           />
         </Modal>
