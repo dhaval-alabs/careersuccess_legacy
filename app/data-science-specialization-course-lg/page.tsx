@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
+import { initBehaviourTracking } from '../../utils/trackBehaviour';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
 import Modal from "../../components/Modal";
 import StatsBar from "../../components/StatsBar";
@@ -111,6 +112,10 @@ export default function Home() {
 
   // ─── Conversion Tracking ─────────────────────────────────────────────────────
   const gclidRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    initBehaviourTracking()
+  }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)

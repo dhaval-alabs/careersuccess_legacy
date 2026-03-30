@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useTransition, FormEvent, useEffect } from 'react';
+import { useState, useTransition, FormEvent } from 'react';
 import { createLeadAction } from '../../app/actions/leads';
-import { initBehaviourTracking, recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
+import { recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
 
 const INDIA_CITIES = [
@@ -48,9 +48,6 @@ export default function LeadCaptureForm({
   const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
 
-  useEffect(() => {
-    initBehaviourTracking();
-  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
