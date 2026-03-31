@@ -83,7 +83,7 @@ const handler = createMcpHandler((server) => {
         campaign: r.campaign?.name,
         impressions: r.metrics?.impressions,
         clicks: r.metrics?.clicks,
-        ctr: \`\${((r.metrics?.ctr || 0) * 100).toFixed(2)}%\`,
+        ctr: `${((r.metrics?.ctr || 0) * 100).toFixed(2)}%`,
         conversions: r.metrics?.conversions,
         spend_inr: ((r.metrics?.cost_micros || 0) / 1_000_000).toFixed(2),
         cpa_inr: ((r.metrics?.cost_per_conversion || 0) / 1_000_000).toFixed(2),
@@ -270,7 +270,7 @@ const handler = createMcpHandler((server) => {
           campaign: r.campaign?.name,
           daily_budget_inr: dailyBudget.toFixed(2),
           avg_daily_spend_inr: avgDailySpend.toFixed(2),
-          pacing_pct: \`\${pacing}%\`,
+          pacing_pct: `${pacing}%`,
           status,
           conversions_7d: r.metrics?.conversions,
         }
