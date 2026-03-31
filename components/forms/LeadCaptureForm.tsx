@@ -24,7 +24,7 @@ interface LeadCaptureFormProps {
   title?:        string;
   typeFilter?:   string;
   thankYouPath?: string;
-  onSuccess?:    () => void;
+  onSuccess?:    (email: string) => void;
 }
 
 /* Shared input className */
@@ -76,7 +76,7 @@ export default function LeadCaptureForm({
     startTransition(async () => {
       const result = await createLeadAction(data);
       if (result.success) {
-        onSuccess?.()
+        onSuccess?.(data.email)
         if (thankYouPath) {
           const params = new URLSearchParams({
             email: data.email,

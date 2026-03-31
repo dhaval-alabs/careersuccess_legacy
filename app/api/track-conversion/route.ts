@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
 
 const GOOGLE_ADS_CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
 const GOOGLE_ADS_MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
@@ -23,7 +24,7 @@ const CONVERSION_MAP: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   try {
-    const { ctaName, gclid } = await req.json()
+    const { ctaName, gclid, email } = await req.json()
 
     if (!ctaName || !gclid) {
       return NextResponse.json(
@@ -42,19 +43,29 @@ export async function POST(req: NextRequest) {
 
     const accessToken = await getAccessToken()
 
+    const hashedEmail = email
+      ? crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex')
+      : undefined
+
+    const conversion: Record<string, any> = {
+      gclid,
+      conversion_action: `customers/${GOOGLE_ADS_CUSTOMER_ID}/conversionActions/${conversionActionId}`,
+      conversion_date_time: new Date()
+        .toISOString()
+        .replace('T', ' ')
+        .replace('Z', '+00:00'),
+      conversion_value: 1.0,
+      currency_code: 'INR',
+    }
+
+    if (hashedEmail) {
+      conversion.user_identifiers = [{
+        hashed_email: hashedEmail
+      }]
+    }
+
     const payload = {
-      conversions: [
-        {
-          gclid,
-          conversion_action: `customers/${GOOGLE_ADS_CUSTOMER_ID}/conversionActions/${conversionActionId}`,
-          conversion_date_time: new Date()
-            .toISOString()
-            .replace('T', ' ')
-            .replace('Z', '+00:00'),
-          conversion_value: 1.0,
-          currency_code: 'INR',
-        },
-      ],
+      conversions: [conversion],
       partial_failure: true,
     }
 

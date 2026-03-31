@@ -129,14 +129,14 @@ export default function Home() {
     }
   }, [])
 
-  async function fireConversion(ctaName: string) {
+  async function fireConversion(ctaName: string, email?: string) {
     const gclid = gclidRef.current || sessionStorage.getItem('gclid')
     if (!gclid) return
     try {
       await fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ctaName, gclid }),
+        body: JSON.stringify({ ctaName, gclid, email }),
       })
     } catch (e) {
       console.error('Conversion tracking failed:', e)
@@ -318,7 +318,7 @@ export default function Home() {
                 typeFilter="PPC_downloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
-                onSuccess={() => fireConversion('lp_blr_download_brochure')}
+                onSuccess={(email) => fireConversion('lp_blr_download_brochure', email)}
               />
             </div>
           </div>
@@ -596,7 +596,7 @@ export default function Home() {
             typeFilter="PPC_CheckEligibility" 
             buttonText="Check Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
-            onSuccess={() => fireConversion(ctaSource)}
+            onSuccess={(email) => fireConversion(ctaSource, email)}
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
@@ -606,7 +606,7 @@ export default function Home() {
             typeFilter="PPC_downloadBrochure" 
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
-            onSuccess={() => fireConversion(ctaSource)}
+            onSuccess={(email) => fireConversion(ctaSource, email)}
           />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
@@ -616,7 +616,7 @@ export default function Home() {
             typeFilter="signUpForDemo" 
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
-            onSuccess={() => fireConversion('lp_pricing_signup_demo')}
+            onSuccess={(email) => fireConversion('lp_pricing_signup_demo', email)}
           />
         </Modal>
 
