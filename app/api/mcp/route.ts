@@ -1,6 +1,9 @@
 import { createMcpHandler } from '@vercel/mcp-adapter'
 import { z } from 'zod'
 
+export const maxDuration = 60
+export const dynamic = 'force-dynamic'
+
 const CUSTOMER_ID = '4064995850'
 const MCC_ID = '8910137241'
 
