@@ -103,6 +103,7 @@ function CheckItem({ text }: { text: string }) {
 export default function Home() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [ctaSource, setCtaSource] = useState<string>('')
   const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
@@ -292,7 +293,7 @@ export default function Home() {
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <button 
-                  onClick={() => setIsEligibilityOpen(true)} 
+                  onClick={() => { setCtaSource('lp_hero_check_eligibility'); setIsEligibilityOpen(true) }} 
                   className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                 >
                   Check Your Eligibility →
@@ -313,11 +314,11 @@ export default function Home() {
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
               <LeadCaptureForm 
                 title="Get Free Career Counselling" 
-                sourceName="PPC_downloadBrochure" 
+                sourceName="PPC_BLR_Hero_DownloadBrochure" 
                 typeFilter="PPC_downloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
-                onSuccess={() => fireConversion('lp_download_brochure')}
+                onSuccess={() => fireConversion('lp_blr_download_brochure')}
               />
             </div>
           </div>
@@ -402,7 +403,7 @@ export default function Home() {
                     ))}
                   </ul>
                   <button 
-                    onClick={() => setIsEligibilityOpen(true)} 
+                    onClick={() => { setCtaSource('lp_placement_check_eligibility'); setIsEligibilityOpen(true) }} 
                     className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center justify-center gap-2 group active:scale-95"
                   >
                     Check Eligibility 
@@ -430,7 +431,7 @@ export default function Home() {
           </div>
         </section>
 
-        <LearningModes onOpenDemo={() => setIsDemoOpen(true)} />
+        <LearningModes onOpenDemo={() => { setCtaSource('lp_pricing_signup_demo'); setIsDemoOpen(true) }} />
 
         <section id="curriculum" className="py-24 px-6 bg-white">
           <div className="max-w-7xl mx-auto">
@@ -449,7 +450,7 @@ export default function Home() {
                 </p>
               </div>
               <button 
-                onClick={() => setIsBrochureOpen(true)} 
+                onClick={() => { setCtaSource('lp_curriculum_download_brochure'); setIsBrochureOpen(true) }} 
                 className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex-shrink-0 active:scale-95"
               >
                 Download Brochure →
@@ -516,7 +517,7 @@ export default function Home() {
                     </div>
                   </div>
                   <button 
-                    onClick={() => setIsEligibilityOpen(true)} 
+                    onClick={() => { setCtaSource('lp_certificate_check_eligibility'); setIsEligibilityOpen(true) }} 
                     className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                   >
                     Check Your Eligibility →
@@ -551,9 +552,9 @@ export default function Home() {
           </div>
         </section>
 
-        <HowToEnrol onOpenEligibility={() => setIsEligibilityOpen(true)} />
+        <HowToEnrol onOpenEligibility={(source) => { setCtaSource(source); setIsEligibilityOpen(true) }} />
         <FAQ />
-        <BottomCTA onOpenEligibility={() => setIsEligibilityOpen(true)} />
+        <BottomCTA onOpenEligibility={(source) => { setCtaSource(source); setIsEligibilityOpen(true) }} />
 
         <footer className="bg-[#06192b] pt-8 pb-32 border-t border-white/5">
           <p className="text-center text-[#4A6275] text-xs">&copy; {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.</p>
@@ -574,7 +575,7 @@ export default function Home() {
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp
             </a>
             <button 
-              onClick={() => setIsEligibilityOpen(true)} 
+              onClick={() => { setCtaSource('lp_sticky_check_eligibility'); setIsEligibilityOpen(true) }} 
               className={`flex-1 relative overflow-hidden border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 ${
                 hasPassedCurriculum ? 'animate-breathing-glow shadow-[0_0_25px_rgba(29,229,181,0.6)] border-[#1DE5B5]' : (scrollProgress > 0.8 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : '')
               }`}
@@ -591,31 +592,31 @@ export default function Home() {
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
           <LeadCaptureForm 
             title="Check Your Eligibility" 
-            sourceName="PPC_CheckEligibility" 
+            sourceName={`PPC_BLR_${ctaSource}`}
             typeFilter="PPC_CheckEligibility" 
             buttonText="Check Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
-            onSuccess={() => fireConversion('lp_submit_lead_primary')}
+            onSuccess={() => fireConversion(ctaSource)}
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
           <LeadCaptureForm 
             title="Download Brochure" 
-            sourceName="PPC_downloadBrochure" 
+            sourceName={`PPC_BLR_${ctaSource}`}
             typeFilter="PPC_downloadBrochure" 
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
-            onSuccess={() => fireConversion('lp_download_brochure')}
+            onSuccess={() => fireConversion(ctaSource)}
           />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
           <LeadCaptureForm 
             title="Signup for a Demo" 
-            sourceName="PPC_signUpForDemo" 
+            sourceName="PPC_BLR_Pricing_SignupDemo" 
             typeFilter="signUpForDemo" 
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
-            onSuccess={() => fireConversion('lp_book_demo')}
+            onSuccess={() => fireConversion('lp_pricing_signup_demo')}
           />
         </Modal>
 

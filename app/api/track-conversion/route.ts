@@ -4,9 +4,21 @@ const GOOGLE_ADS_CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850
 const GOOGLE_ADS_MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
 const CONVERSION_MAP: Record<string, string> = {
-  lp_submit_lead_primary: '7546926404',
-  lp_book_demo: '7547101432',
-  lp_download_brochure: '7547103562',
+  // Core actions
+  lp_blr_submit_lead_primary:           '7555495103',
+  lp_blr_book_demo:                     '7555633345',
+  lp_blr_download_brochure:             '7555493246',
+
+  // Per-CTA BLR actions
+  lp_hero_check_eligibility:            '7555633108',
+  lp_hero_download_brochure:            '7555633843',
+  lp_placement_check_eligibility:       '7555790829',
+  lp_curriculum_download_brochure:      '7555494863',
+  lp_certificate_check_eligibility:     '7555494866',
+  lp_pricing_signup_demo:               '7555791054',
+  lp_enrol_check_eligibility:           '7555495331',
+  lp_bottom_check_eligibility:          '7555633822',
+  lp_sticky_check_eligibility:          '7555495346',
 }
 
 export async function POST(req: NextRequest) {

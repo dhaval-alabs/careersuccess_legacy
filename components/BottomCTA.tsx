@@ -20,7 +20,7 @@ function useVisible(threshold = 0.25) {
   return [ref, visible] as const;
 }
 
-export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: () => void }) {
+export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (source: string) => void }) {
   const [ref, visible] = useVisible();
   const [hovered, setHovered] = useState(false);
 
@@ -89,7 +89,7 @@ export default function BottomCTA({ onOpenEligibility }: { onOpenEligibility?: (
         {/* CTA */}
         <div className="flex justify-center mt-10">
           <button
-            onClick={onOpenEligibility}
+            onClick={() => onOpenEligibility?.('lp_bottom_check_eligibility')}
             className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95 mx-auto"
           >
             Check Your Eligibility →

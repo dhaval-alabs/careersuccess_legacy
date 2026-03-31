@@ -88,7 +88,7 @@ const steps = [
   },
 ];
 
-export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: () => void }) {
+export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: (source: string) => void }) {
   const [ref, visible] = useVisible();
   const [lineRef, lineVisible] = useVisible(0.3);
 
@@ -189,7 +189,7 @@ export default function HowToEnrol({ onOpenEligibility }: { onOpenEligibility?: 
             Join 20,000+ professionals who trained with AnalytixLabs. Check your eligibility or talk to a learning advisor. No commitment, no pressure.
           </p>
           <button 
-            onClick={onOpenEligibility}
+            onClick={() => onOpenEligibility?.('lp_enrol_check_eligibility')}
             className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] inline-block active:scale-95"
           >
             Check Your Eligibility →
