@@ -40,6 +40,12 @@ async function gadsQuery(query: string): Promise<any[]> {
   )
   const data = await res.json()
   if (data.error) throw new Error(JSON.stringify(data.error))
+
+  // DEBUG: log first result to verify field name casing from API
+  if (data.results?.length > 0) {
+    console.log('[gadsQuery] sample result keys:', JSON.stringify(data.results[0], null, 2))
+  }
+
   return data.results || []
 }
 
@@ -86,8 +92,8 @@ const handler = createMcpHandler(
           clicks: r.metrics?.clicks,
           ctr: `${((r.metrics?.ctr || 0) * 100).toFixed(2)}%`,
           conversions: r.metrics?.conversions,
-          spend_inr: ((r.metrics?.cost_micros || 0) / 1_000_000).toFixed(2),
-          cpa_inr: ((r.metrics?.cost_per_conversion || 0) / 1_000_000).toFixed(2),
+          spend_inr: ((r.metrics?.costMicros || 0) / 1_000_000).toFixed(2),
+          cpa_inr: ((r.metrics?.costPerConversion || 0) / 1_000_000).toFixed(2),
         }))
 
         return {
@@ -138,15 +144,15 @@ const handler = createMcpHandler(
         `)
 
         const summary = results.map(r => ({
-          keyword: r.ad_group_criterion?.keyword?.text,
-          match_type: r.ad_group_criterion?.keyword?.match_type,
+          keyword: r.adGroupCriterion?.keyword?.text,
+          match_type: r.adGroupCriterion?.keyword?.matchType,
           campaign: r.campaign?.name,
-          ad_group: r.ad_group?.name,
+          ad_group: r.adGroup?.name,
           impressions: r.metrics?.impressions,
           clicks: r.metrics?.clicks,
           conversions: r.metrics?.conversions,
-          spend_inr: ((r.metrics?.cost_micros || 0) / 1_000_000).toFixed(2),
-          cpa_inr: ((r.metrics?.cost_per_conversion || 0) / 1_000_000).toFixed(2),
+          spend_inr: ((r.metrics?.costMicros || 0) / 1_000_000).toFixed(2),
+          cpa_inr: ((r.metrics?.costPerConversion || 0) / 1_000_000).toFixed(2),
         }))
 
         return {
@@ -190,13 +196,13 @@ const handler = createMcpHandler(
         `)
 
         const summary = results.map(r => ({
-          search_term: r.search_term_view?.search_term,
+          search_term: r.searchTermView?.searchTerm,
           campaign: r.campaign?.name,
-          ad_group: r.ad_group?.name,
+          ad_group: r.adGroup?.name,
           impressions: r.metrics?.impressions,
           clicks: r.metrics?.clicks,
           conversions: r.metrics?.conversions,
-          spend_inr: ((r.metrics?.cost_micros || 0) / 1_000_000).toFixed(2),
+          spend_inr: ((r.metrics?.costMicros || 0) / 1_000_000).toFixed(2),
         }))
 
         return {
@@ -227,10 +233,10 @@ const handler = createMcpHandler(
         `)
 
         const summary = results.map(r => ({
-          conversion_action: r.conversion_action?.name,
+          conversion_action: r.conversionAction?.name,
           conversions: r.metrics?.conversions,
-          all_conversions: r.metrics?.all_conversions,
-          cpa_inr: ((r.metrics?.cost_per_conversion || 0) / 1_000_000).toFixed(2),
+          all_conversions: r.metrics?.allConversions,
+          cpa_inr: ((r.metrics?.costPerConversion || 0) / 1_000_000).toFixed(2),
         }))
 
         return {
@@ -260,8 +266,8 @@ const handler = createMcpHandler(
         `)
 
         const summary = results.map(r => {
-          const dailyBudget = (r.campaign_budget?.amount_micros || 0) / 1_000_000
-          const spend7d = (r.metrics?.cost_micros || 0) / 1_000_000
+          const dailyBudget = (r.campaignBudget?.amountMicros || 0) / 1_000_000
+          const spend7d = (r.metrics?.costMicros || 0) / 1_000_000
           const avgDailySpend = spend7d / 7
           const pacing = dailyBudget > 0 ? ((avgDailySpend / dailyBudget) * 100).toFixed(1) : 'N/A'
           const pacingNum = parseFloat(pacing)
