@@ -41,11 +41,6 @@ async function gadsQuery(query: string): Promise<any[]> {
   const data = await res.json()
   if (data.error) throw new Error(JSON.stringify(data.error))
 
-  // DEBUG: log first result to verify field name casing from API
-  if (data.results?.length > 0) {
-    console.log('[gadsQuery] sample result keys:', JSON.stringify(data.results[0], null, 2))
-  }
-
   return data.results || []
 }
 
@@ -298,4 +293,16 @@ const handler = createMcpHandler(
   }
 )
 
-export { handler as GET, handler as POST }
+export async function GET(req: Request) {
+  // Return SSE headers to satisfy Claude.ai's transport discovery GET
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  })
+}
+
+export { handler as POST }
