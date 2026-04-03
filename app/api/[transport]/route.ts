@@ -338,7 +338,7 @@ const handler = createMcpHandler(
               text: JSON.stringify({
                 status: 'not_found',
                 gclid,
-                message: `No click found for name gclid in the last ${days} days.`,
+                message: `No click found for this gclid in the last ${days} days.`,
               }, null, 2),
             }],
           }
