@@ -26,9 +26,17 @@ export async function POST(req: NextRequest) {
   try {
     const { ctaName, gclid, email } = await req.json()
 
-    if (!ctaName || !gclid) {
+    // ── Validation: need ctaName + at least one identifier (gclid or email) ──
+    if (!ctaName) {
       return NextResponse.json(
-        { error: 'Missing ctaName or gclid' },
+        { error: 'Missing ctaName' },
+        { status: 400 }
+      )
+    }
+
+    if (!gclid && !email) {
+      return NextResponse.json(
+        { error: 'Need at least gclid or email to record a conversion' },
         { status: 400 }
       )
     }
@@ -43,12 +51,13 @@ export async function POST(req: NextRequest) {
 
     const accessToken = await getAccessToken()
 
+    // ── Normalize + hash email (trim, lowercase, then SHA-256) ──
     const hashedEmail = email
       ? crypto.createHash('sha256').update(email.trim().toLowerCase()).digest('hex')
       : undefined
 
+    // ── Build conversion object ──
     const conversion: Record<string, any> = {
-      gclid,
       conversion_action: `customers/${GOOGLE_ADS_CUSTOMER_ID}/conversionActions/${conversionActionId}`,
       conversion_date_time: new Date()
         .toISOString()
@@ -56,6 +65,11 @@ export async function POST(req: NextRequest) {
         .replace('Z', '+00:00'),
       conversion_value: 1.0,
       currency_code: 'INR',
+    }
+
+    // Only include gclid when present (email-only conversions are valid)
+    if (gclid) {
+      conversion.gclid = gclid
     }
 
     if (hashedEmail) {
