@@ -216,23 +216,41 @@ const handler = createMcpHandler(
       async ({ days }) => {
         const results = await gadsQuery(`
           SELECT
-            conversion_action.name,
-            conversion_action.status,
+            segments.conversion_action_name,
+            segments.conversion_action,
             metrics.conversions,
-            metrics.cost_per_conversion,
-            metrics.all_conversions
-          FROM conversion_action
-          WHERE segments.date DURING LAST_${days}_DAYS
-            AND conversion_action.status = 'ENABLED'
+            metrics.all_conversions,
+            metrics.cost_micros
+          FROM campaign
+          WHERE campaign.status = 'ENABLED'
+            AND segments.date DURING LAST_${days}_DAYS
+            AND metrics.conversions > 0
           ORDER BY metrics.conversions DESC
         `)
 
-        const summary = results.map(r => ({
-          conversion_action: r.conversionAction?.name,
-          conversions: r.metrics?.conversions,
-          all_conversions: r.metrics?.allConversions,
-          cpa_inr: ((r.metrics?.costPerConversion || 0) / 1_000_000).toFixed(2),
-        }))
+        // Aggregate by conversion action name (rows are per-campaign, we want totals)
+        const actionMap = new Map<string, { conversions: number; allConversions: number; costMicros: number }>()
+
+        for (const r of results) {
+          const name = r.segments?.conversionActionName || 'Unknown'
+          const existing = actionMap.get(name) || { conversions: 0, allConversions: 0, costMicros: 0 }
+          existing.conversions += r.metrics?.conversions || 0
+          existing.allConversions += r.metrics?.allConversions || 0
+          existing.costMicros += r.metrics?.costMicros || 0
+          actionMap.set(name, existing)
+        }
+
+        const summary = Array.from(actionMap.entries())
+          .sort((a, b) => b[1].conversions - a[1].conversions)
+          .map(([name, data]) => ({
+            conversion_action: name,
+            conversions: data.conversions,
+            all_conversions: data.allConversions,
+            spend_inr: (data.costMicros / 1_000_000).toFixed(2),
+            cpa_inr: data.conversions > 0
+              ? (data.costMicros / 1_000_000 / data.conversions).toFixed(2)
+              : 'N/A',
+          }))
 
         return {
           content: [{ type: 'text', text: JSON.stringify(summary, null, 2) }]
