@@ -284,6 +284,85 @@ const handler = createMcpHandler(
       }
     )
 
+    // ─── Tool 6: GCLID Lookup ───────────────────────────────────────────────
+    server.tool(
+      'lookup_gclid',
+      'Look up a specific gclid to check if the click was registered and if a conversion was passed back to Google Ads.',
+      {
+        gclid: z.string().describe('The gclid value to look up'),
+        days: z.number().default(90).describe('Lookback window in days (default 90)'),
+      },
+      async ({ gclid, days }) => {
+        let results: any[] = []
+        let error: string | null = null
+
+        try {
+          results = await gadsQuery(`
+            SELECT
+              click_view.gclid,
+              click_view.ad_network_type,
+              campaign.name,
+              ad_group.name,
+              segments.date,
+              metrics.all_conversions,
+              metrics.conversions
+            FROM click_view
+            WHERE click_view.gclid = '${gclid}'
+              AND segments.date DURING LAST_${days}_DAYS
+          `)
+        } catch (e: any) {
+          error = e.message
+        }
+
+        if (error) {
+          return {
+            content: [{
+              type: 'text',
+              text: JSON.stringify({ status: 'error', gclid, error }, null, 2),
+            }],
+          }
+        }
+
+        if (!results || results.length === 0) {
+          return {
+            content: [{
+              type: 'text',
+              text: JSON.stringify({
+                status: 'not_found',
+                gclid,
+                message: `No click found for this gclid in the last ${days} days. It may be older than the lookback window, or the gclid may be invalid.`,
+              }, null, 2),
+            }],
+          }
+        }
+
+        const row = results[0]
+        const conversions = row.metrics?.conversions ?? 0
+        const allConversions = row.metrics?.allConversions ?? 0
+
+        const summary = {
+          status: 'found',
+          gclid,
+          click_date: row.segments?.date,
+          campaign: row.campaign?.name,
+          ad_group: row.adGroup?.name,
+          ad_network_type: row.clickView?.adNetworkType,
+          conversions_attributed: conversions,
+          all_conversions_attributed: allConversions,
+          conversion_passed_back: conversions > 0 || allConversions > 0,
+          note: conversions > 0
+            ? '✅ Conversion was attributed to this click.'
+            : allConversions > 0
+            ? '⚠️ Counted in all_conversions (e.g. view-through or cross-device) but not primary conversions.'
+            : '❌ No conversion has been attributed to this click yet. It may still be within the conversion window.',
+        }
+
+        return {
+          content: [{ type: 'text', text: JSON.stringify(summary, null, 2) }],
+        }
+      }
+    )
+
   },
   {},
   {
