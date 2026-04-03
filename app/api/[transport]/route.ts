@@ -293,80 +293,111 @@ const handler = createMcpHandler(
         days: z.number().default(90).describe('Lookback window in days (default 90)'),
       },
       async ({ gclid, days }) => {
-        let results: any[] = []
-        let error: string | null = null
+        // ── Helper: format Date as 'YYYY-MM-DD' ──
+        const fmt = (d: Date) => d.toISOString().split('T')[0]
 
-        try {
-          const today = new Date()
-          const start = new Date()
-          start.setDate(today.getDate() - days)
-
-          const fmt = (d: Date) => d.toISOString().split('T')[0]
-
-          results = await gadsQuery(`
-            SELECT
-              click_view.gclid,
-              click_view.ad_group_ad,
-              click_view.keyword_info.text,
-              campaign.id,
-              campaign.name,
-              ad_group.id,
-              ad_group.name,
-              segments.date,
-              segments.ad_network_type
-            FROM click_view
-            WHERE click_view.gclid = '${gclid}'
-              AND segments.date BETWEEN '${fmt(start)}' AND '${fmt(today)}'
-          `)
-        } catch (e: any) {
-          error = e.message
+        // ── Build list of dates to search (newest first) ──
+        const today = new Date()
+        const dates: string[] = []
+        for (let i = 0; i < days; i++) {
+          const d = new Date(today)
+          d.setDate(today.getDate() - i)
+          dates.push(fmt(d))
         }
 
-        if (error) {
-          return {
-            content: [{
-              type: 'text',
-              text: JSON.stringify({ status: 'error', gclid, error }, null, 2),
-            }],
+        // ── Query click_view one day at a time ──
+        // Google Ads API requires click_view queries to filter on exactly one day.
+        // We search newest-first so recent clicks are found quickly.
+        let foundRow: any = null
+        let lastError: string | null = null
+
+        for (const date of dates) {
+          try {
+            const results = await gadsQuery(`
+              SELECT
+                click_view.gclid,
+                click_view.keyword_info.text,
+                click_view.keyword_info.match_type,
+                segments.date,
+                segments.ad_network_type,
+                campaign.id,
+                campaign.name,
+                ad_group.id,
+                ad_group.name,
+                metrics.clicks
+              FROM click_view
+              WHERE click_view.gclid = '${gclid}'
+                AND segments.date = '${date}'
+            `)
+
+            if (results && results.length > 0) {
+              foundRow = results[0]
+              break // Found it — stop searching
+            }
+          } catch (e: any) {
+            // Store error but keep trying other days
+            lastError = e.message
+            // If it's a non-date-related error (e.g. auth), stop immediately
+            if (
+              !e.message?.includes('EXPECTED_FILTER') &&
+              !e.message?.includes('date')
+            ) {
+              break
+            }
           }
         }
 
-        if (!results || results.length === 0) {
+        // ── No result found after searching all days ──
+        if (!foundRow) {
+          if (lastError) {
+            return {
+              content: [{
+                type: 'text' as const,
+                text: JSON.stringify({
+                  status: 'error',
+                  gclid,
+                  error: lastError,
+                }, null, 2),
+              }],
+            }
+          }
+
           return {
             content: [{
-              type: 'text',
+              type: 'text' as const,
               text: JSON.stringify({
                 status: 'not_found',
                 gclid,
-                message: `No click found for this gclid in the last ${days} days.`,
+                message: `No click found for this gclid in the last ${days} days. It may be older than the lookback window, or the gclid may be invalid.`,
               }, null, 2),
             }],
           }
         }
 
-        const row = results[0]
-
-        const response = {
+        // ── Found — build response ──
+        const summary = {
           status: 'found',
           gclid,
-          click: {
-            date: row.segments?.date,
-            campaign: {
-              id: row.campaign?.id,
-              name: row.campaign?.name,
-            },
-            ad_group: {
-              id: row.adGroup?.id,
-              name: row.adGroup?.name,
-            },
-            keyword: row.clickView?.keywordInfo?.text || 'N/A',
-            network: row.segments?.adNetworkType,
+          click_date: foundRow.segments?.date,
+          campaign: {
+            id: foundRow.campaign?.id,
+            name: foundRow.campaign?.name,
           },
-          note: '✅ Click registration found. (Conversion metrics are not available in click_view resources and must be cross-referenced from tracking logs).',
+          ad_group: {
+            id: foundRow.adGroup?.id,
+            name: foundRow.adGroup?.name,
+          },
+          keyword: foundRow.clickView?.keywordInfo?.text ?? null,
+          match_type: foundRow.clickView?.keywordInfo?.matchType ?? null,
+          ad_network_type: foundRow.segments?.adNetworkType ?? null,
+          clicks: foundRow.metrics?.clicks ?? 0,
         }
 
         return {
-          content: [{ type: 'text', text: JSON.stringify(response, null, 2) }],
+          content: [{
+            type: 'text' as const,
+            text: JSON.stringify(summary, null, 2),
+          }],
         }
       }
     )
