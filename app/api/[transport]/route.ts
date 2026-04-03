@@ -297,10 +297,16 @@ const handler = createMcpHandler(
         let error: string | null = null
 
         try {
+          const today = new Date()
+          const start = new Date()
+          start.setDate(today.getDate() - days)
+
+          const fmt = (d: Date) => d.toISOString().split('T')[0]
+
           results = await gadsQuery(`
             SELECT
               click_view.gclid,
-              click_view.ad_network_type,
+              segments.ad_network_type,
               campaign.name,
               ad_group.name,
               segments.date,
@@ -308,7 +314,7 @@ const handler = createMcpHandler(
               metrics.conversions
             FROM click_view
             WHERE click_view.gclid = '${gclid}'
-              AND segments.date DURING LAST_${days}_DAYS
+              AND segments.date BETWEEN '${fmt(start)}' AND '${fmt(today)}'
           `)
         } catch (e: any) {
           error = e.message
