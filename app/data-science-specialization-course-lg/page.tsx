@@ -131,12 +131,17 @@ export default function Home() {
 
   async function fireConversion(ctaName: string, email?: string) {
     const gclid = gclidRef.current || sessionStorage.getItem('gclid')
-    if (!gclid) return
+    // Need at least gclid or email to record a conversion
+    if (!gclid && !email) return
     try {
       await fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ctaName, gclid, email }),
+        body: JSON.stringify({
+          ctaName,
+          gclid: gclid || undefined,
+          email,
+        }),
       })
     } catch (e) {
       console.error('Conversion tracking failed:', e)
