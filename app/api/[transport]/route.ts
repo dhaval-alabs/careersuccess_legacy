@@ -306,12 +306,14 @@ const handler = createMcpHandler(
           results = await gadsQuery(`
             SELECT
               click_view.gclid,
-              segments.ad_network_type,
+              click_view.ad_group_ad,
+              click_view.keyword_info.text,
+              campaign.id,
               campaign.name,
+              ad_group.id,
               ad_group.name,
               segments.date,
-              metrics.all_conversions,
-              metrics.conversions
+              segments.ad_network_type
             FROM click_view
             WHERE click_view.gclid = '${gclid}'
               AND segments.date BETWEEN '${fmt(start)}' AND '${fmt(today)}'
@@ -336,35 +338,35 @@ const handler = createMcpHandler(
               text: JSON.stringify({
                 status: 'not_found',
                 gclid,
-                message: `No click found for this gclid in the last ${days} days. It may be older than the lookback window, or the gclid may be invalid.`,
+                message: `No click found for name gclid in the last ${days} days.`,
               }, null, 2),
             }],
           }
         }
 
         const row = results[0]
-        const conversions = row.metrics?.conversions ?? 0
-        const allConversions = row.metrics?.allConversions ?? 0
 
-        const summary = {
+        const response = {
           status: 'found',
           gclid,
-          click_date: row.segments?.date,
-          campaign: row.campaign?.name,
-          ad_group: row.adGroup?.name,
-          ad_network_type: row.clickView?.adNetworkType,
-          conversions_attributed: conversions,
-          all_conversions_attributed: allConversions,
-          conversion_passed_back: conversions > 0 || allConversions > 0,
-          note: conversions > 0
-            ? '✅ Conversion was attributed to this click.'
-            : allConversions > 0
-            ? '⚠️ Counted in all_conversions (e.g. view-through or cross-device) but not primary conversions.'
-            : '❌ No conversion has been attributed to this click yet. It may still be within the conversion window.',
+          click: {
+            date: row.segments?.date,
+            campaign: {
+              id: row.campaign?.id,
+              name: row.campaign?.name,
+            },
+            ad_group: {
+              id: row.adGroup?.id,
+              name: row.adGroup?.name,
+            },
+            keyword: row.clickView?.keywordInfo?.text || 'N/A',
+            network: row.segments?.adNetworkType,
+          },
+          note: '✅ Click registration found. (Conversion metrics are not available in click_view resources and must be cross-referenced from tracking logs).',
         }
 
         return {
-          content: [{ type: 'text', text: JSON.stringify(summary, null, 2) }],
+          content: [{ type: 'text', text: JSON.stringify(response, null, 2) }],
         }
       }
     )
