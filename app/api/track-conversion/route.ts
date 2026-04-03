@@ -4,6 +4,15 @@ import crypto from 'crypto'
 const GOOGLE_ADS_CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
 const GOOGLE_ADS_MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
+// ── CORS: Allow the production domain to call this endpoint ──
+const ALLOWED_ORIGIN = 'https://careersuccess.analytixlabs.co.in'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
 const CONVERSION_MAP: Record<string, string> = {
   // Core actions
   lp_blr_submit_lead_primary:           '7555495103',
@@ -22,6 +31,14 @@ const CONVERSION_MAP: Record<string, string> = {
   lp_sticky_check_eligibility:          '7555495346',
 }
 
+// ── Handle CORS preflight ──
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  })
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { ctaName, gclid, email } = await req.json()
@@ -30,14 +47,14 @@ export async function POST(req: NextRequest) {
     if (!ctaName) {
       return NextResponse.json(
         { error: 'Missing ctaName' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
     if (!gclid && !email) {
       return NextResponse.json(
         { error: 'Need at least gclid or email to record a conversion' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -45,7 +62,7 @@ export async function POST(req: NextRequest) {
     if (!conversionActionId) {
       return NextResponse.json(
         { error: `Unknown ctaName: ${ctaName}` },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -109,7 +126,7 @@ export async function POST(req: NextRequest) {
           detail: responseText.substring(0, 500),
           status: response.status
         },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       )
     }
 
@@ -117,16 +134,16 @@ export async function POST(req: NextRequest) {
       console.error('Google Ads API error:', JSON.stringify(data))
       return NextResponse.json(
         { error: 'Google Ads API failed', detail: data },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       )
     }
 
-    return NextResponse.json({ success: true, result: data })
+    return NextResponse.json({ success: true, result: data }, { headers: corsHeaders })
   } catch (err: any) {
     console.error('track-conversion error:', err)
     return NextResponse.json(
       { error: 'Internal server error', message: err.message },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     )
   }
 }
