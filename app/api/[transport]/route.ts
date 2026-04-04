@@ -219,8 +219,7 @@ const handler = createMcpHandler(
             segments.conversion_action_name,
             segments.conversion_action,
             metrics.conversions,
-            metrics.all_conversions,
-            metrics.cost_micros
+            metrics.all_conversions
           FROM campaign
           WHERE campaign.status = 'ENABLED'
             AND segments.date DURING LAST_${days}_DAYS
@@ -229,14 +228,13 @@ const handler = createMcpHandler(
         `)
 
         // Aggregate by conversion action name (rows are per-campaign, we want totals)
-        const actionMap = new Map<string, { conversions: number; allConversions: number; costMicros: number }>()
+        const actionMap = new Map<string, { conversions: number; allConversions: number }>()
 
         for (const r of results) {
           const name = r.segments?.conversionActionName || 'Unknown'
-          const existing = actionMap.get(name) || { conversions: 0, allConversions: 0, costMicros: 0 }
+          const existing = actionMap.get(name) || { conversions: 0, allConversions: 0 }
           existing.conversions += r.metrics?.conversions || 0
           existing.allConversions += r.metrics?.allConversions || 0
-          existing.costMicros += r.metrics?.costMicros || 0
           actionMap.set(name, existing)
         }
 
@@ -246,10 +244,6 @@ const handler = createMcpHandler(
             conversion_action: name,
             conversions: data.conversions,
             all_conversions: data.allConversions,
-            spend_inr: (data.costMicros / 1_000_000).toFixed(2),
-            cpa_inr: data.conversions > 0
-              ? (data.costMicros / 1_000_000 / data.conversions).toFixed(2)
-              : 'N/A',
           }))
 
         return {
