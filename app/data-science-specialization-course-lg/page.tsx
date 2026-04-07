@@ -129,23 +129,24 @@ export default function Home() {
     }
   }, [])
 
-  async function fireConversion(ctaName: string, email?: string) {
+  function fireConversion(ctaName: string, email?: string) {
+    // Fix: guard empty ctaName (e.g. if modal opened before ctaSource was set)
+    if (!ctaName) return
     const gclid = gclidRef.current || sessionStorage.getItem('gclid')
     // Need at least gclid or email to record a conversion
     if (!gclid && !email) return
-    try {
-      await fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ctaName,
-          gclid: gclid || undefined,
-          email,
-        }),
-      })
-    } catch (e) {
-      console.error('Conversion tracking failed:', e)
-    }
+    // Fix: keepalive keeps the request alive through page navigation/redirect.
+    // Without it the browser cancels the in-flight fetch when window.location changes.
+    fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ctaName,
+        gclid: gclid || undefined,
+        email,
+      }),
+      keepalive: true,
+    }).catch((e) => console.error('Conversion tracking failed:', e))
   }
   // ─────────────────────────────────────────────────────────────────────────────
 
@@ -303,8 +304,9 @@ export default function Home() {
                 >
                   Check Your Eligibility →
                 </button>
-                <a 
-                  href="tel:9555525908" 
+                <a
+                  href="tel:9555525908"
+                  onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
                   className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_4px_14px_rgba(255,234,121,0.4)] text-center flex items-center justify-center gap-2 active:scale-95"
                 >
                   <svg className="w-4 h-4 text-[#09263F]" fill="currentColor" viewBox="0 0 20 20">
@@ -572,10 +574,13 @@ export default function Home() {
           }`}
         >
           <div className="max-w-[1600px] mx-auto w-full flex gap-3">
-            <a href="tel:9555525908" className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
+            <a href="tel:9555525908"
+              onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
+              className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9555525908
             </a>
             <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+              onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp
             </a>

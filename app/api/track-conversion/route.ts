@@ -148,7 +148,15 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// Module-level cache: persists across requests within the same function instance.
+// Tokens are valid for 60 min; we refresh 5 min early to avoid edge-of-expiry failures.
+let tokenCache: { token: string; expiresAt: number } | null = null
+
 async function getAccessToken(): Promise<string> {
+  if (tokenCache && Date.now() < tokenCache.expiresAt) {
+    return tokenCache.token
+  }
+
   const res = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -172,5 +180,10 @@ async function getAccessToken(): Promise<string> {
     throw new Error(`Failed to get access token: ${JSON.stringify(data)}`)
   }
 
-  return data.access_token
+  tokenCache = {
+    token: data.access_token,
+    expiresAt: Date.now() + 55 * 60 * 1000, // 55 minutes
+  }
+
+  return tokenCache.token
 }
