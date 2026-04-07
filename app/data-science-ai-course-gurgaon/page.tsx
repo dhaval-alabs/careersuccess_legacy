@@ -234,9 +234,9 @@ export default function GurgaonDSAIPage() {
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
-                Advanced Certification in{' '}
-                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Science & AI</span>
+                Advanced Certification in
                 <br />
+                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Science & AI</span>{' '}
                 <span className="text-[#09263F]">{config.h1City}</span>
               </h1>
 
