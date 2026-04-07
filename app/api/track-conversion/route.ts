@@ -29,6 +29,64 @@ const CONVERSION_MAP: Record<string, string> = {
   lp_enrol_check_eligibility:           '7555495331',
   lp_bottom_check_eligibility:          '7555633822',
   lp_sticky_check_eligibility:          '7555495346',
+
+  // ── DSAI city pages — run scripts/create-dsai-conversion-actions.js and replace PENDING values ──
+
+  // Delhi
+  dsai_del_hero_check_eligibility:          'PENDING',
+  dsai_del_hero_download_brochure:          'PENDING',
+  dsai_del_placement_check_eligibility:     'PENDING',
+  dsai_del_pricing_signup_demo:             'PENDING',
+  dsai_del_curriculum_download_brochure:    'PENDING',
+  dsai_del_certificate_check_eligibility:   'PENDING',
+  dsai_del_enrol_check_eligibility:         'PENDING',
+  dsai_del_bottom_check_eligibility:        'PENDING',
+  dsai_del_sticky_check_eligibility:        'PENDING',
+  dsai_del_submit_lead_primary:             'PENDING',
+  dsai_del_book_demo:                       'PENDING',
+  dsai_del_download_brochure:               'PENDING',
+
+  // Noida
+  dsai_noi_hero_check_eligibility:          'PENDING',
+  dsai_noi_hero_download_brochure:          'PENDING',
+  dsai_noi_placement_check_eligibility:     'PENDING',
+  dsai_noi_pricing_signup_demo:             'PENDING',
+  dsai_noi_curriculum_download_brochure:    'PENDING',
+  dsai_noi_certificate_check_eligibility:   'PENDING',
+  dsai_noi_enrol_check_eligibility:         'PENDING',
+  dsai_noi_bottom_check_eligibility:        'PENDING',
+  dsai_noi_sticky_check_eligibility:        'PENDING',
+  dsai_noi_submit_lead_primary:             'PENDING',
+  dsai_noi_book_demo:                       'PENDING',
+  dsai_noi_download_brochure:               'PENDING',
+
+  // Gurgaon
+  dsai_grg_hero_check_eligibility:          'PENDING',
+  dsai_grg_hero_download_brochure:          'PENDING',
+  dsai_grg_placement_check_eligibility:     'PENDING',
+  dsai_grg_pricing_signup_demo:             'PENDING',
+  dsai_grg_curriculum_download_brochure:    'PENDING',
+  dsai_grg_certificate_check_eligibility:   'PENDING',
+  dsai_grg_enrol_check_eligibility:         'PENDING',
+  dsai_grg_bottom_check_eligibility:        'PENDING',
+  dsai_grg_sticky_check_eligibility:        'PENDING',
+  dsai_grg_submit_lead_primary:             'PENDING',
+  dsai_grg_book_demo:                       'PENDING',
+  dsai_grg_download_brochure:               'PENDING',
+
+  // Bangalore
+  dsai_blr_hero_check_eligibility:          'PENDING',
+  dsai_blr_hero_download_brochure:          'PENDING',
+  dsai_blr_placement_check_eligibility:     'PENDING',
+  dsai_blr_pricing_signup_demo:             'PENDING',
+  dsai_blr_curriculum_download_brochure:    'PENDING',
+  dsai_blr_certificate_check_eligibility:   'PENDING',
+  dsai_blr_enrol_check_eligibility:         'PENDING',
+  dsai_blr_bottom_check_eligibility:        'PENDING',
+  dsai_blr_sticky_check_eligibility:        'PENDING',
+  dsai_blr_submit_lead_primary:             'PENDING',
+  dsai_blr_book_demo:                       'PENDING',
+  dsai_blr_download_brochure:               'PENDING',
 }
 
 // ── Handle CORS preflight ──
