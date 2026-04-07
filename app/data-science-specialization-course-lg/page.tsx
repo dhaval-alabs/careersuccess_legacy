@@ -325,7 +325,7 @@ export default function Home() {
                 typeFilter="PPC_downloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
-                onSuccess={(email) => fireConversion('lp_blr_download_brochure', email)}
+                onSuccess={(email) => fireConversion('lp_hero_download_brochure', email)}
               />
             </div>
           </div>
