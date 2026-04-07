@@ -7,7 +7,7 @@ import { initBehaviourTracking } from '../../utils/trackBehaviour';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
 import Modal from "../../components/Modal";
 import StatsBar from "../../components/StatsBar";
-import CurriculumTiers from "../../components/CurriculumTiers";
+import CurriculumTiers from "../../components/CurriculumTiersV2";
 
 const CourseInfoSection = dynamic(() => import("../../components/CourseInfoSection"), { ssr: false });
 const LearningModes = dynamic(() => import("../../components/LearningModes"), { ssr: false });
