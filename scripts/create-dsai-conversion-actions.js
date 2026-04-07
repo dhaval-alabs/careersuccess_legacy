@@ -116,7 +116,7 @@ async function createConversionAction(accessToken, name) {
         create: {
           name,
           type: 'UPLOAD_CLICKS',
-          category: 'LEAD',
+          category: 'DEFAULT',
           status: 'ENABLED',
           counting_type: 'ONE_PER_CLICK',
           click_through_lookback_window_days: 30,
