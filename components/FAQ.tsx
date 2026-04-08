@@ -9,7 +9,7 @@ const FAQ_DATA = [
     },
     {
         question: "Does this course come with a placement guarantee?",
-        answer: "Yes. For NASSCOM-FutureSkills Prime certified courses, we offer a placement commitment with a 50% fee-back guarantee. Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum annual package within 6 months of certification, 50% of your fee is refunded. Every student also goes through an 8-week Placement Readiness Programme."
+        answer: "Yes. For NASSCOM-FutureSkills Prime certified courses, we offer a placement commitment with a 50% fee-back guarantee. Complete the programme, meet the stipulated requirements, and if you're not placed in a qualifying role with the assured minimum annual package within 6 months of certification, 50% of your fee is refunded. Every student also goes through an 8-week Career Readiness Programme."
     },
     {
         question: "What is the eligibility for this data science course?",

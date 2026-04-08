@@ -182,7 +182,7 @@ export default function CourseInfoSection() {
                     <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<PeopleIcon />}
-                            label="Placement Readiness"
+                            label="Career Readiness"
                             primary="8 Weeks"
                             secondary="Post Certification"
                             delay={410}

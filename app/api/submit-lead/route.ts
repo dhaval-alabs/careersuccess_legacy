@@ -40,10 +40,10 @@ export async function POST(req: NextRequest) {
       { Attribute: 'Phone',                    Value: cleanPhone },
       { Attribute: 'mx_City_name',             Value: body.city },
 
-      // CTA Source
+      // Attribution fields
       { Attribute: 'mx_Lead_Source_CTA',       Value: body.form_source },
-      { Attribute: 'Source',                  Value: body.form_source },
-      { Attribute: 'mx_TypeFilter',           Value: body.typeFilter || '' },
+      { Attribute: 'Source',                  Value: body.typeFilter || 'PPC_CheckEligibility' },
+      { Attribute: 'mx_TypeFilter',           Value: body.typeFilter || 'PPC_CheckEligibility' },
 
       // UTM Parameters
       { Attribute: 'mx_UTM_Source',            Value: body.utm_source || '' },

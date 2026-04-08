@@ -106,7 +106,7 @@ const MODULES: Module[] = [
   },
   {
     num: '11',
-    title: 'Placement Readiness (8 Weeks)',
+    title: 'Career Readiness (8 Weeks)',
     topics: [
       'Resume building & LinkedIn optimisation',
       'Mock interviews with industry experts',

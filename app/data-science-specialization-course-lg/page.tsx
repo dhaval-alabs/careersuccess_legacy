@@ -45,7 +45,7 @@ const MODULES = [
   { num: "08", title: "Model Deployment & MLOps", topics: ["Git, Flask, Cloud deployment", "ML lifecycle", "Monitoring in production"] },
   { num: "09", title: "Generative AI", topics: ["Prompt engineering", "Gen AI for Excel/SQL/Power BI/Python", "Gen AI for ML workflows"] },
   { num: "10", title: "Capstone Projects", topics: ["6 real-world projects", "Banking & E-commerce", "Portfolio building"] },
-  { num: "11", title: "Placement Readiness (8 weeks)", topics: ["Resume building", "Mock interviews", "Case study practice", "Simulated recruitment drives"] },
+  { num: "11", title: "Career Readiness (8 weeks)", topics: ["Resume building", "Mock interviews", "Case study practice", "Simulated recruitment drives"] },
 ];
 
 const ALUMNI_COMPANIES = [
@@ -413,7 +413,7 @@ export default function Home() {
                     onClick={() => { setCtaSource('lp_placement_check_eligibility'); setIsEligibilityOpen(true) }} 
                     className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center justify-center gap-2 group active:scale-95"
                   >
-                    Check Eligibility 
+                    See If You Qualify →
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -426,7 +426,7 @@ export default function Home() {
                 <h3 className="text-[#239bf5] font-bold text-2xl mb-5">Employers Recognise.</h3>
                 <p className="text-[#4A6275] text-sm leading-relaxed mb-8">Not just another piece of paper. You earn a co-branded certificate with NASSCOM FutureSkills Prime instantly validating your skills.</p>
                 <div className="space-y-5">
-                  {[{ t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." }, { t: "Applied Projects", d: "Portfolio of 6 capstone projects using real-world business data." }, { t: "Placement Readiness", d: "8 weeks of mock interviews and resume reviews." }].map((item) => (
+                  {[{ t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." }, { t: "Applied Projects", d: "Portfolio of 6 capstone projects using real-world business data." }, { t: "Career Readiness", d: "8 weeks of mock interviews and resume reviews." }].map((item) => (
                     <div key={item.t} className="flex gap-4">
                       <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm border border-[#D6ECEB]"><svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
                       <div><h4 className="text-sm font-bold text-[#09263F]">{item.t}</h4><p className="text-xs text-[#4A6275] mt-1">{item.d}</p></div>
@@ -527,7 +527,7 @@ export default function Home() {
                     onClick={() => { setCtaSource('lp_certificate_check_eligibility'); setIsEligibilityOpen(true) }} 
                     className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                   >
-                    Check Your Eligibility →
+                    Get Started →
                   </button>
                 </div>
               </div>
@@ -623,7 +623,7 @@ export default function Home() {
           <LeadCaptureForm 
             title="Signup for a Demo" 
             sourceName="PPC_BLR_Pricing_SignupDemo" 
-            typeFilter="signUpForDemo" 
+            typeFilter="PPC_signUpForDemo" 
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
             onSuccess={(email) => fireConversion('lp_pricing_signup_demo', email)}

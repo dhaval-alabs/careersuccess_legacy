@@ -109,10 +109,10 @@ export default function CurriculumTiers({ onOpenBrochure }: Props) {
             </div>
           </div>
 
-          {/* Module 11 — Placement Readiness (yellow) */}
+          {/* Module 11 — Career Readiness (yellow) */}
           <div className="bg-[#FFFBE6] border border-[#FFB800] rounded-xl p-4">
             <span className="inline-block text-[10px] font-bold uppercase tracking-widest bg-[#FFFBE6] text-[#09263F] border border-[#FFB800] px-2 py-0.5 rounded-full mb-2">Module 11</span>
-            <h4 className="text-[13px] font-bold text-[#09263F] mt-1 mb-2 leading-snug">Placement Readiness</h4>
+            <h4 className="text-[13px] font-bold text-[#09263F] mt-1 mb-2 leading-snug">Career Readiness</h4>
             <div className="flex flex-wrap gap-1">
               {["Resume", "Mock Interviews", "8 Weeks", "Simulated Drives"].map((tag) => (
                 <span key={tag} className="text-[10px] bg-[#FFFBE6] text-[#09263F] border border-[#FFB800] px-2 py-0.5 rounded-full font-medium">{tag}</span>
