@@ -345,9 +345,6 @@ export default function NoidaDSAIPage() {
                     className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center justify-center gap-2 group active:scale-95"
                   >
                     See If You Qualify →
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
                   </button>
                 </div>
               </div>
