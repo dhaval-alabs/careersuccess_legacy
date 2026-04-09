@@ -1,19 +1,4 @@
-- [x] Global Branding: Placement Readiness -> Career Readiness
-    - [x] components/CurriculumTiers.tsx
-    - [x] components/CurriculumTiersV2.tsx
-    - [x] components/CourseInfoSection.tsx
-    - [x] components/DetailedCurriculum.tsx
-    - [x] components/FAQ.tsx
-    - [x] All page.tsx files (app/)
-- [x] Revert Curriculum Layout (Delhi)
-    - [x] app/data-science-ai-course-delhi/page.tsx
-- [x] Global CTA Component Updates
-    - [x] components/HowToEnrol.tsx (Talk to a Learning Advisor)
-    - [x] components/BottomCTA.tsx (Reserve Your Spot)
-- [x] Diversify CTA Labels (5 Pages)
-    - [x] Delhi
-    - [x] Noida
-    - [x] Gurgaon
-    - [x] Bangalore
-    - [x] LeadGen (Global)
-- [x] Final Verification
+- [/] Re-enable gtag in `components/ThankYouPage.tsx`
+- [ ] Add `DISABLE_GADS_UPLOAD` check in `app/api/track-conversion/route.ts`
+- [ ] Final Verification
+- [ ] Commit and Push

@@ -153,6 +153,21 @@ export async function POST(req: NextRequest) {
       }]
     }
 
+    // Skip Google Ads upload if disabled — gtag handles conversion tracking.
+    // Server-side endpoint still runs for logging/debugging purposes.
+    if (process.env.DISABLE_GADS_UPLOAD === 'true') {
+      console.log('[track-conversion] Google Ads upload disabled (DISABLE_GADS_UPLOAD=true). Skipping API call.', {
+        ctaName,
+        email: email ? 'present' : 'missing',
+        gclid: gclid ? 'present' : 'missing',
+      });
+      return NextResponse.json({
+        success: true,
+        skipped: true,
+        reason: 'DISABLE_GADS_UPLOAD is set — gtag is primary conversion signal',
+      }, { headers: corsHeaders });
+    }
+
     const payload = {
       conversions: [conversion],
       partial_failure: true,

@@ -1,62 +1,36 @@
-# Implementation Plan: UI Enhancements & CTA Diversification
+# Implementation Plan — Hybrid Conversion Tracking Migration
 
-Standardize the curriculum display, update module branding, and diversify call-to-action (CTA) button text across all landing pages to improve user engagement and clarity.
+High-priority migration to a hybrid tracking model: switching Google Ads tracking to client-side (gtag) while retaining server-side tracking for CRM attribution only.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> - The same eligibility modal will still open for all updated CTAs. Only the visible text is changing.
-> - **Curriculum Tiers**: Reverting the Delhi page to v1 as requested.
-> - **Module 11**: "Placement Readiness" will be rebranded to "Career Readiness" globally across all components.
+> **Environment Variable Requirement**: Before deploying these changes, you must add `DISABLE_GADS_UPLOAD=true` to your Vercel environment variables. This prevents duplicate conversion counts by stopping the server-side Google Ads API uploads while re-enabling the client-side gtag events.
+
+> [!NOTE]
+> **CRM Continuity**: This change does NOT affect CRM attribution. Form submissions will still hit the `/api/track-conversion` endpoint, providing the full source and metadata needed for your CRM records.
 
 ## Proposed Changes
 
-### [Component] Curriculum & Global Text Updates
+### [Conversion Tracking System]
 
-#### [MODIFY] [CurriculumTiers.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/CurriculumTiers.tsx)
-- Rename "Placement Readiness" to "Career Readiness".
+#### [MODIFY] [ThankYouPage.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/ThankYouPage.tsx)
+- Re-import `useEffect` from React.
+- Restore the `conversionId` prop to the component signature.
+- Implement the \`useEffect\` hook to fire the \`gtag('event', 'conversion', ...)\` call with enhanced conversion data (email and first name).
+- Add a safety check for \`conversionId\` and \`window.gtag\` to prevent runtime errors.
 
-#### [MODIFY] [CurriculumTiersV2.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/CurriculumTiersV2.tsx)
-- Rename "Placement Readiness" to "Career Readiness".
+#### [MODIFY] [route.ts](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/app/api/track-conversion/route.ts)
+- Insert a check for the \`DISABLE_GADS_UPLOAD\` environment variable at the start of the \`POST\` handler (after validation but before the Google Ads API call).
+- If enabled, the API will log the conversion attempt and return a early success response without calling the Google Ads \`uploadClickConversions\` endpoint.
 
-#### [MODIFY] [CourseInfoSection.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/CourseInfoSection.tsx)
-- Update label from "Placement Readiness" to "Career Readiness".
+## Open Questions
 
-#### [MODIFY] [DetailedCurriculum.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/DetailedCurriculum.tsx)
-- Update title to "Career Readiness (8 Weeks)".
-
-#### [MODIFY] [FAQ.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/FAQ.tsx)
-- Update answer text mentioning "Placement Readiness Programme" to "Career Readiness Programme".
-
----
-
-### [Component] CTA Button Text Standardization (Global)
-
-#### [MODIFY] [HowToEnrol.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/HowToEnrol.tsx)
-- Change hardcoded button text from "Check Your Eligibility →" to "**Talk to a Learning Advisor →**".
-
-#### [MODIFY] [BottomCTA.tsx](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/components/BottomCTA.tsx)
-- Change hardcoded button text from "Check Your Eligibility →" to "**Reserve Your Spot →**".
-
----
-
-### [Pages] City-Specific Landing Page Updates
-
-#### [MODIFY] [Delhi Page](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/app/data-science-ai-course-delhi/page.tsx)
-- Revert import of `CurriculumTiers` from `CurriculumTiersV2` back to `CurriculumTiers`.
-- **Career Assurance Section**: Change "Check Eligibility" to "**See If You Qualify →**".
-- **Certificate Section**: Change "Check Your Eligibility →" to "**Get Started →**".
-
-#### [MODIFY] [Other Pages](file:///Users/apple/Documents/gemini/antigravity/scratch/Antigravity%20Skills/alabs-lp/app/data-science-ai-course-gurgaon/page.tsx) (Gurgaon, Noida, Bangalore, LG)
-- **Career Assurance Section**: Change "Check Eligibility" to "**See If You Qualify →**".
-- **Certificate Section**: Change "Check Your Eligibility →" to "**Get Started →**".
+- Should we also include the \`phone_number\` in the client-side enhanced conversion data? The provided migration doc snippet for re-enabling gtag only shows \`email\` and \`first_name\`, whereas the original commented-out code had \`phone_number\` as well.
 
 ## Verification Plan
 
-### Automated Checks
-- Grep for "Placement Readiness" to ensure total elimination.
-- Grep for "Check Your Eligibility" in sections 2 and 3 of all pages to ensure updates were applied.
-
 ### Manual Verification
-- Visual inspection of the Delhi page to confirm v1 curriculum layout.
-- Click-test of new buttons to ensure they still trigger the eligibility modal.
+1. **Console Check**: After deployment, I will guide you to check the \`dataLayer\` in the browser console on a successful submission to verify the \`conversion\` event is registered.
+2. **Network Check**: Verify requests to \`googleads.g.doubleclick.net\` in the browser's Network tab.
+3. **Log Verification**: Check Vercel logs for the message: \`[track-conversion] Google Ads upload disabled (DISABLE_GADS_UPLOAD=true). Skipping API call.\`

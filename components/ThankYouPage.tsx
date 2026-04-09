@@ -1,14 +1,14 @@
 // components/ThankYouPage.tsx
 'use client';
 
-// useEffect removed — gtag conversion disabled in favour of server-side API
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 interface ThankYouProps {
   heading: string;
   subCopy: string;
-  conversionId?: string; // kept for backwards-compat; unused — server-side API handles conversions
+  conversionId?: string;
   isBrochureDownload?: boolean;
 }
 
@@ -22,7 +22,7 @@ const WA_MESSAGE = encodeURIComponent(
 const navy = "#09263F";
 const teal = "#1DE5B5";
 
-export default function ThankYouPage({ heading, subCopy, isBrochureDownload }: ThankYouProps) {
+export default function ThankYouPage({ heading, subCopy, conversionId, isBrochureDownload }: ThankYouProps) {
   const searchParams = useSearchParams();
   const rawEmail = searchParams.get('email') || '';
   const rawName = searchParams.get('name') || '';
@@ -30,22 +30,24 @@ export default function ThankYouPage({ heading, subCopy, isBrochureDownload }: T
   const email = decodeURIComponent(rawEmail);
   const name = decodeURIComponent(rawName);
 
-  // gtag client-side conversion disabled — server-side Google Ads Conversions API
-  // (POST /api/track-conversion) fires on form submit, making this redundant and
-  // causing duplicate conversion records in Google Ads.
-  // useEffect(() => {
-  //   if (typeof window === 'undefined' || !window.gtag) return;
-  //   const firstName = name.split(' ')[0] || '';
-  //   const e164Phone = phone ? `+91${phone.replace(/\D/g, '')}` : '';
-  //   window.gtag('event', 'conversion', {
-  //     send_to: conversionId,
-  //     user_data: {
-  //       email,
-  //       phone_number: e164Phone,
-  //       address: { first_name: firstName },
-  //     },
-  //   });
-  // }, [conversionId, email, name, phone]);
+  // gtag client-side conversion — PRIMARY signal for Google Ads dashboard + Smart Bidding.
+  // Server-side API (POST /api/track-conversion) now handles CRM attribution only.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !conversionId) return;
+    if (typeof window.gtag !== 'function') return;
+
+    const firstName = name ? name.split(' ')[0] : '';
+
+    window.gtag('event', 'conversion', {
+      send_to: conversionId,
+      ...(email && {
+        user_data: {
+          email,
+          ...(firstName && { address: { first_name: firstName } }),
+        },
+      }),
+    });
+  }, [conversionId, email, name]);
 
   return (
     <div style={{ minHeight: '100vh', background: '#f0faf8', paddingBottom: '40px' }}>
