@@ -1,34 +1,33 @@
-# Walkthrough: UI Enhancements & CTA Diversification
+# Walkthrough — Hybrid Conversion Migration Complete
 
-Successfully implemented branding updates, reverted curriculum layouts, and diversified call-to-action (CTA) button labels across the entire landing page suite.
+Successfully migrated the conversion tracking pipeline to a hybrid model. **gtag** is now the primary signal for Google Ads, while the server-side API continues to handle CRM attribution safely.
 
-## 1. Branding: "Placement" to "Career" Readiness
-Replaced all occurrences of "Placement Readiness" with "**Career Readiness**" to better reflect the programme's value proposition.
-- **Affected Components**: `CurriculumTiers`, `CurriculumTiersV2`, `CourseInfoSection`, `DetailedCurriculum`, `FAQ`.
-- **Affected Pages**: All 5 city-specific and global landing pages.
+## Changes Made
 
-## 2. Delhi Page Curriculum Revert
-As requested, the Delhi landing page has been switched back to the **Version 1** curriculum layout.
-- **File**: `app/data-science-ai-course-delhi/page.tsx`
-- **Change**: Imported `CurriculumTiers` from `../../components/CurriculumTiers` instead of `CurriculumTiersV2`.
+### 1. Client-Side (gtag) Re-enabled
+- **File**: `components/ThankYouPage.tsx`
+- **Action**: Restored the `useEffect` hook that fires the `gtag('event', 'conversion', ...)` call.
+- **Enhanced Conversions**: Included `email` and `first_name` in the payload for better matching in Google Ads.
+- **Trigger**: Fires immediately on page load of any thank-you page if a `conversionId` is present.
 
-## 3. CTA Button Diversification
-Diversified the repetitive "Check Your Eligibility" text with section-appropriate labels. All buttons still correctly open the eligibility modal.
+### 2. Server-Side (GAds API) Conditional Bypass
+- **File**: `app/api/track-conversion/route.ts`
+- **Action**: Implemented a check for `process.env.DISABLE_GADS_UPLOAD === 'true'`.
+- **Behavior**: If the variable is set, the API returns a success message *without* calling the Google Ads API. This prevents duplicate counting while keeping the logic intact for easy rollback if needed.
+- **Logging**: Added console logging to verify skips in the Vercel dashboard.
 
-| Section | New Button Text | Scope |
-| :--- | :--- | :--- |
-| **Career Assurance** | `See If You Qualify →` | All 5 Pages |
-| **Certificate Section** | `Get Started →` | All 5 Pages |
-| **How to Enrol** | `Talk to a Learning Advisor →` | Shared Component |
-| **Bottom CTA** | `Reserve Your Spot →` | Shared Component |
+## Verification Steps (Your Turn)
 
-> [!NOTE]
-> **What stayed the same:**
-> - Hero Section CTA: "Check Your Eligibility →"
-> - Sticky Footer CTA: "Check Eligibility"
-> - Tracking Logic: `ctaSource`, `fireConversion`, and CRM mappings remain unchanged.
+### 1. Verify gtag in Browser
+- Open a landing page with a test GCLID (e.g., `?gclid=test_conversion`).
+- Submit a form.
+- On the thank-you page, open DevTools Console and type `dataLayer`.
+- Look for the `conversion` event with the correct ID.
 
-## 4. Verification
-- **Visual Audit**: Confirmed the Delhi page now displays the V1 curriculum.
-- **Consistency Check**: Verified that no "Placement Readiness" strings remain in the components or page files.
-- **Formatting**: Fixed a minor formatting issue in the LeadGen page button code to ensure clean rendering.
+### 2. Verify Server-Side Skip
+- Check your Vercel logs for `/api/track-conversion`.
+- You should see: `[track-conversion] Google Ads upload disabled (DISABLE_GADS_UPLOAD=true). Skipping API call.`
+
+---
+**Commit ID**: `cf92267`
+**Date**: April 9, 2026

@@ -322,7 +322,7 @@ export default function Home() {
               <LeadCaptureForm 
                 title="Get Free Career Counselling" 
                 sourceName="PPC_BLR_Hero_DownloadBrochure" 
-                typeFilter="PPC_downloadBrochure" 
+                typeFilter="PPC_DownloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion('lp_hero_download_brochure', email)}
@@ -610,7 +610,7 @@ export default function Home() {
           <LeadCaptureForm 
             title="Download Brochure" 
             sourceName={`PPC_BLR_${ctaSource}`}
-            typeFilter="PPC_downloadBrochure" 
+            typeFilter="PPC_DownloadBrochure" 
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
             onSuccess={(email) => fireConversion(ctaSource, email)}
@@ -620,7 +620,7 @@ export default function Home() {
           <LeadCaptureForm 
             title="Signup for a Demo" 
             sourceName="PPC_BLR_Pricing_SignupDemo" 
-            typeFilter="PPC_signUpForDemo" 
+            typeFilter="PPC_SignupDemo" 
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
             onSuccess={(email) => fireConversion('lp_pricing_signup_demo', email)}

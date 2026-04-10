@@ -280,7 +280,7 @@ export default function GurgaonDSAIPage() {
               <LeadCaptureForm
                 title="Get Free Career Counselling"
                 sourceName={`${config.crmPrefix}_Hero_DownloadBrochure`}
-                typeFilter="PPC_downloadBrochure"
+                typeFilter="PPC_DownloadBrochure"
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion(`${config.cityPrefix}_hero_download_brochure`, email)}
@@ -528,7 +528,7 @@ export default function GurgaonDSAIPage() {
           <LeadCaptureForm
             title="Download Brochure"
             sourceName={`${config.crmPrefix}_${ctaSource}`}
-            typeFilter="PPC_downloadBrochure"
+            typeFilter="PPC_DownloadBrochure"
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
             onSuccess={(email) => fireConversion(ctaSource, email)}
@@ -538,7 +538,7 @@ export default function GurgaonDSAIPage() {
           <LeadCaptureForm
             title="Signup for a Demo"
             sourceName={`${config.crmPrefix}_Pricing_SignupDemo`}
-            typeFilter="PPC_signUpForDemo"
+            typeFilter="PPC_SignupDemo"
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
             onSuccess={(email) => fireConversion(`${config.cityPrefix}_pricing_signup_demo`, email)}
