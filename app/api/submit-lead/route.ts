@@ -2,6 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const CRM_WEBHOOK_URL = "https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Capture?accessKey=u$rfdb83f05f0b66fc1db816ac810a2e0d3&secretKey=5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4";
 
+/**
+ * Parses technical form_source strings into a human-readable format for CRM Notes.
+ * Examples: 
+ * "PPC_BLR2_Hero_DownloadBrochure" -> "Hero | CTA: DownloadBrochure"
+ * "PPC_BLR_lp_enrol_check_eligibility" -> "Enrol | CTA: Check Eligibility"
+ */
+function formatLeadNotesFriendly(source: string): string {
+  if (!source) return 'N/A';
+
+  // 1. Strip top-level CRM prefixes (e.g., PPC_BLR2_, PPC_NOI_)
+  let clean = source.replace(/^(PPC_BLR2_|PPC_NOI_|PPC_DEL_|PPC_GRG_|PPC_BLR_)/i, '');
+
+  // 2. Strip standard landing page prefixes (e.g., dsai_blr_, lp_)
+  clean = clean.replace(/^(dsai_blr_|dsai_noi_|dsai_del_|dsai_grg_|lp_)/i, '');
+
+  // 3. Handle Section and CTA separation
+  const parts = clean.split('_');
+  if (parts.length > 1) {
+    const sectionRaw = parts[0];
+    const section = sectionRaw.charAt(0).toUpperCase() + sectionRaw.slice(1);
+    
+    // Join the rest as the CTA name, capitalizing each part
+    const ctaName = parts.slice(1)
+      .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+      .join(' ');
+
+    return `${section} | CTA: ${ctaName}`;
+  }
+
+  return clean.charAt(0).toUpperCase() + clean.slice(1);
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -69,7 +101,7 @@ export async function POST(req: NextRequest) {
 
       // Extra Data into mx_Extra_Notes as requested
       { Attribute: 'mx_Extra_Notes',           Value: extraNotes },
-      { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${body.form_source}` }
+      { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${formatLeadNotesFriendly(body.form_source)}` }
     ];
 
     console.log('LeadSquared Payload:', JSON.stringify(payload, null, 2));
