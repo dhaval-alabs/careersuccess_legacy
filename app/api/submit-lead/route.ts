@@ -61,7 +61,12 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   sign.update(signatureInput);
   sign.end();
   
-  const formattedKey = privateKey.replace(/\\n/g, '\n');
+  let formattedKey = privateKey.replace(/\\n/g, '\n');
+  // Strip accidental double quotes from copy-pasting
+  if (formattedKey.startsWith('"') && formattedKey.endsWith('"')) {
+    formattedKey = formattedKey.slice(1, -1);
+  }
+  
   const signature = sign.sign(formattedKey, 'base64url');
 
   const jwt = `${signatureInput}.${signature}`;
