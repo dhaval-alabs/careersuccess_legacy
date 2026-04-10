@@ -258,7 +258,7 @@ export default function DelhiDSAIPage() {
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <button
-                  onClick={() => { setCtaSource(`${config.cityPrefix}_hero_check_eligibility`); setIsEligibilityOpen(true); }}
+                  onClick={() => { setCtaSource(`Hero_CheckEligibility`); setIsEligibilityOpen(true); }}
                   className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                 >
                   Check Your Eligibility →
@@ -284,7 +284,7 @@ export default function DelhiDSAIPage() {
                 typeFilter="PPC_DownloadBrochure"
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
-                onSuccess={(email) => fireConversion(`${config.cityPrefix}_hero_download_brochure`, email)}
+                onSuccess={(email) => fireConversion(`${config.cityPrefix}_Hero_DownloadBrochure`, email)}
               />
             </div>
           </div>
@@ -362,7 +362,7 @@ export default function DelhiDSAIPage() {
                     ))}
                   </ul>
                   <button
-                    onClick={() => { setCtaSource(`${config.cityPrefix}_placement_check_eligibility`); setIsEligibilityOpen(true); }}
+                    onClick={() => { setCtaSource(`Placement_CheckEligibility`); setIsEligibilityOpen(true); }}
                     className="w-full bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] flex items-center justify-center gap-2 group active:scale-95"
                   >
                     See If You Qualify →
@@ -387,7 +387,7 @@ export default function DelhiDSAIPage() {
           </div>
         </section>
 
-        <LearningModes onOpenDemo={() => { setCtaSource(`${config.cityPrefix}_pricing_signup_demo`); setIsDemoOpen(true); }} />
+        <LearningModes onOpenDemo={() => { setCtaSource(`Pricing_SignupDemo`); setIsDemoOpen(true); }} />
 
         {/* CURRICULUM */}
         <section id="curriculum" className="py-24 px-6 bg-white">
@@ -406,7 +406,7 @@ export default function DelhiDSAIPage() {
                 </p>
               </div>
             </div>
-            <CurriculumTiers onOpenBrochure={() => { setCtaSource(`${config.cityPrefix}_curriculum_download_brochure`); setIsBrochureOpen(true); }} />
+            <CurriculumTiers onOpenBrochure={() => { setCtaSource(`Curriculum_DownloadBrochure`); setIsBrochureOpen(true); }} />
           </div>
         </section>
 
@@ -436,7 +436,7 @@ export default function DelhiDSAIPage() {
                     </div>
                   </div>
                   <button
-                    onClick={() => { setCtaSource(`${config.cityPrefix}_certificate_check_eligibility`); setIsEligibilityOpen(true); }}
+                    onClick={() => { setCtaSource(`Certificate_CheckEligibility`); setIsEligibilityOpen(true); }}
                     className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.3)] active:scale-95"
                   >
                     Get Started →
@@ -468,7 +468,7 @@ export default function DelhiDSAIPage() {
           </div>
         </section>
 
-        <HowToEnrol onOpenEligibility={(source) => { setCtaSource(`${config.cityPrefix}_enrol_check_eligibility`); setIsEligibilityOpen(true); }} />
+        <HowToEnrol onOpenEligibility={() => { setCtaSource(`Enrol_CheckEligibility`); setIsEligibilityOpen(true); }} />
 
         {/* FAQ SECTION */}
         <section className="py-16 bg-white">
@@ -485,7 +485,7 @@ export default function DelhiDSAIPage() {
           </div>
         </section>
 
-        <BottomCTA onOpenEligibility={(source) => { setCtaSource(`${config.cityPrefix}_bottom_check_eligibility`); setIsEligibilityOpen(true); }} />
+        <BottomCTA onOpenEligibility={() => { setCtaSource(`Bottom_CheckEligibility`); setIsEligibilityOpen(true); }} />
 
         <footer className="bg-[#06192b] pt-8 pb-32 border-t border-white/5">
           <p className="text-center text-[#4A6275] text-xs">&copy; {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.</p>
@@ -505,7 +505,7 @@ export default function DelhiDSAIPage() {
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp
             </a>
             <button
-              onClick={() => { setCtaSource(`${config.cityPrefix}_sticky_check_eligibility`); setIsEligibilityOpen(true); }}
+              onClick={() => { setCtaSource(`Sticky_CheckEligibility`); setIsEligibilityOpen(true); }}
               className={`flex-1 relative overflow-hidden border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 ${hasPassedCurriculum ? 'animate-breathing-glow shadow-[0_0_25px_rgba(29,229,181,0.6)] border-[#1DE5B5]' : (scrollProgress > 0.8 ? 'shadow-[0_0_20px_rgba(29,229,181,0.5)] border-[#1DE5B5]' : '')}`}
               style={{ backgroundColor: hasPassedCurriculum ? '#1DE5B5' : getProgressiveColor(scrollProgress) }}
             >
@@ -522,7 +522,7 @@ export default function DelhiDSAIPage() {
             typeFilter="PPC_CheckEligibility"
             buttonText="Check Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
-            onSuccess={(email) => fireConversion(ctaSource, email)}
+            onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
@@ -532,7 +532,7 @@ export default function DelhiDSAIPage() {
             typeFilter="PPC_DownloadBrochure"
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
-            onSuccess={(email) => fireConversion(ctaSource, email)}
+            onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
           />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
@@ -542,7 +542,7 @@ export default function DelhiDSAIPage() {
             typeFilter="PPC_SignupDemo"
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
-            onSuccess={(email) => fireConversion(`${config.cityPrefix}_pricing_signup_demo`, email)}
+            onSuccess={(email) => fireConversion(`${config.cityPrefix}_Pricing_SignupDemo`, email)}
           />
         </Modal>
 
