@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  alternates: {
+    canonical: 'https://careersuccess.analytixlabs.co.in/lp/data-science-specialization-course-lg',
+  },
 };
 
 export default function Layout({
