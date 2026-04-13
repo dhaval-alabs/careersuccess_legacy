@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-const CRM_WEBHOOK_URL = "https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Capture?accessKey=u$rfdb83f05f0b66fc1db816ac810a2e0d3&secretKey=5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4";
+const LSQ_ACCESS = "u$rfdb83f05f0b66fc1db816ac810a2e0d3";
+const LSQ_SECRET = "5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4";
+const CRM_BASE_URL = "https://api-in21.leadsquared.com/v2/LeadManagement.svc";
+const CRM_WEBHOOK_URL = `${CRM_BASE_URL}/Lead.Capture?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}`;
 
 /**
  * Parses technical form_source strings into a human-readable format for CRM Notes.
@@ -158,7 +161,13 @@ export async function POST(req: NextRequest) {
     if (body.countryCode === '+91' && cleanMobile.startsWith('91') && cleanMobile.length > 10) {
       cleanMobile = cleanMobile.substring(2);
     }
+    
+    // LeadSquared Normalization: 
+    // User says "Leadsquared automatically assigns 91". 
+    // If we pass +91 it becomes 9191.
+    // Solution: For +91, send ONLY the 10-digit mobile. For others, send prefix + mobile.
     const cleanPhone = body.countryCode === '+91' ? cleanMobile : `${body.countryCode}${cleanMobile}`;
+    const lsqPhone = body.countryCode === '+91' ? cleanMobile : cleanPhone;
 
     // Extra Notes for LeadSquared (Requested specifically)
     const extraNotes = [
@@ -179,7 +188,7 @@ export async function POST(req: NextRequest) {
       { Attribute: 'FirstName',                Value: firstName },
       { Attribute: 'LastName',                 Value: lastName },
       { Attribute: 'EmailAddress',             Value: body.email },
-      { Attribute: 'Phone',                    Value: cleanPhone },
+      { Attribute: 'Phone',                    Value: lsqPhone },
       { Attribute: 'mx_City_name',             Value: body.city },
 
       // Attribution fields
@@ -216,13 +225,51 @@ export async function POST(req: NextRequest) {
 
     console.log('LeadSquared Payload:', JSON.stringify(payload, null, 2));
 
-    const response = await fetch(CRM_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    // --- Search logic for Upsert ---
+    let prospectId: string | null = null;
+    try {
+      // 1. Search by Phone (using normalized lsqPhone)
+      const searchPhoneUrl = `${CRM_BASE_URL}/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(lsqPhone)}`;
+      const searchPhoneRes = await fetch(searchPhoneUrl);
+      const searchPhoneData = await searchPhoneRes.json();
+      
+      if (searchPhoneRes.ok && searchPhoneData && searchPhoneData.length > 0) {
+        prospectId = searchPhoneData[0].ProspectID;
+      } else {
+        // 2. Fallback search by Email
+        const searchEmailUrl = `${CRM_BASE_URL}/RetrieveLeadByEmailAddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&email=${encodeURIComponent(body.email)}`;
+        const searchEmailRes = await fetch(searchEmailUrl);
+        const searchEmailData = await searchEmailRes.json();
+        
+        if (searchEmailRes.ok && searchEmailData && searchEmailData.ProspectID) {
+          prospectId = searchEmailData.ProspectID;
+        }
+      }
+    } catch (e) {
+      console.error('LeadSquared search failed, falling back to Capture:', e);
+    }
 
-    // Fire & Forget: Push to Google Sheets asynchronously without blocking the response
+    let response;
+    if (prospectId) {
+      // Update existing lead
+      console.log(`Matching lead found (ID: ${prospectId}). Updating...`);
+      const updateUrl = `${CRM_BASE_URL}/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
+      response = await fetch(updateUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } else {
+      // Capture new lead
+      console.log('No matching lead found. Creating new...');
+      response = await fetch(CRM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+
+    // Fire & Forget: Push to Google Sheets asynchronously
     const friendlyNotes = formatLeadNotesFriendly(body.form_source);
     pushToGoogleSheets(body, cleanPhone, friendlyNotes).catch(console.error);
 
