@@ -211,6 +211,7 @@ export async function POST(req: NextRequest) {
 
     // --- Search logic for Upsert ---
     let prospectId: string | null = null;
+    let matchedLead: any = null;
     try {
       // 1. Search by Phone (using normalized lsqPhone)
       const searchPhoneUrl = `${CRM_BASE_URL}/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(lsqPhone)}`;
@@ -218,7 +219,8 @@ export async function POST(req: NextRequest) {
       const searchPhoneData = await searchPhoneRes.json();
       
       if (searchPhoneRes.ok && searchPhoneData && searchPhoneData.length > 0) {
-        prospectId = searchPhoneData[0].ProspectID;
+        matchedLead = searchPhoneData[0];
+        prospectId = matchedLead.ProspectID;
       } else {
         // 2. Fallback search by Email
         const searchEmailUrl = `${CRM_BASE_URL}/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(body.email)}`;
@@ -228,9 +230,11 @@ export async function POST(req: NextRequest) {
         if (searchEmailRes.ok && searchEmailData) {
           // Leads.GetByEmailaddress typically returns an array
           if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
-            prospectId = searchEmailData[0].ProspectID;
+            matchedLead = searchEmailData[0];
+            prospectId = matchedLead.ProspectID;
           } else if (searchEmailData.ProspectID) {
-            prospectId = searchEmailData.ProspectID;
+            matchedLead = searchEmailData;
+            prospectId = matchedLead.ProspectID;
           }
         }
       }
@@ -243,10 +247,20 @@ export async function POST(req: NextRequest) {
       // Update existing lead
       console.log(`Matching lead found (ID: ${prospectId}). Updating...`);
       const updateUrl = `${CRM_BASE_URL}/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
+      
+      // CRITICAL FIX: LeadSquared Update API throws "Duplicate" errors if you send 
+      // an Email/Phone that ALREADY belongs to that lead.
+      // Solution: Only include EmailAddress/Phone if they are actually DIFFERENT from the existing values.
+      const updatePayload = payload.filter(attr => {
+        if (attr.Attribute === 'EmailAddress' && matchedLead?.EmailAddress === attr.Value) return false;
+        if (attr.Attribute === 'Phone' && matchedLead?.Phone === attr.Value) return false;
+        return true;
+      });
+
       response = await fetch(updateUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(updatePayload)
       });
     } else {
       // Capture new lead
