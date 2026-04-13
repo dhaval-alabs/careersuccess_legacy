@@ -170,8 +170,16 @@ export async function POST(req: NextRequest) {
     const lsqPhone = body.countryCode === '+91' ? cleanMobile : cleanPhone;
 
     // Extra Notes for LeadSquared (Requested specifically)
+    // Consolidating all fields that failed the 412 schema check into this field
     const extraNotes = [
       `Source CTA: ${body.form_source || 'N/A'}`,
+      `Type Filter: ${body.typeFilter || 'N/A'}`,
+      `UTM Source: ${body.utm_source || 'N/A'}`,
+      `UTM Medium: ${body.utm_medium || 'N/A'}`,
+      `UTM Campaign: ${body.utm_campaign || 'N/A'}`,
+      `UTM Term: ${body.utm_term || 'N/A'}`,
+      `UTM Content: ${body.utm_content || 'N/A'}`,
+      `GCLID: ${body.gclid || 'N/A'}`,
       `Device: ${body.device_type || 'N/A'}`,
       `Viewport: ${body.viewport_width || 'N/A'}px`,
       `Time on Page: ${body.time_on_page_seconds || 0}s`,
@@ -181,44 +189,20 @@ export async function POST(req: NextRequest) {
       `Referrer: ${body.referrer_url || 'Direct'}`,
       `Submission URL: ${body.landing_page_url || 'N/A'}`,
       `Timestamp: ${body.submission_timestamp || 'N/A'}`,
+      `Country Code: ${body.countryCode || 'N/A'}`,
     ].join('\n');
 
     const payload = [
-      // Standard LSQ fields
+      // Standard LSQ fields (Confirmed to exist)
       { Attribute: 'FirstName',                Value: firstName },
       { Attribute: 'LastName',                 Value: lastName },
       { Attribute: 'EmailAddress',             Value: body.email },
       { Attribute: 'Phone',                    Value: lsqPhone },
       { Attribute: 'mx_City_name',             Value: body.city },
-
-      // Attribution fields
-      { Attribute: 'mx_Lead_Source_CTA',       Value: body.form_source },
+      { Attribute: 'mx_GCLID',                 Value: body.gclid || '' }, // GCLID didn't error, so keeping as field
       { Attribute: 'Source',                  Value: body.typeFilter || 'PPC_CheckEligibility' },
-      { Attribute: 'mx_TypeFilter',           Value: body.typeFilter || 'PPC_CheckEligibility' },
 
-      // UTM Parameters
-      { Attribute: 'mx_UTM_Source',            Value: body.utm_source || '' },
-      { Attribute: 'mx_UTM_Medium',            Value: body.utm_medium || '' },
-      { Attribute: 'mx_UTM_Campaign',          Value: body.utm_campaign || '' },
-      { Attribute: 'mx_UTM_Term',              Value: body.utm_term || '' },
-      { Attribute: 'mx_UTM_Content',           Value: body.utm_content || '' },
-      { Attribute: 'mx_GCLID',                 Value: body.gclid || '' },
-
-      // Behavioural signals mapped to custom fields if they exist
-      { Attribute: 'mx_Time_on_Page_Sec',      Value: String(body.time_on_page_seconds ?? '') },
-      { Attribute: 'mx_Max_Scroll_Pct',        Value: String(body.max_scroll_pct ?? '') },
-      { Attribute: 'mx_Form_Completion_Sec',   Value: String(body.form_completion_seconds ?? '') },
-      { Attribute: 'mx_First_Field_Touched',   Value: body.first_field_touched || '' },
-
-      // Context
-      { Attribute: 'mx_Device_Type',           Value: body.device_type || '' },
-      { Attribute: 'mx_Viewport_Width',        Value: String(body.viewport_width ?? '') },
-      { Attribute: 'mx_Referrer_URL',          Value: body.referrer_url || '' },
-      { Attribute: 'mx_Landing_Page_URL',      Value: body.landing_page_url || '' },
-      { Attribute: 'mx_Submission_Timestamp',  Value: body.submission_timestamp || '' },
-      { Attribute: 'mx_Country_Code',          Value: body.countryCode || '' },
-
-      // Extra Data into mx_Extra_Notes as requested
+      // All other technical/attribution data consolidated here
       { Attribute: 'mx_Extra_Notes',           Value: extraNotes },
       { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${formatLeadNotesFriendly(body.form_source)}` }
     ];
