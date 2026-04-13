@@ -225,8 +225,13 @@ export async function POST(req: NextRequest) {
         const searchEmailRes = await fetch(searchEmailUrl);
         const searchEmailData = await searchEmailRes.json();
         
-        if (searchEmailRes.ok && searchEmailData && searchEmailData.ProspectID) {
-          prospectId = searchEmailData.ProspectID;
+        if (searchEmailRes.ok && searchEmailData) {
+          // LeadSquared APIs can return either an array or a single object
+          if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
+            prospectId = searchEmailData[0].ProspectID;
+          } else if (searchEmailData.ProspectID) {
+            prospectId = searchEmailData.ProspectID;
+          }
         }
       }
     } catch (e) {
