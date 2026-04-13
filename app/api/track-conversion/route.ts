@@ -250,6 +250,9 @@ async function getAccessToken(): Promise<string> {
   }
 
   if (!res.ok || !data.access_token) {
+    if (data.error === 'invalid_grant') {
+      throw new Error('Google Ads Refresh Token has expired or been revoked (invalid_grant). ACTION REQUIRED: Generate a new refresh token and ensure the GCP OAuth Consent Screen is set to "In Production".');
+    }
     throw new Error(`Failed to get access token: ${JSON.stringify(data)}`)
   }
 
