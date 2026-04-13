@@ -221,12 +221,12 @@ export async function POST(req: NextRequest) {
         prospectId = searchPhoneData[0].ProspectID;
       } else {
         // 2. Fallback search by Email
-        const searchEmailUrl = `${CRM_BASE_URL}/RetrieveLeadByEmailAddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&email=${encodeURIComponent(body.email)}`;
+        const searchEmailUrl = `${CRM_BASE_URL}/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(body.email)}`;
         const searchEmailRes = await fetch(searchEmailUrl);
         const searchEmailData = await searchEmailRes.json();
         
         if (searchEmailRes.ok && searchEmailData) {
-          // LeadSquared APIs can return either an array or a single object
+          // Leads.GetByEmailaddress typically returns an array
           if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
             prospectId = searchEmailData[0].ProspectID;
           } else if (searchEmailData.ProspectID) {
