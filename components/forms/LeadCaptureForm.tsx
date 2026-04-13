@@ -4,12 +4,7 @@ import { useState, useTransition, FormEvent } from 'react';
 import { createLeadAction } from '../../app/actions/leads';
 import { recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
-
-const INDIA_CITIES = [
-  'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Faridabad',
-  'Gurgaon', 'Hyderabad', 'Jaipur', 'Kochi', 'Kolkata',
-  'Mumbai', 'Navi Mumbai', 'Noida', 'Pune', 'Trivandrum',
-];
+import SearchableCitySelect from '../SearchableCitySelect';
 
 const COUNTRY_CODES = [
   { code: '+91', label: '+91' },
@@ -155,17 +150,11 @@ export default function LeadCaptureForm({
           </div>
           <div>
             <label htmlFor="city" className={labelCls}>Current City</label>
-            <select
-              name="city" id="city"
-              required defaultValue=""
-              className={inputCls + ' cursor-pointer'}
-              onFocus={() => recordFirstField('city')}
-            >
-              <option value="" disabled>Select City...</option>
-              {INDIA_CITIES.map((city) => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
+            <SearchableCitySelect 
+              name="city" 
+              required 
+              placeholder="Select City..."
+            />
           </div>
         </div>
 

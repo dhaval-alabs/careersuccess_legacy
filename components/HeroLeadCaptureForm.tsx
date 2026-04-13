@@ -4,11 +4,7 @@ import { useState, useTransition, FormEvent } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../utils/trackBehaviour';
 import { getStoredUtm } from '../utils/captureUtm';
 
-const INDIA_CITIES = [
-  'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Faridabad',
-  'Gurgaon', 'Hyderabad', 'Jaipur', 'Kochi', 'Kolkata',
-  'Mumbai', 'Navi Mumbai', 'Noida', 'Pune', 'Trivandrum',
-];
+import SearchableCitySelect from './SearchableCitySelect';
 
 const COUNTRY_CODES = [
   { code: '+91', label: '+91' },
@@ -45,8 +41,10 @@ export default function HeroLeadCaptureForm({
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
 }: HeroLeadCaptureFormProps) {
-  const [isPending, startTransition] = useTransition(); // Actually might not need this if we don't have standard form action
+  const [isPending, startTransition] = useTransition();
   const [formState, setFormState] = useState({ success: false, error: '' });
+
+  const isOtpEnabled = process.env.NEXT_PUBLIC_ENABLE_OTP === 'true';
 
   const [name, setName]               = useState('');
   const [email, setEmail]             = useState('');
@@ -144,6 +142,37 @@ export default function HeroLeadCaptureForm({
     window.location.href = `${thankYouPath}?${params.toString()}`;
   }
 
+  async function handleSubmitDirect() {
+    if (!name || !email || !city || mobile.length !== 10) {
+      setFormState({ success: false, error: 'Please fill out all fields before submitting.' });
+      return;
+    }
+
+    setOtpState('sending'); // Reuse sending state for loading
+    setFormState({ success: false, error: '' });
+
+    const utms = getStoredUtm();
+    const behaviour = getBehaviourSnapshot();
+    const { createLeadAction } = await import('../app/actions/leads');
+
+    const result = await createLeadAction({
+      name, email, city, countryCode, mobile,
+      form_source: sourceName,
+      typeFilter,
+      ...utms,
+      ...behaviour,
+    });
+
+    if (result.success) {
+      onSuccess?.(email);
+      const params = new URLSearchParams({ email, name, phone: mobile });
+      window.location.href = `${thankYouPath}?${params.toString()}`;
+    } else {
+      setOtpState('idle');
+      setFormState({ success: false, error: result.error || 'Something went wrong. Please try again.' });
+    }
+  }
+
   async function handleResend() {
     setOtpValue('');
     setErrorMsg('');
@@ -210,80 +239,139 @@ export default function HeroLeadCaptureForm({
           </div>
           <div>
             <label htmlFor="city" className={labelCls}>Current City</label>
-            <select
-              name="city" id="city"
+            <SearchableCitySelect
+              name="city"
               required
-              className={inputCls + ' cursor-pointer'}
-              value={city} onChange={e => setCity(e.target.value)}
+              value={city}
+              onChange={(val) => {
+                setCity(val);
+                recordFirstField('city');
+              }}
               disabled={otpState === 'sending' || otpState === 'otp_sent' || otpState === 'verifying' || otpState === 'error'}
-              onFocus={() => recordFirstField('city')}
-            >
-              <option value="" disabled>Select City...</option>
-              {INDIA_CITIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+              placeholder="Select City..."
+            />
           </div>
         </div>
 
         <div>
           <label htmlFor="mobile" className={labelCls}>Mobile Number / OTP</label>
           
-          {otpState === 'idle' || otpState === 'sending' ? (
+          {isOtpEnabled ? (
+            (otpState === 'idle' || otpState === 'sending') ? (
+              <div className="flex gap-2 items-stretch">
+                <select
+                  value={countryCode}
+                  onChange={e => setCountryCode(e.target.value)}
+                  disabled={otpState === 'sending'}
+                  className="w-20 flex-shrink-0 px-2 py-3 rounded-xl border border-[#D6ECEB] bg-white
+                             text-[#09263F] text-sm font-semibold
+                             focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
+                             transition-all duration-200 cursor-pointer disabled:opacity-60"
+                >
+                  {COUNTRY_CODES.map(c => (
+                    <option key={c.code} value={c.code}>{c.label}</option>
+                  ))}
+                </select>
+                <div className="relative flex-1">
+                  <input
+                    type="tel"
+                    value={mobile}
+                    onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    disabled={otpState === 'sending'}
+                    placeholder="10-digit mobile number"
+                    pattern="[0-9]{10}"
+                    maxLength={10}
+                    onFocus={() => recordFirstField('mobile')}
+                    className="w-full pl-4 pr-28 py-3 rounded-xl border border-[#D6ECEB] bg-white
+                               text-[#09263F] text-sm placeholder-[#9BBAC0]
+                               focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
+                               transition-all duration-200 disabled:opacity-60"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    disabled={mobile.length !== 10 || !name || !email || !city || otpState === 'sending'}
+                    className={`absolute right-2 top-1/2 -translate-y-1/2
+                                px-3 py-1.5 rounded-lg text-xs font-bold
+                                transition-all duration-200
+                                ${mobile.length === 10 && name && email && city && otpState !== 'sending'
+                                  ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] cursor-pointer'
+                                  : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
+                                }`}
+                  >
+                    {otpState === 'sending' ? (
+                      <span className="flex items-center gap-1">
+                        <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                        Sending
+                      </span>
+                    ) : 'Send OTP'}
+                  </button>
+                </div>
+              </div>
+            ) : null
+          ) : (
+            /* Standard Mobile Field for Non-OTP Flow */
             <div className="flex gap-2 items-stretch">
               <select
                 value={countryCode}
                 onChange={e => setCountryCode(e.target.value)}
-                disabled={otpState === 'sending'}
                 className="w-20 flex-shrink-0 px-2 py-3 rounded-xl border border-[#D6ECEB] bg-white
                            text-[#09263F] text-sm font-semibold
                            focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
-                           transition-all duration-200 cursor-pointer disabled:opacity-60"
+                           transition-all duration-200 cursor-pointer"
               >
                 {COUNTRY_CODES.map(c => (
                   <option key={c.code} value={c.code}>{c.label}</option>
                 ))}
               </select>
-              <div className="relative flex-1">
-                <input
-                  type="tel"
-                  value={mobile}
-                  onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  disabled={otpState === 'sending'}
-                  placeholder="10-digit mobile number"
-                  pattern="[0-9]{10}"
-                  maxLength={10}
-                  onFocus={() => recordFirstField('mobile')}
-                  className="w-full pl-4 pr-28 py-3 rounded-xl border border-[#D6ECEB] bg-white
-                             text-[#09263F] text-sm placeholder-[#9BBAC0]
-                             focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
-                             transition-all duration-200 disabled:opacity-60"
-                />
-                <button
-                  type="button"
-                  onClick={handleSendOtp}
-                  disabled={mobile.length !== 10 || !name || !email || !city || otpState === 'sending'}
-                  className={`absolute right-2 top-1/2 -translate-y-1/2
-                              px-3 py-1.5 rounded-lg text-xs font-bold
-                              transition-all duration-200
-                              ${mobile.length === 10 && name && email && city && otpState !== 'sending'
-                                ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] cursor-pointer'
-                                : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
-                              }`}
-                >
-                  {otpState === 'sending' ? (
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                      </svg>
-                      Sending
-                    </span>
-                  ) : 'Send OTP'}
-                </button>
-              </div>
+              <input
+                type="tel"
+                value={mobile}
+                onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                placeholder="10-digit mobile number"
+                pattern="[0-9]{10}"
+                maxLength={10}
+                onFocus={() => recordFirstField('mobile')}
+                className="w-full px-4 py-3 rounded-xl border border-[#D6ECEB] bg-white
+                           text-[#09263F] text-sm placeholder-[#9BBAC0]
+                           focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
+                           transition-all duration-200"
+              />
             </div>
-          ) : null}
+          )}
+
+         {/* Button / Form Footer */}
+      {!isOtpEnabled ? (
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleSubmitDirect}
+              disabled={otpState === 'sending'}
+              className="w-full py-4 bg-[#29E8A4] text-[#09263F] font-bold rounded-2xl text-base 
+                         shadow-[0_8px_30px_rgba(41,232,164,0.3)] hover:bg-[#1DE5B5] 
+                         active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              {otpState === 'sending' ? (
+                <>
+                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  Submitting...
+                </>
+              ) : buttonText}
+            </button>
+          </div>
+      ) : (
+        otpState !== 'otp_sent' && otpState !== 'verifying' && otpState !== 'error' && (
+          <p className="mt-4 text-[11px] text-[#4A6275] leading-relaxed text-center px-4">
+            By clicking "Send OTP", you agree to receive verification codes and career updates on WhatsApp.
+          </p>
+        )
+      )}
 
           {(otpState === 'otp_sent' || otpState === 'verifying' || otpState === 'error') ? (
             <div className="space-y-2 mt-1">
