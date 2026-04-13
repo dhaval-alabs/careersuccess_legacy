@@ -248,12 +248,17 @@ export async function POST(req: NextRequest) {
       console.log(`Matching lead found (ID: ${prospectId}). Updating...`);
       const updateUrl = `${CRM_BASE_URL}/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
       
-      // CRITICAL FIX: LeadSquared Update API throws "Duplicate" errors if you send 
-      // an Email/Phone that ALREADY belongs to that lead.
-      // Solution: Only include EmailAddress/Phone if they are actually DIFFERENT from the existing values.
+      // Attempt 1: Targeted update (already filtered identical IDs to avoid self-conflict)
       const updatePayload = payload.filter(attr => {
-        if (attr.Attribute === 'EmailAddress' && matchedLead?.EmailAddress === attr.Value) return false;
-        if (attr.Attribute === 'Phone' && matchedLead?.Phone === attr.Value) return false;
+        const submitted = String(attr.Value || '').trim().toLowerCase();
+        if (attr.Attribute === 'EmailAddress') {
+          const existing = String(matchedLead?.EmailAddress || matchedLead?.Email || '').trim().toLowerCase();
+          return submitted !== existing;
+        }
+        if (attr.Attribute === 'Phone') {
+          const existing = String(matchedLead?.Phone || matchedLead?.Mobile || '').trim().toLowerCase();
+          return submitted !== existing;
+        }
         return true;
       });
 
@@ -262,6 +267,24 @@ export async function POST(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatePayload)
       });
+
+      // Attempt 2 Fallback: If still getting duplicate error, strip Email/Phone entirely and retry
+      // This handles cases where LSQ validation is extremely aggressive or where search info was incomplete
+      if (!response.ok) {
+        const clonedRes = response.clone();
+        const errorText = await clonedRes.text();
+        if (errorText.includes('MXDuplicateEntryException')) {
+          console.warn('Update failed with duplicate error. Retrying without Email/Phone fields...');
+          const strippedPayload = payload.filter(attr => 
+            attr.Attribute !== 'EmailAddress' && attr.Attribute !== 'Phone'
+          );
+          response = await fetch(updateUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(strippedPayload)
+          });
+        }
+      }
     } else {
       // Capture new lead
       console.log('No matching lead found. Creating new...');
