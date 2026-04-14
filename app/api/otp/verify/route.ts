@@ -39,20 +39,20 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
 
 async function updateLeadSquaredToVerified(cleanPhone: string) {
   try {
-    // 1. Retrieve Prospect ID
+    // 1. Retrieve Prospect ID - Using the same phone search pattern
     const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(cleanPhone)}`;
     const searchRes = await fetch(searchUrl);
     const searchData = await searchRes.json();
 
     if (!searchRes.ok || !searchData || searchData.length === 0) {
-      console.error('[Verify] LSQ Search Failed or No Lead Found:', searchData);
+      console.warn('[Verify] LSQ Search: No lead found for phone', cleanPhone);
       return;
     }
 
     const prospectId = searchData[0].ProspectID;
     if (!prospectId) return;
 
-    // 2. Update Lead
+    // 2. Update Lead status to Verified
     const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
     const payload = [{ Attribute: 'mx_OTP_Status', Value: 'Verified' }];
 
@@ -64,6 +64,8 @@ async function updateLeadSquaredToVerified(cleanPhone: string) {
 
     if (!updateRes.ok) {
       console.error('[Verify] LSQ Update Failed:', await updateRes.text());
+    } else {
+      console.log('[Verify] LeadSquared status updated to Verified for Prospect:', prospectId);
     }
   } catch (error) {
     console.error('[Verify] Exception updating LSQ:', error);
@@ -75,12 +77,15 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
-    if (!sheetId || !email || !key) return;
+    if (!sheetId || !email || !key) {
+      console.warn('[Verify Sheets] Missing credentials in .env.local');
+      return;
+    }
 
     const token = await getGoogleSheetsToken(email, key);
     
-    // 1. Fetch values to find row index
-    const getUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!D:D`; // Phone is Col D
+    // 1. Fetch values to find row index - Phone is in Column D
+    const getUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!D:D`;
     const getRes = await fetch(getUrl, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -93,7 +98,7 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     const getData = await getRes.json();
     const rows: string[][] = getData.values || [];
     
-    // Find last matching row (in case of duplicates, update the most recent)
+    // Find matching row (reverse search to get the latest submission)
     let rowIndex = -1;
     for (let i = rows.length - 1; i >= 0; i--) {
       if (rows[i] && rows[i][0] === cleanPhone) {
@@ -103,10 +108,11 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     }
 
     if (rowIndex === -1) {
+      console.warn('[Verify Sheets] No row found for phone:', cleanPhone);
       return;
     }
 
-    // 2. Update Column Q for that row
+    // 2. Update Column Q for identified row
     const updateUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!Q${rowIndex}?valueInputOption=USER_ENTERED`;
     const updateRes = await fetch(updateUrl, {
       method: 'PUT',
@@ -119,6 +125,8 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
 
     if (!updateRes.ok) {
       console.error('[Verify Sheets] Update Failed:', await updateRes.text());
+    } else {
+      console.log(`[Verify Sheets] Status updated to Verified in row ${rowIndex}`);
     }
   } catch (error) {
     console.error('[Verify Sheets] Exception:', error);
@@ -135,6 +143,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!process.env.OTP_HMAC_SECRET) {
+      console.error('[Verify] OTP_HMAC_SECRET is missing!');
       return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500 });
     }
 
@@ -151,32 +160,35 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Malformed token' }, { status: 400 });
     }
 
+    // 1. Check expiry
     if (Date.now() > expiry) {
       return NextResponse.json({ success: false, error: 'OTP expired. Please request a new one.' }, { status: 400 });
     }
 
+    // 2. Recompute HMAC and validate
     const payloadSignature = `${mobile}:${otp_entered}:${expiry}`;
     const expectedHmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
 
-    // Expected and actual must be same length for timingSafeEqual
     const expectedBuf = Buffer.from(expectedHmac, 'hex');
     const actualBuf = Buffer.from(hmac, 'hex');
 
+    // timingSafeEqual protects against timing attacks
     if (expectedBuf.length !== actualBuf.length || !crypto.timingSafeEqual(expectedBuf, actualBuf)) {
       return NextResponse.json({ success: false, error: 'Incorrect OTP. Please try again.' }, { status: 400 });
     }
 
-    // Verified!
+    // 3. Successful verification - Update CRM and Sheets
     const cleanPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
     
-    // Fire & Forget: update external systems
+    // Non-blocking background updates
     updateLeadSquaredToVerified(cleanPhone).catch(console.error);
     updateGoogleSheetRowToVerified(cleanPhone).catch(console.error);
 
+    console.log(`[Verify] Verification successful for phone: ${mobile}`);
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error('Verify OTP error:', error);
+    console.error('[Verify] System error:', error);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

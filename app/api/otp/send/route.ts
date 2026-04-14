@@ -61,7 +61,6 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
-    console.log('[Sheets] Attempting update for sheetId:', sheetId?.substring(0, 5) + '...');
     
     if (!sheetId || !email || !key) {
       console.warn('[Sheets] Missing credentials in .env.local');
@@ -90,7 +89,6 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     ];
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:Q:append?valueInputOption=USER_ENTERED`;
-    console.log('[Sheets] Pushing data to tab "NextJS"...');
     
     const res = await fetch(url, {
       method: 'POST',
@@ -98,11 +96,10 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
       body: JSON.stringify({ values: [row] })
     });
     
-    const resData = await res.json();
     if (res.ok) {
       console.log('[Sheets] Successfully appended row!');
     } else {
-      console.error('[Sheets] Failed to append:', resData);
+      console.error('[Sheets] Failed to append to Google Sheets');
     }
   } catch (error) {
     console.error('[Sheets] Exception:', error);
@@ -113,7 +110,10 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { name, email, city, countryCode, mobile } = body;
-    const cleanPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
+    
+    // Normalize phone for LeadSquared
+    const lsqPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
+    const cleanPhoneForSheets = `${countryCode}${mobile}`;
 
     // 1. Generate OTP & HMAC
     const otp = String(crypto.randomInt(1000, 9999));
@@ -128,39 +128,83 @@ export async function POST(req: NextRequest) {
     const hmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
     const token = Buffer.from(JSON.stringify({ expiry, hmac })).toString('base64');
 
-    // 2. Call Xbot
-    const xbotUrl = 'https://chat-xbot.webspecia.in/api/iwh/08c86dc50ec3914c2fdf14a39ab3acb8';
-    const xbotPayload = {
-      Name: name || '',
-      mobile: mobile,
-      email: email || '',
-      city: city || '',
-      countryCode: countryCode,
-      mobilecc: `${countryCode}${mobile}`,
-      otp: otp,
-      status: 'not varified'
-    };
+    // 2. Call Meta WhatsApp Cloud API
+    const waAccessToken = process.env.META_WA_ACCESS_TOKEN;
+    const waPhoneId = process.env.META_WA_PHONE_NUMBER_ID;
 
-    let xbotSuccess = false;
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
-      const xbotRes = await fetch(xbotUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(xbotPayload),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      xbotSuccess = xbotRes.ok;
-    } catch (err) {
-      console.error('[OTP] Xbot delivery failed:', err);
-      xbotSuccess = false;
+    let waSuccess = false;
+    if (waAccessToken && waPhoneId) {
+      try {
+        const waRes = await fetch(
+          `https://graph.facebook.com/v23.0/${waPhoneId}/messages`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${waAccessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              messaging_product: 'whatsapp',
+              to: `${countryCode.replace('+', '')}${mobile}`,
+              type: 'template',
+              template: {
+                name: 'form_otp',
+                language: { code: 'en' },
+                components: [{
+                  type: 'body',
+                  parameters: [{ type: 'text', text: otp }],
+                }],
+              },
+            }),
+            signal: AbortSignal.timeout(8000),
+          }
+        );
+        waSuccess = waRes.ok;
+        if (!waRes.ok) {
+          const waErr = await waRes.json();
+          console.error('[OTP] Meta API error:', waErr);
+        }
+      } catch (err) {
+        console.error('[OTP] Meta API delivery failed:', err);
+        waSuccess = false;
+      }
+    } else {
+      console.error('[OTP] Missing Meta API credentials');
+      waSuccess = false;
     }
 
-    const otpStatus = xbotSuccess ? 'Unverified' : 'Fallback';
+    const otpStatus = waSuccess ? 'Unverified' : 'Fallback';
 
-    // 3. Create Lead in LSQ
+    // 3. LeadSquared Integration (Search-First Upsert)
+    let prospectId: string | null = null;
+    let matchedLead: any = null;
+    try {
+      const searchPhoneUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(lsqPhone)}`;
+      const searchPhoneRes = await fetch(searchPhoneUrl);
+      const searchPhoneData = await searchPhoneRes.json();
+      
+      if (searchPhoneRes.ok && searchPhoneData && searchPhoneData.length > 0) {
+        matchedLead = searchPhoneData[0];
+        prospectId = matchedLead.ProspectID;
+      } else {
+        const searchEmailUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(email)}`;
+        const searchEmailRes = await fetch(searchEmailUrl);
+        const searchEmailData = await searchEmailRes.json();
+        
+        if (searchEmailRes.ok && searchEmailData) {
+          if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
+            matchedLead = searchEmailData[0];
+            prospectId = matchedLead.ProspectID;
+          } else if (searchEmailData.ProspectID) {
+            matchedLead = searchEmailData;
+            prospectId = matchedLead.ProspectID;
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[OTP] LSQ search failed:', e);
+    }
+
     const nameParts = (name || '').trim().split(' ');
     const firstName = nameParts[0] || '';
     const lastName  = nameParts.slice(1).join(' ') || '';
@@ -176,62 +220,50 @@ export async function POST(req: NextRequest) {
       `Referrer: ${body.referrer_url || 'Direct'}`,
       `Submission URL: ${body.landing_page_url || 'N/A'}`,
       `Timestamp: ${body.submission_timestamp || 'N/A'}`,
+      `Country Code: ${countryCode || 'N/A'}`
     ].join('\n');
 
-    const lsqPayload = [
+    const corePayload = [
       { Attribute: 'FirstName',                Value: firstName },
       { Attribute: 'LastName',                 Value: lastName },
       { Attribute: 'EmailAddress',             Value: email },
-      { Attribute: 'Phone',                    Value: cleanPhone },
+      { Attribute: 'Phone',                    Value: lsqPhone },
       { Attribute: 'mx_City_name',             Value: city },
-      { Attribute: 'mx_Lead_Source_CTA',       Value: body.form_source },
       { Attribute: 'Source',                   Value: body.typeFilter || 'PPC_CheckEligibility' },
-      { Attribute: 'mx_TypeFilter',            Value: body.typeFilter || 'PPC_CheckEligibility' },
-      { Attribute: 'mx_UTM_Source',            Value: body.utm_source || '' },
-      { Attribute: 'mx_UTM_Medium',            Value: body.utm_medium || '' },
-      { Attribute: 'mx_UTM_Campaign',          Value: body.utm_campaign || '' },
-      { Attribute: 'mx_UTM_Term',              Value: body.utm_term || '' },
-      { Attribute: 'mx_UTM_Content',           Value: body.utm_content || '' },
       { Attribute: 'mx_GCLID',                 Value: body.gclid || '' },
-      { Attribute: 'mx_Time_on_Page_Sec',      Value: String(body.time_on_page_seconds ?? '') },
-      { Attribute: 'mx_Max_Scroll_Pct',        Value: String(body.max_scroll_pct ?? '') },
-      { Attribute: 'mx_Form_Completion_Sec',   Value: String(body.form_completion_seconds ?? '') },
-      { Attribute: 'mx_First_Field_Touched',   Value: body.first_field_touched || '' },
-      { Attribute: 'mx_Device_Type',           Value: body.device_type || '' },
-      { Attribute: 'mx_Viewport_Width',        Value: String(body.viewport_width ?? '') },
-      { Attribute: 'mx_Referrer_URL',          Value: body.referrer_url || '' },
-      { Attribute: 'mx_Landing_Page_URL',      Value: body.landing_page_url || '' },
-      { Attribute: 'mx_Submission_Timestamp',  Value: body.submission_timestamp || '' },
-      { Attribute: 'mx_Country_Code',          Value: countryCode || '' },
       { Attribute: 'mx_Extra_Notes',           Value: extraNotes },
-      { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${formatLeadNotesFriendly(body.form_source)}` },
       { Attribute: 'mx_OTP_Status',            Value: otpStatus }
     ];
 
-    const lsqRes = await fetch(CRM_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(lsqPayload)
-    });
-
-    const lsqResult = await lsqRes.json();
-
-    if (!lsqRes.ok) {
-        if (lsqResult.ExceptionType === 'MXDuplicateEntryException') {
-            // Lead already exists, safe to proceed
-        } else {
-            console.error('[OTP] LSQ failed:', JSON.stringify(lsqResult));
-            return NextResponse.json({ success: false, error: 'CRM submission failed.' }, { status: 500 });
-        }
+    if (prospectId) {
+      const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
+      const updatePayload = corePayload.filter(attr => {
+        if (attr.Attribute === 'EmailAddress') return false;
+        if (attr.Attribute === 'Phone') return false;
+        return true;
+      });
+      await fetch(updateUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatePayload)
+      });
+    } else {
+      await fetch(CRM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(corePayload)
+      });
     }
 
+    // 4. Google Sheets (Column Q)
     const friendlyNotes = formatLeadNotesFriendly(body.form_source);
-    pushToGoogleSheetsOtp(body, cleanPhone, friendlyNotes, otpStatus).catch(console.error);
+    pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus).catch(console.error);
 
-    // 5. Build response
-    if (xbotSuccess) {
+    // 5. Successful submission - return token for client-side storage
+    if (waSuccess) {
       return NextResponse.json({ success: true, token });
     } else {
+      // Fallback mode — proceed but tell client so they can redirect immediately
       return NextResponse.json({ success: true, fallback: true });
     }
 

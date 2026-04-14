@@ -5,6 +5,7 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { initBehaviourTracking } from '../../utils/trackBehaviour';
 import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
+import HeroLeadCaptureForm from "../../components/HeroLeadCaptureForm";
 import Modal from "../../components/Modal";
 import StatsBar from "../../components/StatsBar";
 import CurriculumTiers from "../../components/CurriculumTiers";
@@ -277,7 +278,7 @@ export default function GurgaonDSAIPage() {
             </div>
 
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm
+              <HeroLeadCaptureForm
                 title="Get Free Career Counselling"
                 sourceName={`${config.crmPrefix}_Hero_DownloadBrochure`}
                 typeFilter="PPC_DownloadBrochure"
