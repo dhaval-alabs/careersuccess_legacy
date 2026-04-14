@@ -19,6 +19,7 @@ interface HeroLeadCaptureFormProps {
   typeFilter?:   string;
   thankYouPath?: string;
   onSuccess?:    (email: string) => void;
+  debug?:        boolean;
 }
 
 const inputCls = `
@@ -39,6 +40,7 @@ export default function HeroLeadCaptureForm({
   typeFilter,
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
+  debug = false,
 }: HeroLeadCaptureFormProps) {
   const [name, setName]               = useState('');
   const [email, setEmail]             = useState('');
@@ -90,6 +92,7 @@ export default function HeroLeadCaptureForm({
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+          debug,
         }),
       });
 
@@ -102,6 +105,11 @@ export default function HeroLeadCaptureForm({
       }
 
       if (data.fallback) {
+        if (debug && data.debugInfo) {
+          setOtpState('idle');
+          setFormError(`[DEBUG] OTP Delivery Failed: ${data.debugInfo}`);
+          return;
+        }
         // WhatsApp delivery failed - proceed as normal Lead submission (Fallback)
         onSuccess?.(email);
         const params = new URLSearchParams({ email, name, phone: mobile });

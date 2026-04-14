@@ -131,8 +131,11 @@ export async function POST(req: NextRequest) {
     // 2. Call Meta WhatsApp Cloud API
     const waAccessToken = process.env.META_WA_ACCESS_TOKEN;
     const waPhoneId = process.env.META_WA_PHONE_NUMBER_ID;
+    const debug = body.debug === true;
 
     let waSuccess = false;
+    let debugInfo = null;
+
     if (waAccessToken && waPhoneId) {
       try {
         const waRes = await fetch(
@@ -163,14 +166,23 @@ export async function POST(req: NextRequest) {
         if (!waRes.ok) {
           const waErr = await waRes.json();
           console.error('[OTP] Meta API error:', waErr);
+          if (debug) {
+            debugInfo = `Meta API Error: ${waRes.status} ${JSON.stringify(waErr.error || waErr)}`;
+          }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('[OTP] Meta API delivery failed:', err);
         waSuccess = false;
+        if (debug) {
+          debugInfo = `Fetch Error: ${err.message || String(err)}`;
+        }
       }
     } else {
       console.error('[OTP] Missing Meta API credentials');
       waSuccess = false;
+      if (debug) {
+        debugInfo = `Error: Missing Environment Variables (${!waAccessToken ? 'META_WA_ACCESS_TOKEN' : ''} ${!waPhoneId ? 'META_WA_PHONE_NUMBER_ID' : ''})`;
+      }
     }
 
     const otpStatus = waSuccess ? 'Unverified' : 'Fallback';
@@ -264,7 +276,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, token });
     } else {
       // Fallback mode — proceed but tell client so they can redirect immediately
-      return NextResponse.json({ success: true, fallback: true });
+      return NextResponse.json({ success: true, fallback: true, debugInfo });
     }
 
   } catch (error) {
