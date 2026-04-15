@@ -178,11 +178,13 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Successful verification - Update CRM and Sheets
-    const cleanPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
+    // LeadSquared needs the mobile without +91 usually, or specific format
+    const lsqPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
+    const sheetsPhone = `${countryCode}${mobile}`; // Format used in Column D of Sheets
     
     // Await updates to ensure they complete on Vercel
-    await updateLeadSquaredToVerified(cleanPhone).catch(console.error);
-    await updateGoogleSheetRowToVerified(cleanPhone).catch(console.error);
+    await updateLeadSquaredToVerified(lsqPhone).catch(console.error);
+    await updateGoogleSheetRowToVerified(sheetsPhone).catch(console.error);
 
     console.log(`[Verify] Verification successful for phone: ${mobile}`);
     return NextResponse.json({ success: true });
