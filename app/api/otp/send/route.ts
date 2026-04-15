@@ -152,7 +152,7 @@ export async function POST(req: NextRequest) {
               type: 'template',
               template: {
                 name: 'form_otp',
-                language: { code: 'en' },
+                language: { code: 'en_US' },
                 components: [{
                   type: 'body',
                   parameters: [{ type: 'text', text: otp }],
@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
           const waErr = await waRes.json();
           console.error('[OTP] Meta API error:', waErr);
           if (debug) {
-            debugInfo = `Meta API Error: ${waRes.status} ${JSON.stringify(waErr.error || waErr)}`;
+            debugInfo = `Meta API Error: ${waRes.status} ${JSON.stringify(waErr.error || waErr)} | PhoneID used: ${waPhoneId}`;
           }
         }
       } catch (err: any) {
