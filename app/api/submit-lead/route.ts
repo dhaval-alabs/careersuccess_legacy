@@ -6,6 +6,22 @@ const LSQ_SECRET = "5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4";
 const CRM_BASE_URL = "https://api-in21.leadsquared.com/v2/LeadManagement.svc";
 const CRM_WEBHOOK_URL = `${CRM_BASE_URL}/Lead.Capture?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}`;
 
+// ── CORS Configuration ──
+const ALLOWED_ORIGIN = 'https://careersuccess.analytixlabs.co.in';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 /**
  * Parses technical form_source strings into a human-readable format for CRM Notes.
  * Examples: 
@@ -307,12 +323,12 @@ export async function POST(req: NextRequest) {
         success: false, 
         error: 'LeadSquared submission failed',
         details: errorText.substring(0, 200) 
-      }, { status: 500 });
+      }, { status: 500, headers: corsHeaders });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: corsHeaders });
   } catch (error) {
     console.error('API submission error:', error);
-    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500, headers: corsHeaders });
   }
 }

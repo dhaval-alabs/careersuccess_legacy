@@ -4,6 +4,22 @@ import crypto from 'crypto';
 const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
 
+// ── CORS Configuration ──
+const ALLOWED_ORIGIN = 'https://careersuccess.analytixlabs.co.in';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 let sheetsTokenCache: { token: string; expiresAt: number } | null = null;
 async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Promise<string> {
   if (sheetsTokenCache && Date.now() < sheetsTokenCache.expiresAt) return sheetsTokenCache.token;
@@ -140,30 +156,30 @@ export async function POST(req: NextRequest) {
     const { token, otp_entered, mobile, countryCode } = body;
 
     if (!token || !otp_entered || !mobile) {
-      return NextResponse.json({ success: false, error: 'Missing required parameters' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Missing required parameters' }, { status: 400, headers: corsHeaders });
     }
 
     if (!process.env.OTP_HMAC_SECRET) {
       console.error('[Verify] OTP_HMAC_SECRET is missing!');
-      return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500 });
+      return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500, headers: corsHeaders });
     }
 
     let parsedToken;
     try {
       parsedToken = JSON.parse(Buffer.from(token, 'base64').toString('utf8'));
     } catch {
-      return NextResponse.json({ success: false, error: 'Invalid token format' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Invalid token format' }, { status: 400, headers: corsHeaders });
     }
 
     const { expiry, hmac } = parsedToken;
 
     if (!expiry || !hmac) {
-      return NextResponse.json({ success: false, error: 'Malformed token' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Malformed token' }, { status: 400, headers: corsHeaders });
     }
 
     // 1. Check expiry
     if (Date.now() > expiry) {
-      return NextResponse.json({ success: false, error: 'OTP expired. Please request a new one.' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'OTP expired. Please request a new one.' }, { status: 400, headers: corsHeaders });
     }
 
     // 2. Recompute HMAC and validate
@@ -175,7 +191,7 @@ export async function POST(req: NextRequest) {
 
     // timingSafeEqual protects against timing attacks
     if (expectedBuf.length !== actualBuf.length || !crypto.timingSafeEqual(expectedBuf, actualBuf)) {
-      return NextResponse.json({ success: false, error: 'Incorrect OTP. Please try again.' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Incorrect OTP. Please try again.' }, { status: 400, headers: corsHeaders });
     }
 
     // 3. Successful verification - Update CRM and Sheets
@@ -195,10 +211,10 @@ export async function POST(req: NextRequest) {
     }
 
     console.log(`[Verify] Verification successful for phone: ${mobile}`);
-    return NextResponse.json({ success: true, debugInfo });
+    return NextResponse.json({ success: true, debugInfo }, { headers: corsHeaders });
 
   } catch (error) {
     console.error('[Verify] System error:', error);
-    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500, headers: corsHeaders });
   }
 }

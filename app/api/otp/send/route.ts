@@ -5,6 +5,22 @@ const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
 const CRM_WEBHOOK_URL = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Capture?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}`;
 
+// ── CORS Configuration ──
+const ALLOWED_ORIGIN = 'https://careersuccess.analytixlabs.co.in';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 function formatLeadNotesFriendly(source: string): string {
   if (!source) return 'N/A';
   let clean = source.replace(/^(PPC_BLR2_|PPC_NOI_|PPC_DEL_|PPC_GRG_|PPC_BLR_)/i, '');
@@ -127,7 +143,7 @@ export async function POST(req: NextRequest) {
     
     if (!process.env.OTP_HMAC_SECRET) {
       console.error('[OTP] Error: OTP_HMAC_SECRET is missing!');
-      return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500 });
+      return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500, headers: corsHeaders });
     }
 
     const hmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
@@ -284,14 +300,14 @@ export async function POST(req: NextRequest) {
 
     // 5. Successful submission - return token for client-side storage
     if (waSuccess) {
-      return NextResponse.json({ success: true, token, debugInfo });
+      return NextResponse.json({ success: true, token, debugInfo }, { headers: corsHeaders });
     } else {
       // Fallback mode — proceed but tell client so they can redirect immediately
-      return NextResponse.json({ success: true, fallback: true, debugInfo });
+      return NextResponse.json({ success: true, fallback: true, debugInfo }, { headers: corsHeaders });
     }
 
   } catch (error) {
     console.error('Send OTP error:', error);
-    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500, headers: corsHeaders });
   }
 }
