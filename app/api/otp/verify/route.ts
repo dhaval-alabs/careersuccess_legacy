@@ -78,8 +78,7 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
     if (!sheetId || !email || !key) {
-      console.warn('[Verify Sheets] Missing credentials in .env.local');
-      return;
+      return { success: false, error: 'Missing Sheets credentials' };
     }
 
     const token = await getGoogleSheetsToken(email, key);
@@ -91,8 +90,7 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     });
     
     if (!getRes.ok) {
-      console.error('[Verify Sheets] Get Failed:', await getRes.text());
-      return;
+      return { success: false, error: `Get Failed: ${getRes.status}` };
     }
     
     const getData = await getRes.json();
@@ -100,16 +98,19 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     
     // Find matching row (reverse search to get the latest submission)
     let rowIndex = -1;
+    const targetClean = cleanPhone.replace(/\D/g, ''); // Normalize target (remove + signs, spaces)
+    
     for (let i = rows.length - 1; i >= 0; i--) {
-      if (rows[i] && rows[i][0] === cleanPhone) {
+      const cellValue = rows[i] && rows[i][0] ? String(rows[i][0]).replace(/\D/g, '') : '';
+      if (cellValue && (cellValue === targetClean || cellValue.endsWith(targetClean) || targetClean.endsWith(cellValue))) {
         rowIndex = i + 1; // 1-indexed for sheets
         break;
       }
     }
 
     if (rowIndex === -1) {
-      console.warn('[Verify Sheets] No row found for phone:', cleanPhone);
-      return;
+      const sample = rows.length > 0 ? rows.slice(-3).map(r => r[0]).join(', ') : 'empty';
+      return { success: false, error: `Row not found for ${targetClean}. Last few: [${sample}]` };
     }
 
     // 2. Update Column Q for identified row
@@ -124,12 +125,12 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     });
 
     if (!updateRes.ok) {
-      console.error('[Verify Sheets] Update Failed:', await updateRes.text());
-    } else {
-      console.log(`[Verify Sheets] Status updated to Verified in row ${rowIndex}`);
+      return { success: false, error: `Update Failed: ${updateRes.status}` };
     }
-  } catch (error) {
-    console.error('[Verify Sheets] Exception:', error);
+
+    return { success: true, rowIndex };
+  } catch (error: any) {
+    return { success: false, error: error.message || String(error) };
   }
 }
 
@@ -178,16 +179,23 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Successful verification - Update CRM and Sheets
-    // LeadSquared needs the mobile without +91 usually, or specific format
     const lsqPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
-    const sheetsPhone = `${countryCode}${mobile}`; // Format used in Column D of Sheets
+    const sheetsPhone = `${countryCode}${mobile}`; 
+    const debug = body.debug === true;
+    let debugInfo = null;
     
     // Await updates to ensure they complete on Vercel
     await updateLeadSquaredToVerified(lsqPhone).catch(console.error);
-    await updateGoogleSheetRowToVerified(sheetsPhone).catch(console.error);
+    const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone);
+
+    if (debug) {
+      debugInfo = sheetRes.success 
+        ? `Sheets flip OK (Row ${sheetRes.rowIndex})` 
+        : `Sheets flip Failed: ${sheetRes.error}`;
+    }
 
     console.log(`[Verify] Verification successful for phone: ${mobile}`);
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, debugInfo });
 
   } catch (error) {
     console.error('[Verify] System error:', error);

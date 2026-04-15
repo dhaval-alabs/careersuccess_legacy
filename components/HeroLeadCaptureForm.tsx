@@ -144,6 +144,7 @@ export default function HeroLeadCaptureForm({
           countryCode,
           name,
           email,
+          debug,
         }),
       });
 
@@ -154,6 +155,13 @@ export default function HeroLeadCaptureForm({
         setErrorMsg(data.error || 'Verification failed. Please try again.');
         setOtpValue('');
         return;
+      }
+
+      // If debug info returned during verification, briefly show it or log it
+      if (debug && data.debugInfo) {
+        setFormError(`[VERIFY DEBUG] ${data.debugInfo}`);
+        // Give the user a moment to see the debug info before redirecting
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
 
       // Verified successfully!
