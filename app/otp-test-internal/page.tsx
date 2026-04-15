@@ -1,10 +1,10 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useState } from 'react';
 import HeroLeadCaptureForm from '../../components/HeroLeadCaptureForm';
 import Image from 'next/image';
-import { useState } from 'react';
 
-// Use a wrapper component to use client-side state
-function OtpTestContent() {
+export default function OtpTestPage() {
   const [debug, setDebug] = useState(false);
 
   return (
@@ -47,11 +47,19 @@ function OtpTestContent() {
               onChange={(e) => setDebug(e.target.checked)}
             />
             <div className={`w-10 h-6 rounded-full transition-colors ${debug ? 'bg-[#1DE5B5]' : 'bg-gray-300'}`} />
-            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${debug ? 'translate-x-4' : ''}`} />
+            <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform shadow ${debug ? 'translate-x-4' : ''}`} />
           </div>
           <span className="text-xs font-bold text-[#09263F] tracking-tight">ENABLE DIAGNOSTIC (DEBUG) MODE</span>
         </label>
       </div>
+
+      {/* Debug Status Banner */}
+      {debug && (
+        <div className="relative z-10 mb-4 px-4 py-2 bg-amber-50 border border-amber-300 rounded-xl text-amber-800 text-xs font-bold flex items-center gap-2">
+          <span>🐛</span>
+          <span>Debug mode ON — API errors will be shown instead of silent fallback</span>
+        </div>
+      )}
 
       {/* Form Container */}
       <div className="relative z-10 w-full max-w-lg">
@@ -66,32 +74,6 @@ function OtpTestContent() {
           />
         </div>
       </div>
-
-      {/* Footer Note */}
-      <div className="relative z-10 mt-12">
-        <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-amber-700 text-[10px] font-bold uppercase tracking-wider">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          Index Protected: No-Index / No-Follow Enabled
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export const metadata: Metadata = {
-  title: 'Internal OTP Test | AnalytixLabs',
-  description: 'Hidden test page for verifying WhatsApp OTP integration.',
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
-
-export default function OtpTestPage() {
-  return <OtpTestContent />;
-}
 
       {/* Footer Note */}
       <div className="relative z-10 mt-12">
