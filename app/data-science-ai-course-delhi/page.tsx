@@ -291,7 +291,7 @@ export default function DelhiDSAIPage() {
           </div>
         </section>
 
-        <CourseInfoSection />
+        <CourseInfoSection locations={['noida', 'gurgaon']} />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">

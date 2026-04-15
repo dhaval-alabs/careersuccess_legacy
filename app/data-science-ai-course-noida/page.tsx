@@ -270,7 +270,7 @@ export default function NoidaDSAIPage() {
           </div>
         </section>
 
-        <CourseInfoSection />
+        <CourseInfoSection locations={['noida']} />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">

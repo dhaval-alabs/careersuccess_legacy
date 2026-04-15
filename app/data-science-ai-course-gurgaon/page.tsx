@@ -290,7 +290,7 @@ export default function GurgaonDSAIPage() {
           </div>
         </section>
 
-        <CourseInfoSection />
+        <CourseInfoSection locations={['gurgaon']} />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">

@@ -13,7 +13,7 @@ interface ThankYouProps {
 }
 
 const WEBINAR_URL = 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
-const BROCHURE_PDF_URL = 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
+const BROCHURE_PDF_URL = process.env.NEXT_PUBLIC_BROCHURE_URL || 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
 const PHONE_NUMBER = '919555525908';
 const WA_MESSAGE = encodeURIComponent(
   'Hello, I just submitted my details on the AnalytixLabs website. Can you help me?'
