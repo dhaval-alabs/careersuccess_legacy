@@ -80,7 +80,7 @@ export default function HeroLeadCaptureForm({
     const behaviour = getBehaviourSnapshot();
 
     try {
-      const res = await fetch('/api/otp/send', {
+      const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -134,7 +134,7 @@ export default function HeroLeadCaptureForm({
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/otp/verify', {
+      const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
