@@ -20,16 +20,16 @@ function DualBatchCard({ date, month, city, color, textColor, pinColor }: BatchI
     return (
         <div style={{
             display: "flex", alignItems: "center", gap: 12,
-            background: color, borderRadius: 14, padding: "16px 22px",
+            background: color, borderRadius: 14, padding: "14px 20px",
             minWidth: 150, flex: 1
         }}>
             <div>
-                <p style={{ margin: 0, fontSize: 32, fontWeight: 900, color: textColor, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>{date}</p>
-                <p style={{ margin: "2px 0 0", fontSize: 14, fontWeight: 600, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.85 }}>{month}</p>
+                <p style={{ margin: 0, fontSize: 26, fontWeight: 900, color: textColor, fontFamily: "'DM Sans', sans-serif", lineHeight: 1.1 }}>{date}</p>
+                <p style={{ margin: "1px 0 0", fontSize: 13, fontWeight: 600, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.85 }}>{month}</p>
             </div>
             <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
                 <PinIcon color={pinColor} />
-                <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.9 }}>{city}</p>
+                <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.9 }}>{city}</p>
             </div>
         </div>
     );
@@ -40,15 +40,15 @@ function SquareBatchCard({ date, month, city, color, textColor, pinColor }: Batc
         <div style={{
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", 
             textAlign: "center", gap: 8,
-            background: color, borderRadius: 18, padding: "24px",
-            aspectRatio: "1/1", width: "100%", maxWidth: "240px", margin: "0 auto",
+            background: color, borderRadius: 18, padding: "20px",
+            aspectRatio: "1/1", width: "100%", maxWidth: "220px", margin: "0 auto",
             boxShadow: "0 4px 20px rgba(0,0,0,0.04)"
         }}>
             <PinIcon color={pinColor} />
             <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: textColor, fontFamily: "'DM Sans', sans-serif" }}>{city}</p>
             <div style={{ marginTop: 4 }}>
-                <p style={{ margin: 0, fontSize: 34, fontWeight: 900, color: textColor, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>{date}</p>
-                <p style={{ margin: "2px 0 0", fontSize: 16, fontWeight: 600, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.85 }}>{month}</p>
+                <p style={{ margin: 0, fontSize: 26, fontWeight: 900, color: textColor, fontFamily: "'DM Sans', sans-serif", lineHeight: 1.1 }}>{date}</p>
+                <p style={{ margin: "2px 0 0", fontSize: 14, fontWeight: 600, color: textColor, fontFamily: "'DM Sans', sans-serif", opacity: 0.85 }}>{month}</p>
             </div>
         </div>
     );
