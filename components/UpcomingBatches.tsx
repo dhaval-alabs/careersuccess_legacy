@@ -60,28 +60,50 @@ interface Props {
     locations: BatchLocation[];
 }
 
-const BATCH_DATA: Record<BatchLocation, { city: string, color: string, textColor: string, pinColor: string, envVar: string }> = {
+const BATCH_DATA: Record<BatchLocation, { city: string, color: string, textColor: string, pinColor: string }> = {
     noida: {
         city: 'Noida',
         color: '#d4f5e9', // Teal
         textColor: '#1a3d2b',
-        pinColor: '#2e7d5e',
-        envVar: 'NEXT_PUBLIC_BATCH_NOIDA'
+        pinColor: '#2e7d5e'
     },
     gurgaon: {
         city: 'Gurgaon',
         color: '#fef5c8', // Yellow
         textColor: '#3d3010',
-        pinColor: '#9a7c0a',
-        envVar: 'NEXT_PUBLIC_BATCH_GURGAON'
+        pinColor: '#9a7c0a'
     },
     bangalore: {
         city: 'Bangalore',
         color: '#fef5c8', // Yellow
         textColor: '#3d3010',
-        pinColor: '#9a7c0a',
-        envVar: 'NEXT_PUBLIC_BATCH_BANGALORE'
+        pinColor: '#9a7c0a'
     }
+};
+
+const getEnvDate = (loc: BatchLocation): string => {
+    switch (loc) {
+        case 'noida': return process.env.NEXT_PUBLIC_BATCH_NOIDA || '';
+        case 'gurgaon': return process.env.NEXT_PUBLIC_BATCH_GURGAON || '';
+        case 'bangalore': return process.env.NEXT_PUBLIC_BATCH_BANGALORE || '';
+        default: return '';
+    }
+};
+
+const parseBatchDate = (str: string) => {
+    const trimmed = str.trim();
+    if (!trimmed) return { date: 'TBD', month: '' };
+    
+    // Pattern 1: "16 Aug" or "16th August"
+    const p1 = trimmed.match(/^(\d{1,2}(?:st|nd|rd|th)?)\s+([A-Za-z]+)$/);
+    if (p1) return { date: p1[1], month: p1[2] };
+    
+    // Pattern 2: "Aug 16" or "August 16th"
+    const p2 = trimmed.match(/^([A-Za-z]+)\s+(\d{1,2}(?:st|nd|rd|th)?)$/);
+    if (p2) return { date: p2[2], month: p2[1] };
+    
+    // Fallback: Use string as date
+    return { date: trimmed, month: '' };
 };
 
 export default function UpcomingBatches({ locations }: Props) {
@@ -89,13 +111,8 @@ export default function UpcomingBatches({ locations }: Props) {
 
     const cards = locations.map(loc => {
         const config = BATCH_DATA[loc];
-        const dateStr = process.env[config.envVar] || '';
-        
-        // Split "26 April 2026" or "14 May" or "14th May"
-        // Regex to separate leading number/day from month
-        const match = dateStr.match(/^(\d{1,2}(?:st|nd|rd|th)?)\s+(.+)$/);
-        const date = match ? match[1] : 'TBD';
-        const month = match ? match[2] : '';
+        const dateStr = getEnvDate(loc);
+        const { date, month } = parseBatchDate(dateStr);
 
         return {
             ...config,
