@@ -56,15 +56,16 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   return sheetsTokenCache.token;
 }
 
-async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSource: string, otpStatus: string) {
+async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSource: string, otpStatus: string, debug: boolean = false) {
   try {
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
     const key = process.env.GOOGLE_PRIVATE_KEY;
     
     if (!sheetId || !email || !key) {
-      console.warn('[Sheets] Missing credentials in .env.local');
-      return;
+      const msg = `Missing environment variables: ${!sheetId ? 'GOOGLE_SHEET_ID' : ''} ${!email ? 'GOOGLE_SERVICE_ACCOUNT_EMAIL' : ''} ${!key ? 'GOOGLE_PRIVATE_KEY' : ''}`;
+      console.warn('[Sheets]', msg);
+      return { success: false, error: msg };
     }
     
     const token = await getGoogleSheetsToken(email, key);
@@ -98,11 +99,15 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     
     if (res.ok) {
       console.log('[Sheets] Successfully appended row!');
+      return { success: true, sheetIdMasked: `${sheetId.substring(0, 3)}...${sheetId.substring(sheetId.length - 4)}` };
     } else {
-      console.error('[Sheets] Failed to append to Google Sheets');
+      const errorText = await res.text();
+      console.error('[Sheets] Failed to append:', errorText);
+      return { success: false, error: `Google API Error: ${res.status} ${errorText}` };
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('[Sheets] Exception:', error);
+    return { success: false, error: `Exception: ${error.message || String(error)}` };
   }
 }
 
@@ -269,11 +274,17 @@ export async function POST(req: NextRequest) {
 
     // 4. Google Sheets (Column Q)
     const friendlyNotes = formatLeadNotesFriendly(body.form_source);
-    pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus).catch(console.error);
+    const sheetResult = await pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus, debug);
+
+    if (debug && !sheetResult.success) {
+      debugInfo = `${debugInfo || ''} | Sheets Error: ${sheetResult.error}`.trim();
+    } else if (debug && sheetResult.success) {
+      debugInfo = `${debugInfo || ''} | Sheets OK (${sheetResult.sheetIdMasked})`.trim();
+    }
 
     // 5. Successful submission - return token for client-side storage
     if (waSuccess) {
-      return NextResponse.json({ success: true, token });
+      return NextResponse.json({ success: true, token, debugInfo });
     } else {
       // Fallback mode — proceed but tell client so they can redirect immediately
       return NextResponse.json({ success: true, fallback: true, debugInfo });

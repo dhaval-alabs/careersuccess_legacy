@@ -295,9 +295,9 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Fire & Forget: Push to Google Sheets asynchronously
+    // Await to ensure it completes on Vercel
     const friendlyNotes = formatLeadNotesFriendly(body.form_source);
-    pushToGoogleSheets(body, cleanPhone, friendlyNotes).catch(console.error);
+    await pushToGoogleSheets(body, cleanPhone, friendlyNotes).catch(console.error);
 
     if (!response.ok) {
       const errorText = await response.text();

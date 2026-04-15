@@ -180,9 +180,9 @@ export async function POST(req: NextRequest) {
     // 3. Successful verification - Update CRM and Sheets
     const cleanPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
     
-    // Non-blocking background updates
-    updateLeadSquaredToVerified(cleanPhone).catch(console.error);
-    updateGoogleSheetRowToVerified(cleanPhone).catch(console.error);
+    // Await updates to ensure they complete on Vercel
+    await updateLeadSquaredToVerified(cleanPhone).catch(console.error);
+    await updateGoogleSheetRowToVerified(cleanPhone).catch(console.error);
 
     console.log(`[Verify] Verification successful for phone: ${mobile}`);
     return NextResponse.json({ success: true });
