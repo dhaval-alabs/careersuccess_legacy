@@ -239,7 +239,7 @@ export default function HeroLeadCaptureForm({
         </div>
 
         <div>
-          <label htmlFor="mobile" className={labelCls}>Mobile Number</label>
+          <label htmlFor="mobile" className={labelCls}>Whatsapp Number (for OTP)</label>
           
           {(otpState === 'idle' || otpState === 'sending') ? (
             <div className="flex gap-2 items-stretch">

@@ -22,8 +22,8 @@ export async function sendBrochureEmail(email: string, name: string) {
             subject: 'Your Data Science & AI Course Brochure - AnalytixLabs',
             html: `
                 <div style="font-family: sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
-                    <div style="background-color: #09263F; padding: 20px; text-align: center;">
-                        <img src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" alt="AnalytixLabs" style="height: 40px;">
+                    <div style="background-color: #ffffff; padding: 25px; text-align: center; border-bottom: 1px solid #f0f0f0;">
+                        <img src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" alt="AnalytixLabs" style="height: 45px;">
                     </div>
                     <div style="padding: 30px;">
                         <h1 style="color: #09263F; font-size: 24px; margin-top: 0;">Hello ${name || 'Student'},</h1>
