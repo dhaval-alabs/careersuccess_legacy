@@ -4,18 +4,18 @@ import { z } from 'zod'
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
-const CUSTOMER_ID = '4064995850'
-const MCC_ID = '8910137241'
+const CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
+const MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
 async function getAccessToken(): Promise<string> {
   const res = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      client_id:     process.env.GOOGLE_ADS_CLIENT_ID!,
+      client_id: process.env.GOOGLE_ADS_CLIENT_ID!,
       client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET!,
       refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN!,
-      grant_type:    'refresh_token',
+      grant_type: 'refresh_token',
     }),
   })
   const data = await res.json()
@@ -330,22 +330,41 @@ const handler = createMcpHandler(
 
         for (const date of dates) {
           try {
-            const results = await gadsQuery(`
-              SELECT
-                click_view.gclid,
-                click_view.keyword_info.text,
-                click_view.keyword_info.match_type,
-                segments.date,
-                segments.ad_network_type,
-                campaign.id,
-                campaign.name,
-                ad_group.id,
-                ad_group.name,
-                metrics.clicks
-              FROM click_view
-              WHERE click_view.gclid = '${gclid}'
-                AND segments.date = '${date}'
-            `)
+            const token = await getAccessToken()
+            const res = await fetch(
+              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:search`,
+              {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': MCC_ID,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  query: `
+                    SELECT
+                      click_view.gclid,
+                      click_view.keyword_info.text,
+                      click_view.keyword_info.match_type,
+                      segments.date,
+                      segments.ad_network_type,
+                      campaign.id,
+                      campaign.name,
+                      ad_group.id,
+                      ad_group.name,
+                      metrics.clicks
+                    FROM click_view
+                    WHERE click_view.gclid = '${gclid}'
+                      AND segments.date = '${date}'
+                  `
+                }),
+              }
+            )
+
+            const data = await res.json()
+            if (data.error) throw new Error(JSON.stringify(data.error))
+            const results = data.results || []
 
             if (results && results.length > 0) {
               foundRow = results[0]
