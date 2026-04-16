@@ -298,7 +298,15 @@ export async function POST(req: NextRequest) {
       debugInfo = `${debugInfo || ''} | Sheets OK (${sheetResult.sheetIdMasked})`.trim();
     }
 
-    // 5. Successful submission - return token for client-side storage
+    // 5. Automated Brochure Email (Resend)
+    // Send immediately on registration for all brochure requests
+    if (body.typeFilter === 'PPC_DownloadBrochure' && email) {
+      const { sendBrochureEmail } = await import('@/utils/email');
+      // Fire and forget, or await to ensure it completes before response
+      await sendBrochureEmail(email, name);
+    }
+
+    // 6. Successful submission - return token for client-side storage
     if (waSuccess) {
       return NextResponse.json({ success: true, token, debugInfo }, { headers: corsHeaders });
     } else {
