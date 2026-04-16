@@ -331,8 +331,14 @@ const handler = createMcpHandler(
         for (const date of dates) {
           try {
             const token = await getAccessToken()
+            
+            // Masked logging for debugging runtime IDs safely
+            if (process.env.NODE_ENV !== 'production' || true) {
+               console.log(`[lookup_gclid] Runtime Check - Customer: ...${CUSTOMER_ID.slice(-4)}, MCC: ...${MCC_ID.slice(-4)}`);
+            }
+
             const res = await fetch(
-              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:search`,
+              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
               {
                 method: 'POST',
                 headers: {
@@ -364,7 +370,9 @@ const handler = createMcpHandler(
 
             const data = await res.json()
             if (data.error) throw new Error(JSON.stringify(data.error))
-            const results = data.results || []
+            
+            // searchStream returns an array of result objects
+            const results = Array.isArray(data) ? data.flatMap(batch => batch.results || []) : (data.results || [])
 
             if (results && results.length > 0) {
               foundRow = results[0]
