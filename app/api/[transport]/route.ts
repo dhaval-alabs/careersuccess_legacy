@@ -328,6 +328,7 @@ const handler = createMcpHandler(
         let foundRow: any = null
         let lastError: string | null = null
 
+        const debugResults: string[] = []
         for (const date of dates) {
           try {
             const token = await getAccessToken()
@@ -370,7 +371,8 @@ const handler = createMcpHandler(
             )
 
             const responseText = await res.text()
-            console.log(`[lookup_gclid] Date: ${date} | Status: ${res.status} | Body: ${responseText.slice(0, 800)}`)
+            // Accumulate trace instead of logging per-day to prevent Vercel log collapsing
+            debugResults.push(`${date}|${res.status}|${responseText.slice(0, 200)}`)
             
             let data
             try {
@@ -400,6 +402,9 @@ const handler = createMcpHandler(
             }
           }
         }
+
+        // Single consolidated log for Vercel
+        console.log(`[lookup_gclid] Full trace: ${JSON.stringify(debugResults)}`)
 
         // ── After loop: if nothing found, run a broader fallback check for TODAY ──
         if (!foundRow) {
