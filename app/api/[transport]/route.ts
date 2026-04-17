@@ -370,7 +370,7 @@ const handler = createMcpHandler(
             )
 
             const responseText = await res.text()
-            console.log(`[lookup_gclid] Date: ${date} | Status: ${res.status} | Response: ${responseText.slice(0, 1000)}`)
+            console.log(`[lookup_gclid] Date: ${date} | Status: ${res.status} | Body: ${responseText.slice(0, 800)}`)
             
             let data
             try {
@@ -388,8 +388,24 @@ const handler = createMcpHandler(
               foundRow = results[0]
               break // Found it — stop searching
             }
+          } catch (e: any) {
+            // Store error but keep trying other days
+            lastError = e.message
+            // If it's a non-date-related error (e.g. auth), stop immediately
+            if (
+              !e.message?.includes('EXPECTED_FILTER') &&
+              !e.message?.includes('date')
+            ) {
+              break
+            }
+          }
+        }
 
-            // Fallback: Check if ANY clicks exist for this date to verify resource access
+        // ── After loop: if nothing found, run a broader fallback check for TODAY ──
+        if (!foundRow) {
+          try {
+            const token = await getAccessToken()
+            const todayStr = new Date().toISOString().split('T')[0]
             const debugRes = await fetch(
               `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
               {
@@ -402,27 +418,18 @@ const handler = createMcpHandler(
                 },
                 body: JSON.stringify({
                   query: `
-                    SELECT click_view.gclid, segments.date 
+                    SELECT click_view.gclid, segments.date, campaign.name 
                     FROM click_view 
-                    WHERE segments.date = '${date}' 
-                    LIMIT 2
+                    WHERE segments.date = '${todayStr}' 
+                    LIMIT 3
                   `
                 }),
               }
             )
-            const debugText = await debugRes.text()
-            console.log(`[lookup_gclid] Fallback check for ${date}: ${debugText.slice(0, 500)}`)
-
-          } catch (e: any) {
-            // Store error but keep trying other days
-            lastError = e.message
-            // If it's a non-date-related error (e.g. auth), stop immediately
-            if (
-              !e.message?.includes('EXPECTED_FILTER') &&
-              !e.message?.includes('date')
-            ) {
-              break
-            }
+            const debugData = await debugRes.json()
+            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(debugData).slice(0, 500)}`)
+          } catch (debugErr: any) {
+            console.log(`[lookup_gclid] Fallback debug failed: ${debugErr.message}`)
           }
         }
 
