@@ -114,6 +114,7 @@ export default function Home() {
 
   // ─── Conversion Tracking ─────────────────────────────────────────────────────
   const gclidRef = useRef<string | null>(null)
+  const gbraidRef = useRef<string | null>(null)
 
   useEffect(() => {
     initBehaviourTracking()
@@ -128,14 +129,23 @@ export default function Home() {
     } else {
       gclidRef.current = sessionStorage.getItem('gclid')
     }
+
+    const gbraid = params.get('gbraid')
+    if (gbraid) {
+      sessionStorage.setItem('gbraid', gbraid)
+      gbraidRef.current = gbraid
+    } else {
+      gbraidRef.current = sessionStorage.getItem('gbraid')
+    }
   }, [])
 
   function fireConversion(ctaName: string, email?: string) {
     // Fix: guard empty ctaName (e.g. if modal opened before ctaSource was set)
     if (!ctaName) return
     const gclid = gclidRef.current || sessionStorage.getItem('gclid')
-    // Need at least gclid or email to record a conversion
-    if (!gclid && !email) return
+    const gbraid = gbraidRef.current || sessionStorage.getItem('gbraid')
+    // Need at least gclid, gbraid, or email to record a conversion
+    if (!gclid && !gbraid && !email) return
     // Fix: keepalive keeps the request alive through page navigation/redirect.
     // Without it the browser cancels the in-flight fetch when window.location changes.
     fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
@@ -144,6 +154,7 @@ export default function Home() {
       body: JSON.stringify({
         ctaName,
         gclid: gclid || undefined,
+        gbraid: gbraid || undefined,
         email,
       }),
       keepalive: true,

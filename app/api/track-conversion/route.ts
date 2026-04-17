@@ -99,7 +99,7 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { ctaName, gclid, email } = await req.json()
+    const { ctaName, gclid, gbraid, email } = await req.json()
 
     // ── Validation: need ctaName + at least one identifier (gclid or email) ──
     if (!ctaName) {
@@ -109,9 +109,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    if (!gclid && !email) {
+    if (!gclid && !gbraid && !email) {
       return NextResponse.json(
-        { error: 'Need at least gclid or email to record a conversion' },
+        { error: 'Need at least gclid, gbraid, or email to record a conversion' },
         { status: 400, headers: corsHeaders }
       )
     }
@@ -142,8 +142,11 @@ export async function POST(req: NextRequest) {
       currency_code: 'INR',
     }
 
-    // Only include gclid when present (email-only conversions are valid)
-    if (gclid) {
+    // Google Ads API allows exactly one click identifier.
+    // GBRAID takes priority for modern iOS attribution.
+    if (gbraid) {
+      conversion.gbraid = gbraid
+    } else if (gclid) {
       conversion.gclid = gclid
     }
 
@@ -160,6 +163,7 @@ export async function POST(req: NextRequest) {
         ctaName,
         email: email ? 'present' : 'missing',
         gclid: gclid ? 'present' : 'missing',
+        gbraid: gbraid ? 'present' : 'missing',
       });
       return NextResponse.json({
         success: true,

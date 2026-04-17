@@ -108,6 +108,7 @@ export default function GurgaonDSAIPage() {
   const [hasPassedCurriculum, setHasPassedCurriculum] = useState(false);
 
   const gclidRef = useRef<string | null>(null);
+  const gbraidRef = useRef<string | null>(null);
 
   useEffect(() => {
     initBehaviourTracking();
@@ -122,16 +123,26 @@ export default function GurgaonDSAIPage() {
     } else {
       gclidRef.current = sessionStorage.getItem('gclid');
     }
+
+    const gbraid = params.get('gbraid');
+    if (gbraid) {
+      sessionStorage.setItem('gbraid', gbraid);
+      gbraidRef.current = gbraid;
+    } else {
+      gbraidRef.current = sessionStorage.getItem('gbraid');
+    }
   }, []);
 
   function fireConversion(ctaName: string, email?: string) {
     if (!ctaName) return;
     const gclid = gclidRef.current || sessionStorage.getItem('gclid');
-    if (!gclid && !email) return;
+    const gbraid = gbraidRef.current || sessionStorage.getItem('gbraid');
+    if (!gclid && !gbraid && !email) return;
+
     fetch('https://lp-vercel.analytixlabs.co.in/api/track-conversion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ctaName, gclid: gclid || undefined, email }),
+      body: JSON.stringify({ ctaName, gclid: gclid || undefined, gbraid: gbraid || undefined, email }),
       keepalive: true,
     }).catch((e) => console.error('Conversion tracking failed:', e));
   }
