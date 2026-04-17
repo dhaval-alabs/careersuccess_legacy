@@ -328,9 +328,6 @@ const handler = createMcpHandler(
         let foundRow: any = null
         let lastError: string | null = null
 
-        const debugResults: string[] = []
-        const endpoint = `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`
-
         for (const date of dates) {
           try {
             const token = await getAccessToken()
@@ -350,37 +347,21 @@ const handler = createMcpHandler(
                 AND segments.date = '${date}'
             `
 
-            // Add endpoint and query info once to the trace
-            if (debugResults.length === 0) {
-              debugResults.push(`ENDPOINT: ${endpoint}`)
-              debugResults.push(`QUERY: ${query.trim().replace(/\s+/g, ' ').slice(0, 300)}...`)
-            }
-
-            const headers: Record<string, string> = {
-              'Authorization': `Bearer ${token}`,
-              'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-              'login-customer-id': '8910137241', // Restored and hardcoded
-              'Content-Type': 'application/json',
-            }
-
-            const res = await fetch(endpoint, {
+            const res = await fetch(
+              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
+              {
                 method: 'POST',
-                headers,
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': MCC_ID,
+                  'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({ query }),
               }
             )
 
-            const responseText = await res.text()
-            // Now Object.keys(headers) truly reflects what was sent
-            debugResults.push(`${date}|${res.status}|Headers:${Object.keys(headers).join(',')}|${responseText.slice(0, 1000)}`)
-            
-            let data
-            try {
-              data = JSON.parse(responseText)
-            } catch (e) {
-              throw new Error(`Invalid JSON from API for ${date}: ${responseText.slice(0, 200)}`)
-            }
-
+            const data = await res.json()
             const errorObj = Array.isArray(data) ? data[0]?.error : data.error
             if (errorObj) throw new Error(JSON.stringify(errorObj))
             
@@ -401,40 +382,6 @@ const handler = createMcpHandler(
             ) {
               break
             }
-          }
-        }
-
-        // Single consolidated log for Vercel
-        console.log(`[lookup_gclid] Full trace: ${JSON.stringify(debugResults)}`)
-
-        // ── After loop: if nothing found, run a broader fallback check for TODAY ──
-        if (!foundRow) {
-          try {
-            const token = await getAccessToken()
-            const todayStr = new Date().toISOString().split('T')[0]
-            const headers: Record<string, string> = {
-              'Authorization': `Bearer ${token}`,
-              'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-              'login-customer-id': '8910137241',
-              'Content-Type': 'application/json',
-            }
-            const debugRes = await fetch(endpoint, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify({
-                  query: `
-                    SELECT click_view.gclid, segments.date, campaign.name 
-                    FROM click_view 
-                    WHERE segments.date = '${todayStr}' 
-                    LIMIT 3
-                  `
-                }),
-              }
-            )
-            const debugData = await debugRes.json()
-            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(debugData).slice(0, 500)}`)
-          } catch (debugErr: any) {
-            console.log(`[lookup_gclid] Fallback debug failed: ${debugErr.message}`)
           }
         }
 
@@ -460,7 +407,6 @@ const handler = createMcpHandler(
                 status: 'not_found',
                 gclid,
                 message: `No click found for this gclid in the last ${days} days. Note: If this click came from an iOS device, it may be attributed to gbraid instead of gclid and will not appear in click_view. Check the Google Ads dashboard directly for iOS conversion data.`,
-                _debug: debugResults,
               }, null, 2),
             }],
           }
