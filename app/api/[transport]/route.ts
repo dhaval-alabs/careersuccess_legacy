@@ -356,22 +356,23 @@ const handler = createMcpHandler(
               debugResults.push(`QUERY: ${query.trim().replace(/\s+/g, ' ').slice(0, 300)}...`)
             }
 
+            const headers: Record<string, string> = {
+              'Authorization': `Bearer ${token}`,
+              'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+              'login-customer-id': '8910137241', // Restored and hardcoded
+              'Content-Type': 'application/json',
+            }
+
             const res = await fetch(endpoint, {
                 method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  // Temporarily removed login-customer-id to test direct account access
-                  'Content-Type': 'application/json',
-                },
+                headers,
                 body: JSON.stringify({ query }),
               }
             )
 
             const responseText = await res.text()
-            // Accumulate trace with header verification and larger body slice
-            const sentHeaders = ['Authorization', 'developer-token', 'Content-Type']
-            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 1000)}`)
+            // Now Object.keys(headers) truly reflects what was sent
+            debugResults.push(`${date}|${res.status}|Headers:${Object.keys(headers).join(',')}|${responseText.slice(0, 1000)}`)
             
             let data
             try {
@@ -411,14 +412,15 @@ const handler = createMcpHandler(
           try {
             const token = await getAccessToken()
             const todayStr = new Date().toISOString().split('T')[0]
+            const headers: Record<string, string> = {
+              'Authorization': `Bearer ${token}`,
+              'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+              'login-customer-id': '8910137241',
+              'Content-Type': 'application/json',
+            }
             const debugRes = await fetch(endpoint, {
                 method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  // Temporarily removed login-customer-id
-                  'Content-Type': 'application/json',
-                },
+                headers,
                 body: JSON.stringify({
                   query: `
                     SELECT click_view.gclid, segments.date, campaign.name 
