@@ -460,6 +460,7 @@ const handler = createMcpHandler(
                 status: 'not_found',
                 gclid,
                 message: `No click found for this gclid in the last ${days} days. Note: If this click came from an iOS device, it may be attributed to gbraid instead of gclid and will not appear in click_view. Check the Google Ads dashboard directly for iOS conversion data.`,
+                _debug: debugResults,
               }, null, 2),
             }],
           }
