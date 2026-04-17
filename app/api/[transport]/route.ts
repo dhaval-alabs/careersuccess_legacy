@@ -371,8 +371,9 @@ const handler = createMcpHandler(
             )
 
             const responseText = await res.text()
-            // Accumulate trace instead of logging per-day to prevent Vercel log collapsing
-            debugResults.push(`${date}|${res.status}|${responseText.slice(0, 200)}`)
+            // Accumulate trace with header verification
+            const sentHeaders = ['Authorization', 'developer-token', 'login-customer-id', 'Content-Type']
+            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 200)}`)
             
             let data
             try {
