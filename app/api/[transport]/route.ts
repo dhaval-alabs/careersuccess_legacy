@@ -329,6 +329,8 @@ const handler = createMcpHandler(
         let lastError: string | null = null
 
         const debugResults: string[] = []
+        const endpoint = `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`
+        
         for (const date of dates) {
           try {
             const token = await getAccessToken()
@@ -338,18 +340,7 @@ const handler = createMcpHandler(
                console.log(`[lookup_gclid] Runtime Check - Customer: ...${CUSTOMER_ID.slice(-4)}, MCC: ...${MCC_ID.slice(-4)}`);
             }
 
-            const res = await fetch(
-              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
-              {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  'login-customer-id': MCC_ID,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  query: `
+            const query = `
                     SELECT
                       click_view.gclid,
                       click_view.keyword_info.text,
@@ -366,14 +357,29 @@ const handler = createMcpHandler(
                     WHERE click_view.gclid = '${gclid}'
                       AND segments.date = '${date}'
                   `
-                }),
+
+            // Add endpoint and query info once to the trace
+            if (debugResults.length === 0) {
+              debugResults.push(`ENDPOINT: ${endpoint}`)
+              debugResults.push(`QUERY: ${query.trim().replace(/\s+/g, ' ').slice(0, 300)}...`)
+            }
+
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': MCC_ID,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query }),
               }
             )
 
             const responseText = await res.text()
-            // Accumulate trace with header verification
+            // Accumulate trace with header verification and larger body slice
             const sentHeaders = ['Authorization', 'developer-token', 'login-customer-id', 'Content-Type']
-            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 200)}`)
+            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 1000)}`)
             
             let data
             try {
