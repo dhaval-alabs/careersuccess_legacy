@@ -329,69 +329,33 @@ const handler = createMcpHandler(
         let lastError: string | null = null
 
         const debugResults: string[] = []
-        const endpoint = `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`
-        
         for (const date of dates) {
           try {
-            const token = await getAccessToken()
-            
-            // Masked logging for debugging runtime IDs safely
-            if (process.env.NODE_ENV !== 'production' || true) {
-               console.log(`[lookup_gclid] Runtime Check - Customer: ...${CUSTOMER_ID.slice(-4)}, MCC: ...${MCC_ID.slice(-4)}`);
-            }
-
             const query = `
-                    SELECT
-                      click_view.gclid,
-                      click_view.keyword_info.text,
-                      click_view.keyword_info.match_type,
-                      click_view.area_of_interest.city,
-                      segments.date,
-                      segments.ad_network_type,
-                      campaign.id,
-                      campaign.name,
-                      ad_group.id,
-                      ad_group.name,
-                      metrics.clicks
-                    FROM click_view
-                    WHERE click_view.gclid = '${gclid}'
-                      AND segments.date = '${date}'
-                  `
+              SELECT
+                click_view.gclid,
+                click_view.keyword_info.text,
+                click_view.keyword_info.match_type,
+                segments.date,
+                segments.ad_network_type,
+                campaign.id,
+                campaign.name,
+                ad_group.id,
+                ad_group.name
+              FROM click_view
+              WHERE click_view.gclid = '${gclid}'
+                AND segments.date = '${date}'
+            `
 
-            // Add endpoint and query info once to the trace
+            // Log query once
             if (debugResults.length === 0) {
-              debugResults.push(`ENDPOINT: ${endpoint}`)
               debugResults.push(`QUERY: ${query.trim().replace(/\s+/g, ' ').slice(0, 300)}...`)
             }
 
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  'login-customer-id': MCC_ID,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ query }),
-              }
-            )
-
-            const responseText = await res.text()
-            // Accumulate trace with header verification and larger body slice
-            const sentHeaders = ['Authorization', 'developer-token', 'login-customer-id', 'Content-Type']
-            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 1000)}`)
+            const results = await gadsQuery(query)
             
-            let data
-            try {
-              data = JSON.parse(responseText)
-            } catch (e) {
-              throw new Error(`Invalid JSON from API for ${date}: ${responseText.slice(0, 200)}`)
-            }
-
-            if (data.error) throw new Error(JSON.stringify(data.error))
-            
-            // searchStream returns an array of result objects
-            const results = Array.isArray(data) ? data.flatMap(batch => batch.results || []) : (data.results || [])
+            // Record status for trace
+            debugResults.push(`${date}|Rows:${results.length}`)
 
             if (results && results.length > 0) {
               foundRow = results[0]
@@ -400,6 +364,8 @@ const handler = createMcpHandler(
           } catch (e: any) {
             // Store error but keep trying other days
             lastError = e.message
+            debugResults.push(`${date}|Error:${e.message.slice(0, 200)}`)
+
             // If it's a non-date-related error (e.g. auth), stop immediately
             if (
               !e.message?.includes('EXPECTED_FILTER') &&
@@ -416,30 +382,14 @@ const handler = createMcpHandler(
         // ── After loop: if nothing found, run a broader fallback check for TODAY ──
         if (!foundRow) {
           try {
-            const token = await getAccessToken()
             const todayStr = new Date().toISOString().split('T')[0]
-            const debugRes = await fetch(
-              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
-              {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  'login-customer-id': MCC_ID,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  query: `
-                    SELECT click_view.gclid, segments.date, campaign.name 
-                    FROM click_view 
-                    WHERE segments.date = '${todayStr}' 
-                    LIMIT 3
-                  `
-                }),
-              }
-            )
-            const debugData = await debugRes.json()
-            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(debugData).slice(0, 500)}`)
+            const fallbackResults = await gadsQuery(`
+              SELECT click_view.gclid, segments.date, campaign.name 
+              FROM click_view 
+              WHERE segments.date = '${todayStr}' 
+              LIMIT 3
+            `)
+            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(fallbackResults)}`)
           } catch (debugErr: any) {
             console.log(`[lookup_gclid] Fallback debug failed: ${debugErr.message}`)
           }
