@@ -353,6 +353,7 @@ const handler = createMcpHandler(
                       click_view.gclid,
                       click_view.keyword_info.text,
                       click_view.keyword_info.match_type,
+                      click_view.area_of_interest.city,
                       segments.date,
                       segments.ad_network_type,
                       campaign.id,
@@ -368,7 +369,16 @@ const handler = createMcpHandler(
               }
             )
 
-            const data = await res.json()
+            const responseText = await res.text()
+            console.log(`[lookup_gclid] Date: ${date} | Status: ${res.status} | Response: ${responseText.slice(0, 1000)}`)
+            
+            let data
+            try {
+              data = JSON.parse(responseText)
+            } catch (e) {
+              throw new Error(`Invalid JSON from API for ${date}: ${responseText.slice(0, 200)}`)
+            }
+
             if (data.error) throw new Error(JSON.stringify(data.error))
             
             // searchStream returns an array of result objects
@@ -378,6 +388,31 @@ const handler = createMcpHandler(
               foundRow = results[0]
               break // Found it — stop searching
             }
+
+            // Fallback: Check if ANY clicks exist for this date to verify resource access
+            const debugRes = await fetch(
+              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
+              {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': MCC_ID,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  query: `
+                    SELECT click_view.gclid, segments.date 
+                    FROM click_view 
+                    WHERE segments.date = '${date}' 
+                    LIMIT 2
+                  `
+                }),
+              }
+            )
+            const debugText = await debugRes.text()
+            console.log(`[lookup_gclid] Fallback check for ${date}: ${debugText.slice(0, 500)}`)
+
           } catch (e: any) {
             // Store error but keep trying other days
             lastError = e.message
@@ -412,7 +447,7 @@ const handler = createMcpHandler(
               text: JSON.stringify({
                 status: 'not_found',
                 gclid,
-                message: `No click found for this gclid in the last ${days} days. It may be older than the lookback window, or the gclid may be invalid.`,
+                message: `No click found for this gclid in the last ${days} days. Note: If this click came from an iOS device, it may be attributed to gbraid instead of gclid and will not appear in click_view. Check the Google Ads dashboard directly for iOS conversion data.`,
               }, null, 2),
             }],
           }
