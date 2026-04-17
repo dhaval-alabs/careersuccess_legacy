@@ -361,7 +361,7 @@ const handler = createMcpHandler(
                 headers: {
                   'Authorization': `Bearer ${token}`,
                   'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  'login-customer-id': '8910137241', // Hardcoded as requested
+                  // Temporarily removed login-customer-id to test direct account access
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ query }),
@@ -370,7 +370,7 @@ const handler = createMcpHandler(
 
             const responseText = await res.text()
             // Accumulate trace with header verification and larger body slice
-            const sentHeaders = ['Authorization', 'developer-token', 'login-customer-id', 'Content-Type']
+            const sentHeaders = ['Authorization', 'developer-token', 'Content-Type']
             debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 1000)}`)
             
             let data
@@ -380,7 +380,8 @@ const handler = createMcpHandler(
               throw new Error(`Invalid JSON from API for ${date}: ${responseText.slice(0, 200)}`)
             }
 
-            if (data.error) throw new Error(JSON.stringify(data.error))
+            const errorObj = Array.isArray(data) ? data[0]?.error : data.error
+            if (errorObj) throw new Error(JSON.stringify(errorObj))
             
             // searchStream returns an array of result objects
             const results = Array.isArray(data) ? data.flatMap(batch => batch.results || []) : (data.results || [])
@@ -415,7 +416,7 @@ const handler = createMcpHandler(
                 headers: {
                   'Authorization': `Bearer ${token}`,
                   'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
-                  'login-customer-id': '8910137241', // Hardcoded
+                  // Temporarily removed login-customer-id
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
