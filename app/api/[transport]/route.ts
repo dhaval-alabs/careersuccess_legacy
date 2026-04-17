@@ -329,8 +329,11 @@ const handler = createMcpHandler(
         let lastError: string | null = null
 
         const debugResults: string[] = []
+        const endpoint = `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`
+
         for (const date of dates) {
           try {
+            const token = await getAccessToken()
             const query = `
               SELECT
                 click_view.gclid,
@@ -347,15 +350,40 @@ const handler = createMcpHandler(
                 AND segments.date = '${date}'
             `
 
-            // Log query once
+            // Add endpoint and query info once to the trace
             if (debugResults.length === 0) {
+              debugResults.push(`ENDPOINT: ${endpoint}`)
               debugResults.push(`QUERY: ${query.trim().replace(/\s+/g, ' ').slice(0, 300)}...`)
             }
 
-            const results = await gadsQuery(query)
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': '8910137241', // Hardcoded as requested
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query }),
+              }
+            )
+
+            const responseText = await res.text()
+            // Accumulate trace with header verification and larger body slice
+            const sentHeaders = ['Authorization', 'developer-token', 'login-customer-id', 'Content-Type']
+            debugResults.push(`${date}|${res.status}|Headers:${sentHeaders.join(',')}|${responseText.slice(0, 1000)}`)
             
-            // Record status for trace
-            debugResults.push(`${date}|Rows:${results.length}`)
+            let data
+            try {
+              data = JSON.parse(responseText)
+            } catch (e) {
+              throw new Error(`Invalid JSON from API for ${date}: ${responseText.slice(0, 200)}`)
+            }
+
+            if (data.error) throw new Error(JSON.stringify(data.error))
+            
+            // searchStream returns an array of result objects
+            const results = Array.isArray(data) ? data.flatMap(batch => batch.results || []) : (data.results || [])
 
             if (results && results.length > 0) {
               foundRow = results[0]
@@ -364,8 +392,6 @@ const handler = createMcpHandler(
           } catch (e: any) {
             // Store error but keep trying other days
             lastError = e.message
-            debugResults.push(`${date}|Error:${e.message.slice(0, 200)}`)
-
             // If it's a non-date-related error (e.g. auth), stop immediately
             if (
               !e.message?.includes('EXPECTED_FILTER') &&
@@ -382,14 +408,28 @@ const handler = createMcpHandler(
         // ── After loop: if nothing found, run a broader fallback check for TODAY ──
         if (!foundRow) {
           try {
+            const token = await getAccessToken()
             const todayStr = new Date().toISOString().split('T')[0]
-            const fallbackResults = await gadsQuery(`
-              SELECT click_view.gclid, segments.date, campaign.name 
-              FROM click_view 
-              WHERE segments.date = '${todayStr}' 
-              LIMIT 3
-            `)
-            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(fallbackResults)}`)
+            const debugRes = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'developer-token': process.env.GOOGLE_ADS_DEVELOPER_TOKEN!,
+                  'login-customer-id': '8910137241', // Hardcoded
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  query: `
+                    SELECT click_view.gclid, segments.date, campaign.name 
+                    FROM click_view 
+                    WHERE segments.date = '${todayStr}' 
+                    LIMIT 3
+                  `
+                }),
+              }
+            )
+            const debugData = await debugRes.json()
+            console.log(`[lookup_gclid] Fallback debug for ${todayStr}: ${JSON.stringify(debugData).slice(0, 500)}`)
           } catch (debugErr: any) {
             console.log(`[lookup_gclid] Fallback debug failed: ${debugErr.message}`)
           }
