@@ -43,11 +43,15 @@ export async function createLeadAction(data: LeadEntry) {
             return { success: false, error: errorData.error || 'CRM submission failed' };
         }
 
-        // --- Post-submission Automation: Send Brochure Email ---
-        // Trigger only for brochure download forms
-        if (data.typeFilter === 'PPC_DownloadBrochure' && data.email) {
-            const { sendBrochureEmail } = await import('@/utils/email');
-            await sendBrochureEmail(data.email, data.name);
+        // --- Post-submission Automation: Send Emails ---
+        if (data.email) {
+            const { sendBrochureEmail, sendRegistrationEmail } = await import('@/utils/email');
+            
+            if (data.typeFilter === 'PPC_DownloadBrochure') {
+                await sendBrochureEmail(data.email, data.name);
+            } else if (data.typeFilter === 'PPC_CheckEligibility' || data.typeFilter === 'PPC_SignupDemo') {
+                await sendRegistrationEmail(data.email, data.name);
+            }
         }
 
         return { success: true }

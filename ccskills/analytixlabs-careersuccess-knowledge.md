@@ -199,7 +199,21 @@ The `gclid` captured in LeadSquared (`mx_GCLID`) can also be used separately for
 
 ---
 
-## 8. Files Delivered in This Project
+## 8. Automated Email Communications
+
+Automated emails are handled via **Resend** (API key in Vercel).
+
+### 8.1 Email Triggers
+- **Brochure Download (`PPC_DownloadBrochure`)**: Sends brochure link + Zoom/WhatsApp CTAs.
+- **Registration / Eligibility (`PPC_CheckEligibility`, `PPC_SignupDemo`)**: Sends a webinar confirmation email with Zoom registration as primary CTA and WhatsApp help.
+
+### 8.2 Dynamic Assets
+- **Logo**: Updated to transparent version: `https://www.analytixlabs.co.in/wp-content/uploads/2024/04/logo.png`.
+- **Zoom Link**: Pulsed dynamically from `NEXT_PUBLIC_ZOOM_WEBINAR_URL`.
+
+---
+
+## 9. Files Delivered in This Project
 
 | File | Format | Purpose |
 |---|---|---|
