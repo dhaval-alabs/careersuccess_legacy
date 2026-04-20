@@ -57,6 +57,7 @@ All form submissions are routed **server-side** via a Next.js API route (`/pages
 | `LSQ_HOST` | e.g. `api.leadsquared.com` |
 | `LSQ_ACCESS_KEY` | Provided by AnalytixLabs CRM admin |
 | `LSQ_SECRET_KEY` | Provided by AnalytixLabs CRM admin |
+| `NEXT_PUBLIC_ZOOM_WEBINAR_URL` | Managing the "Upcoming Webinar" registration link via Vercel |
 
 ### Standard LeadSquared Fields
 | Field | Source |
@@ -150,7 +151,7 @@ All four Thank You pages share one `ThankYouPage` component with variant props:
 
 | Box | Content | Link |
 |---|---|---|
-| 🎥 Upcoming Webinar | "Join Our Upcoming Webinar" — CTA: **Save My Spot** | `https://us06web.zoom.us/webinar/register/1117706174998/WN_6E7nUME2RlKyG0a8N0qXEQ#/registration` — `_blank` |
+| 🎥 Upcoming Webinar | "Join Our Upcoming Webinar" — CTA: **Save My Spot** | Managed via `NEXT_PUBLIC_ZOOM_WEBINAR_URL` (Vercel) — `_blank` |
 | 📞 Call Us | "Need Help? Talk to Us." Mon–Sat 9AM–7PM — CTA: **Call +91 95555 25908** | `tel:919555525908` |
 | 💬 WhatsApp | "Chat on WhatsApp" — CTA: **Chat Now** | `https://api.whatsapp.com/send?phone=919555525908&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F` — `_blank` |
 
@@ -194,7 +195,7 @@ The `gclid` captured in LeadSquared (`mx_GCLID`) can also be used separately for
 | Phone (sales/support) | +91 95555 25908 |
 | WhatsApp number | 919555525908 |
 | Google Ads account | AW-783236209 |
-| Webinar registration | https://us06web.zoom.us/webinar/register/1117706174998/WN_6E7nUME2RlKyG0a8N0qXEQ#/registration |
+| Webinar registration | Managed via `NEXT_PUBLIC_ZOOM_WEBINAR_URL` environment variable |
 
 ---
 
