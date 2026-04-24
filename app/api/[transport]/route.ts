@@ -5,7 +5,7 @@ export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
 const CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
-const MCC_ID = process.env.GOOGLE_ADS_MCC_ID || '8910137241'
+const MCC_ID = process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
 async function getAccessToken(): Promise<string> {
   const res = await fetch('https://oauth2.googleapis.com/token', {
@@ -31,7 +31,7 @@ async function getAccessToken(): Promise<string> {
 async function gadsQuery(query: string): Promise<any[]> {
   const token = await getAccessToken()
   const res = await fetch(
-    `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:search`,
+    `https://googleads.googleapis.com/v17/customers/${CUSTOMER_ID}/googleAds:search`,
     {
       method: 'POST',
       headers: {
@@ -348,7 +348,7 @@ const handler = createMcpHandler(
             `
 
             const res = await fetch(
-              `https://googleads.googleapis.com/v23/customers/${CUSTOMER_ID}/googleAds:searchStream`,
+              `https://googleads.googleapis.com/v17/customers/${CUSTOMER_ID}/googleAds:searchStream`,
               {
                 method: 'POST',
                 headers: {
