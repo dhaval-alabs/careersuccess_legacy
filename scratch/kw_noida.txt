@@ -1,0 +1,266 @@
+AI & ML Course Keywords
+Keyword	Avg. monthly searches	Competition	Top of page bid (low range)	Top of page bid (high range)
+ai ml courses	390.0	High	49.18	153.6
+ai and ml courses	110.0	Medium	49.14	159.85
+aiml course	90.0	High	37.84	117.13
+ai ml certification	30.0	High	81.59	161.79
+ai ml courses online	20.0	High	55.86	174.83
+best ai ml courses	20.0	High	61.04	216.88
+ai ml certification courses	20.0	High	61.72	175.28
+ai ml courses free	20.0	Medium	10.16	23.24
+ai & ml course	10.0	Medium	44.35	151.9
+ai and ml certification	10.0	High	77.61	132.38
+ai ml training	10.0	High		
+ai and ml courses online	10.0	High	66.42	315.41
+courses on ai and ml	10.0	High	70.83	372.24
+best ai ml certification	10.0	High		
+ml and ai course	10.0	Medium	52.66	192.44
+ai ml online courses	10.0	High	28.5	122.26
+ml ai course	10.0	Medium	82.97	163.93
+best ai and ml courses online	10.0	Unknown		
+aiml certification	10.0	High		
+ml ai certification	10.0	High		
+best ai ml courses for working professionals	10.0	Unknown		
+iisc ai ml course	10.0	High		
+best ai and ml certification	10.0	Unknown		
+data science ai ml course	10.0	High	100.54	242.7
+simplilearn ai ml course	10.0	High		
+pg diploma in ai and ml	10.0	High	115.45	313.96
+artificial intelligence online course	390.0	High	51.79	158.9
+artificial intelligence programs online	390.0	High	51.79	158.9
+artificial intelligence classes online	390.0	High	51.79	158.9
+artificial intelligence course free	170.0	Medium	10.79	41.18
+artificial intelligence certificate course	170.0	High	64.87	173.16
+artificial intelligence online course free	170.0	Medium	10.79	41.18
+artificial intelligence course free online	140.0	Medium	11.71	50.31
+artificial intelligence engineer course	110.0	Medium	35.86	122.77
+artificial intelligence course for beginners	90.0	High	38.06	114.64
+artificial intelligence online course for beginners	90.0	High	38.06	114.64
+artificial intelligence course coursera	90.0	Low	23.95	112.75
+artificial intelligence free course with certificate	70.0	Medium	10.24	41.14
+artificial intelligence course udemy	70.0	Medium	8.53	54.99
+artificial intelligence programming with python	70.0	Low	30.05	94.29
+artificial intelligence and machine learning course	50.0	Medium	58.65	204.43
+artificial intelligence related courses	50.0	High	35.63	104.85
+artificial intelligence training courses	40.0	High	62.8	182.58
+artificial intelligence certification course free	30.0	High	13.48	45.66
+artificial intelligence full course	20.0	High	27.11	87.22
+artificial intelligence classes near me	20.0	High	43.27	101.36
+artificial intelligence basic course	20.0	High	39.19	126.1
+artificial intelligence python course	20.0	High	42.06	111.27
+artificial intelligence with python course	20.0	High	42.06	111.27
+ai ml courses	390.0	High	49.18	153.6
+ai and ml courses	110.0	Medium	49.14	159.85
+aiml course	90.0	High	37.84	117.13
+ai machine learning courses	50.0	Medium	58.65	204.43
+ai ml certification	30.0	High	81.59	161.79
+ai and data science course	30.0	High	47.73	185.43
+ai ml courses online	20.0	High	55.86	174.83
+ai ml certification courses	20.0	High	61.72	175.28
+ai ml courses free	20.0	Medium	10.16	23.24
+ai & ml course	10.0	Medium	44.35	151.9
+ai machine learning certification	10.0	Unknown		
+ai and ml certification	10.0	High	77.61	132.38
+ai ml training	10.0	High		
+ai and ml courses online	10.0	High	66.42	315.41
+ai ml online courses	10.0	High	28.5	122.26
+ai and machine learning degree	10.0	Unknown		
+aiml certification	10.0	High		
+ai data science course	10.0	Medium	33.49	117.46
+learning about machine learning	2400.0	Low	25.17	115.26
+machine learning machine learning	2400.0	Low	25.17	115.26
+machine learning course	260.0	Medium	30.37	106.6
+machine learning classes	260.0	Medium	30.37	106.6
+classes for machine learning	260.0	Medium	30.37	106.6
+course of machine learning	260.0	Medium	30.37	106.6
+python machine learning	110.0	Low	27.22	91.99
+machine learning for beginners	110.0	Low	88.42	126.06
+machine learning using python	110.0	Low	27.22	91.99
+learn machine learning with python	110.0	Low	27.22	91.99
+learn python and machine learning	110.0	Low	27.22	91.99
+learning python for machine learning	110.0	Low	27.22	91.99
+python programming for machine learning	110.0	Low	27.22	91.99
+learning python machine learning	110.0	Low	27.22	91.99
+machine learning ai	90.0	Medium	28.81	101.31
+machine learning for ai	90.0	Medium	28.81	101.31
+engineering machine learning	70.0	Low	25.65	101.45
+andrewng machine learning	70.0	Medium	12.15	59.68
+azure machine learning	50.0	Low	48.96	382.65
+machine learning and ai courses	50.0	Medium	58.65	204.43
+coursera machine learning andrew ng	50.0	Medium	34.72	162.46
+al and machine learning courses	50.0	Medium	49.57	135.17
+aws machine learning certification	40.0	Low	11.26	91.24
+best machine learning course	40.0	Medium	31.49	89.93
+best course to learn machine learning	40.0	Medium	31.49	89.93
+best course in machine learning	40.0	Medium	31.49	89.93
+best machine learning classes	40.0	Medium	31.49	89.93
+machine learning online course	30.0	Low	47.54	130.5
+free machine learning course	30.0	Low	9.31	28.24
+data science machine learning	30.0	Medium	35.51	99.35
+machine learning classes online	30.0	Low	47.54	130.5
+machine learning basic	30.0	Low	23.51	111.52
+data science with machine learning	30.0	Medium	35.51	99.35
+data science for machine learning	30.0	Medium	35.51	99.35
+machine learning with data science	30.0	Medium	35.51	99.35
+free machine learning classes	30.0	Low	9.31	28.24
+machine learning certification	20.0	High	56.29	160.43
+coursera machine learning	20.0	Medium	27.54	102.29
+data science and machine learning course	20.0	Medium		
+aws certified machine learning specialty	20.0	Medium	19.55	113.14
+data science machine learning course	20.0	Medium		
+machine learning course coursera	20.0	Low	32.97	120.75
+certification for machine learning	20.0	High	56.29	160.43
+machine learning in google cloud	20.0	Low		
+machine learning with google cloud	20.0	Low		
+coursera courses machine learning	20.0	Low	32.97	120.75
+machine learning coursera course	20.0	Low	32.97	120.75
+deep learning artificial intelligence machine learning	20.0	Low	53.07	173.13
+learn machine learning	10.0	Medium	35.46	181.89
+Data Science Course Keywords
+Keyword	Avg. monthly searches	Competition	Top of page bid (low range)	Top of page bid (high range)
+data science	2400.0	Low	22.74	72.64
+data science course	1600.0	Medium	41.89	120.47
+data science classes	1600.0	Medium	41.89	120.47
+data scientist classes	1600.0	Medium	41.89	120.47
+data science cours	1600.0	Medium	41.89	120.47
+data science course fees	170.0	High	35.09	99.67
+data science online course	170.0	Low	54.48	187.35
+data scientist course fees	170.0	High	35.09	99.67
+data science online classes	170.0	Low	54.48	187.35
+data science statistics	70.0	Low	19.8	105.18
+data science course near me	50.0	Medium	45.62	127.1
+data scientist course near me	50.0	Medium	45.62	127.1
+data science and artificial intelligence online courses	50.0	High	66.47	173.32
+data science certificate	40.0	Medium	33.85	111.43
+data science course with placement	40.0	Low	46.71	105.75
+data scientist course with placement	40.0	Low	46.71	105.75
+data science course in coursera	40.0	Low	25.91	94.2
+data science course on coursera	40.0	Low	25.91	94.2
+data science programs	30.0	Low	38.72	99.4
+data science certification course	30.0	Medium	55.54	192.32
+data science degrees	30.0	Low	38.72	99.4
+data science course duration	30.0	Medium	39.56	138.7
+data scientist certification course	30.0	Medium	55.54	192.32
+Data Science & AI Course Keywords
+Keyword	Avg. monthly searches	Competition	Top of page bid (low range)	Top of page bid (high range)
+data science and ai course	50.0	High	66.47	173.32
+data science & ai course	10.0	High		
+data science and ai certification	10.0	High		
+data science ai ml course	10.0	High	100.54	242.7
+data science ai course	10.0	High	58.59	88.9
+mtech in ai and data science	10.0	High	65.54	210.46
+data science and ai certification course	10.0	Unknown		
+best data science and ai course	10.0	Unknown		
+masters in ai and data science	10.0	High	85.89	283.96
+python for data science and ai	10.0	Unknown		
+certification in data science and ai	10.0	High	42.99	130.18
+Data Analytics Course Keywords
+Keyword	Avg. monthly searches	Competition	Top of page bid (low range)	Top of page bid (high range)
+database analyst courses	2400.0	High	47.21	136.67
+data analytics course	720.0	Medium	47.85	143.05
+data analyst classes	720.0	Medium	47.85	143.05
+course data analyst	720.0	Medium	47.85	143.05
+data and analytics courses	720.0	Medium	47.85	143.05
+google data analytics professional certificate	480.0	Low	19.6	82.86
+business analytics	480.0	Low	41.9	143.31
+data analyst course fees	260.0	High	33.12	84.08
+data analytics course fees	260.0	High	33.12	84.08
+data analyst course near me	210.0	High	55.54	143.62
+data analytics courses near me	210.0	High	55.54	143.62
+data analytics classes near me	210.0	High	55.54	143.62
+data analysis courses near me	210.0	High	55.54	143.62
+data analysis classes near me	210.0	High	55.54	143.62
+business analytics course	170.0	Medium	60.28	185.77
+business analytics class	170.0	Medium	60.28	185.77
+google analytics certification	140.0	Medium	15.79	71.95
+data analyst course online	140.0	Medium	64.28	184.82
+python for data analysis	140.0	Low	34.43	112.19
+best data analytics courses	140.0	High	58.68	153.45
+best data analyst course	140.0	High	58.68	153.45
+best data analysis courses	140.0	High	58.68	153.45
+data analyst best course	140.0	High	58.68	153.45
+best courses on data analytics	140.0	High	58.68	153.45
+data analytics online training	140.0	Medium	64.28	184.82
+ibm data analyst professional certificate	110.0	Medium	21.72	75.21
+coding ninjas data analytics course	110.0	High	25.64	90.41
+google data analytics certification	70.0	Low	20.13	89.45
+data analytics certification	70.0	High	47.69	143.3
+google analytics course	70.0	Medium	14.89	72.13
+data analyst course with placement	70.0	High	46.69	165.63
+microsoft data analyst certification	70.0	Medium	16.43	66.98
+data and analytics certifications	70.0	High	47.69	143.3
+data analytics cert	70.0	High	47.69	143.3
+data analyst courses with placement	70.0	High	46.69	165.63
+google analytics course google	70.0	Medium	14.89	72.13
+data analyst certification course	50.0	High	40.6	108.82
+data analytics certification courses	50.0	High	40.6	108.82
+python for data analytics	50.0	Low	23.66	76.68
+data analyst master program	50.0	Medium	53.36	163.37
+data analysis certification courses	50.0	High	40.6	108.82
+data analytics master's programs	50.0	Medium	53.36	163.37
+database analyst certification	50.0	Medium	31.11	105.2
+data analysis master program	50.0	Medium	53.36	163.37
+python and data analytics	50.0	Low	23.66	76.68
+ma in data analytics	50.0	Medium	53.36	163.37
+python and data analysis	50.0	Low	23.66	76.68
+python with data analytics	50.0	Low	23.66	76.68
+google data analytics course	40.0	Medium	13.49	79.33
+coursera data analyst course	40.0	Medium	22.86	80.04
+udemy data analyst course	40.0	High	15.93	68.47
+google data analytic course	40.0	Medium	13.49	79.33
+data analyst bootcamp	30.0	Low	29.51	136.18
+data analyst training	30.0	Low		
+coursera data analytics	30.0	High	23.14	73.12
+google data analyst course	30.0	Medium	24.21	73.59
+coursera data analyst	30.0	High	23.14	73.12
+coursera data analysis	30.0	High	23.14	73.12
+simplilearn data analyst course	30.0	High	36.78	122.99
+data analyst course by google	30.0	High	11.77	79.61
+google data analytics professional certificate coursera	30.0	Low	23.24	80.9
+business analyst online courses	30.0	Medium	68.76	158.82
+data analyst course duration	30.0	High	30.54	79.42
+business analytics certification	20.0	High	80.84	221.96
+learn data analytics	20.0	High	63.9	124.46
+coursera google data analytics	20.0	Medium	14.93	39.34
+data analysis courses for beginners	20.0	Low	42.11	100.81
+udemy data analytics	20.0	Medium	11.71	85.24
+msc data analytics	20.0	Medium	61.78	256.26
+data analytics courses for beginners	20.0	Low	42.11	100.81
+data analytics course with placement	20.0	Medium	60.3	142.51
+data analyst courses for beginners	20.0	Low	42.11	100.81
+learn data analysis	20.0	High	63.9	124.46
+data science and analytics courses	20.0	Medium	78.8	201.1
+best institute for data analyst course	20.0	High	65.06	224.64
+excel data analysis course	20.0	Low		
+ibm data analyst course	20.0	Medium	26.39	84.56
+data analyst course with placement guarantee	20.0	High	35.1	112.91
+data analysis using python	20.0	Medium	21.1	98.62
+learn data analyst	20.0	High	63.9	124.46
+beginner data analytics courses	20.0	Low	42.11	100.81
+data analyst certification microsoft	20.0	High		
+coursera data analytics course	20.0	Low	26.94	98.03
+best data analyst course with placement	20.0	High		
+microsoft data analytics certification	20.0	High		
+data analyst learning	20.0	High	63.9	124.46
+data analytics using python	20.0	Medium	21.1	98.62
+data analysis course fees	20.0	High	40.93	119.21
+excel data analytics course	20.0	Low		
+data analyst prerequisites	20.0	Low		
+data analyst course fees and duration	20.0	High	35.86	94.67
+data science analytics course	20.0	Medium	78.8	201.1
+microsoft data analyst course	20.0	Medium	7.73	70.82
+udemy data analysis	20.0	Medium	11.71	85.24
+data analysis msc	20.0	Medium	61.78	256.26
+data analyst msc	20.0	Medium	61.78	256.26
+data analytics beginners course	20.0	Low	42.11	100.81
+data analytics courses iim	20.0	High	46.03	173.44
+python programming for data analysis	20.0	Medium	21.1	98.62
+microsoft data analytics course	20.0	Medium	7.73	70.82
+data analysis in excel course	20.0	Low		
+data analytics certification microsoft	20.0	High		
+data analysis course coursera	20.0	Low	26.94	98.03
+microsoft data analysis course	20.0	Medium	7.73	70.82
+data analyst using python	20.0	Medium	21.1	98.62
+data analyst certification online	10.0	Low	36.02	106.14
+data analyst google certificate	10.0	Medium	52.33	171.74
+best data analytics certification	10.0	High	57.71	165.14

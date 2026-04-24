@@ -21,7 +21,7 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 
 const config = {
   h1City: "in Bangalore",
-  subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. NASSCOM-certified course with 100% placement support at our HSR Layout, Bangalore centre.",
+  subhead: "Launch your career in the Silicon Valley of India. Join Bangalore's #1 NASSCOM-certified Data Analyst course with Generative AI integration. Classroom sessions at HSR Layout.",
   classroomBullet: "Bangalore centre located at HSR Layout (near Silk Board). Weekend and weekday batches available.",
   faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Bangalore (HSR Layout), Noida Sector 15, and Gurgaon Sector 44.",
   faq12nearby: "Koramangala, Whitefield, and Electronic City",
@@ -196,6 +196,9 @@ export default function BangaloreDAAIPage() {
     { q: "Can I do this course while working full-time?", a: "Yes. Weekend sessions and recorded classes make it perfect for working professionals." },
     { q: "What salary can I expect after completing this?", a: "Freshers typically start at Rs.4.5-8 LPA. Experienced professionals see significant hikes, with alumni reaching up to Rs.25 LPA in senior analyst roles." },
     { q: "Does this course cover Generative AI?", a: "Yes. We've integrated GenAI for Python/SQL/BI workflows, making you a 10x more productive analyst." },
+    { q: "How long is the Data Analyst + AI course?", a: "The course duration varies by mode: 6 months for Classroom/Live Online (Weekend), and 4 months for Weekday batches. Self-paced learning depends on your speed but usually takes 5-7 months." },
+    { q: "Which track should I choose?", a: "If you want face-to-face interaction and access to our labs, Classroom is best. If you need flexibility but still want live classes, Live Online is the most popular choice." },
+    { q: "How is this different from free MOOCs?", a: "Unlike MOOCs, we provide a NASSCOM-recognised dual certification, real-world case studies, and a placement guarantee with 50% fee-back. You also get dedicated mentorship and lab support." },
   ];
 
   return (
@@ -245,9 +248,8 @@ export default function BangaloreDAAIPage() {
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
-                Job-Ready Certification in
+                Data Analyst + AI Course
                 <br />
-                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Analyst + AI</span>{' '}
                 <span className="text-[#09263F]">{config.h1City}</span>
               </h1>
 
@@ -306,7 +308,7 @@ export default function BangaloreDAAIPage() {
         <ToolsMasteryStrip />
 
         {/* NEW SECTION: WHO IS THIS FOR */}
-        <WhoIsThisFor />
+        <WhoIsThisFor subtitle="Designed for Bangalore's tech ecosystem. Whether you're a fresher looking for your first break or a professional switching to analytics, we ensure you're day-1 ready for global tech companies." />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">

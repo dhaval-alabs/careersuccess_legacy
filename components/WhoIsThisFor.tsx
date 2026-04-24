@@ -57,7 +57,7 @@ const PERSONAS = [
   },
 ];
 
-export default function WhoIsThisFor() {
+export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
   const [ref, visible] = useVisible();
 
   return (
@@ -71,7 +71,7 @@ export default function WhoIsThisFor() {
             Built for Every <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Starting Point</span>
           </h2>
           <p className="text-[#4A6275] max-w-2xl mx-auto text-base leading-relaxed">
-            Whether you are a fresher, a working professional, or switching careers: this data analyst course meets you where you are.
+            {subtitle || "Whether you are a fresher, a working professional, or switching careers: this data analyst course meets you where you are."}
           </p>
         </div>
 
