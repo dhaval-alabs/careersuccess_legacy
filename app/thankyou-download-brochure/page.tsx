@@ -8,6 +8,7 @@ function ThankYouWrapper() {
       heading="Your Brochure is On Its Way!"
       subCopy="We've sent the programme brochure to your email. Check your inbox (and spam folder, just in case)."
       conversionId="AW-783236209/389QCJfKlv4aEPH4vPUC"
+      verifiedConversionId="AW-783236209/0fAuCJnD-qEcEPH4vPUC"
       isBrochureDownload={true}
     />
   );

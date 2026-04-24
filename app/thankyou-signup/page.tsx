@@ -8,6 +8,7 @@ function ThankYouWrapper() {
       heading="Demo Seat Confirmed!"
       subCopy="You've successfully registered for the demo session. Our team will send you the session details shortly."
       conversionId="AW-783236209/VXQtCOvzhf4aEPH4vPUC"
+      verifiedConversionId="AW-783236209/_P91CJCu-KEcEPH4vPUC"
     />
   );
 }

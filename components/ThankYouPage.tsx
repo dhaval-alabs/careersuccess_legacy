@@ -9,6 +9,7 @@ interface ThankYouProps {
   heading: string;
   subCopy: string;
   conversionId?: string;
+  verifiedConversionId?: string; // NEW: Primary conversion for OTP verified leads
   isBrochureDownload?: boolean;
 }
 
@@ -22,32 +23,43 @@ const WA_MESSAGE = encodeURIComponent(
 const navy = "#09263F";
 const teal = "#1DE5B5";
 
-export default function ThankYouPage({ heading, subCopy, conversionId, isBrochureDownload }: ThankYouProps) {
+export default function ThankYouPage({ heading, subCopy, conversionId, verifiedConversionId, isBrochureDownload }: ThankYouProps) {
   const searchParams = useSearchParams();
   const rawEmail = searchParams.get('email') || '';
   const rawName = searchParams.get('name') || '';
+  const isVerified = searchParams.get('verified') === 'true';
 
   const email = decodeURIComponent(rawEmail);
   const name = decodeURIComponent(rawName);
 
   // gtag client-side conversion — PRIMARY signal for Google Ads dashboard + Smart Bidding.
-  // Server-side API (POST /api/track-conversion) now handles CRM attribution only.
   useEffect(() => {
-    if (typeof window === 'undefined' || !conversionId) return;
+    if (typeof window === 'undefined') return;
     if (typeof window.gtag !== 'function') return;
 
     const firstName = name ? name.split(' ')[0] : '';
+    const userData = email ? {
+      email,
+      ...(firstName && { address: { first_name: firstName } }),
+    } : undefined;
 
-    window.gtag('event', 'conversion', {
-      send_to: conversionId,
-      ...(email && {
-        user_data: {
-          email,
-          ...(firstName && { address: { first_name: firstName } }),
-        },
-      }),
-    });
-  }, [conversionId, email, name]);
+    // 1. Always fire existing conversion (Secondary)
+    if (conversionId) {
+      window.gtag('event', 'conversion', {
+        send_to: conversionId,
+        ...(userData && { user_data: userData }),
+      });
+    }
+
+    // 2. Conditionally fire NEW Verified Lead conversion (Primary)
+    if (isVerified && verifiedConversionId) {
+      window.gtag('event', 'conversion', {
+        send_to: verifiedConversionId,
+        ...(userData && { user_data: userData }),
+      });
+      console.log(`[ThankYouPage] Verified Lead conversion fired: ${verifiedConversionId}`);
+    }
+  }, [conversionId, verifiedConversionId, email, name, isVerified]);
 
   return (
     <div style={{ minHeight: '100vh', background: '#f0faf8', paddingBottom: '40px' }}>

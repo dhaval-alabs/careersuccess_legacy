@@ -200,9 +200,35 @@ export async function POST(req: NextRequest) {
     const debug = body.debug === true;
     let debugInfo = null;
     
+    const { name: fullName, email, typeFilter } = parsedToken; // Extract from token if possible, or from body
+
     // Await updates to ensure they complete on Vercel
     await updateLeadSquaredToVerified(lsqPhone).catch(console.error);
     const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone);
+
+    // ── TRIGGER EMAIL FLOW (Async) ──
+    const { sendLeadEmail } = await import('@/lib/sendLeadEmail');
+    const { updateEmailStatus } = await import('@/lib/updateEmailStatus');
+
+    (async () => {
+      try {
+        const sendResult = await sendLeadEmail({
+          recipientEmail: email || body.email,
+          recipientName: fullName || body.name || '',
+          typeFilter: typeFilter || body.typeFilter || 'PPC_CheckEligibility',
+        });
+
+        if (sendResult.status !== 'Skipped') {
+          await updateEmailStatus({
+            phone: lsqPhone,
+            emailStatus: sendResult.status as 'Sent' | 'Failed',
+          });
+        }
+        console.log(`[Verify] Email flow complete | phone=${mobile} | type=${sendResult.emailType} | status=${sendResult.status}`);
+      } catch (err: any) {
+        console.error(`[Verify] Email flow exception | phone=${mobile} | error=${err.message}`);
+      }
+    })();
 
     if (debug) {
       debugInfo = sheetRes.success 
@@ -211,7 +237,7 @@ export async function POST(req: NextRequest) {
     }
 
     console.log(`[Verify] Verification successful for phone: ${mobile}`);
-    return NextResponse.json({ success: true, debugInfo }, { headers: corsHeaders });
+    return NextResponse.json({ success: true, verified: true, debugInfo }, { headers: corsHeaders });
 
   } catch (error) {
     console.error('[Verify] System error:', error);

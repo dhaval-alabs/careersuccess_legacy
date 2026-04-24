@@ -166,7 +166,10 @@ export default function LeadCaptureForm({
       // Verified successfully!
       onSuccess?.(email);
       const params = new URLSearchParams({ email, name, phone: mobile });
-      window.location.href = `${thankYouPath}?${params.toString()}`;
+      const redirectUrl = data.verified 
+        ? `${thankYouPath}?${params.toString()}&verified=true`
+        : `${thankYouPath}?${params.toString()}`;
+      window.location.href = redirectUrl;
     } catch (err) {
       setOtpState('error');
       setErrorMsg('Verification failed. Server is unreachable.');
