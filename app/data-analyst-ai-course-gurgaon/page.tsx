@@ -539,7 +539,7 @@ export default function GurgaonDAAIPage() {
             title="Check Your Eligibility"
             sourceName={`${config.crmPrefix}_${ctaSource}`}
             typeFilter="PPC_CheckEligibility"
-            buttonText="Check Eligibility →"
+            buttonText="Check Your Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
             onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
           />
