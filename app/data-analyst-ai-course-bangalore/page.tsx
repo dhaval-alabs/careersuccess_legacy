@@ -306,7 +306,7 @@ export default function BangaloreDAAIPage() {
         <ToolsMasteryStrip />
 
         {/* NEW SECTION: WHO IS THIS FOR */}
-        <WhoIsThis For />
+        <WhoIsThisFor />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">
