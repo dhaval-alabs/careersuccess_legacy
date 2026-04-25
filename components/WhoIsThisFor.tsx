@@ -26,7 +26,7 @@ const PERSONAS = [
     outcome: "Entry-level Data Analyst, MIS Analyst, or BI Analyst role within 6 months.",
     color: "#1DE5B5",
     bgColor: "#E6F7F6",
-    image: "https://images.unsplash.com/photo-1523240715639-963c6a216a76?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "Non-Tech Career Switchers",
@@ -44,7 +44,7 @@ const PERSONAS = [
     outcome: "Upskill to Senior Analyst, Analytics Manager, or transition to a data-centric function.",
     color: "#F5C842",
     bgColor: "#FFFBE6",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "BI and Business Analyst Upgraders",
