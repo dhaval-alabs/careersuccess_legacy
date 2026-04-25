@@ -28,14 +28,14 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <span className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
-            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">DUAL-TRACK CURRICULUM</span>
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Dual-Track Curriculum · 450+ Hours</span>
           </span>
           <h2 className="text-[#09263F] font-bold text-3xl sm:text-5xl leading-tight mb-4">
-            What You Will Learn Across{' '}
-            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">450+ Hours</span>
+            Data Analyst + AI —{' '}
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">What You Will Learn</span>
           </h2>
           <p className="text-[#4A6275] text-base leading-relaxed max-w-3xl mx-auto">
-            Our curriculum is split into two powerful tracks. Master the core foundations first, then supercharge your productivity with Generative AI tools designed for modern analysts.
+            Master the core analytics foundations first, then supercharge your productivity with Generative AI tools designed for modern analysts.
           </p>
         </div>
 

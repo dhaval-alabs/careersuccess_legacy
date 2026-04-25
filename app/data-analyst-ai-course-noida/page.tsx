@@ -408,26 +408,8 @@ export default function NoidaDAAIPage() {
         {/* NEW SECTION: DALearningModes */}
         <DALearningModes onOpenDemo={() => { setCtaSource(`Pricing_SignupDemo`); setIsDemoOpen(true); }} />
 
-        {/* NEW SECTION: CURRICULUM */}
-        <section id="curriculum" className="py-24 px-6 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-16">
-              <div className="max-w-3xl">
-                <span className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
-                  <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">FLEXIBILITY FIRST</span>
-                </span>
-                <h2 className="text-[#09263F] font-bold text-4xl sm:text-5xl leading-tight mb-4">
-                  Data Analyst + AI <br />
-                  <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Dual Track Curriculum</span>
-                </h2>
-                <p className="text-[#4A6275] text-lg leading-relaxed">
-                  Master core analytics and then supercharge your productivity with Generative AI tools.
-                </p>
-              </div>
-            </div>
-            <DACurriculumSection onOpenBrochure={() => { setCtaSource(`Curriculum_DownloadBrochure`); setIsBrochureOpen(true); }} />
-          </div>
-        </section>
+        {/* CURRICULUM */}
+        <DACurriculumSection onOpenBrochure={() => { setCtaSource(`Curriculum_DownloadBrochure`); setIsBrochureOpen(true); }} />
 
         {/* COMBINED CERTIFICATE & TESTIMONIALS */}
         <section className="py-12 bg-[#f0faf8]">
