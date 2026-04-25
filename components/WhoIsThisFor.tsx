@@ -26,7 +26,7 @@ const PERSONAS = [
     outcome: "Entry-level Data Analyst, MIS Analyst, or BI Analyst role within 6 months.",
     color: "#1DE5B5",
     bgColor: "#E6F7F6",
-    image: "https://images.unsplash.com/photo-1599566662334-905d6e25539d?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1599566662334-905d6e25539d?q=80&w=800&auto=format&fit=crop&v=2",
   },
   {
     title: "Non-Tech Career Switchers",
@@ -35,7 +35,7 @@ const PERSONAS = [
     outcome: "Transition into a data analytics role in retail, banking, or consulting.",
     color: "#239bf5",
     bgColor: "#E6F0F7",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop&v=2",
   },
   {
     title: "Working Professionals",
@@ -44,7 +44,7 @@ const PERSONAS = [
     outcome: "Upskill to Senior Analyst, Analytics Manager, or transition to a data-centric function.",
     color: "#F5C842",
     bgColor: "#FFFBE6",
-    image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=800&auto=format&fit=crop&v=2",
   },
   {
     title: "BI and Business Analyst Upgraders",
@@ -53,7 +53,7 @@ const PERSONAS = [
     outcome: "Move into Product Analyst, Senior BI Analyst, or Analytics Lead roles.",
     color: "#19dfaf",
     bgColor: "#E6F7F6",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop&v=2",
   },
 ];
 
