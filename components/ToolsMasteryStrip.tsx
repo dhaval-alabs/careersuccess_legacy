@@ -24,45 +24,64 @@ function useVisible(threshold = 0.15) {
 const TOOLS = [
   {
     name: "Microsoft Excel",
-    icon: "📊",
-    tagColor: "#217346",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="#217346">
+        <path d="M16.2 21H7.8C6.81 21 6 20.19 6 19.2V4.8C6 3.81 6.81 3 7.8 3H16.2C17.19 3 18 3.81 18 4.8V19.2C18 20.19 17.19 21 16.2 21Z" opacity="0.1" />
+        <path d="M14.25 21L6 18.3V5.7L14.25 3V21Z" fill="#217346" />
+        <path d="M14.25 8.25H21V15.75H14.25V8.25Z" fill="#217346" opacity="0.5" />
+        <path d="M9.75 14.25L7.5 12L9.75 9.75M12.75 9.75L15 12L12.75 14.25" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
     desc: "Advanced formulas, pivot tables, dashboards, and VBA macros for business reporting and data organisation.",
-    keywords: "excel course, excel for data analyst"
   },
   {
     name: "SQL",
-    icon: "🗄️",
-    tagColor: "#336791",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="#336791">
+        <path d="M12 3C7.58 3 4 4.79 4 7V17C4 19.21 7.58 21 12 21C16.42 21 20 19.21 20 17V7C20 4.79 16.42 3 12 3ZM18 17C18 17.65 15.65 19 12 19C8.35 19 6 17.65 6 17V15.11C7.68 15.68 9.74 16 12 16C14.26 16 16.32 15.68 18 15.11V17ZM18 13.11C16.32 13.68 14.26 14 12 14C9.74 14 7.68 13.68 6 13.11V11.11C7.68 11.68 9.74 12 12 12C14.26 12 16.32 11.68 18 11.11V13.11ZM18 9.11C16.32 9.68 14.26 10 12 10C9.74 10 7.68 9.68 6 9.11V7C6 6.35 8.35 5 12 5C15.65 5 18 6.35 18 7V9.11Z" />
+      </svg>
+    ),
     desc: "Write complex queries, joins, subqueries, window functions, and CTEs. Practice on cloud databases (Azure SQL).",
-    keywords: "sql course, sql for data analysis"
   },
   {
     name: "Power BI",
-    icon: "📈",
-    tagColor: "#F2C811",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8" fill="#F2C811">
+        <path d="M7 11h4v10H7V11zm6-4h4v14h-4V7zm6-4h4v18h-4V3z" />
+        <path d="M2 15h4v6H2v-6z" opacity="0.6" />
+      </svg>
+    ),
     desc: "Build interactive dashboards, DAX measures, data modelling, and scheduled refresh pipelines for real-time reporting.",
-    keywords: "power bi course, power bi training"
   },
   {
     name: "Tableau",
-    icon: "📉",
-    tagColor: "#E97627",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8">
+        <path d="M11 11V3h2v8h8v2h-8v8h-2v-8H3v-2h8z" fill="#E97627" />
+        <path d="M10 5L12 3L14 5M10 19L12 21L14 19M5 10L3 12L5 14M19 10L21 12L19 14" stroke="#E97627" strokeWidth="1" />
+      </svg>
+    ),
     desc: "Create stunning visual analytics, LOD expressions, and story-driven dashboards for stakeholder presentations.",
-    keywords: "tableau course, tableau training"
   },
   {
     name: "Python",
-    icon: "🐍",
-    tagColor: "#3776AB",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8">
+        <path d="M12.04 1.25c-3.15 0-2.95 1.36-2.95 1.36l.01 1.41h2.99v.42h-4.2c0 0-2.28-.26-2.28 2.24s1.94 2.16 1.94 2.16h1.16v-1.64c0 0-.03-1.95 1.91-1.95h3.04s1.85-.05 1.85-1.78-.01-2.22-.01-2.22s.22-2-3.47-2z" fill="#3776AB" />
+        <path d="M11.96 22.75c3.15 0 2.95-1.36 2.95-1.36l-.01-1.41H11.9v-.42h4.2c0 0 2.28.26 2.28-2.24s-1.94-2.16-1.94-2.16h-1.16v1.64c0 0 .03 1.95-1.91 1.95h-3.04s-1.85.05-1.85 1.78.01 2.22.01 2.22s-.22 2 3.47 2z" fill="#FFD43B" />
+      </svg>
+    ),
     desc: "Pandas, NumPy, Matplotlib, and Seaborn for statistical analysis, EDA, and predictive modelling with regression.",
-    keywords: "python for data analysis, python for data analytics"
   },
   {
     name: "Generative AI",
-    icon: "🤖",
-    tagColor: teal,
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-8 h-8" fill={teal}>
+        <path d="M12 2L14.5 9H22L16 14L18.5 21L12 17L5.5 21L8 14L2 9H9.5L12 2Z" opacity="0.3" />
+        <path d="M9 3l1.5 4.5h4.5l-3.5 3 1.5 4.5-4-3-4 3 1.5-4.5-3.5-3h4.5L9 3z" />
+      </svg>
+    ),
     desc: "Prompt engineering, AI-assisted coding for Python and SQL, and GenAI tools for automated BI narratives and reporting.",
-    keywords: "ai data analytics course"
   },
 ];
 
@@ -99,7 +118,7 @@ export default function ToolsMasteryStrip() {
                 {tool.icon}
               </div>
               <h3 className="font-bold text-[#09263F] text-sm mb-2">{tool.name}</h3>
-              <p className="text-[#4A6275] text-[11px] leading-relaxed">{tool.desc}</p>
+              <p className="text-[#4A6275] text-[12px] leading-relaxed">{tool.desc}</p>
             </div>
           ))}
         </div>

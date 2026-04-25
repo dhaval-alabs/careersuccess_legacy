@@ -156,7 +156,7 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
                   <c.Icon />
                 </div>
                 <span
-                  className="text-[9px] font-extrabold tracking-[0.14em] px-3 py-1 rounded-full"
+                  className="text-[11px] font-extrabold tracking-[0.14em] px-3 py-1 rounded-full"
                   style={{
                     background: `${c.tagColor}18`,
                     color: c.tagColor,
@@ -183,11 +183,11 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
                 >
                   {c.price}
                 </span>
-                <span className="text-xs ml-1.5" style={{ color: "#7aaea6" }}>incl. taxes</span>
+                <span className="text-[13px] ml-1.5" style={{ color: "#7aaea6" }}>incl. taxes</span>
               </div>
 
               {/* EMI line */}
-              <p className="text-[11px] font-semibold mb-4 tracking-wide" style={{ color: blue }}>
+              <p className="text-[12px] font-semibold mb-4 tracking-wide" style={{ color: blue }}>
                 0% interest EMI available
               </p>
 

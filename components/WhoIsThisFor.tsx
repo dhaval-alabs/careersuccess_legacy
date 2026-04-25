@@ -26,7 +26,7 @@ const PERSONAS = [
     forYouIf: "You want a structured, job-ready data analyst course for freshers that starts from zero and ends with placement support.",
     outcome: "Entry-level Data Analyst, MIS Analyst, or BI Analyst role within 6 months.",
     color: "#1DE5B5",
-    bgColor: "#E6F7F6",
+    bgColor: "#87F0D7",
   },
   {
     icon: "🔄",
@@ -35,7 +35,7 @@ const PERSONAS = [
     forYouIf: "You are looking for a career change to data analyst, starting from Excel and SQL foundations with no prior programming required.",
     outcome: "Transition into a data analytics role in retail, banking, or consulting.",
     color: "#239bf5",
-    bgColor: "#E6FAFF",
+    bgColor: "#88E2FF",
   },
   {
     icon: "💼",
@@ -44,7 +44,7 @@ const PERSONAS = [
     forYouIf: "You need a data analyst course for working professionals with weekend batches, evening sessions, and flexible learning modes.",
     outcome: "Upskill to Senior Analyst, Analytics Manager, or transition to a data-centric function.",
     color: "#F5C842",
-    bgColor: "#FFFBE6",
+    bgColor: "#FFF385",
   },
   {
     icon: "📊",
@@ -52,8 +52,8 @@ const PERSONAS = [
     painPoint: "You already work with data but want to add Python, AI, and predictive modelling to your toolkit.",
     forYouIf: "You are a business analyst or BI analyst looking to upgrade from Excel and Tableau to Python, SQL, and AI-integrated analytics.",
     outcome: "Move into Product Analyst, Senior BI Analyst, or Analytics Lead roles.",
-    color: "#E97627",
-    bgColor: "#FFF4EC",
+    color: "#19dfaf",
+    bgColor: "#B7F2BA",
   },
 ];
 
@@ -94,12 +94,12 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
                 {persona.icon}
               </div>
               <h3 className="font-bold text-[#09263F] text-sm mb-3">{persona.title}</h3>
-              <p className="text-[#4A6275] text-[12px] leading-relaxed mb-3 italic">&ldquo;{persona.painPoint}&rdquo;</p>
-              <p className="text-[#09263F] text-[12px] leading-relaxed mb-3 font-medium">
+              <p className="text-[#4A6275] text-[13px] leading-relaxed mb-3 italic">&ldquo;{persona.painPoint}&rdquo;</p>
+              <p className="text-[#09263F] text-[13px] leading-relaxed mb-3 font-medium">
                 <span className="font-bold" style={{ color: persona.color }}>This course is for you if:</span> {persona.forYouIf}
               </p>
               <div className="mt-auto pt-3 border-t border-[#D6ECEB]">
-                <p className="text-[11px] text-[#4A6275] leading-relaxed">
+                <p className="text-[12px] text-[#4A6275] leading-relaxed">
                   <span className="font-bold text-[#09263F]">Expected outcome:</span> {persona.outcome}
                 </p>
               </div>
