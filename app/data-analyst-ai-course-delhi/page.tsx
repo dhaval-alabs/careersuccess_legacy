@@ -21,7 +21,7 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 
 const config = {
   h1City: "in Delhi",
-  subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. NASSCOM-certified course with 100% placement support in Delhi NCR (Noida, Gurgaon).",
+  subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. Complete course with 100% placement support in Delhi NCR (Noida, Gurgaon).",
   classroomBullet: "Delhi NCR centres in Noida (Sector 15) and Gurgaon (Sector 44). Weekend batches available.",
   faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Delhi NCR (Noida Sector 15, Gurgaon Sector 44) and Bangalore (HSR Layout).",
   faq12nearby: "Noida, Gurgaon, and Greater Noida",
@@ -258,7 +258,7 @@ export default function DelhiDAAIPage() {
               </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
-                {["SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee", "NASSCOM-FutureSkills Prime Certified", "Classroom training available"].map((item) => (
+                {["SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee", "Classroom training available"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                       <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

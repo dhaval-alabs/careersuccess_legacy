@@ -9,7 +9,6 @@ const STATS = [
 ];
 
 const BADGES = [
-  'NASSCOM-FutureSkills Prime Certified',
   'Classroom + Live Online',
   'Placement with Fee-Back Guarantee',
   '1-Year LMS Access',
@@ -18,7 +17,6 @@ const BADGES = [
 const FEATURES = [
   '700+ Hours of Training',
   '11 Modules incl. Gen AI',
-  'NASSCOM-FutureSkills Prime Certified',
 ];
 
 export default function Hero() {
