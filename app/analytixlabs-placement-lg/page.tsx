@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import Navbar from '../../components/Navbar';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Modal from '../../components/Modal';
+import LeadCaptureForm from '../../components/forms/LeadCaptureForm';
 
 // ─── Accordion Item ────────────────────────────────────────────────────────────
 
@@ -104,13 +106,55 @@ const PRP_CARDS = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PlacementPage() {
+  const [isEligibilityOpen, setIsEligibilityOpen] = useState(false);
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowSticky(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
-      <Navbar />
       <main id="main-content">
 
-        {/* ── HERO ── */}
-        <section className="py-16 bg-white text-center">
+        {/* ── HERO LOGOS ── */}
+        <section className="pt-12 pb-6 bg-white">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-4 sm:gap-8 mb-12">
+              <div className="flex-shrink-0">
+                <Image
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
+                  alt="AnalytixLabs Icon"
+                  width={48} height={48}
+                  className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain"
+                  priority
+                />
+                <Image
+                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+                  alt="AnalytixLabs - Data Analytics Training Institute"
+                  width={180} height={40}
+                  className="w-auto h-[3.5rem] hidden sm:block"
+                  priority
+                />
+              </div>
+              <div className="w-px h-8 bg-[#D6ECEB]" />
+              <Image
+                src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
+                alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
+                width={160} height={40}
+                className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── PLACEMENT HERO CONTENT ── */}
+        <section className="pb-16 bg-white text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <span className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-6">
               <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Career Assurance</span>
@@ -296,53 +340,71 @@ export default function PlacementPage() {
           </div>
         </section>
 
-        {/* ── BOTTOM CTA ── */}
-        <section className="py-16 bg-[#09263F] text-center">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-            <h2 className="text-white font-bold text-3xl sm:text-4xl mb-3">Ready to Get Started?</h2>
-            <p className="text-white/60 text-lg mb-10">Talk to our team or visit us at a centre near you.</p>
+        {/* ── BOTTOM CTA — Standard Block ── */}
+        <section className="py-24 bg-[#09263F] text-center overflow-hidden relative">
+          <div className="absolute inset-0 pointer-events-none opacity-20">
+             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#1DE5B5_0%,transparent_70%)]" />
+          </div>
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10">
+            <h2 className="text-white font-bold text-3xl sm:text-5xl mb-4 leading-tight">Ready to Get Started?</h2>
+            <p className="text-white/70 text-lg mb-12 max-w-2xl mx-auto">Talk to our career advisors today and take the first step towards your data career.</p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <a
                 href="tel:9555525908"
-                className="inline-flex items-center justify-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-8 py-4 rounded-full text-base transition-all shadow-[0_4px_14px_rgba(29,229,181,0.3)]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-5 rounded-2xl text-lg transition-all shadow-[0_10px_30px_rgba(29,229,181,0.3)] active:scale-95"
               >
-                📞 +91 95555 25908
+                📞 Call +91 95555 25908
               </a>
               <a
-                href="https://maps.app.goo.gl/eN9mhRSmB7s5k41FA"
+                href="https://api.whatsapp.com/send?phone=919555525908"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 font-bold px-6 py-4 rounded-full text-base transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white hover:bg-[#F4FAFA] text-[#09263F] font-bold px-10 py-5 rounded-2xl text-lg transition-all shadow-[0_10px_30px_rgba(0,0,0,0.1)] active:scale-95"
               >
-                Noida Campus →
-              </a>
-              <a
-                href="https://maps.app.goo.gl/VhGWFi7xRpDgD2tD9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 font-bold px-6 py-4 rounded-full text-base transition-all"
-              >
-                Gurgaon Campus →
-              </a>
-              <a
-                href="https://maps.app.goo.gl/8bJzz7Boc4N9aEFJ8"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 font-bold px-6 py-4 rounded-full text-base transition-all"
-              >
-                Bangalore Campus →
+                💬 Chat on WhatsApp
               </a>
             </div>
           </div>
         </section>
 
         {/* ── FOOTER ── */}
-        <footer className="bg-[#06192b] py-6 border-t border-white/5">
+        <footer className="bg-[#06192b] pt-8 pb-32 border-t border-white/5">
           <p className="text-center text-[#4A6275] text-xs">
             © {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.
           </p>
         </footer>
+
+        {/* ── UNIVERSAL STICKY BAR ── */}
+        <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-all duration-500 transform ${showSticky ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
+          <div className="max-w-[1600px] mx-auto w-full flex gap-3">
+            <a href="tel:9555525908"
+              className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
+              📞 <span className="hidden sm:inline ml-1">Call:</span> 9555525908
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+              className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
+              💬 <span className="hidden sm:inline ml-1">WhatsApp</span>
+            </a>
+            <button
+              onClick={() => setIsEligibilityOpen(true)}
+              className="flex-1 bg-[#1DE5B5] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 shadow-[0_0_20px_rgba(29,229,181,0.4)]"
+            >
+              Check Eligibility
+            </button>
+          </div>
+        </div>
+
+        {/* ── MODALS ── */}
+        <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
+          <LeadCaptureForm
+            title="Check Your Eligibility"
+            sourceName="Placement_Page_CheckEligibility"
+            typeFilter="PPC_CheckEligibility"
+            buttonText="Check Eligibility →"
+            thankYouPath="/thankyou-check-your-eligibility"
+          />
+        </Modal>
       </main>
     </div>
   );

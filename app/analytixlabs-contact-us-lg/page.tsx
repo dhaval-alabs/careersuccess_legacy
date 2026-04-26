@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import Navbar from '../../components/Navbar';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Modal from '../../components/Modal';
 import LeadCaptureForm from '../../components/forms/LeadCaptureForm';
 
@@ -31,18 +31,56 @@ const LOCATIONS = [
   },
 ];
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function ContactUsPage() {
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowSticky(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="font-sans bg-white text-[#1A2E3B] antialiased">
-      <Navbar />
       <main id="main-content">
 
-        {/* ── CONTACT HERO ── */}
-        <section className="py-24 bg-white">
+        {/* ── HERO LOGOS ── */}
+        <section className="pt-12 pb-6 bg-white">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-4 sm:gap-8 mb-12">
+              <div className="flex-shrink-0">
+                <Image
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
+                  alt="AnalytixLabs Icon"
+                  width={48} height={48}
+                  className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain"
+                  priority
+                />
+                <Image
+                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+                  alt="AnalytixLabs - Data Analytics Training Institute"
+                  width={180} height={40}
+                  className="w-auto h-[3.5rem] hidden sm:block"
+                  priority
+                />
+              </div>
+              <div className="w-px h-8 bg-[#D6ECEB]" />
+              <Image
+                src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
+                alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
+                width={160} height={40}
+                className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT HERO CONTENT ── */}
+        <section className="pb-24 bg-white">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
 
@@ -158,17 +196,37 @@ export default function ContactUsPage() {
         </section>
 
         {/* ── FOOTER ── */}
-        <footer className="bg-[#06192b] py-6 border-t border-white/5">
+        <footer className="bg-[#06192b] pt-8 pb-32 border-t border-white/5">
           <p className="text-center text-[#4A6275] text-xs">
             © {new Date().getFullYear()} AnalytixLabs. All rights reserved. | NASSCOM-FutureSkills Prime Accredited.
           </p>
         </footer>
 
+        {/* ── UNIVERSAL STICKY BAR ── */}
+        <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-all duration-500 transform ${showSticky ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
+          <div className="max-w-[1600px] mx-auto w-full flex gap-3">
+            <a href="tel:9555525908"
+              className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
+              📞 <span className="hidden sm:inline ml-1">Call:</span> 9555525908
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+              className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
+              💬 <span className="hidden sm:inline ml-1">WhatsApp</span>
+            </a>
+            <button
+              onClick={() => setIsBrochureOpen(true)}
+              className="flex-1 bg-[#1DE5B5] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm transition-all duration-300 shadow-[0_0_20px_rgba(29,229,181,0.4)]"
+            >
+              Get Brochure
+            </button>
+          </div>
+        </div>
+
         {/* ── BROCHURE MODAL ── */}
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
           <LeadCaptureForm
             title="Download Brochure"
-            sourceName="lp_blr_download_brochure"
+            sourceName="Contact_Page_DownloadBrochure"
             typeFilter="PPC_DownloadBrochure"
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
