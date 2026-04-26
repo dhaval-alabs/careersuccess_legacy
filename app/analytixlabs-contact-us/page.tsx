@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Modal from '../../components/Modal';
-import LeadCaptureForm from '../../components/forms/LeadCaptureForm';
+import LeadCaptureFormContactUs from '../../components/forms/LeadCaptureForm-ContactUs';
 
 // ─── Location Data ────────────────────────────────────────────────────────────
 
@@ -224,7 +224,7 @@ export default function ContactUsPage() {
 
         {/* ── BROCHURE MODAL ── */}
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
-          <LeadCaptureForm
+          <LeadCaptureFormContactUs
             title="Download Brochure"
             sourceName="Contact_Page_DownloadBrochure"
             typeFilter="PPC_DownloadBrochure"
