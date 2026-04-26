@@ -18,49 +18,6 @@ function useVisible(threshold = 0.15) {
   return [ref, visible] as const;
 }
 
-function FresherIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 10L12 5 2 10l10 5 10-5z" />
-      <path d="M6 12.5v5c0 0 2 2 6 2s6-2 6-2v-5" />
-      <path d="M22 10v5" />
-    </svg>
-  );
-}
-
-function SwitcherIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 9h12" />
-      <path d="M13 6l3 3-3 3" />
-      <path d="M20 15H8" />
-      <path d="M11 18l-3-3 3-3" />
-    </svg>
-  );
-}
-
-function ProfessionalIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="7" width="18" height="14" rx="1.5" />
-      <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" />
-      <path d="M3 12h18" />
-    </svg>
-  );
-}
-
-function UpgraderIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="14" width="3.5" height="6" rx="0.5" />
-      <rect x="10.25" y="9" width="3.5" height="11" rx="0.5" />
-      <rect x="17.5" y="4" width="3.5" height="16" rx="0.5" />
-      <path d="M7 7l4-3 4 3 4-4" />
-      <path d="M17 3h2v2" />
-    </svg>
-  );
-}
-
 const PERSONAS = [
   {
     title: "Freshers and Recent Graduates",
@@ -69,9 +26,7 @@ const PERSONAS = [
     outcome: "Entry-level Data Analyst, MIS Analyst, or BI Analyst role within 6 months.",
     color: "#1DE5B5",
     bgColor: "#E6F7F6",
-    iconBgColor: "#C2EFE8",
-    titleColor: "#0F6E56",
-    Icon: FresherIcon,
+    image: "/lp/images/personas/fresher.webp",
   },
   {
     title: "Non-Tech Career Switchers",
@@ -80,9 +35,7 @@ const PERSONAS = [
     outcome: "Transition into a data analytics role in retail, banking, or consulting.",
     color: "#239bf5",
     bgColor: "#E6F0F7",
-    iconBgColor: "#C5DCEF",
-    titleColor: "#185FA5",
-    Icon: SwitcherIcon,
+    image: "/lp/images/personas/switcher.webp",
   },
   {
     title: "Working Professionals",
@@ -91,9 +44,7 @@ const PERSONAS = [
     outcome: "Upskill to Senior Analyst, Analytics Manager, or transition to a data-centric function.",
     color: "#F5C842",
     bgColor: "#FFFBE6",
-    iconBgColor: "#FAEDB8",
-    titleColor: "#854F0B",
-    Icon: ProfessionalIcon,
+    image: "/lp/images/personas/pro.webp",
   },
   {
     title: "BI and Business Analyst Upgraders",
@@ -101,10 +52,8 @@ const PERSONAS = [
     forYouIf: "You are a business analyst or BI analyst looking to upgrade from Excel and Tableau to Python, SQL, and AI-integrated analytics.",
     outcome: "Move into Product Analyst, Senior BI Analyst, or Analytics Lead roles.",
     color: "#19dfaf",
-    bgColor: "#E6F7F0",
-    iconBgColor: "#BBF0DC",
-    titleColor: "#0F6E56",
-    Icon: UpgraderIcon,
+    bgColor: "#E6F7F6",
+    image: "/lp/images/personas/upgrader.webp",
   },
 ];
 
@@ -131,9 +80,7 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
         </div>
 
         <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {PERSONAS.map((persona, i) => {
-            const Icon = persona.Icon;
-            return (
+          {PERSONAS.map((persona, i) => (
             <div
               key={persona.title}
               className="group bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#E6F0F7] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500"
@@ -143,30 +90,25 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
                 transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s, box-shadow 0.4s`,
               }}
             >
-              {/* Icon + Title Header */}
-              <div style={{ backgroundColor: persona.bgColor, padding: "20px 24px 16px" }}>
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    backgroundColor: persona.iconBgColor,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: persona.titleColor,
-                    marginBottom: 10,
-                  }}
+              {/* Image Section */}
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={persona.image}
+                  alt={persona.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                <div 
+                  className="absolute bottom-4 left-6 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider backdrop-blur-md"
+                  style={{ backgroundColor: `${persona.color}88` }}
                 >
-                  <Icon />
+                  Target Persona
                 </div>
-                <h3 className="font-bold text-base leading-snug" style={{ color: persona.titleColor }}>
-                  {persona.title}
-                </h3>
               </div>
 
               {/* Content Section */}
               <div className="p-8">
+                <h3 className="font-bold text-[#09263F] text-lg mb-4 group-hover:text-[#239bf5] transition-colors">{persona.title}</h3>
                 <div className="space-y-4 mb-8">
                   <p className="text-[#4A6275] text-sm leading-relaxed italic border-l-2 pl-4" style={{ borderColor: persona.color }}>
                     &ldquo;{persona.painPoint}&rdquo;
@@ -184,8 +126,7 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
                 </div>
               </div>
             </div>
-            );
-          })}
+          ))}
         </div>
       </div>
     </section>
