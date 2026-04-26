@@ -9,6 +9,15 @@ interface SendLeadEmailParams {
   courseSlug?: string
 }
 
+interface SendLeadEmailResult {
+  success: boolean
+  status: 'Sent' | 'Failed' | 'Skipped'
+  emailType: 'brochure' | 'confirmation' | 'none'
+  httpStatus?: number
+  messageId?: string
+  error?: string
+}
+
 const COURSE_MAP: Record<string, string> = {
   'agentic-ai': 'Agentic AI Course',
   'data-analytics': 'Data Analytics Course',
