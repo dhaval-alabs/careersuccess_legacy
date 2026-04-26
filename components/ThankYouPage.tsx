@@ -5,6 +5,28 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
+// Per-course brochure env vars. Format: NEXT_PUBLIC_BROCHURE_<SLUG_UPPER_UNDERSCORES>
+// e.g. NEXT_PUBLIC_BROCHURE_AGENTIC_AI, NEXT_PUBLIC_BROCHURE_DATA_ANALYTICS
+const COURSE_BROCHURE_URLS: Record<string, string | undefined> = {
+  'agentic-ai':         process.env.NEXT_PUBLIC_BROCHURE_AGENTIC_AI,
+  'data-analytics':     process.env.NEXT_PUBLIC_BROCHURE_DATA_ANALYTICS,
+  'data-science':       process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE,
+  'business-analytics': process.env.NEXT_PUBLIC_BROCHURE_BUSINESS_ANALYTICS,
+  'full-stack-ai':      process.env.NEXT_PUBLIC_BROCHURE_FULL_STACK_AI,
+  'data-visualization': process.env.NEXT_PUBLIC_BROCHURE_DATA_VISUALIZATION,
+  'data-science-python':process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE_PYTHON,
+};
+
+const COURSE_DISPLAY_NAMES: Record<string, string> = {
+  'agentic-ai':         'Agentic AI Course',
+  'data-analytics':     'Data Analytics Course',
+  'data-science':       'Data Science Course',
+  'business-analytics': 'Business Analytics Course',
+  'full-stack-ai':      'Full Stack Applied AI Course',
+  'data-visualization': 'Data Visualization & Analytics',
+  'data-science-python':'Data Science With Python',
+};
+
 interface ThankYouProps {
   heading: string;
   subCopy: string;
@@ -28,9 +50,14 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
   const rawEmail = searchParams.get('email') || '';
   const rawName = searchParams.get('name') || '';
   const isVerified = searchParams.get('verified') === 'true';
+  const courseSlug = searchParams.get('course') || '';
 
   const email = decodeURIComponent(rawEmail);
   const name = decodeURIComponent(rawName);
+
+  // Resolve per-course brochure URL from env vars if slug is present and known
+  const courseBrochureUrl = courseSlug ? COURSE_BROCHURE_URLS[courseSlug] || null : null;
+  const courseDisplayName = courseSlug ? COURSE_DISPLAY_NAMES[courseSlug] || '' : '';
 
   // gtag client-side conversion — PRIMARY signal for Google Ads dashboard + Smart Bidding.
   useEffect(() => {
@@ -131,24 +158,42 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
             </div>
           )}
 
-          {/* Brochure Download Button */}
+          {/* Brochure Download Button — course-specific if slug matches, else generic */}
           {isBrochureDownload && (
             <div style={{ marginTop: '20px' }}>
-              <a href={BROCHURE_PDF_URL} target="_blank" rel="noopener noreferrer"
-                style={{
-                  background: teal,
-                  color: navy,
-                  padding: '16px 32px',
-                  borderRadius: '12px',
-                  fontWeight: 700,
-                  fontSize: '16px',
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                  boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
-                  transition: 'all 0.2s'
-                }}>
-                Download File now
-              </a>
+              {courseBrochureUrl ? (
+                <a href={courseBrochureUrl} target="_blank" rel="noopener noreferrer"
+                  style={{
+                    background: teal,
+                    color: navy,
+                    padding: '16px 32px',
+                    borderRadius: '12px',
+                    fontWeight: 700,
+                    fontSize: '16px',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
+                    transition: 'all 0.2f'
+                  }}>
+                  ⬇ Download {courseDisplayName} Brochure
+                </a>
+              ) : !courseSlug ? (
+                <a href={BROCHURE_PDF_URL} target="_blank" rel="noopener noreferrer"
+                  style={{
+                    background: teal,
+                    color: navy,
+                    padding: '16px 32px',
+                    borderRadius: '12px',
+                    fontWeight: 700,
+                    fontSize: '16px',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
+                    transition: 'all 0.2s'
+                  }}>
+                  Download File now
+                </a>
+              ) : null}
             </div>
           )}
         </div>
