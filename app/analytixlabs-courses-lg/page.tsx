@@ -30,7 +30,7 @@ const COURSES: Course[] = [
     mode: 'Fully Interactive Online',
     price: '40,000',
     initials: 'AI',
-    image: '/lp/images/courses/agentic-ai.webp',
+    image: '/images/courses/agentic-ai.webp',
   },
   {
     slug: 'data-analytics',
@@ -41,7 +41,7 @@ const COURSES: Course[] = [
     mode: 'Bootcamp Classroom',
     price: '56,490',
     initials: 'DA',
-    image: '/lp/images/courses/data-analytics.webp',
+    image: '/images/courses/data-analytics.webp',
   },
   {
     slug: 'data-science',
@@ -52,7 +52,7 @@ const COURSES: Course[] = [
     mode: 'Classroom | Live Online | Blended',
     price: '44,100',
     initials: 'DS',
-    image: '/lp/images/courses/data-science.webp',
+    image: '/images/courses/data-science.webp',
   },
   {
     slug: 'business-analytics',
@@ -63,7 +63,7 @@ const COURSES: Course[] = [
     mode: 'Classroom | Live Online | Blended',
     price: '39,900',
     initials: 'BA',
-    image: '/lp/images/courses/business-analytics.webp',
+    image: '/images/courses/business-analytics.webp',
   },
   {
     slug: 'full-stack-ai',
@@ -73,7 +73,7 @@ const COURSES: Course[] = [
     mode: 'Classroom | Live Online | Blended',
     price: '51,000',
     initials: 'FS',
-    image: '/lp/images/courses/full-stack-ai.webp',
+    image: '/images/courses/full-stack-ai.webp',
   },
   {
     slug: 'data-visualization',
@@ -84,7 +84,7 @@ const COURSES: Course[] = [
     mode: 'Classroom | Live Online | Blended',
     price: '18,000',
     initials: 'DV',
-    image: '/lp/images/courses/data-visualization.webp',
+    image: '/images/courses/data-visualization.webp',
   },
   {
     slug: 'data-science-python',
@@ -95,7 +95,7 @@ const COURSES: Course[] = [
     mode: 'Classroom | Live Online | Blended',
     price: '25,000',
     initials: 'PY',
-    image: '/lp/images/courses/data-science-python.webp',
+    image: '/images/courses/data-science-python.webp',
   },
 ];
 
