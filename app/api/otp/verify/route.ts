@@ -200,7 +200,7 @@ export async function POST(req: NextRequest) {
     const debug = body.debug === true;
     let debugInfo = null;
     
-    const { name: fullName, email, typeFilter } = parsedToken; // Extract from token if possible, or from body
+    const { name: fullName, email, typeFilter, course } = parsedToken; // Extract from token
 
     // Await updates to ensure they complete on Vercel
     await updateLeadSquaredToVerified(lsqPhone).catch(console.error);
@@ -216,6 +216,7 @@ export async function POST(req: NextRequest) {
           recipientEmail: email || body.email,
           recipientName: fullName || body.name || '',
           typeFilter: typeFilter || body.typeFilter || 'PPC_CheckEligibility',
+          courseSlug: course || body.course,
         });
 
         if (sendResult.status !== 'Skipped') {

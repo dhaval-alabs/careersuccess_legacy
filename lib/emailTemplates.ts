@@ -8,15 +8,17 @@ interface BrochureEmailParams {
   recipientName: string
   brochureUrl: string
   masterclassUrl: string
+  courseName?: string
 }
 
 interface ConfirmationEmailParams {
   recipientName: string
   masterclassUrl: string
   ctaType: 'eligibility' | 'demo'
+  courseName?: string
 }
 
-export function brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl }: BrochureEmailParams): string {
+export function brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl, courseName = 'Data Science & AI' }: BrochureEmailParams): string {
   return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
 <body style="margin: 0; padding: 20px; background-color: #f9f9f9;">
@@ -26,7 +28,7 @@ export function brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl }
     </div>
     <div style="padding: 30px;">
       <h1 style="color: #09263F; font-size: 24px; margin-top: 0;">Hello ${recipientName || 'there'},</h1>
-      <p>Thank you for your interest in the <strong>Advanced Certification in Data Science &amp; AI</strong>.</p>
+      <p>Thank you for your interest in the <strong>${courseName}</strong>.</p>
       <p>As requested, here is the course brochure containing details about the curriculum, placement assistance, and upcoming batches.</p>
       <div style="text-align: center; margin: 35px 0;">
         <a href="${brochureUrl}" style="background-color: #1DE5B5; color: #09263F; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Download Brochure</a>
@@ -51,7 +53,7 @@ export function brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl }
 </body></html>`
 }
 
-export function confirmationEmailHtml({ recipientName, masterclassUrl, ctaType }: ConfirmationEmailParams): string {
+export function confirmationEmailHtml({ recipientName, masterclassUrl, ctaType, courseName = 'Data Science & AI' }: ConfirmationEmailParams): string {
   return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
 <body style="margin: 0; padding: 20px; background-color: #f9f9f9;">
@@ -61,7 +63,7 @@ export function confirmationEmailHtml({ recipientName, masterclassUrl, ctaType }
     </div>
     <div style="padding: 30px;">
       <h1 style="color: #09263F; font-size: 24px; margin-top: 0;">Thanks for Reaching Out, ${recipientName || 'there'}!</h1>
-      <p>Thank you for expressing interest in our <strong>Advanced Certification in Data Science &amp; AI</strong>.</p>
+      <p>Thank you for expressing interest in our <strong>${courseName}</strong>.</p>
       <div style="background-color: #f0faf8; border: 1.5px solid #1DE5B5; border-radius: 16px; padding: 30px; margin: 30px 0;">
         <p style="font-size: 16px; font-weight: bold; color: #09263F; margin-top: 0; margin-bottom: 16px;">What happens next</p>
         <ul style="color: #4A6275; font-size: 14px; line-height: 1.8; padding-left: 20px; margin: 0 0 25px 0;">

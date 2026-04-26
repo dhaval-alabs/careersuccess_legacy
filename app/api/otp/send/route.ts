@@ -147,7 +147,14 @@ export async function POST(req: NextRequest) {
     }
 
     const hmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
-    const token = Buffer.from(JSON.stringify({ expiry, hmac })).toString('base64');
+    const token = Buffer.from(JSON.stringify({ 
+      expiry, 
+      hmac,
+      name: body.name,
+      email: body.email,
+      typeFilter: body.typeFilter,
+      course: body.course
+    })).toString('base64');
 
     // 2. Call Meta WhatsApp Cloud API
     const waAccessToken = process.env.META_WA_ACCESS_TOKEN;
@@ -303,7 +310,7 @@ export async function POST(req: NextRequest) {
     if (body.typeFilter === 'PPC_DownloadBrochure' && email) {
       const { sendBrochureEmail } = await import('@/utils/email');
       // Fire and forget, or await to ensure it completes before response
-      await sendBrochureEmail(email, name);
+      await sendBrochureEmail(email, name, body.course);
     }
 
     // 6. Successful submission - return token for client-side storage

@@ -6,21 +6,24 @@ interface SendLeadEmailParams {
   recipientEmail: string
   recipientName: string
   typeFilter: string
+  courseSlug?: string
 }
 
-interface SendLeadEmailResult {
-  success: boolean
-  status: 'Sent' | 'Failed' | 'Skipped'
-  emailType: 'brochure' | 'confirmation' | 'none'
-  httpStatus?: number
-  messageId?: string
-  error?: string
-}
+const COURSE_MAP: Record<string, string> = {
+  'agentic-ai': 'Agentic AI Course',
+  'data-analytics': 'Data Analytics Course',
+  'data-science': 'Data Science Course',
+  'business-analytics': 'Business Analytics Course',
+  'full-stack-ai': 'Full Stack Applied AI Course',
+  'data-visualization': 'Data Visualization & Analytics',
+  'data-science-python': 'Data Science With Python',
+};
 
 export async function sendLeadEmail({
   recipientEmail,
   recipientName,
   typeFilter,
+  courseSlug,
 }: SendLeadEmailParams): Promise<SendLeadEmailResult> {
   const resendKey = process.env.RESEND_API_KEY
   const masterclassUrl = process.env.NEXT_PUBLIC_MASTERCLASS_URL || process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://www.analytixlabs.co.in/'
@@ -36,23 +39,27 @@ export async function sendLeadEmail({
   let html: string
   let emailType: 'brochure' | 'confirmation'
 
+  const courseName = courseSlug ? COURSE_MAP[courseSlug] || 'Data Science & AI' : 'Data Science & AI';
+
   if (typeFilter === 'PPC_DownloadBrochure' || typeFilter === 'PPC_downloadBrochure') {
-    const brochureUrl = process.env.NEXT_PUBLIC_BROCHURE_URL
+    // Resolve course-specific brochure URL from env if possible
+    const envKey = `NEXT_PUBLIC_BROCHURE_${courseSlug?.toUpperCase().replace(/-/g, '_')}`;
+    const brochureUrl = (courseSlug && process.env[envKey]) || process.env.NEXT_PUBLIC_BROCHURE_URL;
+
     if (!brochureUrl) {
-      return { success: false, status: 'Failed', emailType: 'brochure', error: 'NEXT_PUBLIC_BROCHURE_URL not configured' }
+      return { success: false, status: 'Failed', emailType: 'brochure', error: 'Brochure URL not configured' }
     }
-    subject = 'Your Data Science & AI Program Brochure — AnalytixLabs'
-    html = brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl })
+    subject = `Your ${courseName} Brochure — AnalytixLabs`
+    html = brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl, courseName })
     emailType = 'brochure'
   } else if (typeFilter === 'PPC_CheckEligibility' || typeFilter === 'signUpForDemo' || typeFilter === 'PPC_HeroForm') {
     const ctaType = typeFilter === 'signUpForDemo' ? 'demo' : 'eligibility'
-    subject = 'Thanks for Your Interest in Data Science & AI — AnalytixLabs'
-    html = confirmationEmailHtml({ recipientName, masterclassUrl, ctaType })
+    subject = `Thanks for Your Interest in ${courseName} — AnalytixLabs`
+    html = confirmationEmailHtml({ recipientName, masterclassUrl, ctaType, courseName })
     emailType = 'confirmation'
   } else {
-    // Default to confirmation email for other types if they are lead captures
-    subject = 'Thanks for Your Interest in Data Science & AI — AnalytixLabs'
-    html = confirmationEmailHtml({ recipientName, masterclassUrl, ctaType: 'eligibility' })
+    subject = `Thanks for Your Interest in ${courseName} — AnalytixLabs`
+    html = confirmationEmailHtml({ recipientName, masterclassUrl, ctaType: 'eligibility', courseName })
     emailType = 'confirmation'
   }
 
