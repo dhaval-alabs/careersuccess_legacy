@@ -241,7 +241,7 @@ export default function BangaloreDAAIPage() {
                   src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
                   alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
                   width={160} height={40}
-                  className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
+                  className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain hidden"
                   priority
                   sizes="(max-width: 640px) 260px, 160px"
                 />
@@ -256,8 +256,9 @@ export default function BangaloreDAAIPage() {
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
-                Data Analyst + AI Course
+                Advanced Certification in
                 <br />
+                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Analyst + AI</span>{' '}
                 <span className="text-[#09263F]">{config.h1City}</span>
               </h1>
 

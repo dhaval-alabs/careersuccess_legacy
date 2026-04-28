@@ -110,7 +110,7 @@ const PERSONAS = [
 
 export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
   const [ref, visible] = useVisible();
-  const [activePersona, setActivePersona] = useState<number | null>(0);
+  const [activePersona, setActivePersona] = useState<number | null>(null);
 
   return (
     <section id="who-is-this-for" className="py-24 bg-white relative overflow-hidden">
@@ -132,7 +132,7 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
         </div>
 
         {/* Mobile Accordion / Desktop Grid */}
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 sm:gap-8">
           {PERSONAS.map((persona, i) => {
             const Icon = persona.Icon;
             const isOpen = activePersona === i;
@@ -141,13 +141,10 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
               <div
                 key={persona.title}
                 onClick={() => {
-                  // Only toggle if on mobile (sm is 640px)
-                  if (window.innerWidth < 640) {
-                    setActivePersona(isOpen ? null : i);
-                  }
+                  setActivePersona(isOpen ? null : i);
                 }}
-                className={`group bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#E6F0F7] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500 cursor-pointer sm:cursor-default ${
-                  isOpen ? 'ring-2 ring-[#1DE5B5]/30' : ''
+                className={`group bg-white rounded-none sm:rounded-3xl overflow-hidden shadow-none sm:shadow-[0_10px_40px_rgba(0,0,0,0.04)] border-b sm:border border-[#E6F0F7] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500 cursor-pointer sm:cursor-default ${
+                  isOpen ? 'ring-0 sm:ring-2 ring-[#1DE5B5]/30' : ''
                 }`}
                 style={{
                   opacity: visible ? 1 : 0,

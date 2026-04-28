@@ -30,10 +30,11 @@ const AI_EXTENDED_MODULES: Module[] = [
   { num: "03", title: "SQL and Data Management", tags: ["SQL", "Azure", "ETL", "Cloud"] },
   { num: "04", title: "Python for Data Analysis", tags: ["Python", "Pandas", "NumPy", "EDA"] },
   { num: "05", title: "Industry Analytics", tags: ["Marketing", "Operations", "Risk", "BFSI"] },
+  { num: "06", title: "Capstone Projects", tags: ["3 Projects", "Portfolio", "Pipeline"] },
   { 
     num: "05A", 
     title: "Generative AI for Analysts", 
-    tags: ["GenAI", "Prompt Engineering", "Power BI", "SQL Automation"],
+    tags: ["ChatGPT", "Claude", "Prompt Eng.", "GenAI for Python/SQL/BI"],
     desc: "Use Generative AI to accelerate your analytics workflow. Write SQL faster with AI-assisted query generation, automate Python scripts, and build dynamic Power BI narratives using GenAI tools.",
     highlight: true
   },
@@ -51,9 +52,46 @@ const AI_EXTENDED_MODULES: Module[] = [
     desc: "A specialised Python module designed to control and scale Agentic AI systems. Covers API integrations, orchestration libraries, and building data pipelines that connect AI agents.",
     highlight: true
   },
-  { num: "06", title: "Capstone Projects", tags: ["3 Projects", "Portfolio", "Pipeline"] },
-  { num: "07", title: "Placement Readiness", tags: ["Resume", "Mock Interviews", "8 Weeks"] },
+  { 
+    num: "07", 
+    title: "Placement Readiness", 
+    tags: ["Resume", "Mock Interviews", "8 Weeks", "Simulated Drives"],
+    highlight: false // Special treatment handled in renderer
+  },
 ];
+
+function ModuleCard({ m, type = 'standard' }: { m: Module; type?: 'standard' | 'ai' | 'placement' }) {
+  const isAI = type === 'ai';
+  const isPlacement = type === 'placement';
+  
+  let cardClass = "bg-white border-[#D6ECEB] border rounded-2xl p-6 transition-all group hover:shadow-xl";
+  let tagClass = "text-[9px] bg-[#F4FAFA] text-[#09263F] px-2 py-0.5 rounded-full font-bold border border-[#D6ECEB]";
+  let labelClass = "text-[10px] font-bold uppercase tracking-widest text-[#4A6275] opacity-60";
+
+  if (isAI && m.num === '05A') {
+    cardClass = "bg-[#E6F7F6] border-l-[3px] border-l-[#1DE5B5] border border-[#D6ECEB] rounded-2xl p-6 transition-all group hover:shadow-xl";
+  } else if (isPlacement) {
+    cardClass = "bg-[#FFFBE6] border border-[#FFB800] rounded-2xl p-6 transition-all group hover:shadow-xl";
+    tagClass = "text-[9px] bg-[#FFFBE6] text-[#09263F] px-2 py-0.5 rounded-full font-bold border border-[#FFB800]";
+    labelClass = "text-[10px] font-bold uppercase tracking-widest text-[#09263F] opacity-100";
+  }
+
+  return (
+    <div className={cardClass}>
+      <div className="flex justify-between items-start mb-4">
+        <span className={labelClass}>MODULE {m.num}</span>
+        {isAI && <span className="bg-[#1DE5B5] text-[#09263F] text-[8px] font-black px-1.5 py-0.5 rounded-md">AI MODULE</span>}
+      </div>
+      <h4 className="text-[15px] font-bold text-[#09263F] mb-3 h-10 flex items-center leading-tight">{m.title}</h4>
+      {m.desc && <p className="text-[11px] text-[#4A6275] leading-relaxed mb-4 line-clamp-3 group-hover:line-clamp-none transition-all">{m.desc}</p>}
+      <div className="flex flex-wrap gap-1.5 mt-auto">
+        {m.tags.map((tag) => (
+          <span key={tag} className={tagClass}>{tag}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function DACurriculumSection({ onOpenBrochure }: Props) {
   const [activeTab, setActiveTab] = useState<'core' | 'ai'>('ai');
@@ -76,7 +114,7 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
           </p>
         </div>
 
-        {/* Change 5: Overview Stats Row */}
+        {/* Overview Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-[#f8fcfb] border border-[#D6ECEB] rounded-2xl p-6 flex items-start gap-4 transition-all hover:shadow-md">
             <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 border border-[#D6ECEB] text-[#1DE5B5]">
@@ -148,28 +186,49 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
         </div>
 
         {/* Grid of Modules */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(activeTab === 'core' ? CORE_MODULES : AI_EXTENDED_MODULES).map((m) => (
+        {activeTab === 'core' ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CORE_MODULES.map((m) => (
+              <ModuleCard key={m.num} m={m} />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {/* Zone A: Core Modules */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {AI_EXTENDED_MODULES.filter(m => ['01','02','03','04','05','06'].includes(m.num)).map((m) => (
+                <ModuleCard key={m.num} m={m} />
+              ))}
+            </div>
+
+            {/* Zone B: AI + Placement Readiness */}
             <div 
-              key={m.num} 
-              className={`bg-white border rounded-2xl p-6 transition-all group hover:shadow-xl ${
-                m.highlight ? 'border-[#1DE5B5] ring-1 ring-[#1DE5B5]/20 shadow-lg' : 'border-[#D6ECEB]'
-              }`}
+              className="border border-[#1DE5B5] rounded-3xl p-8 sm:p-10"
+              style={{ background: 'linear-gradient(135deg, #fefbe5 0%, #e6fbf1 50%, #ecfafe 100%)' }}
             >
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#4A6275] opacity-60">MODULE {m.num}</span>
-                {m.highlight && <span className="bg-[#1DE5B5] text-[#09263F] text-[8px] font-black px-1.5 py-0.5 rounded-md">AI MODULE</span>}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+                <span className="inline-flex items-center gap-2 bg-[#79f4c8] text-[#09263F] text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full self-start">
+                  AI INTEGRATED
+                </span>
+                <div>
+                  <h3 className="font-bold text-[#09263F] text-lg leading-snug">Advanced Automation Track</h3>
+                  <p className="text-xs text-[#4A6275] font-bold uppercase tracking-widest">What Sets This Course Apart</p>
+                </div>
               </div>
-              <h4 className="text-[15px] font-bold text-[#09263F] mb-3 h-10 flex items-center">{m.title}</h4>
-              {m.desc && <p className="text-[11px] text-[#4A6275] leading-relaxed mb-4 line-clamp-3 group-hover:line-clamp-none transition-all">{m.desc}</p>}
-              <div className="flex flex-wrap gap-1.5 mt-auto">
-                {m.tags.map((tag) => (
-                  <span key={tag} className="text-[9px] bg-[#F4FAFA] text-[#09263F] px-2 py-0.5 rounded-full font-bold border border-[#D6ECEB]">{tag}</span>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* AI Modules */}
+                {AI_EXTENDED_MODULES.filter(m => ['05A','05B','05C'].includes(m.num)).map((m) => (
+                  <ModuleCard key={m.num} m={m} type="ai" />
+                ))}
+                {/* Placement Readiness */}
+                {AI_EXTENDED_MODULES.filter(m => m.num === '07').map((m) => (
+                  <ModuleCard key={m.num} m={m} type="placement" />
                 ))}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
         {/* Download CTA */}
         <div className="mt-16 text-center">
