@@ -245,6 +245,14 @@ export default function NoidaDAAIPage() {
                   priority
                   sizes="(max-width: 640px) 260px, 160px"
                 />
+                <div className="w-px h-8 bg-[#D6ECEB] hidden sm:block" />
+                <Image
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp"
+                  alt="IIT Bombay and IIT Patna — Academic Partners"
+                  width={180} height={40}
+                  className="w-auto h-[4.5rem] sm:h-[5.25rem] max-w-[45vw] sm:max-w-none object-contain"
+                  priority
+                />
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
@@ -258,7 +266,7 @@ export default function NoidaDAAIPage() {
               </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
-                {["SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee", "Classroom training available"].map((item) => (
+                {["IIT Bombay + IIT Patna Academic Tie-Up", "NASSCOM-FutureSkills Prime Certified", "SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                       <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -266,6 +274,24 @@ export default function NoidaDAAIPage() {
                     {item}
                   </span>
                 ))}
+              </div>
+
+              {/* UPCOMING BATCHES ROW */}
+              <div className="mb-10">
+                <p className="text-xs font-bold text-[#09263F] uppercase tracking-widest mb-3">Upcoming Batches:</p>
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    { date: process.env.NEXT_PUBLIC_BATCH_DATE_NOIDA,   city: 'Noida'   },
+                    { date: process.env.NEXT_PUBLIC_BATCH_DATE_GURGAON, city: 'Gurgaon' },
+                    { date: process.env.NEXT_PUBLIC_BATCH_DATE_BANGALORE, city: 'Bangalore' },
+                  ].filter(b => b.date).map((b) => (
+                    <div key={b.city} className="bg-[#09263F] text-[#1DE5B5] px-4 py-2 rounded-full text-[11px] font-bold flex items-center gap-2 shadow-sm">
+                      <span className="opacity-80">{b.date}</span>
+                      <span className="w-1 h-1 bg-[#1DE5B5] rounded-full opacity-40"></span>
+                      <span>{b.city}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -426,14 +452,25 @@ export default function NoidaDAAIPage() {
                   AnalytixLabs is a NASSCOM-FutureSkills Prime accredited training partner. Upon successful completion, you will receive a dual certification recognized by top global recruiters.
                 </p>
                 <div className="flex flex-col items-center gap-10">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
-                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
-                      <p className="text-[#09263F] font-bold text-sm mt-4 text-center">NASSCOM FutureSkills Prime</p>
+                      <div className="aspect-[1024/724] relative mb-4">
+                        <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
+                      </div>
+                      <p className="text-[#09263F] font-bold text-sm text-center">NASSCOM FutureSkills Prime</p>
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
-                      <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
-                      <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Data Analyst + AI Certificate</p>
+                      <div className="aspect-[1024/724] relative mb-4">
+                        <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
+                      </div>
+                      <p className="text-[#09263F] font-bold text-sm text-center">Data Analyst + AI Certificate</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
+                      <div className="aspect-[1024/724] relative mb-4 flex items-center justify-center">
+                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" alt="IIT Bombay and IIT Patna — Academic Partners" width={300} height={212} className="object-contain rounded-lg shadow-sm w-full h-auto" />
+                      </div>
+                      <p className="text-[#09263F] font-bold text-sm text-center">IIT Bombay + IIT Patna</p>
+                      <p className="text-[#4A6275] text-[10px] font-bold text-center mt-1 uppercase tracking-wider">Academic Partners</p>
                     </div>
                   </div>
                   <button

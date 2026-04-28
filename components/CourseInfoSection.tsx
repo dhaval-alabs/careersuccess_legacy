@@ -135,31 +135,31 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                     <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<CalendarIcon />}
-                            label="Classes × Hours"
-                            primary="65 × 3 = <span style='color:#1a2b4a'>195 hrs</span>"
-                            secondary="+ 20 hours e-learning"
+                            label="Classes × Duration"
+                            primary="43 Classes"
+                            secondary="6-10 Months"
                             delay={150}
                         />
                     </div>
 
-                    {/* Column 3: Self-Study Info */}
+                    {/* Column 3: Hours Info */}
                     <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<CodeIcon />}
-                            label="Self-Study Hours"
-                            primary="422 <span style='font-size:18px;color:#1a2b4a'>(8–10/wk)</span>"
-                            secondary="38 hours of Assessments"
+                            label="Structured Learning"
+                            primary="445-760 <span style='font-size:18px;color:#1a2b4a'>Hours</span>"
+                            secondary="Incl. GenAI & Agents"
                             delay={280}
                         />
                     </div>
 
-                    {/* Column 4: Placement Info */}
+                    {/* Column 4: Assignments Info */}
                     <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
                         <StatCard
                             icon={<PeopleIcon />}
-                            label="Career Readiness"
-                            primary="8 Weeks"
-                            secondary="Post Certification"
+                            label="Practice & Projects"
+                            primary="6 <span style='font-size:18px;color:#1a2b4a'>Projects</span>"
+                            secondary="6 Assignments"
                             delay={410}
                         />
                     </div>
