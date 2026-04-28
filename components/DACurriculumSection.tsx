@@ -6,21 +6,53 @@ interface Props {
   onOpenBrochure: () => void;
 }
 
-const CORE_MODULES = [
-  { num: "01", title: "Building Blocks", desc: "Foundations of mathematics, statistics, and problem-solving for data analysis.", tags: ["Maths", "Stats", "Problem-Solving"] },
-  { num: "02", title: "Excel and Power BI", desc: "Business intelligence, data visualization, dashboards, pivot tables, and DAX measures.", tags: ["Excel", "Power BI", "DAX", "Dashboards"] },
-  { num: "03", title: "SQL and Data Management", desc: "RDBMS, ETL pipelines, complex joins, window functions, CTEs, and cloud SQL (Azure).", tags: ["SQL", "Azure", "ETL", "Cloud"] },
-  { num: "04", title: "Python for Data Analysis", desc: "Core Python, Pandas, NumPy, EDA, statistical analysis, and predictive modelling.", tags: ["Python", "Pandas", "NumPy", "EDA"] },
-  { num: "05", title: "Industry Analytics", desc: "Marketing analytics, operations analytics, risk analytics across retail, BFSI, telecom.", tags: ["Marketing", "Operations", "Risk", "BFSI"] },
-  { num: "06", title: "Capstone Projects", desc: "End-to-end data analytics projects: requirement gathering, pipeline building, and final viva.", tags: ["3 Projects", "Portfolio", "Pipeline"] },
-  { num: "07", title: "Placement Readiness", desc: "Resume building, mock interviews, career coaching, and placement drives over 8 weeks.", tags: ["Resume", "Mock Interviews", "8 Weeks"] },
-];
+const TIER_1 = {
+  title: "Foundation and Analytics",
+  subtitle: "MODULES 01-04",
+  modules: [
+    { num: "01", title: "Building Blocks", tags: ["Analytics", "Excel", "Stats", "Foundations"] },
+    { num: "02", title: "Excel, SQL & Power BI", tags: ["SQL", "Power BI", "DAX", "Excel Advanced"] },
+    { num: "03", title: "Python for Data Science", tags: ["Python", "Pandas", "NumPy", "EDA"] },
+    { num: "04", title: "R for Data Science", tags: ["R", "Optional", "Predictive Modelling"] },
+  ]
+};
 
-const AI_MODULES = [
-  { num: "AI-1", title: "Generative AI for Analysts", desc: "Prompt engineering, AI-assisted SQL and Python coding, GenAI for automated BI narratives and Power BI storytelling.", tags: ["ChatGPT", "Prompt Eng.", "GenAI for BI"] },
-  { num: "AI-2", title: "No-Code AI Tools", desc: "Build predictive models and automate analysis workflows without writing code. Ideal for business users upgrading to AI.", tags: ["No-Code", "AutoML", "AI Workflows"] },
-  { num: "AI-3", title: "Python for AI Analytics", desc: "Specialised Python foundation designed for AI-enhanced data analysis, automation, and reporting pipelines.", tags: ["Python", "AI Automation", "Pipelines"] },
-];
+const TIER_2 = {
+  title: "Data Science and Machine Learning",
+  subtitle: "MODULES 05-08",
+  modules: [
+    { num: "05", title: "Statistics and Predictive Modelling", tags: ["Stats", "Regression", "Hypothesis Testing"] },
+    { num: "06", title: "Machine Learning", tags: ["scikit-learn", "SVM", "Ensemble", "Clustering"] },
+    { num: "07", title: "Text Mining and NLP", tags: ["spaCy", "NLTK", "Sentiment Analysis"] },
+    { num: "08", title: "Deployment and MLOps", tags: ["Flask", "Git", "Cloud", "ML Lifecycle"] },
+  ]
+};
+
+const TIER_3 = {
+  title: "AI and Career Readiness",
+  subtitle: "WHAT SETS THIS COURSE APART",
+  modules: [
+    { 
+      num: "09", 
+      title: "Generative AI", 
+      desc: "Prompt engineering, GenAI for Python/SQL/Power BI, AI-assisted model evaluation",
+      tags: ["ChatGPT", "Claude", "Prompt Eng.", "GenAI for Python/SQL/BI"],
+      highlight: true
+    },
+    { 
+      num: "10", 
+      title: "Capstone Projects", 
+      desc: "6 Projects",
+      tags: ["Banking", "E-commerce", "Portfolio"]
+    },
+    { 
+      num: "11", 
+      title: "Career Readiness", 
+      tags: ["Resume", "Mock Interviews", "8 Weeks", "Simulated Drives"],
+      special: true
+    },
+  ]
+};
 
 export default function DACurriculumSection({ onOpenBrochure }: Props) {
   return (
@@ -28,41 +60,38 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <span className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
-            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Dual-Track Curriculum · 450+ Hours</span>
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Comprehensive Curriculum · 500+ Hours</span>
           </span>
           <h2 className="text-[#09263F] font-bold text-3xl sm:text-5xl leading-tight mb-4">
-            Data Analyst + AI —{' '}
+            Data Science + AI —{' '}
             <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">What You Will Learn</span>
           </h2>
           <p className="text-[#4A6275] text-base leading-relaxed max-w-3xl mx-auto">
-            Master the core analytics foundations first, then supercharge your productivity with Generative AI tools designed for modern analysts.
+            From analytics foundations to advanced machine learning and Generative AI, master the tools used by world-class data scientists.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_380px] gap-8 items-stretch">
+        <div className="space-y-8">
           
-          {/* LEFT COLUMN: CORE TRACK */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="bg-[#09263F] text-white text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full">
-                Track 01
+          {/* TIER 1 */}
+          <div className="bg-white border border-[#D6ECEB] rounded-[32px] p-6 sm:p-10">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="bg-[#f0f9f9] text-[#09263F] text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-[#D6ECEB]">
+                TIER 1
               </span>
-              <h3 className="text-xl font-bold text-[#09263F]">Core Data Analytics Foundation</h3>
+              <div>
+                <h3 className="text-xl font-bold text-[#09263F]">{TIER_1.title}</h3>
+                <p className="text-[11px] text-[#4A6275] font-bold tracking-widest uppercase mt-0.5">{TIER_1.subtitle}</p>
+              </div>
             </div>
-            
-            <div className="grid sm:grid-cols-2 gap-4">
-              {CORE_MODULES.map((m) => (
-                <div key={m.num} className="bg-white border border-[#D6ECEB] rounded-2xl p-6 transition-all duration-300 hover:border-[#1DE5B5] hover:shadow-md group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[12px] font-bold uppercase tracking-widest text-[#1DE5B5] group-hover:text-[#09263F] transition-colors">
-                      Module {m.num}
-                    </span>
-                  </div>
-                  <h4 className="text-base font-bold text-[#09263F] mb-2">{m.title}</h4>
-                  <p className="text-[14px] text-[#4A6275] leading-relaxed mb-4">{m.desc}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {TIER_1.modules.map((m) => (
+                <div key={m.num} className="bg-white border border-[#D6ECEB] rounded-2xl p-6 hover:border-[#1DE5B5] transition-all group">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#4A6275] mb-2 block opacity-60">MODULE {m.num}</span>
+                  <h4 className="text-[15px] font-bold text-[#09263F] mb-4 h-10 flex items-center">{m.title}</h4>
+                  <div className="flex flex-wrap gap-1.5">
                     {m.tags.map((tag) => (
-                      <span key={tag} className="text-[12px] bg-[#F4FAFA] text-[#09263F] px-2 py-0.5 rounded-full font-medium border border-[#D6ECEB]">{tag}</span>
+                      <span key={tag} className="text-[10px] bg-[#F4FAFA] text-[#09263F] px-2 py-0.5 rounded-full font-semibold border border-[#D6ECEB]">{tag}</span>
                     ))}
                   </div>
                 </div>
@@ -70,60 +99,71 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: AI TRACK */}
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-6 lg:pl-4">
-              <span className="bg-[#1DE5B5] text-[#09263F] text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-sm">
-                Track 02
+          {/* TIER 2 */}
+          <div className="bg-white border border-[#D6ECEB] rounded-[32px] p-6 sm:p-10">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="bg-[#f0f9f9] text-[#09263F] text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-[#D6ECEB]">
+                TIER 2
               </span>
-              <h3 className="text-xl font-bold text-[#09263F]">AI-Integrated Layer</h3>
+              <div>
+                <h3 className="text-xl font-bold text-[#09263F]">{TIER_2.title}</h3>
+                <p className="text-[11px] text-[#4A6275] font-bold tracking-widest uppercase mt-0.5">{TIER_2.subtitle}</p>
+              </div>
             </div>
-
-            <div className="flex-1 bg-gradient-to-b from-[#fefbe5] via-[#e6fbf1] to-[#ecfafe] border border-[#1DE5B5] rounded-3xl p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="text-[10px] font-bold uppercase tracking-widest bg-[#09263F] text-white px-3 py-1 rounded-full">Recommended</span>
-                <span className="text-[11px] text-[#4A6275] font-medium">Included in the Course</span>
-              </div>
-
-              <div className="space-y-6">
-                {AI_MODULES.map((m) => (
-                  <div key={m.num} className="bg-white/60 backdrop-blur-sm border border-[#D6ECEB] rounded-2xl p-5 hover:border-[#1DE5B5] transition-colors group">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#09263F] opacity-60">{m.num}</span>
-                      <svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <h4 className="text-base font-bold text-[#09263F] mb-2">{m.title}</h4>
-                    <p className="text-[12px] text-[#4A6275] leading-relaxed mb-4">{m.desc}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {m.tags.map((tag) => (
-                        <span key={tag} className="text-[10px] bg-white text-[#09263F] px-2 py-0.5 rounded-full font-medium border border-[#D6ECEB] group-hover:border-[#1DE5B5] transition-colors">{tag}</span>
-                      ))}
-                    </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {TIER_2.modules.map((m) => (
+                <div key={m.num} className="bg-white border border-[#D6ECEB] rounded-2xl p-6 hover:border-[#1DE5B5] transition-all group">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#4A6275] mb-2 block opacity-60">MODULE {m.num}</span>
+                  <h4 className="text-[15px] font-bold text-[#09263F] mb-4 h-10 flex items-center">{m.title}</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {m.tags.map((tag) => (
+                      <span key={tag} className="text-[10px] bg-[#F4FAFA] text-[#09263F] px-2 py-0.5 rounded-full font-semibold border border-[#D6ECEB]">{tag}</span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Unique value add box */}
-              <div className="mt-8 pt-6 border-t border-[#1DE5B5]/20">
-                <h5 className="text-sm font-bold text-[#09263F] mb-3">What sets this apart?</h5>
-                <ul className="space-y-2">
-                  {[
-                    "Master Prompt Engineering for data tasks",
-                    "AI-assisted SQL & Python coding",
-                    "Automated dashboard narratives",
-                    "Dual Certification (NASSCOM + AI)"
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-[11px] text-[#4A6275]">
-                      <svg className="w-3.5 h-3.5 text-[#1DE5B5] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+          {/* TIER 3 */}
+          <div className="bg-[#f0faf8] border border-[#1DE5B5]/30 rounded-[32px] p-6 sm:p-10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#1DE5B5]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            <div className="flex items-center gap-4 mb-8 relative z-10">
+              <span className="bg-[#1DE5B5] text-[#09263F] text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full shadow-sm">
+                TIER 3
+              </span>
+              <div>
+                <h3 className="text-xl font-bold text-[#09263F]">{TIER_3.title}</h3>
+                <p className="text-[11px] text-[#4A6275] font-bold tracking-widest uppercase mt-0.5">{TIER_3.subtitle}</p>
               </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+              {TIER_3.modules.map((m) => (
+                <div 
+                  key={m.num} 
+                  className={`rounded-2xl p-6 transition-all group ${
+                    m.highlight ? 'bg-white border-2 border-[#1DE5B5] shadow-lg' : 
+                    m.special ? 'bg-[#fffbeb] border border-[#fcd34d] shadow-sm' : 
+                    'bg-white/60 border border-[#D6ECEB] backdrop-blur-sm'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#09263F]/60">MODULE {m.num}</span>
+                    {m.highlight && (
+                      <span className="bg-[#1DE5B5] text-[#09263F] text-[8px] font-black px-2 py-0.5 rounded-full uppercase">NEW</span>
+                    )}
+                  </div>
+                  <h4 className="text-base font-bold text-[#09263F] mb-2">{m.title}</h4>
+                  {m.desc && <p className="text-[12px] text-[#4A6275] leading-relaxed mb-4">{m.desc}</p>}
+                  <div className="flex flex-wrap gap-1.5">
+                    {m.tags.map((tag) => (
+                      <span key={tag} className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                        m.special ? 'bg-white text-[#854f0b] border-[#fcd34d]' : 'bg-white text-[#09263F] border-[#D6ECEB]'
+                      }`}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -134,12 +174,12 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
           <p className="text-[#4A6275] text-sm mb-6 font-medium">Want the complete day-wise breakdown?</p>
           <button
             onClick={onOpenBrochure}
-            className="bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(29,229,181,0.25)] active:scale-95 flex items-center gap-2 mx-auto"
+            className="bg-[#09263F] hover:bg-[#0c3150] text-white font-bold px-10 py-4 rounded-xl text-base transition-all shadow-[0_8px_30px_rgba(9,38,63,0.2)] active:scale-95 flex items-center gap-2 mx-auto"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            Download Full Dual-Track Syllabus
+            Download Full Curriculum
           </button>
         </div>
       </div>

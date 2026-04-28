@@ -110,6 +110,7 @@ const PERSONAS = [
 
 export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
   const [ref, visible] = useVisible();
+  const [activePersona, setActivePersona] = useState<number | null>(0);
 
   return (
     <section id="who-is-this-for" className="py-24 bg-white relative overflow-hidden">
@@ -130,60 +131,89 @@ export default function WhoIsThisFor({ subtitle }: { subtitle?: string }) {
           </p>
         </div>
 
-        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Mobile Accordion / Desktop Grid */}
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {PERSONAS.map((persona, i) => {
             const Icon = persona.Icon;
+            const isOpen = activePersona === i;
+            
             return (
-            <div
-              key={persona.title}
-              className="group bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#E6F0F7] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(40px)",
-                transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s, box-shadow 0.4s`,
-              }}
-            >
-              {/* Icon + Title Header */}
-              <div style={{ backgroundColor: persona.bgColor, padding: "20px 24px 16px" }}>
-                <div
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    backgroundColor: persona.iconBgColor,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: persona.titleColor,
-                    marginBottom: 10,
-                  }}
+              <div
+                key={persona.title}
+                onClick={() => {
+                  // Only toggle if on mobile (sm is 640px)
+                  if (window.innerWidth < 640) {
+                    setActivePersona(isOpen ? null : i);
+                  }
+                }}
+                className={`group bg-white rounded-3xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#E6F0F7] hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-all duration-500 cursor-pointer sm:cursor-default ${
+                  isOpen ? 'ring-2 ring-[#1DE5B5]/30' : ''
+                }`}
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(40px)",
+                  transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s, box-shadow 0.4s`,
+                }}
+              >
+                {/* Icon + Title Header */}
+                <div 
+                  className="flex sm:block items-center gap-4 sm:gap-0"
+                  style={{ backgroundColor: persona.bgColor, padding: "20px 24px 16px" }}
                 >
-                  <Icon />
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      backgroundColor: persona.iconBgColor,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: persona.titleColor,
+                      marginBottom: 10,
+                    }}
+                    className="sm:mb-2.5 flex-shrink-0"
+                  >
+                    <Icon />
+                  </div>
+                  <div className="flex-1 flex items-center justify-between">
+                    <h3 className="font-bold text-sm sm:text-base leading-snug" style={{ color: persona.titleColor }}>
+                      {persona.title}
+                    </h3>
+                    {/* Chevron for mobile */}
+                    <svg 
+                      className={`w-5 h-5 sm:hidden transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+                      style={{ color: persona.titleColor }}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
-                <h3 className="font-bold text-base leading-snug" style={{ color: persona.titleColor }}>
-                  {persona.title}
-                </h3>
-              </div>
 
-              {/* Content Section */}
-              <div className="p-8">
-                <div className="space-y-4 mb-8">
-                  <p className="text-[#4A6275] text-sm leading-relaxed italic border-l-2 pl-4" style={{ borderColor: persona.color }}>
-                    &ldquo;{persona.painPoint}&rdquo;
-                  </p>
-                  <p className="text-[#4A6275] text-sm leading-relaxed">
-                    <span className="font-bold text-[#09263F]">Ideal for:</span> {persona.forYouIf}
-                  </p>
-                </div>
+                {/* Content Section - Hidden on mobile unless open */}
+                <div className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                  isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 sm:max-h-none opacity-0 sm:opacity-100'
+                }`}>
+                  <div className="p-6 sm:p-8">
+                    <div className="space-y-4 mb-8">
+                      <p className="text-[#4A6275] text-sm leading-relaxed italic border-l-2 pl-4" style={{ borderColor: persona.color }}>
+                        &ldquo;{persona.painPoint}&rdquo;
+                      </p>
+                      <p className="text-[#4A6275] text-sm leading-relaxed">
+                        <span className="font-bold text-[#09263F]">Ideal for:</span> {persona.forYouIf}
+                      </p>
+                    </div>
 
-                <div className="mt-auto pt-6 border-t border-[#F0F7F7]">
-                  <p className="text-sm font-bold text-[#09263F] mb-1">Expected Outcome:</p>
-                  <p className="text-[13px] text-[#4A6275] leading-relaxed">
-                    {persona.outcome}
-                  </p>
+                    <div className="mt-auto pt-6 border-t border-[#F0F7F7]">
+                      <p className="text-sm font-bold text-[#09263F] mb-1">Expected Outcome:</p>
+                      <p className="text-[13px] text-[#4A6275] leading-relaxed">
+                        {persona.outcome}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
             );
           })}
         </div>

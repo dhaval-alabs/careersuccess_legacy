@@ -70,32 +70,32 @@ const BlendedIcon = () => (
 
 const cards = [
   {
-    tag: "IN-PERSON",
-    Icon: ClassroomIcon,
-    title: "Classroom and Bootcamp",
-    price: "₹61,360",
-    desc: "In-person training at our centres in Noida (Sector 15), Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, and direct faculty access.",
-    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
+    tag: "FLEXIBLE",
+    Icon: BlendedIcon,
+    title: "Blended eLearning",
+    price: "₹53,100",
+    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same syllabus and NASSCOM certification. Ideal for working professionals.",
+    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
     featured: false,
     tagColor: blue,
   },
   {
-    tag: "LIVE • MOST POPULAR",
+    tag: "MOST POPULAR",
     Icon: LiveOnlineIcon,
     title: "Interactive Live Online",
-    price: "₹53,100",
-    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches.",
+    price: "₹59,000",
+    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
     tagColor: blue,
   },
   {
-    tag: "FLEXIBLE",
-    Icon: BlendedIcon,
-    title: "Blended eLearning",
-    price: "₹47,200",
-    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same curriculum and NASSCOM certification. Ideal for working professionals.",
-    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum and faculty"],
+    tag: "IN-PERSON",
+    Icon: ClassroomIcon,
+    title: "Classroom & Bootcamp",
+    price: "₹68,440",
+    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
+    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
     tagColor: blue,
   },
@@ -187,8 +187,8 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
               </div>
 
               {/* EMI line */}
-              <p className="text-[12px] font-semibold mb-4 tracking-wide" style={{ color: blue }}>
-                0% interest EMI available
+              <p className="text-[11px] font-bold mb-4 tracking-wide" style={{ color: blue }}>
+                0% interest EMI · Starting ₹6,387/month
               </p>
 
               {/* Description */}
