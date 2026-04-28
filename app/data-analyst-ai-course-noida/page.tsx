@@ -258,7 +258,7 @@ export default function NoidaDAAIPage() {
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
                 Advanced Certification in
                 <br />
-                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Analyst + AI</span>{' '}
+                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Analyst & AI</span>{' '}
                 <span className="text-[#09263F]">{config.h1City}</span>
               </h1>
 
@@ -279,7 +279,7 @@ export default function NoidaDAAIPage() {
 
               {/* UPCOMING BATCHES ROW */}
               <div className="mb-10">
-                <p className="text-xs font-bold text-[#09263F] uppercase tracking-widest mb-3">Upcoming Batches:</p>
+                <p className="text-xs font-bold text-[#09263F] uppercase tracking-widest mb-3 hidden">Upcoming Batches:</p>
                 <div className="flex flex-wrap gap-3">
                   {[
                     { date: process.env.NEXT_PUBLIC_BATCH_DATE_NOIDA,   city: 'Noida'   },
