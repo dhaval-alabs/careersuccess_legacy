@@ -131,30 +131,30 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                         <UpcomingBatches locations={locations} />
                     </div>
 
-                    {/* Column 2: Classes Info */}
-                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    {/* Column 2: Duration & Classes */}
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center text-center">
                         <StatCard
                             icon={<CalendarIcon />}
-                            label="Classes × Duration"
-                            primary="43 Classes"
-                            secondary="6-10 Months"
+                            label="Course Duration"
+                            primary="6-10 <span style='font-size:18px;color:#1a2b4a'>Months</span>"
+                            secondary="43 Intensive Classes"
                             delay={150}
                         />
                     </div>
 
                     {/* Column 3: Hours Info */}
-                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center text-center">
                         <StatCard
                             icon={<CodeIcon />}
-                            label="Structured Learning"
+                            label="Learning Hours"
                             primary="445-760 <span style='font-size:18px;color:#1a2b4a'>Hours</span>"
-                            secondary="Incl. GenAI & Agents"
+                            secondary="Structured Learning"
                             delay={280}
                         />
                     </div>
 
                     {/* Column 4: Assignments Info */}
-                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center">
+                    <div className="col-span-1 lg:px-6 lg:border-r border-[#dde8f4] flex flex-col justify-center text-center">
                         <StatCard
                             icon={<PeopleIcon />}
                             label="Practice & Projects"

@@ -70,12 +70,12 @@ const BlendedIcon = () => (
 
 const cards = [
   {
-    tag: "FLEXIBLE",
-    Icon: BlendedIcon,
-    title: "Blended eLearning",
-    price: "₹53,100",
-    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same syllabus and NASSCOM certification. Ideal for working professionals.",
-    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
+    tag: "IN-PERSON",
+    Icon: ClassroomIcon,
+    title: "Classroom & Bootcamp",
+    price: "₹61,360",
+    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
+    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
     tagColor: blue,
   },
@@ -83,19 +83,19 @@ const cards = [
     tag: "MOST POPULAR",
     Icon: LiveOnlineIcon,
     title: "Interactive Live Online",
-    price: "₹59,000",
+    price: "₹53,100",
     desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
     tagColor: blue,
   },
   {
-    tag: "IN-PERSON",
-    Icon: ClassroomIcon,
-    title: "Classroom & Bootcamp",
-    price: "₹68,440",
-    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
-    bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
+    tag: "FLEXIBLE",
+    Icon: BlendedIcon,
+    title: "Blended eLearning",
+    price: "₹47,200",
+    desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same syllabus and NASSCOM certification. Ideal for working professionals.",
+    bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
     featured: false,
     tagColor: blue,
   },
@@ -176,13 +176,14 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
               </h3>
 
               {/* Price */}
-              <div className="mt-4 mb-1.5">
+              <div className="mt-4 mb-1.5 flex items-baseline">
                 <span
                   className="font-extrabold tracking-tight leading-none"
                   style={{ fontFamily: "var(--font-outfit)", fontSize: "2.4rem", color: navy }}
                 >
                   {c.price}
                 </span>
+                <sup className="text-sm font-bold ml-0.5" style={{ color: navy }}>*</sup>
                 <span className="text-[13px] ml-1.5" style={{ color: "#7aaea6" }}>incl. taxes</span>
               </div>
 
@@ -211,6 +212,11 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
         {/* Footer note */}
         <p className="text-center mt-7 text-xs" style={{ color: "#7aaea6" }}>
           All modes share the same curriculum, faculty, and NASSCOM-FutureSkills Prime certification.
+        </p>
+
+        {/* Footnote */}
+        <p className="mt-6 text-[12px] text-[#4A6275] max-w-2xl leading-relaxed">
+          * Fees shown are for the NASSCOM-FutureSkills Prime certified programme. An upgrade to the IIT Patna Vishlesan I-HUB Foundation co-certified track is available at an additional fee — speak to your learning advisor for details.
         </p>
 
         {/* Demo CTA */}

@@ -35,21 +35,21 @@ const AI_EXTENDED_MODULES: Module[] = [
     num: "05A", 
     title: "Generative AI for Analysts", 
     tags: ["ChatGPT", "Claude", "Prompt Eng.", "GenAI for Python/SQL/BI"],
-    desc: "Use Generative AI to accelerate your analytics workflow. Write SQL faster with AI-assisted query generation, automate Python scripts, and build dynamic Power BI narratives using GenAI tools.",
+    desc: "Use Generative AI to accelerate your analytics workflow. Write SQL faster with AI-assisted query generation, automate Python scripts, and build dynamic Power BI narratives using GenAI tools. Includes hands-on prompt engineering for data tasks and AI-assisted data cleaning and reporting pipelines.",
     highlight: true
   },
   { 
     num: "05B", 
     title: "Agentic AI Systems", 
-    tags: ["No-Code Agents", "AutoGen", "LangChain", "Multi-Step Workflows"],
-    desc: "Build and manage No-Code AI Agents that autonomously plan, reason, and execute multi-step analytics workflows. Design agent pipelines that monitor live data and handle data validation.",
+    tags: ["AutoGen", "LangChain", "No-Code Agents", "Multi-Step Workflows"],
+    desc: "Build and manage No-Code AI Agents that autonomously plan, reason, and execute multi-step analytics workflows. Design agent pipelines that monitor live data, trigger automated reports, handle data validation, and escalate anomalies.",
     highlight: true
   },
   { 
     num: "05C", 
     title: "Python for AI and Automation", 
     tags: ["Python", "API Integration", "AI Orchestration", "Automation"],
-    desc: "A specialised Python module designed to control and scale Agentic AI systems. Covers API integrations, orchestration libraries, and building data pipelines that connect AI agents.",
+    desc: "A specialised Python module for controlling and scaling Agentic AI systems. Covers API integrations, orchestration libraries, building data pipelines that connect AI agents to live business data, and deploying lightweight AI-assisted analytics tools.",
     highlight: true
   },
   { 
@@ -127,19 +127,19 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
           </div>
           <div className="bg-[#f8fcfb] border border-[#D6ECEB] rounded-2xl p-6 flex items-start gap-4 transition-all hover:shadow-md">
             <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 border border-[#D6ECEB] text-[#239bf5]">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
             <div>
-              <p className="text-xl font-bold text-[#09263F]">90 Hours</p>
-              <p className="text-xs text-[#4A6275] font-medium leading-relaxed">Self-study + 6 assignments and projects</p>
+              <p className="text-xl font-bold text-[#09263F]">6-10 Months</p>
+              <p className="text-xs text-[#4A6275] font-medium leading-relaxed">Self-paced study + assignments</p>
             </div>
           </div>
           <div className="bg-[#f8fcfb] border border-[#D6ECEB] rounded-2xl p-6 flex items-start gap-4 transition-all hover:shadow-md">
             <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 border border-[#D6ECEB] text-[#FFEA79]">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 005.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
             </div>
             <div>
-              <p className="text-xl font-bold text-[#09263F]">8 Weeks</p>
+              <p className="text-xl font-bold text-[#09263F]">100% Placement</p>
               <p className="text-xs text-[#4A6275] font-medium leading-relaxed">Placement Readiness Program included</p>
             </div>
           </div>
@@ -229,6 +229,23 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
             </div>
           </div>
         )}
+
+        {/* Enrollment Assistance */}
+        <div className="mt-16 bg-[#09263F] rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#1DE5B5] opacity-5 blur-[80px] -translate-y-1/2 translate-x-1/2" />
+          <div className="relative z-10">
+            <h3 className="text-2xl font-bold text-white mb-3">Enrollment Assistance</h3>
+            <p className="text-[#A5B9C8] max-w-xl text-base leading-relaxed">
+              Need help understanding which track is right for you? Our learning advisors are available to guide you based on your career goals.
+            </p>
+          </div>
+          <a
+            href="tel:9555525908"
+            className="relative z-10 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4 rounded-xl text-base transition-all shadow-lg active:scale-95 whitespace-nowrap"
+          >
+            Talk to Advisor →
+          </a>
+        </div>
 
         {/* Download CTA */}
         <div className="mt-16 text-center">
