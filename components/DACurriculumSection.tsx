@@ -6,7 +6,15 @@ interface Props {
   onOpenBrochure: () => void;
 }
 
-const CORE_MODULES = [
+interface Module {
+  num: string;
+  title: string;
+  tags: string[];
+  desc?: string;
+  highlight?: boolean;
+}
+
+const CORE_MODULES: Module[] = [
   { num: "01", title: "Building Blocks", tags: ["Maths", "Stats", "Problem-Solving"] },
   { num: "02", title: "Excel and Power BI", tags: ["Excel", "Power BI", "DAX", "Dashboards"] },
   { num: "03", title: "SQL and Data Management", tags: ["SQL", "Azure", "ETL", "Cloud"] },
@@ -16,7 +24,7 @@ const CORE_MODULES = [
   { num: "07", title: "Placement Readiness", tags: ["Resume", "Mock Interviews", "8 Weeks"] },
 ];
 
-const AI_EXTENDED_MODULES = [
+const AI_EXTENDED_MODULES: Module[] = [
   { num: "01", title: "Building Blocks", tags: ["Maths", "Stats", "Problem-Solving"] },
   { num: "02", title: "Excel and Power BI", tags: ["Excel", "Power BI", "DAX", "Dashboards"] },
   { num: "03", title: "SQL and Data Management", tags: ["SQL", "Azure", "ETL", "Cloud"] },
