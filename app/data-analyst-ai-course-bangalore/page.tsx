@@ -222,10 +222,10 @@ export default function BangaloreDAAIPage() {
                   <Image
                     src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
                     alt="AnalytixLabs Icon"
-                    width={60} height={60}
-                    className="w-auto h-[5.5rem] sm:hidden max-w-[30vw] object-contain"
+                    width={48} height={48}
+                    className="w-auto h-[3.5rem] sm:hidden max-w-[30vw] object-contain"
                     priority
-                    sizes="(max-width: 640px) 60px, 0px"
+                    sizes="(max-width: 640px) 48px, 0px"
                   />
                   <Image
                     src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
@@ -238,19 +238,10 @@ export default function BangaloreDAAIPage() {
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
-                  alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
-                  width={160} height={40}
-                  className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain hidden"
-                  priority
-                  sizes="(max-width: 640px) 260px, 160px"
-                />
-                <div className="w-px h-8 bg-[#D6ECEB] hidden sm:block" />
-                <Image
                   src="https://www.analytixlabs.co.in/wp-content/uploads/2026/04/IITB_IITP_Nasscom.webp"
                   alt="IIT Bombay, IIT Patna and Nasscom — Partners"
                   width={300} height={60}
-                  className="w-auto h-[5.5rem] sm:h-[6.5rem] max-w-[70vw] sm:max-w-none object-contain"
+                  className="w-auto h-[4.5rem] sm:h-[6.5rem] max-w-[65vw] sm:max-w-none object-contain"
                   priority
                 />
               </div>
@@ -263,7 +254,7 @@ export default function BangaloreDAAIPage() {
               </h1>
 
               <p className="text-[#4A6275] text-base leading-relaxed mb-6 max-w-xl">
-                {config.subhead}
+                SQL, Power BI, Python, and Generative AI — all in one NASSCOM-FutureSkills Prime certified programme. Classroom and online batches in Bangalore.
               </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">

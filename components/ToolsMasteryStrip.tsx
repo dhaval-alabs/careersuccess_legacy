@@ -118,7 +118,7 @@ export default function ToolsMasteryStrip() {
                 {tool.icon}
               </div>
               <h3 className="font-bold text-[#09263F] text-sm mb-2">{tool.name}</h3>
-              <p className="text-[#4A6275] text-[12px] leading-relaxed">{tool.desc}</p>
+              <p className="hidden sm:block text-[#4A6275] text-[12px] leading-relaxed">{tool.desc}</p>
             </div>
           ))}
         </div>
