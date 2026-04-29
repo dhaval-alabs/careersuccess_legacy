@@ -222,18 +222,18 @@ export default function DelhiDAAIPage() {
                   <Image
                     src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
                     alt="AnalytixLabs Icon"
-                    width={48} height={48}
-                    className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain"
+                    width={60} height={60}
+                    className="w-auto h-[5.5rem] sm:hidden max-w-[30vw] object-contain"
                     priority
-                    sizes="(max-width: 640px) 48px, 0px"
+                    sizes="(max-width: 640px) 60px, 0px"
                   />
                   <Image
                     src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
                     alt="AnalytixLabs - Data Analytics Training Institute"
-                    width={180} height={40}
-                    className="w-auto h-[3.5rem] hidden sm:block"
+                    width={200} height={45}
+                    className="w-auto h-[4rem] hidden sm:block"
                     priority
-                    sizes="(min-width: 640px) 180px, 0px"
+                    sizes="(min-width: 640px) 200px, 0px"
                   />
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
@@ -249,8 +249,8 @@ export default function DelhiDAAIPage() {
                 <Image
                   src="https://www.analytixlabs.co.in/wp-content/uploads/2026/04/IITB_IITP_Nasscom.webp"
                   alt="IIT Bombay, IIT Patna and Nasscom — Partners"
-                  width={250} height={40}
-                  className="w-auto h-[4.5rem] sm:h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
+                  width={300} height={60}
+                  className="w-auto h-[5.5rem] sm:h-[6.5rem] max-w-[70vw] sm:max-w-none object-contain"
                   priority
                 />
               </div>
