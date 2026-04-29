@@ -187,9 +187,9 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
 
         {/* Grid of Modules */}
         {activeTab === 'core' ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CORE_MODULES.map((m) => (
-              <div key={m.num}>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CORE_MODULES.map((m, idx) => (
+              <div key={m.num} className={idx === 6 ? "col-span-2 sm:col-span-1" : ""}>
                 <ModuleCard m={m} />
               </div>
             ))}
@@ -197,7 +197,7 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
         ) : (
           <div className="space-y-12">
             {/* Zone A: Core Modules */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {AI_EXTENDED_MODULES.filter(m => ['01','02','03','04','05','06'].includes(m.num)).map((m) => (
                 <ModuleCard key={m.num} m={m} />
               ))}
