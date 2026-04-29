@@ -258,7 +258,7 @@ export default function DelhiDAAIPage() {
               </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
-                {["In collaboration with TIH at IIT Bombay and TIH at IIT Patna", "NASSCOM-FutureSkills Prime Certified", "SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee"].map((item) => (
+                {["SQL & Power BI", "Python for Analytics", "Generative AI Integration", "Placement + Fee-Back Guarantee"].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-sm font-semibold text-[#4A6275]">
                     <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none">
                       <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
