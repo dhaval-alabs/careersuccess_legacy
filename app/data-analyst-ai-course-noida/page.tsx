@@ -247,10 +247,10 @@ export default function NoidaDAAIPage() {
                 />
                 <div className="w-px h-8 bg-[#D6ECEB] hidden sm:block" />
                 <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp"
-                  alt="IIT Bombay and IIT Patna — Academic Partners"
-                  width={180} height={40}
-                  className="w-auto h-[4.5rem] sm:h-[5.25rem] max-w-[45vw] sm:max-w-none object-contain"
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/04/IITB_IITP_Nasscom.webp"
+                  alt="IIT Bombay, IIT Patna and Nasscom — Partners"
+                  width={250} height={40}
+                  className="w-auto h-[4.5rem] sm:h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
                   priority
                 />
               </div>
@@ -468,10 +468,10 @@ export default function NoidaDAAIPage() {
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <div className="aspect-[1024/724] relative mb-4 flex items-center justify-center">
-                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" alt="IIT Bombay and IIT Patna — Academic Partners" width={300} height={212} className="object-contain rounded-lg shadow-sm w-full h-auto" />
+                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2026/04/IITB_IITP_Nasscom.webp" alt="IIT Bombay, IIT Patna and Nasscom — Partners" width={400} height={212} className="object-contain rounded-lg shadow-sm w-full h-auto" />
                       </div>
-                      <p className="text-[#09263F] font-bold text-sm text-center">IIT Bombay + IIT Patna</p>
-                      <p className="text-[#4A6275] text-[10px] font-bold text-center mt-1 uppercase tracking-wider">Academic Partners</p>
+                      <p className="text-[#09263F] font-bold text-sm text-center">IIT Bombay, IIT Patna & Nasscom</p>
+                      <p className="text-[#4A6275] text-[10px] font-bold text-center mt-1 uppercase tracking-wider">Official Partners</p>
                     </div>
                   </div>
                   <button
