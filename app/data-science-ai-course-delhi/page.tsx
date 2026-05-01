@@ -222,7 +222,7 @@ export default function DelhiDSAIPage() {
                     src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
                     alt="AnalytixLabs Icon"
                     width={48} height={48}
-                    className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain"
+                    className="w-auto h-[3.5rem] sm:hidden max-w-[30vw] object-contain"
                     priority
                     sizes="(max-width: 640px) 48px, 0px"
                   />
@@ -230,19 +230,18 @@ export default function DelhiDSAIPage() {
                     src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
                     alt="AnalytixLabs - Data Science Training Institute"
                     width={180} height={40}
-                    className="w-auto h-[3.5rem] hidden sm:block"
+                    className="w-auto h-[4rem] hidden sm:block"
                     priority
                     sizes="(min-width: 640px) 180px, 0px"
                   />
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
-                  alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
-                  width={160} height={40}
-                  className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"
+                  src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp"
+                  alt="IIT Bombay, IIT Patna and Nasscom — Partners"
+                  width={300} height={60}
+                  className="w-auto h-[4.5rem] sm:h-[6.5rem] max-w-[65vw] sm:max-w-none object-contain"
                   priority
-                  sizes="(max-width: 640px) 260px, 160px"
                 />
               </div>
 
@@ -437,7 +436,7 @@ export default function DelhiDSAIPage() {
                   AnalytixLabs is a NASSCOM-FutureSkills Prime accredited training partner. Upon successful completion of the programme, you will receive a dual certification that is recognized by top global recruiters and Fortune 500 companies.
                 </p>
                 <div className="flex flex-col items-center gap-10">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">NASSCOM FutureSkills Prime</p>
@@ -445,6 +444,12 @@ export default function DelhiDSAIPage() {
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" width={600} height={420} className="w-full h-auto rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Advanced AI Certificate</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03] flex flex-col justify-center">
+                      <div className="bg-[#F4FAFA] rounded-lg p-4 flex items-center justify-center h-full min-h-[140px]">
+                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" alt="Official Partners" width={400} height={120} className="w-full h-auto object-contain" />
+                      </div>
+                      <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Official Partner Branding</p>
                     </div>
                   </div>
                   <button

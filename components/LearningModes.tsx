@@ -74,7 +74,7 @@ const cards = [
     tag: "FLEXIBLE",
     Icon: BlendedIcon,
     title: "Blended eLearning",
-    price: "₹47,200",
+    price: "₹53,100",
     desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same syllabus and NASSCOM certification. Ideal for working professionals.",
     bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
     featured: false,
@@ -84,7 +84,7 @@ const cards = [
     tag: "MOST POPULAR",
     Icon: LiveOnlineIcon,
     title: "Interactive Live Online",
-    price: "₹53,100",
+    price: "₹59,000",
     desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
@@ -94,7 +94,7 @@ const cards = [
     tag: "IN-PERSON",
     Icon: ClassroomIcon,
     title: "Classroom & Bootcamp",
-    price: "₹61,360",
+    price: "₹68,440",
     desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
     bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
@@ -192,7 +192,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
 
               {/* EMI line */}
               <p className="text-[11px] font-semibold mb-4 tracking-wide" style={{ color: blue }}>
-                0% interest EMI · Starting ₹6,387/month
+                0% interest EMI · Starting ₹6,637/month
               </p>
 
               {/* Description */}
