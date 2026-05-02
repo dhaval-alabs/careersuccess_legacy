@@ -23,7 +23,7 @@ const config = {
   h1City: "in Gurgaon",
   subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. Complete course with 100% placement support at our Sector 44, Gurgaon centre.",
   classroomBullet: "Gurgaon centre located at Sector 44 (near HUDA City Centre). Weekend batches available.",
-  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Gurgaon Sector 44, Noida Sector 15, and Bangalore (HSR Layout).",
+  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Gurgaon Sector 44, Noida Sector 2, and Bangalore (HSR Layout).",
   faq12nearby: "Sohna Road, Cyber City, and DLF Phases",
   cityPrefix: "daai_gur",
   crmPrefix: "PPC_DA_GUR",

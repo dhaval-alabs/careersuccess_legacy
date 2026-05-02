@@ -21,9 +21,9 @@ const MODES: Mode[] = [
     priceNote: 'incl. taxes',
     emi: 'Starting ₹6,387/month · 0% interest EMI',
     description:
-      'In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.',
+      'In-person training at our centres in Noida (Sector 2, near Sector 15 Metro), Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.',
     highlights: [
-      'Noida · Gurgaon · Bangalore',
+      'Noida (Sector 2) · Gurgaon · Bangalore',
       'Small batch sizes',
       'Hands-on lab sessions',
       'On-campus placement drives',

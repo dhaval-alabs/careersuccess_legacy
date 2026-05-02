@@ -22,8 +22,8 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 const config = {
   h1City: "in Delhi",
   subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. Complete course with 100% placement support in Delhi NCR (Noida, Gurgaon).",
-  classroomBullet: "Delhi NCR centres in Noida (Sector 15) and Gurgaon (Sector 44). Weekend batches available.",
-  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Delhi NCR (Noida Sector 15, Gurgaon Sector 44) and Bangalore (HSR Layout).",
+  classroomBullet: "Delhi NCR centres in Noida (Sector 2) and Gurgaon (Sector 44). Weekend batches available.",
+  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Delhi NCR (Noida Sector 2, Gurgaon Sector 44) and Bangalore (HSR Layout).",
   faq12nearby: "Noida, Gurgaon, and Greater Noida",
   cityPrefix: "daai_del",
   crmPrefix: "PPC_DA_DEL",

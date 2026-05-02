@@ -21,7 +21,7 @@ const config = {
   h1City: "in Bangalore",
   subhead: "Job-ready data science course with placement support. Master Python, Machine Learning, NLP, Deep Learning, and Generative AI. Classroom training in Bangalore (Sector 44), Noida, and Bangalore.",
   classroomBullet: "Bangalore campus at HSR Layout. Weekend batches.",
-  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Bangalore (HSR Layout), Noida (Sector 62), and Gurgaon (Sector 44).",
+  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Bangalore (HSR Layout), Noida (Sector 2), and Gurgaon (Sector 44).",
   faq12nearby: "Electronic City, Whitefield, and Koramangala",
   cityPrefix: "dsai_blr",
   crmPrefix: "PPC_BLR2",

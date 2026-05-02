@@ -21,9 +21,9 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 
 const config = {
   h1City: "in Noida",
-  subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. Complete course with 100% placement support at our Sector 15, Noida centre.",
-  classroomBullet: "Noida centre located at Sector 15 (near Metro). Weekend and weekday batches available.",
-  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Noida Sector 15, Gurgaon Sector 44, and Bangalore (HSR Layout).",
+  subhead: "Master Data Analytics with Generative AI. Learn SQL, Power BI, Python, and AI-assisted analytics. Complete course with 100% placement support at our Sector 2, Noida centre.",
+  classroomBullet: "Noida centre located at Sector 2 (near Sector 15 Metro, Gate no. 3). Weekend and weekday batches available.",
+  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Noida Sector 2, Gurgaon Sector 44, and Bangalore (HSR Layout).",
   faq12nearby: "Sector 62, Sector 18, and Greater Noida",
   cityPrefix: "daai_noi",
   crmPrefix: "PPC_DA_NOI",
@@ -34,7 +34,7 @@ const config = {
 const HIGHLIGHTS = [
   { icon: "🏅", title: "Certified by NASSCOM, TIH at IIT Bombay / Patna", desc: "NASSCOM-FutureSkills Prime certified, supported by MeitY, Government of India. Backed by Technology Innovation Hubs at IIT Bombay and IIT Patna — among India's most respected research institutions." },
   { icon: "🔒", title: "Placement with Fee-Back Guarantee", desc: "Complete the programme and meet the requirements. If you are not placed within 6 months, we refund 50% of your fee. Minimum annual package assured." },
-  { icon: "🏛️", title: "Real Classroom and Flexible Learning", desc: "Learn in-person in Noida Sector 15. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
+  { icon: "🏛️", title: "Real Classroom and Flexible Learning", desc: "Learn in-person in Noida Sector 2. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
   { icon: "🤖", title: "AI-Assisted Analytics Built In", desc: "Master prompt engineering for SQL and Python, and use Generative AI tools to automate reporting and data cleaning. Stay ahead of the curve." },
   { icon: "🎥", title: "Live and Recorded Classes", desc: "Attend live instructor-led sessions or rewatch anytime via your personal LMS. 1 year of access included." },
   { icon: "🤝", title: "Mentorship Beyond the Class", desc: "Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. You are never stuck." },

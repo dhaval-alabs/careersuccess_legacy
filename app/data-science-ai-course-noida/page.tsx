@@ -19,9 +19,9 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 
 const config = {
   h1City: "in Noida",
-  subhead: "Job-ready data science course with placement support. Master Python, Machine Learning, NLP, Deep Learning, and Generative AI. Classroom training in Noida (Sector 62), Gurgaon, and Bangalore.",
-  classroomBullet: "Noida campus at Sector 62 with easy metro access. Weekend batches.",
-  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Noida (Sector 62), Gurgaon (Sector 44), and Bangalore (HSR Layout).",
+  subhead: "Job-ready data science course with placement support. Master Python, Machine Learning, NLP, Deep Learning, and Generative AI. Classroom training in Noida (Sector 2), Gurgaon, and Bangalore.",
+  classroomBullet: "Noida campus at Sector 2 (near Sector 15 Metro, Gate no. 3) with easy metro access. Weekend batches.",
+  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Noida (Sector 2), Gurgaon (Sector 44), and Bangalore (HSR Layout).",
   faq12nearby: "Delhi, Greater Noida, and Gurgaon",
   cityPrefix: "dsai_noi",
   crmPrefix: "PPC_NOI",

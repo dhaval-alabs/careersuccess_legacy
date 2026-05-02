@@ -23,7 +23,7 @@ const config = {
   h1City: "in Bangalore",
   subhead: "Launch your career in the Silicon Valley of India. Join Bangalore's #1 Data Analyst course with Generative AI integration. Classroom sessions at HSR Layout.",
   classroomBullet: "Bangalore centre located at HSR Layout (near Silk Board). Weekend and weekday batches available.",
-  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Bangalore (HSR Layout), Noida Sector 15, and Gurgaon Sector 44.",
+  faq6answer: "Yes. AnalytixLabs offers classroom Data Analytics training at Bangalore (HSR Layout), Noida Sector 2, and Gurgaon Sector 44.",
   faq12nearby: "Koramangala, Whitefield, and Electronic City",
   cityPrefix: "daai_blr",
   crmPrefix: "PPC_DA_BLR",

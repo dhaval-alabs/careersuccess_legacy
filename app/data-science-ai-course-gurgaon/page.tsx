@@ -21,7 +21,7 @@ const config = {
   h1City: "in Gurgaon",
   subhead: "Job-ready data science course with placement support. Master Python, Machine Learning, NLP, Deep Learning, and Generative AI. Classroom training in Gurgaon (Sector 44), Noida, and Bangalore.",
   classroomBullet: "Gurgaon campus at Sector 44 near Huda City Centre metro. Weekend batches.",
-  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Gurgaon (Sector 44), Noida (Sector 62), and Bangalore (HSR Layout).",
+  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Gurgaon (Sector 44), Noida (Sector 2), and Bangalore (HSR Layout).",
   faq12nearby: "Delhi, Noida, and Faridabad",
   cityPrefix: "dsai_grg",
   crmPrefix: "PPC_GRG",

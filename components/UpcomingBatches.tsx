@@ -62,7 +62,7 @@ interface Props {
 
 const BATCH_DATA: Record<BatchLocation, { city: string, color: string, textColor: string, pinColor: string }> = {
     noida: {
-        city: 'Noida',
+        city: 'Noida (Sector 2)',
         color: '#d4f5e9', // Teal
         textColor: '#1a3d2b',
         pinColor: '#2e7d5e'

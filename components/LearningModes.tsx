@@ -95,7 +95,7 @@ const cards = [
     Icon: ClassroomIcon,
     title: "Classroom & Bootcamp",
     price: "₹68,440",
-    desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
+    desc: "In-person training at our centres in Noida (Sector 2, near Sector 15 Metro), Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
     bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
     tagColor: blue,

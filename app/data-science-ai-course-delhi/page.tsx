@@ -20,8 +20,8 @@ const BottomCTA = dynamic(() => import("../../components/BottomCTA"), { ssr: fal
 const config = {
   h1City: "in Delhi",
   subhead: "Job-ready data science course with placement support. Master Python, Machine Learning, NLP, Deep Learning, and Generative AI. Classroom training in Delhi NCR (Noida, Gurgaon) and Bangalore.",
-  classroomBullet: "Delhi NCR centres in Noida (Sector 62) and Gurgaon (Sector 44). Weekend batches.",
-  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Delhi NCR (Noida Sector 62, Gurgaon Sector 44) and Bangalore (HSR Layout).",
+  classroomBullet: "Delhi NCR centres in Noida (Sector 2) and Gurgaon (Sector 44). Weekend batches.",
+  faq6answer: "Yes. AnalytixLabs offers classroom data science training at Delhi NCR (Noida Sector 2, Gurgaon Sector 44) and Bangalore (HSR Layout).",
   faq12nearby: "Noida, Gurgaon, and Greater Noida",
   cityPrefix: "dsai_del",
   crmPrefix: "PPC_DEL",

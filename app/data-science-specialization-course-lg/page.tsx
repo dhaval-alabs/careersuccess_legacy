@@ -29,7 +29,7 @@ const TRUST_BADGES = [
 const HIGHLIGHTS = [
   { icon: "🏅", title: "Certified by NASSCOM, TIH at IIT Bombay / Patna", desc: "NASSCOM-FutureSkills Prime certified, supported by MeitY, Government of India. Backed by Technology Innovation Hubs at IIT Bombay and IIT Patna — among India's most respected research institutions." },
   { icon: "🔒", title: "Placement with Fee-Back Guarantee", desc: "Complete the programme and meet the requirements. If you're not placed within 6 months, we refund 50% of your fee. Minimum annual package assured." },
-  { icon: "🏛️", title: "Real Classroom + Flexible Learning", desc: "Learn in-person in Noida, Gurgaon, or Bangalore. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
+  { icon: "🏛️", title: "Real Classroom + Flexible Learning", desc: "Learn in-person in Noida (Sector 2), Gurgaon (Sector 44), or Bangalore (HSR Layout). Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
   { icon: "🎥", title: "Live + Recorded Classes", desc: "Attend live instructor-led sessions or rewatch anytime via your personal LMS. 1 year of access included." },
   { icon: "🤖", title: "Generative AI in the Curriculum", desc: "Not an afterthought. Prompt engineering and Gen AI for Excel, SQL, Power BI, and Python are part of the core syllabus." },
   { icon: "🤝", title: "Mentorship Beyond the Class", desc: "Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. You're never stuck." },

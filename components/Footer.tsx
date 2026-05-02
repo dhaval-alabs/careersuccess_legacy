@@ -15,7 +15,7 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm mb-4 uppercase tracking-widest">Connect</h4>
             <ul className="text-[#4A6275] text-sm space-y-2">
               <li>Gurgaon: Sector 44</li>
-              <li>Noida: Sector 15</li>
+              <li>Noida: Sector 2</li>
               <li>Bangalore: HSR Layout</li>
             </ul>
           </div>
