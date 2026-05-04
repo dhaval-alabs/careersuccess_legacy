@@ -1,6 +1,8 @@
 import { createMcpHandler } from 'mcp-handler'
 import { z } from 'zod'
 
+export const maxDuration = 60
+
 
 
 const CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
