@@ -1,8 +1,7 @@
 import { createMcpHandler } from 'mcp-handler'
 import { z } from 'zod'
 
-export const maxDuration = 60
-export const dynamic = 'force-dynamic'
+
 
 const CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
 const MCC_ID = process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || process.env.GOOGLE_ADS_MCC_ID || '8910137241'
