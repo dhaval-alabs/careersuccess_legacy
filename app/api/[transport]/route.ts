@@ -456,10 +456,33 @@ const handler = createMcpHandler(
 
 
 async function safeHandler(req: Request) {
+  console.log('[MCP] Received:', req.method)
   try {
-    return await handler(req)
+    const response = await handler(req)
+    
+    // Clone so we can read the body for logging without consuming it
+    const cloned = response.clone()
+    const bodyText = await cloned.text()
+    
+    console.log('[MCP] Response status:', response.status)
+    console.log('[MCP] Response body (first 300 chars):', bodyText.substring(0, 300))
+    
+    // If body starts with HTML, return a proper JSON error instead
+    if (bodyText.trimStart().startsWith('<')) {
+      console.error('[MCP] HTML response detected — returning JSON error instead')
+      return new Response(
+        JSON.stringify({
+          jsonrpc: '2.0',
+          error: { code: -32603, message: 'Internal error: handler returned HTML', detail: bodyText.substring(0, 500) },
+          id: null
+        }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    return response
   } catch (error) {
-    console.error('[MCP] Handler crashed:', error)
+    console.error('[MCP] Handler threw:', error)
     return new Response(
       JSON.stringify({ jsonrpc: '2.0', error: { code: -32603, message: String(error) }, id: null }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
@@ -467,4 +490,4 @@ async function safeHandler(req: Request) {
   }
 }
 
-export { safeHandler as GET, safeHandler as POST, safeHandler as DELETE }
+export { safeHandler as GET, safeHandler as POST, handler as DELETE }
