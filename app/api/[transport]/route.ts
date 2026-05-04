@@ -1,4 +1,4 @@
-import { createMcpHandler } from '@vercel/mcp-adapter'
+import { createMcpHandler } from 'mcp-handler'
 import { z } from 'zod'
 
 export const maxDuration = 60
@@ -449,16 +449,6 @@ const handler = createMcpHandler(
   }
 )
 
-export async function GET(req: Request) {
-  // Return SSE headers to satisfy Claude.ai's transport discovery GET
-  return new Response(null, {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
-    },
-  })
-}
 
-export { handler as POST }
+
+export { handler as GET, handler as POST, handler as DELETE }

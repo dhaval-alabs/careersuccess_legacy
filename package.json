@@ -9,7 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@vercel/mcp-adapter": "^0.3.1",
+    "@modelcontextprotocol/sdk": "1.26.0",
+    "mcp-handler": "latest",
     "dotenv": "^17.3.1",
     "mcp-adapter": "^0.0.1",
     "next": "16.1.6",
