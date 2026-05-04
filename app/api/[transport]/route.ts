@@ -7,24 +7,29 @@ const CUSTOMER_ID = process.env.GOOGLE_ADS_CUSTOMER_ID || '4064995850'
 const MCC_ID = process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || process.env.GOOGLE_ADS_MCC_ID || '8910137241'
 
 async function getAccessToken(): Promise<string> {
-  const res = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_ADS_CLIENT_ID!,
-      client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET!,
-      refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN!,
-      grant_type: 'refresh_token',
-    }),
-  })
-  const data = await res.json()
-  if (!data.access_token) {
-    if (data.error === 'invalid_grant') {
-      throw new Error('Google Ads Refresh Token has expired or been revoked (invalid_grant). ACTION REQUIRED: Generate a new refresh token and ensure the GCP OAuth Consent Screen is set to "In Production".');
+  try {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: process.env.GOOGLE_ADS_CLIENT_ID!,
+        client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET!,
+        refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN!,
+        grant_type: 'refresh_token',
+      }),
+    })
+    const data = await res.json()
+    if (!data.access_token) {
+      if (data.error === 'invalid_grant') {
+        throw new Error('Google Ads Refresh Token has expired or been revoked (invalid_grant). ACTION REQUIRED: Generate a new refresh token and ensure the GCP OAuth Consent Screen is set to "In Production".');
+      }
+      throw new Error(`OAuth failed: ${JSON.stringify(data)}`)
     }
-    throw new Error(`OAuth failed: ${JSON.stringify(data)}`)
+    return data.access_token
+  } catch (error) {
+    console.error('[MCP] getAccessToken failed:', error)
+    throw error
   }
-  return data.access_token
 }
 
 async function gadsQuery(query: string): Promise<any[]> {
@@ -450,4 +455,16 @@ const handler = createMcpHandler(
 
 
 
-export { handler as GET, handler as POST, handler as DELETE }
+async function safeHandler(req: Request) {
+  try {
+    return await handler(req)
+  } catch (error) {
+    console.error('[MCP] Handler crashed:', error)
+    return new Response(
+      JSON.stringify({ jsonrpc: '2.0', error: { code: -32603, message: String(error) }, id: null }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+}
+
+export { safeHandler as GET, safeHandler as POST, safeHandler as DELETE }
