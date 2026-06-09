@@ -328,6 +328,7 @@ export default function Home() {
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion('lp_Hero_DownloadBrochure', email)}
+                qualificationConfigKey="data-science-specialization"
               />
             </div>
           </div>

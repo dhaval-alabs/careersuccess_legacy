@@ -53,7 +53,7 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   return sheetsTokenCache.token;
 }
 
-async function updateLeadSquaredToVerified(cleanPhone: string) {
+async function updateLeadSquaredToVerified(cleanPhone: string, preferredCallbackTime?: string) {
   try {
     // 1. Retrieve Prospect ID - Using the same phone search pattern
     const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(cleanPhone)}`;
@@ -71,6 +71,9 @@ async function updateLeadSquaredToVerified(cleanPhone: string) {
     // 2. Update Lead status to Verified
     const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
     const payload = [{ Attribute: 'mx_OTP_Status', Value: 'Verified' }];
+    if (preferredCallbackTime) {
+      payload.push({ Attribute: 'mx_Preferred_Callback_Time', Value: preferredCallbackTime });
+    }
 
     const updateRes = await fetch(updateUrl, {
       method: 'POST',
@@ -153,7 +156,7 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { token, otp_entered, mobile, countryCode } = body;
+    const { token, otp_entered, mobile, countryCode, preferredCallbackTime } = body;
 
     if (!token || !otp_entered || !mobile) {
       return NextResponse.json({ success: false, error: 'Missing required parameters' }, { status: 400, headers: corsHeaders });
@@ -203,7 +206,7 @@ export async function POST(req: NextRequest) {
     const { name: fullName, email, typeFilter, course } = parsedToken; // Extract from token
 
     // Await updates to ensure they complete on Vercel
-    await updateLeadSquaredToVerified(lsqPhone).catch(console.error);
+    await updateLeadSquaredToVerified(lsqPhone, preferredCallbackTime).catch(console.error);
     const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone);
 
     // ── TRIGGER EMAIL FLOW (Async) ──

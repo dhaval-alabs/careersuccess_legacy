@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../utils/trackBehaviour';
 import { getStoredUtm } from '../utils/captureUtm';
 import SearchableCitySelect from './SearchableCitySelect';
+import QualificationChat from './QualificationChat';
+import { QUALIFICATION_CONFIG } from '../lib/qualification-config';
 
 const COUNTRY_CODES = [
   { code: '+91', label: '+91' },
@@ -20,6 +22,7 @@ interface HeroLeadCaptureFormProps {
   thankYouPath?: string;
   onSuccess?:    (email: string) => void;
   debug?:        boolean;
+  qualificationConfigKey?: string;
 }
 
 const inputCls = `
@@ -31,7 +34,7 @@ const inputCls = `
 
 const labelCls = 'block text-xs font-bold text-[#09263F] mb-1.5 tracking-wide';
 
-type OtpState = 'idle' | 'sending' | 'otp_sent' | 'verifying' | 'error';
+type OtpState = 'idle' | 'chatStep' | 'sending' | 'otp_sent' | 'verifying' | 'error';
 
 export default function HeroLeadCaptureForm({
   sourceName   = 'Hero Section',
@@ -41,6 +44,7 @@ export default function HeroLeadCaptureForm({
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
   debug = false,
+  qualificationConfigKey,
 }: HeroLeadCaptureFormProps) {
   const [name, setName]               = useState('');
   const [email, setEmail]             = useState('');
@@ -54,6 +58,8 @@ export default function HeroLeadCaptureForm({
   const [errorMsg, setErrorMsg]       = useState('');
   const [resendTimer, setResendTimer] = useState(0);
   const [formError, setFormError]     = useState('');
+  const [conversation, setConversation] = useState<string[]>([]);
+  const [preferredCallbackTime, setPreferredCallbackTime] = useState('');
 
   // Manage resend timer
   useEffect(() => {
@@ -65,6 +71,49 @@ export default function HeroLeadCaptureForm({
     }
     return () => clearInterval(interval);
   }, [resendTimer]);
+
+  async function handleInitialSubmit() {
+    if (!name || !email || !city || mobile.length !== 10) {
+      setFormError('Please fill all fields before continuing.');
+      return;
+    }
+
+    setFormError('');
+    if (qualificationConfigKey && QUALIFICATION_CONFIG[qualificationConfigKey]) {
+      // First submit - go to chat step
+      setOtpState('chatStep');
+      
+      try {
+        const utms = getStoredUtm();
+        const behaviour = getBehaviourSnapshot();
+        await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({
+             name, email, city, countryCode, mobile,
+             form_source: sourceName,
+             typeFilter: typeFilter || 'PPC_HeroForm',
+             ...utms,
+             ...behaviour,
+             submission_timestamp: new Date().toISOString(),
+             landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+             referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+             debug,
+           })
+        });
+      } catch (err) {
+        // ignore
+      }
+    } else {
+      await handleSendOtp();
+    }
+  }
+
+  const handleChatComplete = (conv: string[], callbackTime: string) => {
+    setConversation(conv);
+    setPreferredCallbackTime(callbackTime);
+    handleSendOtp();
+  };
 
   async function handleSendOtp() {
     if (!name || !email || !city || mobile.length !== 10) {
@@ -145,6 +194,7 @@ export default function HeroLeadCaptureForm({
           name,
           email,
           debug,
+          preferredCallbackTime,
         }),
       });
 
@@ -165,6 +215,20 @@ export default function HeroLeadCaptureForm({
       }
 
       // Verified successfully!
+      if (qualificationConfigKey && QUALIFICATION_CONFIG[qualificationConfigKey]) {
+         fetch('/api/qualify', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({
+             phone: `${countryCode}${mobile}`,
+             email,
+             conversation,
+             preferredCallbackTime
+           }),
+           keepalive: true
+         }).catch(console.error);
+      }
+
       onSuccess?.(email);
       const params = new URLSearchParams({ email, name, phone: mobile });
       const redirectUrl = data.verified 
@@ -275,7 +339,7 @@ export default function HeroLeadCaptureForm({
                 />
                 <button
                   type="button"
-                  onClick={handleSendOtp}
+                  onClick={handleInitialSubmit}
                   disabled={mobile.length !== 10 || otpState === 'sending'}
                   className={`absolute right-2 top-1/2 -translate-y-1/2
                               px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
@@ -295,6 +359,16 @@ export default function HeroLeadCaptureForm({
                   ) : 'Send OTP'}
                 </button>
               </div>
+            </div>
+          ) : otpState === 'chatStep' && qualificationConfigKey ? (
+            <div className="animate-in fade-in zoom-in-95 duration-300 relative z-20">
+              <QualificationChat 
+                firstName={name.split(' ')[0]}
+                courseSubject={QUALIFICATION_CONFIG[qualificationConfigKey].subject}
+                questions={QUALIFICATION_CONFIG[qualificationConfigKey].questions}
+                options={QUALIFICATION_CONFIG[qualificationConfigKey].options}
+                onComplete={handleChatComplete}
+              />
             </div>
           ) : (
             <div className="space-y-3 animate-in fade-in zoom-in-95 duration-300">
@@ -365,7 +439,7 @@ export default function HeroLeadCaptureForm({
           <div className="pt-2">
             <button
               type="button"
-              onClick={handleSendOtp}
+              onClick={handleInitialSubmit}
               disabled={otpState === 'sending'}
               className="w-full py-4 bg-[#29E8A4] text-[#09263F] font-bold rounded-2xl text-base 
                          shadow-[0_8px_30px_rgba(41,232,164,0.3)] hover:bg-[#1DE5B5] 
