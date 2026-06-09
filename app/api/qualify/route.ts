@@ -74,9 +74,10 @@ export async function POST(req: NextRequest) {
       if (prospectId) {
         const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
         const scoreField = process.env.LSQ_LEAD_SCORE_FIELD || 'mx_Lead_Score';
+        const notesField = process.env.LSQ_NOTES_FIELD_NAME || 'mx_Notes';
         const payload = [
           { Attribute: scoreField, Value: score },
-          { Attribute: 'mx_Notes', Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` }
+          { Attribute: notesField, Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` }
         ];
 
         await fetch(updateUrl, {
