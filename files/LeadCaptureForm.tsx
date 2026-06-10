@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { createLeadAction } from '../../app/actions/leads';
+import { readGclidFromGclAwCookie } from '../utils/captureUtm';
 
 const INDIA_CITIES = [
   'Ahmedabad', 'Bangalore', 'Chennai', 'Delhi', 'Faridabad',
@@ -57,6 +58,12 @@ export default function LeadCaptureForm({
           source_keyword = parsed.keyword;
         }
       } catch { /* ignore */ }
+    }
+
+    // _gcl_aw cookie fallback — only when no in-session gclid was captured
+    if (!gclid) {
+      const cookieGclid = readGclidFromGclAwCookie();
+      if (cookieGclid) gclid = cookieGclid;
     }
 
     const data = {
