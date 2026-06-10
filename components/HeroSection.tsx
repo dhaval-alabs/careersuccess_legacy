@@ -56,7 +56,7 @@ export default function HeroSection({ title, subtitle, location, onOpenForm, cta
             </button>
             <div className="flex items-center gap-4 px-6 border-l border-[#D6ECEB]">
               <Image 
-                src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp" 
+                src="/lp/images/logo-nasscom-ministry.webp" 
                 alt="NASSCOM" 
                 width={120} height={40} 
                 className="h-10 w-auto"

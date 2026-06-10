@@ -13,7 +13,7 @@ export default function CertificationStrip() {
           <div className="flex-shrink-0 relative z-10">
             <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-3xl flex items-center justify-center p-4 shadow-2xl rotate-3">
               <Image 
-                src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
+                src="/lp/images/logo-nasscom-ministry.webp"
                 alt="NASSCOM"
                 width={200} height={80}
                 className="w-full h-auto"

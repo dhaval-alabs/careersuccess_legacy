@@ -220,7 +220,7 @@ export default function BangaloreDAAIPage() {
               <div className="mb-10 flex items-center gap-4 sm:gap-8">
                 <div className="flex-shrink-0">
                   <Image
-                    src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
+                    src="/lp/images/alabs-hd.webp"
                     alt="AnalytixLabs Icon"
                     width={48} height={48}
                     className="w-auto h-[3.5rem] sm:hidden max-w-[30vw] object-contain"
@@ -228,7 +228,7 @@ export default function BangaloreDAAIPage() {
                     sizes="(max-width: 640px) 48px, 0px"
                   />
                   <Image
-                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+                    src="/lp/images/analytixlabs-logo.webp"
                     alt="AnalytixLabs - Data Analytics Training Institute"
                     width={200} height={45}
                     className="w-auto h-[4rem] hidden sm:block"
@@ -238,7 +238,7 @@ export default function BangaloreDAAIPage() {
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp"
+                  src="/lp/images/Final-Logo-IITP-IITB-2026.webp"
                   alt="IIT Bombay, IIT Patna and Nasscom — Partners"
                   width={300} height={60}
                   className="w-auto h-[4.5rem] sm:h-[6.5rem] max-w-[65vw] sm:max-w-none object-contain"
@@ -447,19 +447,19 @@ export default function BangaloreDAAIPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <div className="aspect-[1024/724] relative mb-4">
-                        <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
+                        <Image src="/lp/images/Nasscom-Certification-1024x724-1-300x212.jpg" alt="NASSCOM Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
                       </div>
                       <p className="text-[#09263F] font-bold text-sm text-center">NASSCOM FutureSkills Prime</p>
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <div className="aspect-[1024/724] relative mb-4">
-                        <Image src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
+                        <Image src="/lp/images/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" alt="AnalytixLabs Certification" fill className="object-contain rounded-lg shadow-sm" sizes="(max-width: 768px) 100vw, 300px" />
                       </div>
                       <p className="text-[#09263F] font-bold text-sm text-center">Data Analyst + AI Certificate</p>
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <div className="aspect-[1024/724] relative mb-4 flex items-center justify-center">
-                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" alt="IIT Bombay, IIT Patna and Nasscom — Partners" width={400} height={212} className="object-contain rounded-lg shadow-sm w-full h-auto" />
+                        <Image src="/lp/images/Final-Logo-IITP-IITB-2026.webp" alt="IIT Bombay, IIT Patna and Nasscom — Partners" width={400} height={212} className="object-contain rounded-lg shadow-sm w-full h-auto" />
                       </div>
                       <p className="text-[#09263F] font-bold text-sm text-center">IIT Bombay, IIT Patna & Nasscom</p>
                       <p className="text-[#4A6275] text-[10px] font-bold text-center mt-1 uppercase tracking-wider">Official Partners</p>

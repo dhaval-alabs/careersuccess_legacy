@@ -9,7 +9,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+            src="/lp/images/analytixlabs-logo.webp"
             alt="AnalytixLabs"
             width={160}
             height={36}

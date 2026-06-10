@@ -255,7 +255,7 @@ export default function Home() {
                 <div className="flex-shrink-0">
                   {/* Mobile Mobile Icon */}
                   <Image 
-                    src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp" 
+                    src="/lp/images/alabs-hd.webp" 
                     alt="AnalytixLabs Icon" 
                     width={48} height={48} 
                     className="w-auto h-[3.5rem] sm:hidden max-w-[30vw] object-contain" 
@@ -264,7 +264,7 @@ export default function Home() {
                   />
                   {/* Desktop Logo */}
                   <Image 
-                    src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp" 
+                    src="/lp/images/analytixlabs-logo.webp" 
                     alt="AnalytixLabs - Data Science Training Institute" 
                     width={180} height={40} 
                     className="w-auto h-[4rem] hidden sm:block" 
@@ -274,7 +274,7 @@ export default function Home() {
                 </div>
                 <div className="w-px h-8 bg-[#D6ECEB]" />
                 <Image 
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" 
+                  src="/lp/images/Final-Logo-IITP-IITB-2026.webp" 
                   alt="IIT Bombay, IIT Patna and Nasscom — Partners" 
                   width={300} height={60} 
                   className="w-auto h-[4.5rem] sm:h-[6.5rem] max-w-[65vw] sm:max-w-none object-contain" 
@@ -504,7 +504,7 @@ export default function Home() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <Image 
-                        src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Nasscom-Certification-1024x724-1-300x212.jpg" 
+                        src="/lp/images/Nasscom-Certification-1024x724-1-300x212.jpg" 
                         alt="NASSCOM Certification" 
                         width={600} height={420} 
                         className="w-full h-auto rounded-lg shadow-sm"
@@ -514,7 +514,7 @@ export default function Home() {
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
                       <Image 
-                        src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/10/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" 
+                        src="/lp/images/Alabs_DS-Advanced-Certification-in-Data-Science-AI-300x212.jpg" 
                         alt="AnalytixLabs Certification" 
                         width={600} height={420} 
                         className="w-full h-auto rounded-lg shadow-sm"
@@ -524,7 +524,7 @@ export default function Home() {
                     </div>
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03] flex flex-col justify-center">
                       <div className="bg-[#F4FAFA] rounded-lg p-4 flex items-center justify-center h-full min-h-[140px]">
-                        <Image src="https://www.analytixlabs.co.in/wp-content/uploads/2024/12/Final-Logo-IITP-IITB-2026.webp" alt="Official Partners" width={400} height={120} className="w-full h-auto object-contain" />
+                        <Image src="/lp/images/Final-Logo-IITP-IITB-2026.webp" alt="Official Partners" width={400} height={120} className="w-full h-auto object-contain" />
                       </div>
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Official Partner Branding</p>
                     </div>

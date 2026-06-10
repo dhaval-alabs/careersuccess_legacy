@@ -94,7 +94,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
       <header style={{ padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px', justifyContent: 'center' }}>
           <Image
-            src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+            src="/lp/images/analytixlabs-logo.webp"
             alt="AnalytixLabs"
             width={180}
             height={40}
@@ -102,7 +102,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
           />
           <div style={{ width: '1px', height: '30px', background: '#D6ECEB' }} />
           <Image
-            src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
+            src="/lp/images/logo-nasscom-ministry.webp"
             alt="NASSCOM"
             width={260}
             height={50}

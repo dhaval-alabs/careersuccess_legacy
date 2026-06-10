@@ -19,7 +19,7 @@ export default function OtpTestPage() {
       <div className="relative z-10 mb-8 flex flex-col items-center gap-6">
         <div className="flex items-center gap-4">
           <Image
-            src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+            src="/lp/images/analytixlabs-logo.webp"
             alt="AnalytixLabs"
             width={180}
             height={40}

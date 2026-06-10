@@ -53,14 +53,14 @@ export default function ContactUsPage() {
             <div className="flex items-center gap-4 sm:gap-8 mb-12">
               <div className="flex-shrink-0">
                 <Image
-                  src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/alabs-hd.webp"
+                  src="/lp/images/alabs-hd.webp"
                   alt="AnalytixLabs Icon"
                   width={48} height={48}
                   className="w-auto h-[4.5rem] sm:hidden max-w-[30vw] object-contain"
                   priority
                 />
                 <Image
-                  src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+                  src="/lp/images/analytixlabs-logo.webp"
                   alt="AnalytixLabs - Data Analytics Training Institute"
                   width={180} height={40}
                   className="w-auto h-[3.5rem] hidden sm:block"
@@ -69,7 +69,7 @@ export default function ContactUsPage() {
               </div>
               <div className="w-px h-8 bg-[#D6ECEB]" />
               <Image
-                src="https://www.analytixlabs.co.in/wp-content/uploads/2026/03/logo-nasscom-ministry.webp"
+                src="/lp/images/logo-nasscom-ministry.webp"
                 alt="Nasscom Futureskills - Ministry of Electronics and Information Technology"
                 width={160} height={40}
                 className="w-auto h-[5.25rem] max-w-[55vw] sm:max-w-none object-contain"

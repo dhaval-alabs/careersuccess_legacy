@@ -12,7 +12,7 @@ export default function Header({ onOpenForm }: Props) {
       <div className="max-w-[1600px] mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Image
-            src="https://careersuccess.analytixlabs.co.in/wp-content/uploads/2025/03/analytixlabs-logo.webp"
+            src="/lp/images/analytixlabs-logo.webp"
             alt="AnalytixLabs"
             width={160} height={36}
             className="w-auto h-8 sm:h-9"
