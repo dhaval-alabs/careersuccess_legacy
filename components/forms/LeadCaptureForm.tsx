@@ -286,24 +286,11 @@ export default function LeadCaptureForm({
                   placeholder="10-digit mobile"
                   maxLength={10}
                   onFocus={() => recordFirstField('mobile')}
-                  className="w-full pl-4 pr-28 py-3 rounded-xl border border-[#D6ECEB] bg-white
+                  className="w-full px-4 py-3 rounded-xl border border-[#D6ECEB] bg-white
                              text-[#09263F] text-sm placeholder-[#9BBAC0]
                              focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
                              transition-all duration-200 disabled:opacity-60"
                 />
-                <button
-                  type="button"
-                  onClick={handleSendOtp}
-                  disabled={mobile.length !== 10 || otpState === 'sending'}
-                  className={`absolute right-2 top-1/2 -translate-y-1/2
-                              px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                              ${mobile.length === 10 && otpState !== 'sending'
-                                ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] cursor-pointer'
-                                : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
-                              }`}
-                >
-                  {otpState === 'sending' ? '...' : 'OTP'}
-                </button>
               </div>
             </div>
           ) : (
