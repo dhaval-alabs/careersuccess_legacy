@@ -102,10 +102,14 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
       body.max_scroll_pct || '',
       body.form_completion_seconds || '',
       body.referrer_url || '',
-      otpStatus // Column Q
+      otpStatus, // Column Q
+      '', // R: score
+      '', // S: preferredCallbackTime
+      '', // T: reason
+      body.status || '' // U: Profile/Status
     ];
     
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:Q:append?valueInputOption=USER_ENTERED`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:U:append?valueInputOption=USER_ENTERED`;
     
     const res = await fetch(url, {
       method: 'POST',

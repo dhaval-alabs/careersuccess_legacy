@@ -48,6 +48,7 @@ export default function HeroLeadCaptureForm({
 }: HeroLeadCaptureFormProps) {
   const [name, setName]               = useState('');
   const [email, setEmail]             = useState('');
+  const [status, setStatus]           = useState('');
   const [city, setCity]               = useState('');
   const [countryCode, setCountryCode] = useState('+91');
   const [mobile, setMobile]           = useState('');
@@ -73,7 +74,7 @@ export default function HeroLeadCaptureForm({
   }, [resendTimer]);
 
   async function handleInitialSubmit() {
-    if (!name || !email || !city || mobile.length !== 10) {
+    if (!name || !email || !city || !status || mobile.length !== 10) {
       setFormError('Please fill all fields before continuing.');
       return;
     }
@@ -90,7 +91,7 @@ export default function HeroLeadCaptureForm({
            method: 'POST',
            headers: { 'Content-Type': 'application/json' },
            body: JSON.stringify({
-             name, email, city, countryCode, mobile,
+             name, email, city, status, countryCode, mobile,
              form_source: sourceName,
              typeFilter: typeFilter || 'PPC_HeroForm',
              ...utms,
@@ -116,7 +117,7 @@ export default function HeroLeadCaptureForm({
   };
 
   async function handleSendOtp() {
-    if (!name || !email || !city || mobile.length !== 10) {
+    if (!name || !email || !city || !status || mobile.length !== 10) {
       setFormError('Please fill all fields before requesting OTP.');
       return;
     }
@@ -133,7 +134,7 @@ export default function HeroLeadCaptureForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, email, city, countryCode, mobile,
+          name, email, city, status, countryCode, mobile,
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_HeroForm',
           ...utms,
@@ -290,19 +291,37 @@ export default function HeroLeadCaptureForm({
             />
           </div>
           <div>
-            <label htmlFor="city" className={labelCls}>Current City</label>
-            <SearchableCitySelect
-              name="city"
-              required
-              value={city}
-              onChange={(val) => {
-                setCity(val);
-                recordFirstField('city');
+            <label htmlFor="status" className={labelCls}>Current Status</label>
+            <select
+              id="status" name="status" required
+              className={inputCls}
+              value={status} onChange={e => {
+                setStatus(e.target.value);
+                recordFirstField('status');
               }}
               disabled={otpState !== 'idle' && otpState !== 'sending'}
-              placeholder="Select City..."
-            />
+            >
+              <option value="" disabled>Select Status...</option>
+              <option value="Student">Student</option>
+              <option value="Working professional">Working professional</option>
+              <option value="Career switcher">Career switcher</option>
+            </select>
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="city" className={labelCls}>Current City</label>
+          <SearchableCitySelect
+            name="city"
+            required
+            value={city}
+            onChange={(val) => {
+              setCity(val);
+              recordFirstField('city');
+            }}
+            disabled={otpState !== 'idle' && otpState !== 'sending'}
+            placeholder="Select City..."
+          />
         </div>
 
         <div>

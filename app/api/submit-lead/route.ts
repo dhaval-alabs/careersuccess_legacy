@@ -121,7 +121,6 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
     }
 
     const token = await getGoogleSheetsToken(email, key);
-    
     const row = [
       body.submission_timestamp || new Date().toISOString(),
       body.name || '',
@@ -138,12 +137,16 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
       body.time_on_page_seconds || '',
       body.max_scroll_pct || '',
       body.form_completion_seconds || '',
-      body.referrer_url || ''
+      body.referrer_url || '',
+      'Unverified', // Q: otpStatus
+      '', // R: score
+      '', // S: preferredCallbackTime
+      '', // T: reason
+      body.status || '' // U: Profile/Status
     ];
 
     // Using the tab name provided by user
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:P:append?valueInputOption=USER_ENTERED`;
-
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:U:append?valueInputOption=USER_ENTERED`;
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -188,6 +191,7 @@ export async function POST(req: NextRequest) {
     // Extra Notes for LeadSquared (Requested specifically)
     // Consolidating all fields that failed the 412 schema check into this field
     const extraNotes = [
+      `Status: ${body.status || 'N/A'}`,
       `Source CTA: ${body.form_source || 'N/A'}`,
       `Type Filter: ${body.typeFilter || 'N/A'}`,
       `UTM Source: ${body.utm_source || 'N/A'}`,
