@@ -606,13 +606,14 @@ export default function Home() {
 
         {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm 
+          <HeroLeadCaptureForm 
             title="Check Your Eligibility" 
             sourceName={`PPC_BLR_${ctaSource}`}
             typeFilter="PPC_CheckEligibility" 
             buttonText="Check Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
             onSuccess={(email) => fireConversion(`lp_${ctaSource}`, email)}
+            qualificationConfigKey="data-science-specialization"
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>

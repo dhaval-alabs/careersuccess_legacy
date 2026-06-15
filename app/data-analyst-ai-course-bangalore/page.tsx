@@ -547,13 +547,14 @@ export default function BangaloreDAAIPage() {
 
         {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm
+          <HeroLeadCaptureForm
             title="Check Your Eligibility"
             sourceName={`${config.crmPrefix}_${ctaSource}`}
             typeFilter="PPC_CheckEligibility"
             buttonText="Check Your Eligibility →"
             thankYouPath="/thankyou-check-your-eligibility"
             onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
+            qualificationConfigKey="data-analytics-ai"
           />
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>

@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../utils/trackBehaviour';
 import { getStoredUtm } from '../utils/captureUtm';
 import SearchableCitySelect from './SearchableCitySelect';
-import QualificationChat from './QualificationChat';
 import { QUALIFICATION_CONFIG } from '../lib/qualification-config';
 
 const COUNTRY_CODES = [
@@ -25,16 +24,12 @@ interface HeroLeadCaptureFormProps {
   qualificationConfigKey?: string;
 }
 
-const inputCls = `
-  w-full px-4 py-3 rounded-xl border border-[#D6ECEB] bg-white
-  text-[#09263F] text-sm placeholder-[#9BBAC0]
-  focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
-  transition-all duration-200 disabled:opacity-60
-`.trim();
-
-const labelCls = 'block text-xs font-bold text-[#09263F] mb-1.5 tracking-wide';
-
-type OtpState = 'idle' | 'chatStep' | 'sending' | 'otp_sent' | 'verifying' | 'error';
+interface Message {
+  id: string;
+  sender: 'bot' | 'user';
+  text: string;
+  isTyping?: boolean;
+}
 
 export default function HeroLeadCaptureForm({
   sourceName   = 'Hero Section',
@@ -44,25 +39,54 @@ export default function HeroLeadCaptureForm({
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
   debug = false,
-  qualificationConfigKey,
+  qualificationConfigKey = 'data-science-ai',
 }: HeroLeadCaptureFormProps) {
-  const [name, setName]               = useState('');
-  const [email, setEmail]             = useState('');
-  const [status, setStatus]           = useState('');
-  const [city, setCity]               = useState('');
-  const [countryCode, setCountryCode] = useState('+91');
-  const [mobile, setMobile]           = useState('');
+  // Conversational Form States
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [step, setStep] = useState(0); // 0 to 8: status -> interest -> timeline -> name -> email -> city -> mobile -> callback -> OTP
+  const [showInputs, setShowInputs] = useState(false);
 
-  const [otpState, setOtpState]       = useState<OtpState>('idle');
-  const [otpValue, setOtpValue]       = useState('');
-  const [token, setToken]             = useState('');
-  const [errorMsg, setErrorMsg]       = useState('');
-  const [resendTimer, setResendTimer] = useState(0);
-  const [formError, setFormError]     = useState('');
-  const [conversation, setConversation] = useState<string[]>([]);
+  // Form Fields Data
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
+  const [interest, setInterest] = useState('');
+  const [timeline, setTimeline] = useState('');
+  const [city, setCity] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
+  const [mobile, setMobile] = useState('');
   const [preferredCallbackTime, setPreferredCallbackTime] = useState('');
 
-  // Manage resend timer
+  // OTP and Verification States
+  const [otpValue, setOtpValue] = useState('');
+  const [token, setToken] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [resendTimer, setResendTimer] = useState(0);
+  const [formError, setFormError] = useState('');
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  // Chat/History Helper States
+  const [conversation, setConversation] = useState<string[]>([]);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+
+  // Ref for Auto-scroll
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Course configuration lookup
+  const configInfo = QUALIFICATION_CONFIG[qualificationConfigKey] || QUALIFICATION_CONFIG['data-science-ai'];
+  const courseSubject = configInfo.subject;
+
+  // Auto scroll effect
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, showInputs, showTimePicker]);
+
+  // Resend Timer Effect
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (resendTimer > 0) {
@@ -73,115 +97,229 @@ export default function HeroLeadCaptureForm({
     return () => clearInterval(interval);
   }, [resendTimer]);
 
-  async function handleInitialSubmit() {
-    if (!name || !email || !city || !status || mobile.length !== 10) {
-      setFormError('Please fill all fields before continuing.');
-      return;
-    }
-
-    setFormError('');
-    if (qualificationConfigKey && QUALIFICATION_CONFIG[qualificationConfigKey]) {
-      // First submit - go to chat step
-      setOtpState('chatStep');
-      
-      try {
-        const utms = getStoredUtm();
-        const behaviour = getBehaviourSnapshot();
-        await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify({
-             name, email, city, status, countryCode, mobile,
-             form_source: sourceName,
-             typeFilter: typeFilter || 'PPC_HeroForm',
-             ...utms,
-             ...behaviour,
-             submission_timestamp: new Date().toISOString(),
-             landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
-             referrer_url: typeof document !== 'undefined' ? document.referrer : '',
-             debug,
-           })
-        });
-      } catch (err) {
-        // ignore
+  // Conversation sequence initiator
+  useEffect(() => {
+    setMessages([
+      {
+        id: 'welcome',
+        sender: 'bot',
+        text: `Hi! 👋 Let's customize your learning plan for ${courseSubject}. To start, are you working, studying, or just starting out?`
       }
-    } else {
-      await handleSendOtp();
-    }
-  }
+    ]);
+    setShowInputs(true);
+  }, []);
 
-  const handleChatComplete = (conv: string[], callbackTime: string) => {
-    setConversation(conv);
-    setPreferredCallbackTime(callbackTime);
-    handleSendOtp(true);
+  // Helper to add bot messages with a natural typing delay
+  const addBotMessage = (text: string, delay = 600) => {
+    setShowInputs(false);
+    const id = Math.random().toString();
+    setMessages(prev => [...prev, { id, sender: 'bot', text: '...', isTyping: true }]);
+    
+    setTimeout(() => {
+      setMessages(prev => prev.map(m => m.id === id ? { ...m, text, isTyping: false } : m));
+      setShowInputs(true);
+    }, delay);
   };
 
-  async function handleSendOtp(skipSheets = false) {
-    if (!name || !email || !city || !status || mobile.length !== 10) {
-      setFormError('Please fill all fields before requesting OTP.');
-      return;
+  // Progression handler
+  const handleUserSelection = async (val: string) => {
+    // 1. Render User Bubble
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: val }]);
+    
+    // 2. State & Question Mapping
+    if (step === 0) {
+      setStatus(val);
+      recordFirstField('status');
+      setConversation(prev => [...prev, `Q: Quick one — are you working, studying, or just starting out?\nA: ${val}`]);
+      setStep(1);
+      addBotMessage(`Got it. What's drawing you toward ${courseSubject} right now?`);
+    } 
+    else if (step === 1) {
+      setInterest(val);
+      setConversation(prev => [...prev, `Q: What's drawing you toward ${courseSubject} right now?\nA: ${val}`]);
+      setStep(2);
+      addBotMessage("Makes sense. When are you hoping to get started?");
+    } 
+    else if (step === 2) {
+      setTimeline(val);
+      setConversation(prev => [...prev, `Q: When are you hoping to get started?\nA: ${val}`]);
+      setStep(3);
+      addBotMessage("Understood. Could you share your full name?");
     }
+  };
 
-    setOtpState('sending');
-    setErrorMsg('');
+  // Handler for custom typed responses (Name, Email, Phone)
+  const handleTypedSubmit = async (val: string) => {
+    if (!val.trim()) return;
+
+    // Render user bubble
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: val }]);
+
+    if (step === 3) {
+      setName(val);
+      recordFirstField('name');
+      setConversation(prev => [...prev, `Q: Could you share your full name?\nA: ${val}`]);
+      setStep(4);
+      addBotMessage(`Nice to meet you, ${val.split(' ')[0]}! What is your email address?`);
+    } 
+    else if (step === 4) {
+      // Simple email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(val.trim())) {
+        setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'bot', text: "Hmm, that email doesn't look quite right. Please try entering a valid email address." }]);
+        return;
+      }
+      setEmail(val.trim());
+      recordFirstField('email');
+      setConversation(prev => [...prev, `Q: What is your email address?\nA: ${val.trim()}`]);
+      setStep(5);
+      addBotMessage("Perfect. Which city are you currently in?");
+    }
+  };
+
+  // City selection handler
+  const handleCitySubmit = (selectedCity: string) => {
+    setCity(selectedCity);
+    recordFirstField('city');
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: selectedCity }]);
+    setConversation(prev => [...prev, `Q: Which city are you currently in?\nA: ${selectedCity}`]);
+    setStep(6);
+    addBotMessage("Almost there! What is your WhatsApp number?");
+  };
+
+  // WhatsApp and OTP trigger logic (runs after Step 6 is submitted)
+  const handlePhoneSubmit = async (phoneVal: string) => {
+    if (phoneVal.length !== 10) return;
+    
+    setMobile(phoneVal);
+    recordFirstField('mobile');
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: `${countryCode} ${phoneVal}` }]);
+    setConversation(prev => [...prev, `Q: What is your WhatsApp number?\nA: ${countryCode}${phoneVal}`]);
+    
+    setStep(7);
+    addBotMessage("Thanks! When works best for a learning advisor to call you?");
+  };
+
+  // Preferred callback handler (runs at Step 7)
+  const handleCallbackSubmit = async (timeVal: string) => {
+    setPreferredCallbackTime(timeVal);
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: timeVal }]);
+    setConversation(prev => [...prev, `Q: When works best for a learning advisor to call you?\nA: ${timeVal}`]);
+
+    // Transition to verification stage
+    setStep(8);
+    setShowInputs(false);
+    
+    // Add bot explanation and trigger lead capture + OTP send APIs
+    const verificationText = "To send you the customized plan, we need to first verify your details.";
+    const id = Math.random().toString();
+    setMessages(prev => [...prev, { id, sender: 'bot', text: '...', isTyping: true }]);
+    
+    setTimeout(async () => {
+      setMessages(prev => prev.map(m => m.id === id ? { ...m, text: verificationText, isTyping: false } : m));
+      await processLeadSubmissionAndSendOtp(phoneValForSubmit(mobile), timeVal);
+    }, 600);
+  };
+
+  const phoneValForSubmit = (phone: string) => {
+    return phone || mobile;
+  };
+
+  // Performs initial lead capture API followed by OTP sending API
+  const processLeadSubmissionAndSendOtp = async (targetPhone: string, targetCallback: string) => {
+    setIsSendingOtp(true);
     setFormError('');
+    setErrorMsg('');
 
     const utms = getStoredUtm();
     const behaviour = getBehaviourSnapshot();
+    const cleanPhone = countryCode === '+91' ? targetPhone : `${countryCode}${targetPhone}`;
 
+    // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
     try {
-      const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
+      await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, email, city, status, countryCode, mobile,
+          name,
+          email,
+          city,
+          status,
+          countryCode,
+          mobile: targetPhone,
           form_source: sourceName,
-          typeFilter: typeFilter || 'PPC_HeroForm',
+          typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
           ...utms,
           ...behaviour,
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
           debug,
-          skipSheets,
+        })
+      });
+    } catch (err) {
+      console.error('[ConversationalForm] submit-lead error:', err);
+    }
+
+    // 2. Send OTP with skipSheets: true (since the lead row already got appended above)
+    try {
+      const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          city,
+          status,
+          countryCode,
+          mobile: targetPhone,
+          form_source: sourceName,
+          typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
+          ...utms,
+          ...behaviour,
+          submission_timestamp: new Date().toISOString(),
+          landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+          referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+          debug,
+          skipSheets: true,
         }),
       });
 
       const data = await res.json();
+      setIsSendingOtp(false);
 
       if (!data.success) {
-        setOtpState('idle');
-        setFormError(data.error || 'Something went wrong. Please try again.');
+        setFormError(data.error || 'Something went wrong while sending the verification code. Please try again.');
         return;
       }
 
       if (data.fallback) {
         if (debug && data.debugInfo) {
-          setOtpState('idle');
           setFormError(`[DEBUG] OTP Delivery Failed: ${data.debugInfo}`);
           return;
         }
-        // WhatsApp delivery failed - proceed as normal Lead submission (Fallback)
+        // WhatsApp API failed -> fallback silently to success immediately (no block)
         onSuccess?.(email);
-        const params = new URLSearchParams({ email, name, phone: mobile });
+        const params = new URLSearchParams({ email, name, phone: targetPhone });
         window.location.href = `${thankYouPath}?${params.toString()}`;
         return;
       }
 
       // OTP sent successfully
       setToken(data.token);
-      setOtpState('otp_sent');
       setResendTimer(30);
+      setShowInputs(true); // show OTP verification inputs inside the chat area
     } catch (err) {
-      setOtpState('idle');
+      setIsSendingOtp(false);
       setFormError('Connection error. Please check your internet and try again.');
     }
-  }
+  };
 
-  async function handleVerify() {
+  // OTP Verification Handler
+  const handleOtpVerify = async () => {
     if (otpValue.length !== 4) return;
 
-    setOtpState('verifying');
+    setIsVerifying(true);
     setErrorMsg('');
 
     try {
@@ -201,34 +339,34 @@ export default function HeroLeadCaptureForm({
       });
 
       const data = await res.json();
+      setIsVerifying(false);
 
       if (!data.success) {
-        setOtpState('error');
-        setErrorMsg(data.error || 'Verification failed. Please try again.');
+        setErrorMsg(data.error || 'Incorrect OTP code. Please check and try again.');
         setOtpValue('');
         return;
       }
 
-      // If debug info returned during verification, briefly show it or log it
+      // If debug info returned during verification
       if (debug && data.debugInfo) {
         setFormError(`[VERIFY DEBUG] ${data.debugInfo}`);
-        // Give the user a moment to see the debug info before redirecting
         await new Promise(resolve => setTimeout(resolve, 3000));
       }
 
-      // Verified successfully!
-      if (qualificationConfigKey && QUALIFICATION_CONFIG[qualificationConfigKey]) {
-         fetch('/api/qualify', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify({
-             phone: `${countryCode}${mobile}`,
-             email,
-             conversation,
-             preferredCallbackTime
-           }),
-           keepalive: true
-         }).catch(console.error);
+      // Submit qualification answers to CRM and sheets
+      const qualConfigKey = qualificationConfigKey || 'data-science-ai';
+      if (QUALIFICATION_CONFIG[qualConfigKey]) {
+        fetch('/api/qualify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: `${countryCode}${mobile}`,
+            email,
+            conversation,
+            preferredCallbackTime
+          }),
+          keepalive: true
+        }).catch(console.error);
       }
 
       onSuccess?.(email);
@@ -236,248 +374,375 @@ export default function HeroLeadCaptureForm({
       const redirectUrl = data.verified 
         ? `${thankYouPath}?${params.toString()}&verified=true`
         : `${thankYouPath}?${params.toString()}`;
+      
       window.location.href = redirectUrl;
     } catch (err) {
-      setOtpState('error');
-      setErrorMsg('Verification failed. Server is unreachable.');
+      setIsVerifying(false);
+      setErrorMsg('Verification failed. Server is currently unreachable.');
     }
-  }
+  };
 
-  async function handleResend() {
+  // Resend OTP logic inside the chat UI
+  const handleResendOtp = async () => {
     setOtpValue('');
     setErrorMsg('');
     setToken('');
-    setOtpState('idle');
-    await handleSendOtp();
-  }
+    await processLeadSubmissionAndSendOtp(mobile, preferredCallbackTime);
+  };
+
+  const handleSpecificTimePickerSubmit = () => {
+    if (selectedDate && selectedTime) {
+      const dt = new Date(selectedDate);
+      const day = dt.getDay(); // 0 is Sunday
+      if (day === 0) {
+        alert("Advisors are not available on Sundays. Please pick Monday to Saturday.");
+        return;
+      }
+      const [hh, mm] = selectedTime.split(':').map(Number);
+      if (hh < 10 || hh > 18 || (hh === 18 && mm > 0)) {
+        alert("Please pick a time between 10 AM and 6 PM.");
+        return;
+      }
+      setShowTimePicker(false);
+      handleCallbackSubmit(`${selectedDate} at ${selectedTime}`);
+    }
+  };
 
   return (
-    <div className="px-7 py-8 bg-white/50 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden" id="hero-lead-capture">
-      <div className="mb-6 relative z-10">
-        <h2 className="font-display font-bold text-[#09263F] text-xl mb-1">{title}</h2>
-        <p className="text-[#4A6275] text-sm">Verify your WhatsApp to connect with our experts.</p>
+    <div className="px-5 py-6 bg-white/55 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden flex flex-col h-[480px] w-full" id="hero-lead-capture">
+      {/* Title / Header */}
+      <div className="mb-4 relative z-10 border-b border-[#D6ECEB]/40 pb-3">
+        <h2 className="font-display font-bold text-[#09263F] text-base mb-0.5">{title}</h2>
+        <p className="text-[#4A6275] text-[11px]">Chat with our AI advisor to customize your learning path.</p>
       </div>
 
+      {/* Global Error Banner */}
       {formError && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="mb-3 px-3 py-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium animate-in fade-in slide-in-from-top-2 duration-300">
           {formError}
         </div>
       )}
 
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-4 relative z-10">
-        <div>
-          <label htmlFor="name" className={labelCls}>Full Name</label>
-          <input
-            type="text" name="name" id="name"
-            required maxLength={50}
-            placeholder="e.g. Rahul Sharma"
-            className={inputCls}
-            value={name} onChange={e => setName(e.target.value)}
-            disabled={otpState !== 'idle' && otpState !== 'sending'}
-            onFocus={() => recordFirstField('name')}
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label htmlFor="email" className={labelCls}>Email Address</label>
-            <input
-              type="email" name="email" id="email"
-              required maxLength={75}
-              placeholder="you@email.com"
-              className={inputCls}
-              value={email} onChange={e => setEmail(e.target.value)}
-              disabled={otpState !== 'idle' && otpState !== 'sending'}
-              onFocus={() => recordFirstField('email')}
-            />
-          </div>
-          <div>
-            <label htmlFor="status" className={labelCls}>Current Status</label>
-            <select
-              id="status" name="status" required
-              className={inputCls}
-              value={status} onChange={e => {
-                setStatus(e.target.value);
-                recordFirstField('status');
-              }}
-              disabled={otpState !== 'idle' && otpState !== 'sending'}
-            >
-              <option value="" disabled>Select Status...</option>
-              <option value="Student">Student</option>
-              <option value="Working professional">Working professional</option>
-              <option value="Career switcher">Career switcher</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="city" className={labelCls}>Current City</label>
-          <SearchableCitySelect
-            name="city"
-            required
-            value={city}
-            onChange={(val) => {
-              setCity(val);
-              recordFirstField('city');
-            }}
-            disabled={otpState !== 'idle' && otpState !== 'sending'}
-            placeholder="Select City..."
-          />
-        </div>
-
-        <div>
-          <label htmlFor="mobile" className={labelCls}>Whatsapp Number (for OTP)</label>
-          
-          {(otpState === 'idle' || otpState === 'sending') ? (
-            <div className="flex gap-2 items-stretch">
-              <select
-                value={countryCode}
-                onChange={e => setCountryCode(e.target.value)}
-                disabled={otpState === 'sending'}
-                className="w-20 flex-shrink-0 px-2 py-3 rounded-xl border border-[#D6ECEB] bg-white
-                           text-[#09263F] text-sm font-semibold
-                           focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
-                           transition-all duration-200 cursor-pointer disabled:opacity-60"
-              >
-                {COUNTRY_CODES.map(c => (
-                  <option key={c.code} value={c.code}>{c.label}</option>
-                ))}
-              </select>
-              <div className="relative flex-1">
-                <input
-                  type="tel"
-                  value={mobile}
-                  onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  disabled={otpState === 'sending'}
-                  placeholder="10-digit mobile"
-                  maxLength={10}
-                  onFocus={() => recordFirstField('mobile')}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D6ECEB] bg-white
-                             text-[#09263F] text-sm placeholder-[#9BBAC0]
-                             focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/40 focus:border-[#1DE5B5]
-                             transition-all duration-200 disabled:opacity-60"
-                />
-              </div>
-            </div>
-          ) : otpState === 'chatStep' && qualificationConfigKey ? (
-            <div className="animate-in fade-in zoom-in-95 duration-300 relative z-20">
-              <QualificationChat 
-                firstName={name.split(' ')[0]}
-                courseSubject={QUALIFICATION_CONFIG[qualificationConfigKey].subject}
-                questions={QUALIFICATION_CONFIG[qualificationConfigKey].questions}
-                options={QUALIFICATION_CONFIG[qualificationConfigKey].options}
-                onComplete={handleChatComplete}
-              />
-            </div>
-          ) : (
-            <div className="space-y-3 animate-in fade-in zoom-in-95 duration-300">
-              <div className="flex items-center justify-between text-xs font-medium">
-                <span className="text-[#29E8A4]">WhatsApp OTP sent to {countryCode} {mobile}</span>
-                <button 
-                  type="button" 
-                  onClick={() => setOtpState('idle')} 
-                  className="text-[#4A6275] hover:text-[#09263F] underline"
-                >
-                  Change
-                </button>
-              </div>
-              <div className="relative">
-                <input
-                  type="tel"
-                  value={otpValue}
-                  onChange={e => setOtpValue(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                  disabled={otpState === 'verifying'}
-                  placeholder="Enter 4-digit code"
-                  maxLength={4}
-                  autoFocus
-                  className="w-full pl-4 pr-28 py-3 rounded-xl border border-[#1DE5B5] bg-white
-                             text-[#09263F] text-sm placeholder-[#9BBAC0] tracking-[0.5em] font-bold
-                             focus:outline-none focus:ring-4 focus:ring-[#1DE5B5]/20
-                             transition-all duration-200 disabled:opacity-60"
-                />
-                <button
-                  type="button"
-                  onClick={handleVerify}
-                  disabled={otpValue.length !== 4 || otpState === 'verifying'}
-                  className={`absolute right-2 top-1/2 -translate-y-1/2
-                              px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200
-                              ${otpValue.length === 4 && otpState !== 'verifying'
-                                ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] cursor-pointer shadow-lg shadow-[#29E8A4]/20'
-                                : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
-                              }`}
-                >
-                  {otpState === 'verifying' ? (
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                      </svg>
-                      ...
-                    </span>
-                  ) : 'Verify'}
-                </button>
-              </div>
-              
-              {errorMsg && <p className="text-xs text-red-500 font-medium">{errorMsg}</p>}
-              
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-[#4A6275]">Didn't receive it?</span>
-                {resendTimer > 0 ? (
-                  <span className="text-[#4A6275] font-semibold">Resend in {resendTimer}s</span>
-                ) : (
-                  <button type="button" onClick={handleResend} className="text-[#239bf5] font-bold hover:underline">
-                    Resend Now
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {(otpState === 'idle' || otpState === 'sending') && (
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={handleInitialSubmit}
-              disabled={otpState === 'sending'}
-              className="w-full py-4 bg-[#29E8A4] text-[#09263F] font-bold rounded-2xl text-base 
-                         shadow-[0_8px_30px_rgba(41,232,164,0.3)] hover:bg-[#1DE5B5] 
-                         active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group"
-            >
-              {otpState === 'sending' ? (
-                <>
-                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                  </svg>
-                  Sending OTP...
-                </>
+      {/* Chat Messages Container */}
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3.5 pr-1 scroll-smooth" ref={scrollRef}>
+        {messages.map((m) => (
+          <div key={m.id} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs ${
+              m.sender === 'user'
+                ? 'bg-[#09263F] text-white rounded-br-none animate-in slide-in-from-right-2 duration-200'
+                : 'bg-white text-[#09263F] border border-[#D6ECEB] rounded-bl-none shadow-sm animate-in slide-in-from-left-2 duration-200'
+            }`}>
+              {m.isTyping ? (
+                <div className="flex items-center gap-1 h-4">
+                  <div className="w-1.5 h-1.5 bg-[#4A6275] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-1.5 h-1.5 bg-[#4A6275] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-1.5 h-1.5 bg-[#4A6275] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
               ) : (
-                <>
-                  {buttonText}
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </>
+                <p className="whitespace-pre-wrap leading-relaxed">{m.text}</p>
               )}
-            </button>
-            <p className="mt-3 text-[10px] text-[#4A6275] leading-relaxed text-center px-4">
-              By clicking, you agree to receive career updates and verification codes on WhatsApp.
-            </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Input Options / Controls Area */}
+      <div className="relative z-10 bg-white/70 backdrop-blur-md border-t border-[#D6ECEB] pt-3 -mx-5 px-5 pb-1">
+        {showInputs && (
+          <div className="space-y-3 animate-in slide-in-from-bottom-3 duration-300">
+            {/* Step 0: Status Selection */}
+            {step === 0 && (
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {['Working professional', 'Fresher / recent graduate', 'Student', 'Between jobs right now'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => handleUserSelection(opt)}
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 1: Interest */}
+            {step === 1 && (
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {['Start my career in data / AI', 'Switch into a data / AI role', 'Upskill or get promoted', 'Just exploring for now'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => handleUserSelection(opt)}
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 2: Timeline */}
+            {step === 2 && (
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {['This month', 'In the next month or two', 'Still figuring it out'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => handleUserSelection(opt)}
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 3: Name Input */}
+            {step === 3 && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const val = new FormData(form).get('custom_name') as string;
+                  if (val.trim()) {
+                    handleTypedSubmit(val);
+                    form.reset();
+                  }
+                }}
+                className="flex gap-2 items-center"
+              >
+                <input
+                  type="text"
+                  name="custom_name"
+                  required
+                  placeholder="Enter your full name..."
+                  className="flex-1 px-4 py-2 text-xs border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                />
+                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-xs font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                  Send
+                </button>
+              </form>
+            )}
+
+            {/* Step 4: Email Input */}
+            {step === 4 && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const val = new FormData(form).get('custom_email') as string;
+                  if (val.trim()) {
+                    handleTypedSubmit(val);
+                    form.reset();
+                  }
+                }}
+                className="flex gap-2 items-center"
+              >
+                <input
+                  type="email"
+                  name="custom_email"
+                  required
+                  placeholder="Enter your email address..."
+                  className="flex-1 px-4 py-2 text-xs border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                />
+                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-xs font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                  Send
+                </button>
+              </form>
+            )}
+
+            {/* Step 5: City Selector */}
+            {step === 5 && (
+              <div className="pb-1">
+                <SearchableCitySelect
+                  name="city"
+                  value={city}
+                  onChange={handleCitySubmit}
+                  placeholder="Search and select city..."
+                />
+              </div>
+            )}
+
+            {/* Step 6: Phone Input */}
+            {step === 6 && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const val = mobile.trim();
+                  if (val.length === 10) {
+                    handlePhoneSubmit(val);
+                  }
+                }}
+                className="flex gap-2 items-stretch"
+              >
+                <select
+                  value={countryCode}
+                  onChange={e => setCountryCode(e.target.value)}
+                  className="w-16 flex-shrink-0 px-1.5 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-xs font-semibold focus:outline-none focus:border-[#29E8A4]"
+                >
+                  {COUNTRY_CODES.map(c => (
+                    <option key={c.code} value={c.code}>{c.label}</option>
+                  ))}
+                </select>
+                <div className="relative flex-1">
+                  <input
+                    type="tel"
+                    required
+                    value={mobile}
+                    onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    placeholder="10-digit WhatsApp number"
+                    maxLength={10}
+                    className="w-full pl-3 pr-24 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-xs placeholder-[#9BBAC0] focus:outline-none focus:border-[#29E8A4]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={mobile.length !== 10 || isSendingOtp}
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                      mobile.length === 10 && !isSendingOtp
+                        ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
+                        : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
+                    }`}
+                  >
+                    {isSendingOtp ? 'Sending...' : 'Send OTP'}
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Step 7: Callback Time */}
+            {step === 7 && !showTimePicker && (
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {['As soon as possible', 'Later today (before 6 PM)', 'Tomorrow morning (10 AM–1 PM)', 'Tomorrow afternoon (1–6 PM)', 'Let me pick a specific time'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => {
+                      if (opt === 'Let me pick a specific time') {
+                        setShowTimePicker(true);
+                      } else {
+                        handleCallbackSubmit(opt);
+                      }
+                    }}
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 7: Time Picker Sub-View */}
+            {step === 7 && showTimePicker && (
+              <div className="space-y-2 p-1 border border-[#D6ECEB] rounded-xl bg-white animate-in zoom-in-95 duration-200">
+                <p className="text-[10px] font-bold text-[#09263F]">Pick callback time (Mon-Sat, 10 AM - 6 PM)</p>
+                <div className="grid grid-cols-2 gap-1.5">
+                  <input 
+                    type="date" 
+                    className="px-2.5 py-1.5 text-xs border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    value={selectedDate}
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                  />
+                  <input 
+                    type="time" 
+                    className="px-2.5 py-1.5 text-xs border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    value={selectedTime}
+                    min="10:00"
+                    max="18:00"
+                    onChange={(e) => setSelectedTime(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-1.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowTimePicker(false)}
+                    className="flex-1 py-1.5 bg-gray-100 text-gray-700 text-[10px] font-semibold rounded-lg"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSpecificTimePickerSubmit}
+                    disabled={!selectedDate || !selectedTime}
+                    className="flex-1 py-1.5 bg-[#29E8A4] text-[#09263F] text-[10px] font-bold rounded-lg disabled:opacity-50"
+                  >
+                    Confirm Time
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 8: OTP Verification Code */}
+            {step === 8 && (
+              <div className="space-y-2.5 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between text-[10px] font-medium text-[#29E8A4]">
+                  <span>OTP code sent to {countryCode} {mobile}</span>
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      setStep(6);
+                      setMobile('');
+                      setShowInputs(true);
+                    }} 
+                    className="text-[#4A6275] hover:text-[#09263F] underline"
+                  >
+                    Change Number
+                  </button>
+                </div>
+                <div className="relative">
+                  <input
+                    type="tel"
+                    value={otpValue}
+                    onChange={e => setOtpValue(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    disabled={isVerifying}
+                    placeholder="Enter 4-digit code"
+                    maxLength={4}
+                    autoFocus
+                    className="w-full pl-3 pr-24 py-2 rounded-xl border border-[#1DE5B5] bg-white text-[#09263F] text-xs placeholder-[#9BBAC0] tracking-[0.5em] font-bold focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/20"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleOtpVerify}
+                    disabled={otpValue.length !== 4 || isVerifying}
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-3.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                      otpValue.length === 4 && !isVerifying
+                        ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
+                        : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
+                    }`}
+                  >
+                    {isVerifying ? '...' : 'Verify'}
+                  </button>
+                </div>
+                
+                {errorMsg && <p className="text-[10px] text-red-500 font-medium">{errorMsg}</p>}
+                
+                <div className="flex justify-between items-center text-[10px] text-[#4A6275]">
+                  <span>Didn't receive it?</span>
+                  {resendTimer > 0 ? (
+                    <span className="font-semibold">Resend in {resendTimer}s</span>
+                  ) : (
+                    <button type="button" onClick={handleResendOtp} className="text-[#239bf5] font-bold hover:underline">
+                      Resend Now
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
+      </div>
 
-        <div className="flex items-start gap-3 pt-1 border-t border-white/40 mt-6">
-          <div className="mt-0.5 flex-shrink-0">
-            <input
-              type="checkbox" id="consent" name="consent" required defaultChecked
-              className="w-4 h-4 rounded border-[#D6ECEB] text-[#1DE5B5]
-                         focus:ring-[#1DE5B5]/40 accent-[#1DE5B5] cursor-pointer"
-            />
-          </div>
-          <label htmlFor="consent" className="text-[0.72rem] text-[#4A6275] leading-relaxed cursor-pointer">
-            I agree to the <a href="/privacy-policy" className="text-[#239bf5] hover:underline font-medium">Privacy Policy</a> and consent to being contacted by AnalytixLabs. <span className="text-[#1DE5B5] font-semibold">No Spam ❤️</span>
-          </label>
-        </div>
-      </form>
+      {/* Compliance / Privacy Consent Bar (Renders at the bottom) */}
+      <div className="mt-3 flex items-start gap-2 pt-2 border-t border-[#D6ECEB]/40 relative z-10">
+        <input
+          type="checkbox" id="consent" name="consent" required defaultChecked
+          className="mt-0.5 w-3.5 h-3.5 rounded border-[#D6ECEB] text-[#1DE5B5] focus:ring-[#1DE5B5]/40 accent-[#1DE5B5] cursor-pointer"
+        />
+        <label htmlFor="consent" className="text-[9px] text-[#4A6275] leading-relaxed cursor-pointer select-none">
+          I agree to the <a href="/privacy-policy" className="text-[#239bf5] hover:underline font-semibold">Privacy Policy</a> and consent to being contacted by AnalytixLabs. <span className="text-[#1DE5B5] font-semibold">No Spam ❤️</span>
+        </label>
+      </div>
     </div>
   );
 }
