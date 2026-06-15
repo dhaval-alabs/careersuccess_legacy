@@ -59,7 +59,7 @@ export default function QualificationChat({
       
       setTimeout(() => {
         setQuestionIndex(0);
-      }, 600);
+      }, 800);
     }
   }, []);
 
@@ -70,14 +70,14 @@ export default function QualificationChat({
       setTimeout(() => {
         setMessages(prev => prev.map(m => m.isTyping && m.text === q ? { ...m, isTyping: false } : m));
         setShowOptions(true);
-      }, 300);
+      }, 600);
     } else if (questionIndex === questions.length) {
       // Chat complete
       const outro = "Perfect — sending your verification code to WhatsApp now. Talk soon!";
       setMessages(prev => [...prev, { id: 'outro', sender: 'bot', text: outro }]);
       setTimeout(() => {
         onComplete(conversation, preferredCallbackTime);
-      }, 600);
+      }, 800);
     }
   }, [questionIndex]);
 
@@ -119,8 +119,8 @@ export default function QualificationChat({
           
           setTimeout(() => {
             setQuestionIndex(prev => prev + 1);
-          }, 300);
-        }, 300);
+          }, 600);
+        }, 500);
     }
   };
 
