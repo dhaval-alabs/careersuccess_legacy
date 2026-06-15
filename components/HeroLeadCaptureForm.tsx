@@ -447,7 +447,7 @@ export default function HeroLeadCaptureForm({
       </div>
 
       {/* Input Options / Controls Area */}
-      <div className="relative z-10 bg-white/70 backdrop-blur-md border-t border-[#D6ECEB] pt-3 -mx-5 px-5 pb-1">
+      <div className="relative z-30 bg-white/70 backdrop-blur-md border-t border-[#D6ECEB] pt-3 -mx-5 px-5 pb-1">
         {showInputs && (
           <div className="space-y-3 animate-in slide-in-from-bottom-3 duration-300">
             {/* Step 0: Status Selection */}
@@ -560,6 +560,7 @@ export default function HeroLeadCaptureForm({
                   value={city}
                   onChange={handleCitySubmit}
                   placeholder="Search and select city..."
+                  openUpward={true}
                 />
               </div>
             )}

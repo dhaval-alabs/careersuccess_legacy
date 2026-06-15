@@ -9,6 +9,7 @@ interface SearchableCitySelectProps {
   onChange?: (value: string) => void;
   required?: boolean;
   disabled?: boolean;
+  openUpward?: boolean;
 }
 
 export default function SearchableCitySelect({
@@ -17,7 +18,8 @@ export default function SearchableCitySelect({
   value,
   onChange,
   required = false,
-  disabled = false
+  disabled = false,
+  openUpward = false
 }: SearchableCitySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -111,7 +113,11 @@ export default function SearchableCitySelect({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.12)] border border-[#D6ECEB] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className={`absolute z-50 w-full bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.12)] border border-[#D6ECEB] overflow-hidden animate-in fade-in duration-200 ${
+          openUpward 
+            ? 'bottom-full mb-2 slide-in-from-bottom-2' 
+            : 'top-full mt-2 slide-in-from-top-2'
+        }`}>
           <div className="p-2 border-b border-[#F0F7F7]">
             <input
               ref={inputRef}
