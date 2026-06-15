@@ -296,6 +296,7 @@ export default function DelhiDSAIPage() {
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion(`${config.cityPrefix}_Hero_DownloadBrochure`, email)}
+                qualificationConfigKey="data-science-ai"
               />
             </div>
           </div>

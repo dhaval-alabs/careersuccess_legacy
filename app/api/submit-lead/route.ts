@@ -146,7 +146,7 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
     ];
 
     // Using the tab name provided by user
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:U:append?valueInputOption=USER_ENTERED`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
     const res = await fetch(url, {
       method: 'POST',
       headers: {

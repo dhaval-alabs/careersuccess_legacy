@@ -109,7 +109,7 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
       body.status || '' // U: Profile/Status
     ];
     
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:U:append?valueInputOption=USER_ENTERED`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
     
     const res = await fetch(url, {
       method: 'POST',
