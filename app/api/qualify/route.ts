@@ -77,7 +77,8 @@ export async function POST(req: NextRequest) {
         const notesField = process.env.LSQ_NOTES_FIELD_NAME || 'mx_Notes';
         const payload = [
           { Attribute: scoreField, Value: score },
-          { Attribute: notesField, Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` }
+          { Attribute: notesField, Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` },
+          { Attribute: 'mx_conv_form', Value: convText }
         ];
 
         await fetch(updateUrl, {
