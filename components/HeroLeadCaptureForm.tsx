@@ -43,7 +43,7 @@ export default function HeroLeadCaptureForm({
 }: HeroLeadCaptureFormProps) {
   // Conversational Form States
   const [messages, setMessages] = useState<Message[]>([]);
-  const [step, setStep] = useState(0); // 0 to 8: status -> interest -> timeline -> name -> email -> city -> mobile -> callback -> OTP
+  const [step, setStep] = useState(0); // 0 to 8: status -> interest -> timeline -> name -> email -> city -> callback -> mobile -> OTP
   const [showInputs, setShowInputs] = useState(false);
 
   // Form Fields Data
@@ -109,8 +109,8 @@ export default function HeroLeadCaptureForm({
     setShowInputs(true);
   }, []);
 
-  // Helper to add bot messages with a natural typing delay
-  const addBotMessage = (text: string, delay = 600) => {
+  // Helper to add bot messages with a natural typing delay (default 1800ms for natural feel)
+  const addBotMessage = (text: string, delay = 1800) => {
     setShowInputs(false);
     const id = Math.random().toString();
     setMessages(prev => [...prev, { id, sender: 'bot', text: '...', isTyping: true }]);
@@ -132,23 +132,23 @@ export default function HeroLeadCaptureForm({
       recordFirstField('status');
       setConversation(prev => [...prev, `Q: Quick one — are you working, studying, or just starting out?\nA: ${val}`]);
       setStep(1);
-      addBotMessage(`Got it. What's drawing you toward ${courseSubject} right now?`);
+      addBotMessage(`Got it. What's drawing you toward ${courseSubject} right now?`, 1800);
     } 
     else if (step === 1) {
       setInterest(val);
       setConversation(prev => [...prev, `Q: What's drawing you toward ${courseSubject} right now?\nA: ${val}`]);
       setStep(2);
-      addBotMessage("Makes sense. When are you hoping to get started?");
+      addBotMessage("Makes sense. When are you hoping to get started?", 1800);
     } 
     else if (step === 2) {
       setTimeline(val);
       setConversation(prev => [...prev, `Q: When are you hoping to get started?\nA: ${val}`]);
       setStep(3);
-      addBotMessage("Understood. Could you share your full name?");
+      addBotMessage("Understood. Could you share your full name?", 1800);
     }
   };
 
-  // Handler for custom typed responses (Name, Email, Phone)
+  // Handler for custom typed responses (Name, Email)
   const handleTypedSubmit = async (val: string) => {
     if (!val.trim()) return;
 
@@ -160,7 +160,7 @@ export default function HeroLeadCaptureForm({
       recordFirstField('name');
       setConversation(prev => [...prev, `Q: Could you share your full name?\nA: ${val}`]);
       setStep(4);
-      addBotMessage(`Nice to meet you, ${val.split(' ')[0]}! What is your email address?`);
+      addBotMessage(`Nice to meet you, ${val.split(' ')[0]}! What is your email address?`, 1800);
     } 
     else if (step === 4) {
       // Simple email validation
@@ -173,21 +173,30 @@ export default function HeroLeadCaptureForm({
       recordFirstField('email');
       setConversation(prev => [...prev, `Q: What is your email address?\nA: ${val.trim()}`]);
       setStep(5);
-      addBotMessage("Perfect. Which city are you currently in?");
+      addBotMessage("Perfect. Which city are you currently in?", 1800);
     }
   };
 
-  // City selection handler
+  // City selection handler (transitions to Callback step)
   const handleCitySubmit = (selectedCity: string) => {
     setCity(selectedCity);
     recordFirstField('city');
     setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: selectedCity }]);
     setConversation(prev => [...prev, `Q: Which city are you currently in?\nA: ${selectedCity}`]);
     setStep(6);
-    addBotMessage("Almost there! What is your WhatsApp number?");
+    addBotMessage("Thanks! When works best for a learning advisor to call you?", 1800);
   };
 
-  // WhatsApp and OTP trigger logic (runs after Step 6 is submitted)
+  // Preferred callback handler (transitions to Phone step)
+  const handleCallbackSubmit = async (timeVal: string) => {
+    setPreferredCallbackTime(timeVal);
+    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: timeVal }]);
+    setConversation(prev => [...prev, `Q: When works best for a learning advisor to call you?\nA: ${timeVal}`]);
+    setStep(7);
+    addBotMessage("Almost there! What is your WhatsApp number?", 1800);
+  };
+
+  // WhatsApp and OTP trigger logic (runs after Step 7 is submitted)
   const handlePhoneSubmit = async (phoneVal: string) => {
     if (phoneVal.length !== 10) return;
     
@@ -196,17 +205,6 @@ export default function HeroLeadCaptureForm({
     setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: `${countryCode} ${phoneVal}` }]);
     setConversation(prev => [...prev, `Q: What is your WhatsApp number?\nA: ${countryCode}${phoneVal}`]);
     
-    setStep(7);
-    addBotMessage("Thanks! When works best for a learning advisor to call you?");
-  };
-
-  // Preferred callback handler (runs at Step 7)
-  const handleCallbackSubmit = async (timeVal: string) => {
-    setPreferredCallbackTime(timeVal);
-    setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'user', text: timeVal }]);
-    setConversation(prev => [...prev, `Q: When works best for a learning advisor to call you?\nA: ${timeVal}`]);
-
-    // Transition to verification stage
     setStep(8);
     setShowInputs(false);
     
@@ -217,12 +215,8 @@ export default function HeroLeadCaptureForm({
     
     setTimeout(async () => {
       setMessages(prev => prev.map(m => m.id === id ? { ...m, text: verificationText, isTyping: false } : m));
-      await processLeadSubmissionAndSendOtp(phoneValForSubmit(mobile), timeVal);
-    }, 600);
-  };
-
-  const phoneValForSubmit = (phone: string) => {
-    return phone || mobile;
+      await processLeadSubmissionAndSendOtp(phoneVal, preferredCallbackTime);
+    }, 1800);
   };
 
   // Performs initial lead capture API followed by OTP sending API
@@ -233,7 +227,6 @@ export default function HeroLeadCaptureForm({
 
     const utms = getStoredUtm();
     const behaviour = getBehaviourSnapshot();
-    const cleanPhone = countryCode === '+91' ? targetPhone : `${countryCode}${targetPhone}`;
 
     // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
     try {
@@ -409,16 +402,16 @@ export default function HeroLeadCaptureForm({
   };
 
   return (
-    <div className="px-5 py-6 bg-white/55 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden flex flex-col h-[540px] w-full" id="hero-lead-capture">
+    <div className="px-5 py-6 bg-white/55 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden flex flex-col h-[620px] w-full" id="hero-lead-capture">
       {/* Title / Header */}
       <div className="mb-4 relative z-10 border-b border-[#D6ECEB]/40 pb-3">
-        <h2 className="font-display font-bold text-[#09263F] text-[17px] mb-0.5">{title}</h2>
-        <p className="text-[#4A6275] text-xs">Chat with our AI advisor to customize your learning path.</p>
+        <h2 className="font-display font-bold text-[#09263F] text-xl mb-0.5">{title}</h2>
+        <p className="text-[#4A6275] text-sm">Chat with our AI advisor to customize your learning path.</p>
       </div>
 
       {/* Global Error Banner */}
       {formError && (
-        <div className="mb-3 px-3 py-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="mb-3 px-3 py-2 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
           {formError}
         </div>
       )}
@@ -427,7 +420,7 @@ export default function HeroLeadCaptureForm({
       <div className="flex-1 overflow-y-auto mb-4 space-y-3.5 pr-1 scroll-smooth" ref={scrollRef}>
         {messages.map((m) => (
           <div key={m.id} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] ${
+            <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-base ${
               m.sender === 'user'
                 ? 'bg-[#09263F] text-white rounded-br-none animate-in slide-in-from-right-2 duration-200'
                 : 'bg-white text-[#09263F] border border-[#D6ECEB] rounded-bl-none shadow-sm animate-in slide-in-from-left-2 duration-200'
@@ -458,7 +451,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-4 py-2 bg-white text-[#09263F] text-base font-semibold rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -474,7 +467,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-4 py-2 bg-white text-[#09263F] text-base font-semibold rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -490,7 +483,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-4 py-2 bg-white text-[#09263F] text-base font-semibold rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -517,9 +510,9 @@ export default function HeroLeadCaptureForm({
                   name="custom_name"
                   required
                   placeholder="Enter your full name..."
-                  className="flex-1 px-4 py-2 text-sm border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                  className="flex-1 px-4 py-2.5 text-base border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
                 />
-                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-sm font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                <button type="submit" className="px-5 py-2.5 bg-[#09263F] text-white text-base font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
                   Send
                 </button>
               </form>
@@ -544,9 +537,9 @@ export default function HeroLeadCaptureForm({
                   name="custom_email"
                   required
                   placeholder="Enter your email address..."
-                  className="flex-1 px-4 py-2 text-sm border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                  className="flex-1 px-4 py-2.5 text-base border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
                 />
-                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-sm font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                <button type="submit" className="px-5 py-2.5 bg-[#09263F] text-white text-base font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
                   Send
                 </button>
               </form>
@@ -565,8 +558,71 @@ export default function HeroLeadCaptureForm({
               </div>
             )}
 
-            {/* Step 6: Phone Input */}
-            {step === 6 && (
+            {/* Step 6: Callback Time */}
+            {step === 6 && !showTimePicker && (
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                {['As soon as possible', 'Later today (before 6 PM)', 'Tomorrow morning (10 AM–1 PM)', 'Tomorrow afternoon (1–6 PM)', 'Let me pick a specific time'].map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => {
+                      if (opt === 'Let me pick a specific time') {
+                        setShowTimePicker(true);
+                      } else {
+                        handleCallbackSubmit(opt);
+                      }
+                    }}
+                    className="px-4 py-2 bg-white text-[#09263F] text-base font-semibold rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 6: Time Picker Sub-View */}
+            {step === 6 && showTimePicker && (
+              <div className="space-y-2.5 p-2 border border-[#D6ECEB] rounded-xl bg-white animate-in zoom-in-95 duration-200">
+                <p className="text-sm font-bold text-[#09263F]">Pick callback time (Mon-Sat, 10 AM - 6 PM)</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <input 
+                    type="date" 
+                    className="px-3 py-2 text-base border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    value={selectedDate}
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                  />
+                  <input 
+                    type="time" 
+                    className="px-3 py-2 text-base border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    value={selectedTime}
+                    min="10:00"
+                    max="18:00"
+                    onChange={(e) => setSelectedTime(e.target.value)}
+                  />
+                </div>
+                <div className="flex gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowTimePicker(false)}
+                    className="flex-1 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSpecificTimePickerSubmit}
+                    disabled={!selectedDate || !selectedTime}
+                    className="flex-1 py-2 bg-[#29E8A4] text-[#09263F] text-sm font-bold rounded-lg disabled:opacity-50"
+                  >
+                    Confirm Time
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 7: Phone Input */}
+            {step === 7 && (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -580,7 +636,7 @@ export default function HeroLeadCaptureForm({
                 <select
                   value={countryCode}
                   onChange={e => setCountryCode(e.target.value)}
-                  className="w-18 flex-shrink-0 px-1.5 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-sm font-semibold focus:outline-none focus:border-[#29E8A4]"
+                  className="w-20 flex-shrink-0 px-2.5 py-2.5 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-base font-semibold focus:outline-none focus:border-[#29E8A4]"
                 >
                   {COUNTRY_CODES.map(c => (
                     <option key={c.code} value={c.code}>{c.label}</option>
@@ -594,12 +650,12 @@ export default function HeroLeadCaptureForm({
                     onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
                     placeholder="10-digit WhatsApp number"
                     maxLength={10}
-                    className="w-full pl-3 pr-24 py-2.5 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-sm placeholder-[#9BBAC0] focus:outline-none focus:border-[#29E8A4]"
+                    className="w-full pl-3 pr-28 py-2.5 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-base placeholder-[#9BBAC0] focus:outline-none focus:border-[#29E8A4]"
                   />
                   <button
                     type="submit"
                     disabled={mobile.length !== 10 || isSendingOtp}
-                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${
                       mobile.length === 10 && !isSendingOtp
                         ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
                         : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
@@ -611,78 +667,15 @@ export default function HeroLeadCaptureForm({
               </form>
             )}
 
-            {/* Step 7: Callback Time */}
-            {step === 7 && !showTimePicker && (
-              <div className="flex flex-wrap gap-1.5 pb-2">
-                {['As soon as possible', 'Later today (before 6 PM)', 'Tomorrow morning (10 AM–1 PM)', 'Tomorrow afternoon (1–6 PM)', 'Let me pick a specific time'].map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => {
-                      if (opt === 'Let me pick a specific time') {
-                        setShowTimePicker(true);
-                      } else {
-                        handleCallbackSubmit(opt);
-                      }
-                    }}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Step 7: Time Picker Sub-View */}
-            {step === 7 && showTimePicker && (
-              <div className="space-y-2 p-1 border border-[#D6ECEB] rounded-xl bg-white animate-in zoom-in-95 duration-200">
-                <p className="text-xs font-bold text-[#09263F]">Pick callback time (Mon-Sat, 10 AM - 6 PM)</p>
-                <div className="grid grid-cols-2 gap-1.5">
-                  <input 
-                    type="date" 
-                    className="px-2.5 py-1.5 text-sm border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
-                    value={selectedDate}
-                    min={new Date().toISOString().split('T')[0]}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                  />
-                  <input 
-                    type="time" 
-                    className="px-2.5 py-1.5 text-sm border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
-                    value={selectedTime}
-                    min="10:00"
-                    max="18:00"
-                    onChange={(e) => setSelectedTime(e.target.value)}
-                  />
-                </div>
-                <div className="flex gap-1.5 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setShowTimePicker(false)}
-                    className="flex-1 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSpecificTimePickerSubmit}
-                    disabled={!selectedDate || !selectedTime}
-                    className="flex-1 py-1.5 bg-[#29E8A4] text-[#09263F] text-xs font-bold rounded-lg disabled:opacity-50"
-                  >
-                    Confirm Time
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* Step 8: OTP Verification Code */}
             {step === 8 && (
               <div className="space-y-2.5 animate-in fade-in duration-200">
-                <div className="flex items-center justify-between text-xs font-medium text-[#29E8A4]">
+                <div className="flex items-center justify-between text-sm font-medium text-[#29E8A4]">
                   <span>OTP code sent to {countryCode} {mobile}</span>
                   <button 
                     type="button" 
                     onClick={() => {
-                      setStep(6);
+                      setStep(7);
                       setMobile('');
                       setShowInputs(true);
                     }} 
@@ -700,13 +693,13 @@ export default function HeroLeadCaptureForm({
                     placeholder="Enter 4-digit code"
                     maxLength={4}
                     autoFocus
-                    className="w-full pl-3 pr-24 py-2.5 rounded-xl border border-[#1DE5B5] bg-white text-[#09263F] text-sm placeholder-[#9BBAC0] tracking-[0.5em] font-bold focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/20"
+                    className="w-full pl-3 pr-28 py-2.5 rounded-xl border border-[#1DE5B5] bg-white text-[#09263F] text-base placeholder-[#9BBAC0] tracking-[0.5em] font-bold focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/20"
                   />
                   <button
                     type="button"
                     onClick={handleOtpVerify}
                     disabled={otpValue.length !== 4 || isVerifying}
-                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
                       otpValue.length === 4 && !isVerifying
                         ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
                         : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
@@ -716,9 +709,9 @@ export default function HeroLeadCaptureForm({
                   </button>
                 </div>
                 
-                {errorMsg && <p className="text-xs text-red-500 font-medium">{errorMsg}</p>}
+                {errorMsg && <p className="text-sm text-red-500 font-medium">{errorMsg}</p>}
                 
-                <div className="flex justify-between items-center text-xs text-[#4A6275]">
+                <div className="flex justify-between items-center text-sm text-[#4A6275]">
                   <span>Didn't receive it?</span>
                   {resendTimer > 0 ? (
                     <span className="font-semibold">Resend in {resendTimer}s</span>
@@ -740,7 +733,7 @@ export default function HeroLeadCaptureForm({
           type="checkbox" id="consent" name="consent" required defaultChecked
           className="mt-0.5 w-3.5 h-3.5 rounded border-[#D6ECEB] text-[#1DE5B5] focus:ring-[#1DE5B5]/40 accent-[#1DE5B5] cursor-pointer"
         />
-        <label htmlFor="consent" className="text-[10px] text-[#4A6275] leading-relaxed cursor-pointer select-none">
+        <label htmlFor="consent" className="text-xs text-[#4A6275] leading-relaxed cursor-pointer select-none">
           I agree to the <a href="/privacy-policy" className="text-[#239bf5] hover:underline font-semibold">Privacy Policy</a> and consent to being contacted by AnalytixLabs. <span className="text-[#1DE5B5] font-semibold">No Spam ❤️</span>
         </label>
       </div>
