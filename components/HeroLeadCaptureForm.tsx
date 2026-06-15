@@ -409,11 +409,11 @@ export default function HeroLeadCaptureForm({
   };
 
   return (
-    <div className="px-5 py-6 bg-white/55 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden flex flex-col h-[480px] w-full" id="hero-lead-capture">
+    <div className="px-5 py-6 bg-white/55 backdrop-blur-xl rounded-2xl border border-white/40 shadow-2xl relative overflow-hidden flex flex-col h-[540px] w-full" id="hero-lead-capture">
       {/* Title / Header */}
       <div className="mb-4 relative z-10 border-b border-[#D6ECEB]/40 pb-3">
-        <h2 className="font-display font-bold text-[#09263F] text-base mb-0.5">{title}</h2>
-        <p className="text-[#4A6275] text-[11px]">Chat with our AI advisor to customize your learning path.</p>
+        <h2 className="font-display font-bold text-[#09263F] text-[17px] mb-0.5">{title}</h2>
+        <p className="text-[#4A6275] text-xs">Chat with our AI advisor to customize your learning path.</p>
       </div>
 
       {/* Global Error Banner */}
@@ -427,7 +427,7 @@ export default function HeroLeadCaptureForm({
       <div className="flex-1 overflow-y-auto mb-4 space-y-3.5 pr-1 scroll-smooth" ref={scrollRef}>
         {messages.map((m) => (
           <div key={m.id} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs ${
+            <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] ${
               m.sender === 'user'
                 ? 'bg-[#09263F] text-white rounded-br-none animate-in slide-in-from-right-2 duration-200'
                 : 'bg-white text-[#09263F] border border-[#D6ECEB] rounded-bl-none shadow-sm animate-in slide-in-from-left-2 duration-200'
@@ -458,7 +458,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -474,7 +474,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -490,7 +490,7 @@ export default function HeroLeadCaptureForm({
                     key={opt}
                     type="button"
                     onClick={() => handleUserSelection(opt)}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -517,9 +517,9 @@ export default function HeroLeadCaptureForm({
                   name="custom_name"
                   required
                   placeholder="Enter your full name..."
-                  className="flex-1 px-4 py-2 text-xs border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                  className="flex-1 px-4 py-2 text-sm border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
                 />
-                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-xs font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-sm font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
                   Send
                 </button>
               </form>
@@ -544,9 +544,9 @@ export default function HeroLeadCaptureForm({
                   name="custom_email"
                   required
                   placeholder="Enter your email address..."
-                  className="flex-1 px-4 py-2 text-xs border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
+                  className="flex-1 px-4 py-2 text-sm border border-[#D6ECEB] rounded-full focus:outline-none focus:border-[#29E8A4] focus:ring-1 focus:ring-[#29E8A4]"
                 />
-                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-xs font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
+                <button type="submit" className="px-4 py-2 bg-[#09263F] text-white text-sm font-semibold rounded-full hover:bg-[#153e5e] active:scale-95 transition-all">
                   Send
                 </button>
               </form>
@@ -580,7 +580,7 @@ export default function HeroLeadCaptureForm({
                 <select
                   value={countryCode}
                   onChange={e => setCountryCode(e.target.value)}
-                  className="w-16 flex-shrink-0 px-1.5 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-xs font-semibold focus:outline-none focus:border-[#29E8A4]"
+                  className="w-18 flex-shrink-0 px-1.5 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-sm font-semibold focus:outline-none focus:border-[#29E8A4]"
                 >
                   {COUNTRY_CODES.map(c => (
                     <option key={c.code} value={c.code}>{c.label}</option>
@@ -594,12 +594,12 @@ export default function HeroLeadCaptureForm({
                     onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
                     placeholder="10-digit WhatsApp number"
                     maxLength={10}
-                    className="w-full pl-3 pr-24 py-2 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-xs placeholder-[#9BBAC0] focus:outline-none focus:border-[#29E8A4]"
+                    className="w-full pl-3 pr-24 py-2.5 rounded-xl border border-[#D6ECEB] bg-white text-[#09263F] text-sm placeholder-[#9BBAC0] focus:outline-none focus:border-[#29E8A4]"
                   />
                   <button
                     type="submit"
                     disabled={mobile.length !== 10 || isSendingOtp}
-                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       mobile.length === 10 && !isSendingOtp
                         ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
                         : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
@@ -625,7 +625,7 @@ export default function HeroLeadCaptureForm({
                         handleCallbackSubmit(opt);
                       }
                     }}
-                    className="px-3 py-1.5 bg-white text-[#09263F] text-xs font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
+                    className="px-3 py-1.5 bg-white text-[#09263F] text-[13px] font-medium rounded-full border border-[#29E8A4] hover:bg-[#29E8A4] hover:text-[#09263F] active:scale-[0.97] transition-all duration-150"
                   >
                     {opt}
                   </button>
@@ -636,18 +636,18 @@ export default function HeroLeadCaptureForm({
             {/* Step 7: Time Picker Sub-View */}
             {step === 7 && showTimePicker && (
               <div className="space-y-2 p-1 border border-[#D6ECEB] rounded-xl bg-white animate-in zoom-in-95 duration-200">
-                <p className="text-[10px] font-bold text-[#09263F]">Pick callback time (Mon-Sat, 10 AM - 6 PM)</p>
+                <p className="text-xs font-bold text-[#09263F]">Pick callback time (Mon-Sat, 10 AM - 6 PM)</p>
                 <div className="grid grid-cols-2 gap-1.5">
                   <input 
                     type="date" 
-                    className="px-2.5 py-1.5 text-xs border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    className="px-2.5 py-1.5 text-sm border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
                     value={selectedDate}
                     min={new Date().toISOString().split('T')[0]}
                     onChange={(e) => setSelectedDate(e.target.value)}
                   />
                   <input 
                     type="time" 
-                    className="px-2.5 py-1.5 text-xs border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
+                    className="px-2.5 py-1.5 text-sm border border-[#D6ECEB] rounded-lg focus:outline-none focus:border-[#29E8A4]"
                     value={selectedTime}
                     min="10:00"
                     max="18:00"
@@ -658,7 +658,7 @@ export default function HeroLeadCaptureForm({
                   <button
                     type="button"
                     onClick={() => setShowTimePicker(false)}
-                    className="flex-1 py-1.5 bg-gray-100 text-gray-700 text-[10px] font-semibold rounded-lg"
+                    className="flex-1 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg"
                   >
                     Back
                   </button>
@@ -666,7 +666,7 @@ export default function HeroLeadCaptureForm({
                     type="button"
                     onClick={handleSpecificTimePickerSubmit}
                     disabled={!selectedDate || !selectedTime}
-                    className="flex-1 py-1.5 bg-[#29E8A4] text-[#09263F] text-[10px] font-bold rounded-lg disabled:opacity-50"
+                    className="flex-1 py-1.5 bg-[#29E8A4] text-[#09263F] text-xs font-bold rounded-lg disabled:opacity-50"
                   >
                     Confirm Time
                   </button>
@@ -677,7 +677,7 @@ export default function HeroLeadCaptureForm({
             {/* Step 8: OTP Verification Code */}
             {step === 8 && (
               <div className="space-y-2.5 animate-in fade-in duration-200">
-                <div className="flex items-center justify-between text-[10px] font-medium text-[#29E8A4]">
+                <div className="flex items-center justify-between text-xs font-medium text-[#29E8A4]">
                   <span>OTP code sent to {countryCode} {mobile}</span>
                   <button 
                     type="button" 
@@ -700,13 +700,13 @@ export default function HeroLeadCaptureForm({
                     placeholder="Enter 4-digit code"
                     maxLength={4}
                     autoFocus
-                    className="w-full pl-3 pr-24 py-2 rounded-xl border border-[#1DE5B5] bg-white text-[#09263F] text-xs placeholder-[#9BBAC0] tracking-[0.5em] font-bold focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/20"
+                    className="w-full pl-3 pr-24 py-2.5 rounded-xl border border-[#1DE5B5] bg-white text-[#09263F] text-sm placeholder-[#9BBAC0] tracking-[0.5em] font-bold focus:outline-none focus:ring-2 focus:ring-[#1DE5B5]/20"
                   />
                   <button
                     type="button"
                     onClick={handleOtpVerify}
                     disabled={otpValue.length !== 4 || isVerifying}
-                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-3.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                    className={`absolute right-1.5 top-1/2 -translate-y-1/2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       otpValue.length === 4 && !isVerifying
                         ? 'bg-[#29E8A4] text-[#09263F] hover:bg-[#1DE5B5] active:scale-95'
                         : 'bg-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
@@ -716,9 +716,9 @@ export default function HeroLeadCaptureForm({
                   </button>
                 </div>
                 
-                {errorMsg && <p className="text-[10px] text-red-500 font-medium">{errorMsg}</p>}
+                {errorMsg && <p className="text-xs text-red-500 font-medium">{errorMsg}</p>}
                 
-                <div className="flex justify-between items-center text-[10px] text-[#4A6275]">
+                <div className="flex justify-between items-center text-xs text-[#4A6275]">
                   <span>Didn't receive it?</span>
                   {resendTimer > 0 ? (
                     <span className="font-semibold">Resend in {resendTimer}s</span>
@@ -740,7 +740,7 @@ export default function HeroLeadCaptureForm({
           type="checkbox" id="consent" name="consent" required defaultChecked
           className="mt-0.5 w-3.5 h-3.5 rounded border-[#D6ECEB] text-[#1DE5B5] focus:ring-[#1DE5B5]/40 accent-[#1DE5B5] cursor-pointer"
         />
-        <label htmlFor="consent" className="text-[9px] text-[#4A6275] leading-relaxed cursor-pointer select-none">
+        <label htmlFor="consent" className="text-[10px] text-[#4A6275] leading-relaxed cursor-pointer select-none">
           I agree to the <a href="/privacy-policy" className="text-[#239bf5] hover:underline font-semibold">Privacy Policy</a> and consent to being contacted by AnalytixLabs. <span className="text-[#1DE5B5] font-semibold">No Spam ❤️</span>
         </label>
       </div>
