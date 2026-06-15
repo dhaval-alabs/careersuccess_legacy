@@ -300,13 +300,17 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Google Sheets (Column Q)
-    const friendlyNotes = formatLeadNotesFriendly(body.form_source);
-    const sheetResult = await pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus, debug);
+    if (!body.skipSheets) {
+      const friendlyNotes = formatLeadNotesFriendly(body.form_source);
+      const sheetResult = await pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus, debug);
 
-    if (debug && !sheetResult.success) {
-      debugInfo = `${debugInfo || ''} | Sheets Error: ${sheetResult.error}`.trim();
-    } else if (debug && sheetResult.success) {
-      debugInfo = `${debugInfo || ''} | Sheets OK (${sheetResult.sheetIdMasked})`.trim();
+      if (debug && !sheetResult.success) {
+        debugInfo = `${debugInfo || ''} | Sheets Error: ${sheetResult.error}`.trim();
+      } else if (debug && sheetResult.success) {
+        debugInfo = `${debugInfo || ''} | Sheets OK (${sheetResult.sheetIdMasked})`.trim();
+      }
+    } else {
+      console.log('[OTP] Skipping Google Sheets push since lead was already submitted');
     }
 
     // 5. Automated Brochure Email (Resend)

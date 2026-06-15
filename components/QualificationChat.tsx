@@ -59,7 +59,7 @@ export default function QualificationChat({
       
       setTimeout(() => {
         setQuestionIndex(0);
-      }, 1500);
+      }, 600);
     }
   }, []);
 
@@ -70,14 +70,14 @@ export default function QualificationChat({
       setTimeout(() => {
         setMessages(prev => prev.map(m => m.isTyping && m.text === q ? { ...m, isTyping: false } : m));
         setShowOptions(true);
-      }, 800);
+      }, 300);
     } else if (questionIndex === questions.length) {
       // Chat complete
       const outro = "Perfect — sending your verification code to WhatsApp now. Talk soon!";
       setMessages(prev => [...prev, { id: 'outro', sender: 'bot', text: outro }]);
       setTimeout(() => {
         onComplete(conversation, preferredCallbackTime);
-      }, 1500);
+      }, 600);
     }
   }, [questionIndex]);
 
@@ -100,41 +100,27 @@ export default function QualificationChat({
       setPreferredCallbackTime(replyText);
       setQuestionIndex(prev => prev + 1);
     } else {
-      // Need ack
-      try {
+        // Need ack
         setMessages(prev => [...prev, { id: 'ack_typing', sender: 'bot', text: '...', isTyping: true }]);
         
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout per brief
-        
-        const res = await fetch('/api/chat/ack', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: replyText, courseSubject }),
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        let ackText = "Got it.";
-        if (res.ok) {
-          const data = await res.json();
-          ackText = data.ack;
-        }
-        
-        setMessages(prev => prev.filter(m => m.id !== 'ack_typing'));
-        setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'bot', text: ackText }]);
-        
         setTimeout(() => {
-          setQuestionIndex(prev => prev + 1);
-        }, 1000);
-      } catch (err) {
-        // Fallback on timeout or error
-        setMessages(prev => prev.filter(m => m.id !== 'ack_typing'));
-        setTimeout(() => {
-          setQuestionIndex(prev => prev + 1);
-        }, 500);
-      }
+          const acks = [
+            "Got it.",
+            "Makes sense.",
+            "Understood.",
+            "Thanks for sharing that.",
+            "Great, thanks.",
+            "Right, got it."
+          ];
+          const ackText = acks[Math.floor(Math.random() * acks.length)];
+          
+          setMessages(prev => prev.filter(m => m.id !== 'ack_typing'));
+          setMessages(prev => [...prev, { id: Math.random().toString(), sender: 'bot', text: ackText }]);
+          
+          setTimeout(() => {
+            setQuestionIndex(prev => prev + 1);
+          }, 300);
+        }, 300);
     }
   };
 

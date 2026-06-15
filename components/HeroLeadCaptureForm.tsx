@@ -113,10 +113,10 @@ export default function HeroLeadCaptureForm({
   const handleChatComplete = (conv: string[], callbackTime: string) => {
     setConversation(conv);
     setPreferredCallbackTime(callbackTime);
-    handleSendOtp();
+    handleSendOtp(true);
   };
 
-  async function handleSendOtp() {
+  async function handleSendOtp(skipSheets = false) {
     if (!name || !email || !city || !status || mobile.length !== 10) {
       setFormError('Please fill all fields before requesting OTP.');
       return;
@@ -143,6 +143,7 @@ export default function HeroLeadCaptureForm({
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
           debug,
+          skipSheets,
         }),
       });
 
