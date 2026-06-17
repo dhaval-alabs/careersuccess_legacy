@@ -290,7 +290,7 @@ export default function DelhiDSAIPage() {
             </div>
 
             <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <HeroLeadCaptureForm
+              <LeadCaptureForm
                 title="Get Free Career Counselling"
                 sourceName={`${config.crmPrefix}_Hero_DownloadBrochure`}
                 typeFilter="PPC_DownloadBrochure"
@@ -526,16 +526,27 @@ export default function DelhiDSAIPage() {
           </div>
         </div>
 
-        {/* MODALS */}
         <Modal isOpen={isEligibilityOpen} onClose={() => setIsEligibilityOpen(false)}>
-          <LeadCaptureForm
-            title="Check Your Eligibility"
-            sourceName={`${config.crmPrefix}_${ctaSource}`}
-            typeFilter="PPC_CheckEligibility"
-            buttonText="Check Eligibility →"
-            thankYouPath="/thankyou-check-your-eligibility"
-            onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
-          />
+          {ctaSource === 'Hero_CheckEligibility' || ctaSource === 'Sticky_CheckEligibility' ? (
+            <HeroLeadCaptureForm
+              title="Check Your Eligibility"
+              sourceName={`${config.crmPrefix}_${ctaSource}`}
+              typeFilter="PPC_CheckEligibility"
+              buttonText="Check Eligibility →"
+              thankYouPath="/thankyou-check-your-eligibility"
+              onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
+              qualificationConfigKey="data-science-ai"
+            />
+          ) : (
+            <LeadCaptureForm
+              title="Check Your Eligibility"
+              sourceName={`${config.crmPrefix}_${ctaSource}`}
+              typeFilter="PPC_CheckEligibility"
+              buttonText="Check Eligibility →"
+              thankYouPath="/thankyou-check-your-eligibility"
+              onSuccess={(email) => fireConversion(`${config.cityPrefix}_${ctaSource}`, email)}
+            />
+          )}
         </Modal>
         <Modal isOpen={isBrochureOpen} onClose={() => setIsBrochureOpen(false)}>
           <LeadCaptureForm
