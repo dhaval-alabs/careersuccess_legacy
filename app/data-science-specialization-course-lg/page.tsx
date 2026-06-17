@@ -320,7 +320,7 @@ export default function Home() {
               <StatsBar />
             </div>
 
-            <div id="enroll" className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
+            <div id="enroll" className="hidden lg:block bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
               <LeadCaptureForm 
                 title="Get Free Career Counselling" 
                 sourceName="PPC_BLR_Hero_DownloadBrochure" 
