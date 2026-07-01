@@ -158,42 +158,24 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
             </div>
           )}
 
-          {/* Brochure Download Button — course-specific if slug matches, else generic */}
+          {/* Brochure Download Button — course-specific if slug matches, else generic fallback */}
           {isBrochureDownload && (
             <div style={{ marginTop: '20px' }}>
-              {courseBrochureUrl ? (
-                <a href={courseBrochureUrl} target="_blank" rel="noopener noreferrer"
-                  style={{
-                    background: teal,
-                    color: navy,
-                    padding: '16px 32px',
-                    borderRadius: '12px',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    textDecoration: 'none',
-                    display: 'inline-block',
-                    boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
-                    transition: 'all 0.2f'
-                  }}>
-                  ⬇ Download {courseDisplayName} Brochure
-                </a>
-              ) : !courseSlug ? (
-                <a href={BROCHURE_PDF_URL} target="_blank" rel="noopener noreferrer"
-                  style={{
-                    background: teal,
-                    color: navy,
-                    padding: '16px 32px',
-                    borderRadius: '12px',
-                    fontWeight: 700,
-                    fontSize: '16px',
-                    textDecoration: 'none',
-                    display: 'inline-block',
-                    boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
-                    transition: 'all 0.2s'
-                  }}>
-                  Download File now
-                </a>
-              ) : null}
+              <a href={courseBrochureUrl || BROCHURE_PDF_URL} target="_blank" rel="noopener noreferrer"
+                style={{
+                  background: teal,
+                  color: navy,
+                  padding: '16px 32px',
+                  borderRadius: '12px',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  textDecoration: 'none',
+                  display: 'inline-block',
+                  boxShadow: '0 8px 30px rgba(29,229,181,0.3)',
+                  transition: 'all 0.2s'
+                }}>
+                ⬇ Download {courseDisplayName || 'Course'} Brochure
+              </a>
             </div>
           )}
         </div>
