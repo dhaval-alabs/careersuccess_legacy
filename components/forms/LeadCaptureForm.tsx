@@ -20,6 +20,7 @@ interface LeadCaptureFormProps {
   thankYouPath?: string;
   onSuccess?:    (email: string) => void;
   debug?:        boolean;
+  course?:       string;
 }
 
 const inputCls = `
@@ -41,6 +42,7 @@ export default function LeadCaptureForm({
   thankYouPath = '/thankyou-check-your-eligibility',
   onSuccess,
   debug = false,
+  course,
 }: LeadCaptureFormProps) {
   const [name, setName]               = useState('');
   const [email, setEmail]             = useState('');
@@ -88,6 +90,7 @@ export default function LeadCaptureForm({
           name, email, city, status, countryCode, mobile,
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_ModalForm',
+          course,
           ...utms,
           ...behaviour,
           submission_timestamp: new Date().toISOString(),

@@ -73,7 +73,7 @@ const cards = [
     tag: "FLEXIBLE",
     Icon: BlendedIcon,
     title: "Blended eLearning",
-    price: "₹47,200",
+    price: "₹53,100",
     desc: "Self-paced learning with recorded sessions and select live components. Maximum scheduling flexibility. Same syllabus and NASSCOM certification. Ideal for working professionals.",
     bullets: ["Best of both worlds", "Switch modes anytime", "Same curriculum & faculty"],
     featured: false,
@@ -83,8 +83,8 @@ const cards = [
     tag: "MOST POPULAR",
     Icon: LiveOnlineIcon,
     title: "Interactive Live Online",
-    price: "₹53,100",
-    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
+    price: "₹59,000",
+    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
     tagColor: blue,
@@ -93,7 +93,7 @@ const cards = [
     tag: "IN-PERSON",
     Icon: ClassroomIcon,
     title: "Classroom & Bootcamp",
-    price: "₹61,360",
+    price: "₹68,440",
     desc: "In-person training at our centres in Noida, Gurgaon (Sector 44), and Bangalore (HSR Layout). Small batch sizes, hands-on labs, direct faculty access, and on-campus placement activities.",
     bullets: ["Hands-on lab sessions", "Peer collaboration", "On-campus placement drives"],
     featured: false,
@@ -189,7 +189,7 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
 
               {/* EMI line */}
               <p className="text-[11px] font-bold mb-4 tracking-wide" style={{ color: blue }}>
-                0% interest EMI · Starting ₹6,387/month
+                0% interest EMI available
               </p>
 
               {/* Description */}
@@ -216,7 +216,7 @@ export default function DALearningModes({ onOpenDemo }: { onOpenDemo?: () => voi
 
         {/* Footnote */}
         <p className="mt-6 text-[12px] text-[#4A6275] max-w-2xl leading-relaxed">
-          * Fees shown are for the NASSCOM-FutureSkills Prime certified programme. An upgrade to the IIT Patna Vishlesan I-HUB Foundation co-certified track is available at an additional fee — speak to your learning advisor for details.
+          *Fees shown are for the NASSCOM FutureSkills Prime certified programme. An upgrade to the TIH at IIT Bombay or TIH at IIT Patna co-certified tracks is available at an additional fee — speak to your learning advisor for details.
         </p>
 
         {/* Demo CTA */}

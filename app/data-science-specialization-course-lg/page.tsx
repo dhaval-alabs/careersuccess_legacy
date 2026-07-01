@@ -45,7 +45,7 @@ const MODULES = [
   { num: "07", title: "Text Mining & NLP", topics: ["Regex, text vectorisation, Word2Vec", "Sentiment analysis, text classification", "spaCy/NLTK"] },
   { num: "08", title: "Model Deployment & MLOps", topics: ["Git, Flask, Cloud deployment", "ML lifecycle", "Monitoring in production"] },
   { num: "09", title: "Generative AI", topics: ["Prompt engineering", "Gen AI for Excel/SQL/Power BI/Python", "Gen AI for ML workflows"] },
-  { num: "10", title: "Capstone Projects", topics: ["6 real-world projects", "Banking & E-commerce", "Portfolio building"] },
+  { num: "10", title: "Capstone Projects", topics: ["real-world projects", "Banking & E-commerce", "Portfolio building"] },
   { num: "11", title: "Career Readiness (8 weeks)", topics: ["Resume building", "Mock interviews", "Case study practice", "Simulated recruitment drives"] },
 ];
 
@@ -283,9 +283,9 @@ export default function Home() {
               </div>
 
               <h1 className="text-[#09263F] text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-[1.1] mb-5 tracking-tight">
-                Data Science Course with
+                Advanced Certification in
                 <br />
-                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Guaranteed Career Support</span>
+                <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Data Science & GenAI</span>
               </h1>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-10">
@@ -328,12 +328,13 @@ export default function Home() {
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion('lp_Hero_DownloadBrochure', email)}
+                course="data-science"
               />
             </div>
           </div>
         </section>
 
-        <CourseInfoSection locations={['noida', 'gurgaon']} />
+        <CourseInfoSection locations={['noida', 'gurgaon']} courseType="ds" />
 
         {/* WHY ANALYTIXLABS + ALUMNI MARQUEE */}
         <section id="overview" className="py-10 bg-[#F4FAFA]">
@@ -400,11 +401,11 @@ export default function Home() {
               <div className="relative rounded-3xl overflow-hidden p-9 border border-[#D6ECEB] shadow-lg" style={{ background: 'linear-gradient(45deg, #FEFBE5, #E6FBF1, #ECFAFE)' }}>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#1DE5B5]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
                 <div className="relative">
-                  <span className="inline-block bg-[#79f4c8] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">NASSCOM Certified. Career Supported.</span>
+                  <span className="inline-block bg-[#79f4c8] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">For TIH at IIT Bombay and TIH at IIT Patna certified programs</span>
                   <h3 className="text-4xl font-bold text-[#09263F] mb-4 font-outfit">Get Placed. Or Get 50% Back.</h3>
-                  <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">Complete the programme, meet the requirements, and if you're not placed in a qualifying role within 6 months, we refund 50% of your course fee.</p>
+                  <p className="text-[#4A6275] text-lg leading-relaxed mb-8 font-medium">Complete your TIH at IIT Bombay or TIH at IIT Patna co-certified course and meet the requirements. If you are not placed within 6 months, we refund 50% of your fee. Minimum annual package assured.</p>
                   <ul className="space-y-3 mb-8">
-                    {["Minimum annual package assured", "6-month post-certification placement window", "NASSCOM globally recognised certificate", "Dedicated placement relationship manager"].map((i) => (
+                    {["Minimum annual package assured", "6-month post-certification placement window", "Dedicated placement relationship manager"].map((i) => (
                       <li key={i} className="flex items-start gap-2.5 text-sm text-[#4A6275]">
                         <svg className="w-4 h-4 text-[#239bf5] flex-shrink-0 mt-0.5" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         {i}
@@ -420,12 +421,12 @@ export default function Home() {
                 </div>
               </div>
               <div className="rounded-3xl bg-[#F4FAFA] p-9 border border-[#D6ECEB]">
-                <span className="inline-block bg-[#D6ECEB] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">Global Recognition</span>
+                <span className="inline-block bg-[#D6ECEB] text-[#09263F] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">Industry Recognized Certification</span>
                 <h2 className="text-[#09263F] font-bold text-2xl mb-1">A Certificate That</h2>
                 <h3 className="text-[#239bf5] font-bold text-2xl mb-5">Employers Recognise.</h3>
                 <p className="text-[#4A6275] text-sm leading-relaxed mb-8">Not just another piece of paper. You earn a co-branded certificate with NASSCOM FutureSkills Prime instantly validating your skills.</p>
                 <div className="space-y-5">
-                  {[{ t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." }, { t: "Applied Projects", d: "Portfolio of 6 capstone projects using real-world business data." }, { t: "Career Readiness", d: "8 weeks of mock interviews and resume reviews." }].map((item) => (
+                  {[{ t: "NASSCOM-FutureSkills Prime", d: "Backed by the Ministry of Electronics and IT (MeitY)." }, { t: "Applied Projects", d: "Portfolio of capstone projects using real-world business data." }, { t: "Placement Readiness Program (PRP)", d: "8 weeks of mock interviews and resume reviews." }].map((item) => (
                     <div key={item.t} className="flex gap-4">
                       <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm border border-[#D6ECEB]"><svg className="w-5 h-5 text-[#1DE5B5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
                       <div><h4 className="text-sm font-bold text-[#09263F]">{item.t}</h4><p className="text-xs text-[#4A6275] mt-1">{item.d}</p></div>
@@ -448,11 +449,10 @@ export default function Home() {
                 </span>
                 <h2 className="text-[#09263F] font-bold text-4xl sm:text-5xl leading-tight mb-4">
                   What You'll Learn Across <br />
-                  <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">700+ Hours</span>
+                  <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">500+ Hours</span>
                 </h2>
                 <p className="text-[#4A6275] text-lg leading-relaxed">
-                  11 modules covering analytics, data science, ML, and AI. <br className="hidden md:block" />
-                  Curriculum designed with NASSCOM-FutureSkills Prime.
+                  8 comprehensive modules covering Analytics, Data Science, Machine Learning, and AI, plus elective add-ons included at no extra cost.
                 </p>
               </div>
               <button 
@@ -494,11 +494,19 @@ export default function Home() {
                   <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Your Credential</span>
                 </span>
                 <h2 className="text-[#09263F] font-bold text-3xl sm:text-[2.6rem] leading-tight mb-6">
-                  Industry Recognised <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Certification</span>
+                  Industry Recognized <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Certification</span>
                 </h2>
-                <p className="text-[#4A6275] text-base leading-relaxed mb-10 pr-4">
-                  AnalytixLabs is a NASSCOM-FutureSkills Prime accredited training partner. Upon successful completion of the programme, you will receive a dual certification that is recognized by top global recruiters and Fortune 500 companies.
+                <p className="text-[#4A6275] text-base leading-relaxed mb-6 pr-4">
+                  Earn a prestigious dual certification from <strong>TIH at IIT Bombay or TIH at IIT Patna and NASSCOM FutureSkills Prime</strong> through AnalytixLabs. These industry-recognized credentials enhance your profile with top recruiters and Fortune 500 employers worldwide.
                 </p>
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-sm font-semibold">
+                  <a href="https://drive.google.com/file/d/1_5mP6t-qbK5hvuiY6dcoiYNg0DTO9ara/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-[#239bf5] hover:underline flex items-center gap-1.5">
+                    📄 View Sample Certificate (TIH at IIT Bombay)
+                  </a>
+                  <a href="https://drive.google.com/file/d/1o26GOYrlwDL0rEQDIXdCf3hnycHB4CtA/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-[#239bf5] hover:underline flex items-center gap-1.5">
+                    📄 View Sample Certificate (TIH at IIT Patna)
+                  </a>
+                </div>
                 <div className="flex flex-col items-center gap-10">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-[#D6ECEB] transform transition-transform hover:scale-[1.03]">
@@ -526,6 +534,35 @@ export default function Home() {
                         <Image src="/lp/images/Final-Logo-IITP-IITB-2026.webp" alt="Official Partners" width={400} height={120} className="w-full h-auto object-contain" />
                       </div>
                       <p className="text-[#09263F] font-bold text-sm mt-4 text-center">Official Partner Branding</p>
+                    </div>
+                  </div>
+                  
+                  {/* Program Fees Table */}
+                  <div className="w-full bg-white rounded-3xl p-6 sm:p-8 border border-[#D6ECEB] shadow-lg mt-4 text-left">
+                    <h3 className="font-bold text-[#09263F] text-lg mb-6 flex items-center gap-2 border-b border-[#F4FAFA] pb-3">
+                      <span>🔹</span> Program Fees (Inclusive of Certification)
+                    </h3>
+                    <div className="space-y-8">
+                      <div>
+                        <h4 className="font-extrabold text-[#239bf5] text-sm mb-3">
+                          » For TIH at IIT Bombay | TIH at IIT Patna Certification:
+                        </h4>
+                        <ul className="space-y-3 text-sm text-[#4A6275]">
+                          <li className="flex justify-between border-b border-[#F4FAFA] pb-2"><span>Classroom Sessions</span> <strong className="text-[#09263F]">INR 87,320/- (including taxes)</strong></li>
+                          <li className="flex justify-between border-b border-[#F4FAFA] pb-2"><span>Interactive Live Online Sessions</span> <strong className="text-[#09263F]">INR 80,240/- (including taxes)</strong></li>
+                          <li className="flex justify-between pb-2"><span>Blended eLearning</span> <strong className="text-[#09263F]">INR 70,800/- (including taxes)</strong></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-extrabold text-[#239bf5] text-sm mb-3">
+                          » For NASSCOM FutureSkills Prime Certification:
+                        </h4>
+                        <ul className="space-y-3 text-sm text-[#4A6275]">
+                          <li className="flex justify-between border-b border-[#F4FAFA] pb-2"><span>Classroom Sessions</span> <strong className="text-[#09263F]">INR 68,440/- (including taxes)</strong></li>
+                          <li className="flex justify-between border-b border-[#F4FAFA] pb-2"><span>Interactive Live Online Sessions</span> <strong className="text-[#09263F]">INR 59,000/- (including taxes)</strong></li>
+                          <li className="flex justify-between pb-2"><span>Blended eLearning</span> <strong className="text-[#09263F]">INR 53,100/- (including taxes)</strong></li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                   <button 
@@ -613,6 +650,7 @@ export default function Home() {
               thankYouPath="/thankyou-check-your-eligibility"
               onSuccess={(email) => fireConversion(`lp_${ctaSource}`, email)}
               qualificationConfigKey="data-science-specialization"
+              course="data-science"
             />
           ) : (
             <LeadCaptureForm 
@@ -622,6 +660,7 @@ export default function Home() {
               buttonText="Check Eligibility →"
               thankYouPath="/thankyou-check-your-eligibility"
               onSuccess={(email) => fireConversion(`lp_${ctaSource}`, email)}
+              course="data-science"
             />
           )}
         </Modal>
@@ -633,6 +672,7 @@ export default function Home() {
             buttonText="Download Now →"
             thankYouPath="/thankyou-download-brochure"
             onSuccess={(email) => fireConversion(`lp_${ctaSource}`, email)}
+            course="data-science"
           />
         </Modal>
         <Modal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)}>
@@ -643,6 +683,7 @@ export default function Home() {
             buttonText="Signup for a Demo"
             thankYouPath="/thankyou-signup"
             onSuccess={(email) => fireConversion(`lp_${ctaSource}`, email)}
+            course="data-science"
           />
         </Modal>
 

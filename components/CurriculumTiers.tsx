@@ -103,7 +103,7 @@ export default function CurriculumTiers({ onOpenBrochure }: Props) {
             <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-[#4A6275] bg-[#E6F7F6] px-2 py-0.5 rounded-full mb-2">Module 10</span>
             <h4 className="text-[13px] font-bold text-[#09263F] mt-1 mb-2 leading-snug">Capstone Projects</h4>
             <div className="flex flex-wrap gap-1">
-              {["6 Projects", "Banking", "E-commerce", "Portfolio"].map((tag) => (
+              {["Projects", "Banking", "E-commerce", "Portfolio"].map((tag) => (
                 <span key={tag} className="text-[10px] bg-[#E6F7F6] text-[#09263F] px-2 py-0.5 rounded-full font-medium border border-[#D6ECEB]">{tag}</span>
               ))}
             </div>

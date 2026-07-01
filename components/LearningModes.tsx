@@ -85,7 +85,7 @@ const cards = [
     Icon: LiveOnlineIcon,
     title: "Interactive Live Online",
     price: "₹59,000",
-    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday evening and weekend batches available.",
+    desc: "Real-time, instructor-led sessions from anywhere in India. Same faculty as classroom. Full LMS access with recordings for 1 year. Weekday and weekend batches available.",
     bullets: ["Real-time Q&A with faculty", "Flexible batch timings", "1-year recording access"],
     featured: true,
     tagColor: blue,
@@ -192,7 +192,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
 
               {/* EMI line */}
               <p className="text-[11px] font-semibold mb-4 tracking-wide" style={{ color: blue }}>
-                0% interest EMI · Starting ₹6,637/month
+                0% interest EMI available
               </p>
 
               {/* Description */}
@@ -221,7 +221,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
 
         {/* Footnote */}
         <p className="mt-6 text-[12px] text-[#4A6275] max-w-2xl leading-relaxed">
-          * Fees shown are for the NASSCOM-FutureSkills Prime certified programme. An upgrade to the IIT Patna Vishlesan I-HUB Foundation co-certified track is available at an additional fee — speak to your learning advisor for details.
+          * Fees shown are for the NASSCOM FutureSkills Prime certified programme. An upgrade to the TIH at IIT Bombay or TIH at IIT Patna co-certified tracks is available at an additional fee — speak to your learning advisor for details.
         </p>
 
         {/* Demo CTA */}

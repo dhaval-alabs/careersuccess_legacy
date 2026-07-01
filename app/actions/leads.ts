@@ -17,6 +17,7 @@ interface LeadEntry {
     source_keyword?: string
     page_url?: string
     typeFilter?: string
+    course?: string
 }
 
 export async function createLeadAction(data: LeadEntry) {
@@ -48,7 +49,7 @@ export async function createLeadAction(data: LeadEntry) {
             const { sendBrochureEmail, sendRegistrationEmail } = await import('@/utils/email');
             
             if (data.typeFilter === 'PPC_DownloadBrochure') {
-                await sendBrochureEmail(data.email, data.name);
+                await sendBrochureEmail(data.email, data.name, data.course);
             } else if (data.typeFilter === 'PPC_CheckEligibility' || data.typeFilter === 'PPC_SignupDemo') {
                 await sendRegistrationEmail(data.email, data.name);
             }

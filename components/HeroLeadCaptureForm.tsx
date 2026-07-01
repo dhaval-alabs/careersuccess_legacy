@@ -22,6 +22,7 @@ interface HeroLeadCaptureFormProps {
   onSuccess?:    (email: string) => void;
   debug?:        boolean;
   qualificationConfigKey?: string;
+  course?:       string;
 }
 
 interface Message {
@@ -40,6 +41,7 @@ export default function HeroLeadCaptureForm({
   onSuccess,
   debug = false,
   qualificationConfigKey = 'data-science-ai',
+  course,
 }: HeroLeadCaptureFormProps) {
   // Conversational Form States
   const [messages, setMessages] = useState<Message[]>([]);
@@ -268,6 +270,7 @@ export default function HeroLeadCaptureForm({
           mobile: targetPhone,
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
+          course,
           ...utms,
           ...behaviour,
           submission_timestamp: new Date().toISOString(),

@@ -103,17 +103,17 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
         {/* Header */}
         <div className="text-center mb-16">
           <span className="inline-block bg-[#e8f4fd] text-[12px] font-bold uppercase tracking-[0.1em] px-[18px] py-[5px] rounded-full border border-[#b8ddf7] mb-4">
-            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Authoritative Curriculum · 445-760 Hours</span>
+            <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">Authoritative Curriculum · 594 Hours</span>
           </span>
           <h2 className="text-[#09263F] font-bold text-3xl sm:text-5xl leading-tight mb-4">
             Dual Certification Track —{' '}
             <span className="bg-gradient-to-r from-[#19dfaf] to-[#07b2e8] bg-clip-text text-transparent">What You Will Learn</span>
           </h2>
           <p className="text-[#4A6275] text-base leading-relaxed max-w-3xl mx-auto">
-            Synced with the IIT Bombay + IIT Patna academic partnership. Choose between our Core Analytics track or the AI-Integrated track for advanced automation.
+            Synced with the TIH at IIT Bombay + TIH at IIT Patna academic partnership. Choose between our Core Analytics track or the AI-Integrated track for advanced automation.
           </p>
         </div>
-
+        
         {/* Overview Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-[#f8fcfb] border border-[#D6ECEB] rounded-2xl p-6 flex items-start gap-4 transition-all hover:shadow-md">
@@ -121,8 +121,8 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             </div>
             <div>
-              <p className="text-xl font-bold text-[#09263F]">43 Classes</p>
-              <p className="text-xs text-[#4A6275] font-medium leading-relaxed">445 hours of structured learning</p>
+              <p className="text-xl font-bold text-[#09263F]">Includes GenAI & Agentic AI</p>
+              <p className="text-xs text-[#4A6275] font-medium leading-relaxed">594 hours of structured learning</p>
             </div>
           </div>
           <div className="bg-[#f8fcfb] border border-[#D6ECEB] rounded-2xl p-6 flex items-start gap-4 transition-all hover:shadow-md">
@@ -130,7 +130,7 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
             <div>
-              <p className="text-xl font-bold text-[#09263F]">6-10 Months</p>
+              <p className="text-xl font-bold text-[#09263F]">6-8 Months</p>
               <p className="text-xs text-[#4A6275] font-medium leading-relaxed">Self-paced study + assignments</p>
             </div>
           </div>
@@ -176,11 +176,11 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
         <div className="max-w-3xl mx-auto text-center mb-12">
           {activeTab === 'ai' ? (
             <p className="text-[#4A6275] text-sm leading-relaxed font-medium">
-              Everything in the Core track, plus three AI modules that put you ahead of the market. The AI-Integrated track earns the same NASSCOM-FutureSkills Prime certification with an extended syllabus of 760+ hours.
+              Everything in the Core track, plus three AI modules that put you ahead of the market. The AI-Integrated track earns the same NASSCOM-FutureSkills Prime certification with an extended syllabus of 594 Hours.
             </p>
           ) : (
             <p className="text-[#4A6275] text-sm leading-relaxed font-medium">
-              Our flagship analytics program covering the essential tool-stack for data professionals. 445 hours of comprehensive training from foundations to industry applications.
+              Our flagship analytics program covering the essential tool-stack for data professionals. 594 hours of comprehensive training from foundations to industry applications.
             </p>
           )}
         </div>

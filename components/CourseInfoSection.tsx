@@ -79,14 +79,23 @@ function StatCard({ icon, label, primary, secondary, delay }: { icon: React.Reac
 
 interface Props {
     locations?: BatchLocation[];
+    courseType?: 'ds' | 'da';
 }
 
-export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: Props) {
+export default function CourseInfoSection({ locations = ['noida', 'gurgaon'], courseType = 'da' }: Props) {
     const [sectionVisible, setSectionVisible] = useState(false);
     useEffect(() => {
         const t = setTimeout(() => setSectionVisible(true), 100);
         return () => clearTimeout(t);
     }, []);
+
+    const durationPrimary = "6-8 <span style='font-size:18px;color:#1a2b4a'>Months</span>";
+    const durationSecondary = courseType === 'ds' ? "Includes GenAI" : "Includes Generative & Agentic AI";
+    const hoursPrimary = courseType === 'ds' ? "546 <span style='font-size:18px;color:#1a2b4a'>Hours</span>" : "594 <span style='font-size:18px;color:#1a2b4a'>Hours</span>";
+    const hoursSecondary = "Structured Learning";
+    const projectsPrimary = "<span style='font-size:18px;color:#1a2b4a'>Projects</span>";
+    const projectsSecondary = "Assignments";
+    const emiText = "0% EMI available";
 
     return (
         <section className="relative -mt-8 mb-8 px-4 sm:px-6">
@@ -136,8 +145,8 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                         <StatCard
                             icon={<CalendarIcon />}
                             label="Course Duration"
-                            primary="6-10 <span style='font-size:18px;color:#1a2b4a'>Months</span>"
-                            secondary="43 Intensive Classes"
+                            primary={durationPrimary}
+                            secondary={durationSecondary}
                             delay={150}
                         />
                     </div>
@@ -147,8 +156,8 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                         <StatCard
                             icon={<CodeIcon />}
                             label="Learning Hours"
-                            primary="445-760 <span style='font-size:18px;color:#1a2b4a'>Hours</span>"
-                            secondary="Structured Learning"
+                            primary={hoursPrimary}
+                            secondary={hoursSecondary}
                             delay={280}
                         />
                     </div>
@@ -158,8 +167,8 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                         <StatCard
                             icon={<PeopleIcon />}
                             label="Practice & Projects"
-                            primary="6 <span style='font-size:18px;color:#1a2b4a'>Projects</span>"
-                            secondary="6 Assignments"
+                            primary={projectsPrimary}
+                            secondary={projectsSecondary}
                             delay={410}
                         />
                     </div>
@@ -173,8 +182,7 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'] }: 
                                 <p style={{ margin: 0, fontSize: 32, fontWeight: 900, color: "#00AEEF", lineHeight: 1 }}>
                                     ₹53,100<span style={{ fontSize: 16, fontWeight: 600, color: "#6b7a96" }}>/-*</span>
                                 </p>
-                                <p style={{ margin: "10px 0 0", fontSize: 13, color: "#6b7a96", fontWeight: 500, lineHeight: 1.4 }}>
-                                    0% EMI available<br />Starts ₹6,387/month
+                                <p style={{ margin: "10px 0 0", fontSize: 13, color: "#6b7a96", fontWeight: 500, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: emiText }}>
                                 </p>
                             </div>
                         </div>
