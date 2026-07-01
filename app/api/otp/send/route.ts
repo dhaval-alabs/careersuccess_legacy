@@ -160,60 +160,47 @@ export async function POST(req: NextRequest) {
       course: body.course
     })).toString('base64');
 
-    // 2. Call Meta WhatsApp Cloud API
-    const waAccessToken = process.env.META_WA_ACCESS_TOKEN;
-    const waPhoneId = process.env.META_WA_PHONE_NUMBER_ID;
+    // 2. Call xBot Webhook API
     const debug = body.debug === true;
 
     let waSuccess = false;
     let debugInfo = null;
 
-    if (waAccessToken && waPhoneId) {
-      try {
-        const waRes = await fetch(
-          `https://graph.facebook.com/v23.0/${waPhoneId}/messages`,
-          {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${waAccessToken}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              messaging_product: 'whatsapp',
-              to: `${countryCode.replace('+', '')}${mobile}`,
-              type: 'template',
-              template: {
-                name: 'form_otp',
-                language: { code: 'en_US' },
-                components: [{
-                  type: 'body',
-                  parameters: [{ type: 'text', text: otp }],
-                }],
-              },
-            }),
-            signal: AbortSignal.timeout(8000),
-          }
-        );
-        waSuccess = waRes.ok;
-        if (!waRes.ok) {
-          const waErr = await waRes.json();
-          console.error('[OTP] Meta API error:', waErr);
-          if (debug) {
-            debugInfo = `Meta API Error: ${waRes.status} ${JSON.stringify(waErr.error || waErr)} | PhoneID used: ${waPhoneId}`;
-          }
+    try {
+      const params = new URLSearchParams();
+      params.append('Name', name || 'Lead');
+      params.append('mobile', mobile);
+      params.append('email', email || '');
+      params.append('city', city || '');
+      params.append('countryCode', countryCode || '+91');
+      params.append('mobilecc', `${countryCode}${mobile}`);
+      params.append('otp', otp);
+      params.append('status', 'not varified');
+
+      const xbotRes = await fetch(
+        'https://chat-xbot.webspecia.in/api/iwh/08c86dc50ec3914c2fdf14a39ab3acb8',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params.toString(),
+          signal: AbortSignal.timeout(8000),
         }
-      } catch (err: any) {
-        console.error('[OTP] Meta API delivery failed:', err);
-        waSuccess = false;
+      );
+      waSuccess = xbotRes.ok;
+      if (!xbotRes.ok) {
+        const xbotErr = await xbotRes.text();
+        console.error('[OTP] xBot API error:', xbotErr);
         if (debug) {
-          debugInfo = `Fetch Error: ${err.message || String(err)}`;
+          debugInfo = `xBot Error: ${xbotRes.status} ${xbotErr}`;
         }
       }
-    } else {
-      console.error('[OTP] Missing Meta API credentials');
+    } catch (err: any) {
+      console.error('[OTP] xBot API delivery failed:', err);
       waSuccess = false;
       if (debug) {
-        debugInfo = `Error: Missing Environment Variables (${!waAccessToken ? 'META_WA_ACCESS_TOKEN' : ''} ${!waPhoneId ? 'META_WA_PHONE_NUMBER_ID' : ''})`;
+        debugInfo = `Fetch Error: ${err.message || String(err)}`;
       }
     }
 
