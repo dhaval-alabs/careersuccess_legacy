@@ -5,17 +5,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-// Per-course brochure env vars. Format: NEXT_PUBLIC_BROCHURE_<SLUG_UPPER_UNDERSCORES>
-// e.g. NEXT_PUBLIC_BROCHURE_AGENTIC_AI, NEXT_PUBLIC_BROCHURE_DATA_ANALYTICS
-const COURSE_BROCHURE_URLS: Record<string, string | undefined> = {
-  'agentic-ai':         process.env.NEXT_PUBLIC_BROCHURE_AGENTIC_AI,
-  'data-analytics':     process.env.NEXT_PUBLIC_BROCHURE_DATA_ANALYTICS,
-  'data-science':       process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE,
-  'business-analytics': process.env.NEXT_PUBLIC_BROCHURE_BUSINESS_ANALYTICS,
-  'full-stack-ai':      process.env.NEXT_PUBLIC_BROCHURE_FULL_STACK_AI,
-  'data-visualization': process.env.NEXT_PUBLIC_BROCHURE_DATA_VISUALIZATION,
-  'data-science-python':process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE_PYTHON,
-};
+
 
 const COURSE_DISPLAY_NAMES: Record<string, string> = {
   'agentic-ai':         'Agentic AI Course',
@@ -35,8 +25,6 @@ interface ThankYouProps {
   isBrochureDownload?: boolean;
 }
 
-const WEBINAR_URL = process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
-const BROCHURE_PDF_URL = process.env.NEXT_PUBLIC_BROCHURE_URL || 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
 const PHONE_NUMBER = '919555525908';
 const WA_MESSAGE = encodeURIComponent(
   'Hello, I just submitted my details on the AnalytixLabs website. Can you help me?'
@@ -46,6 +34,20 @@ const navy = "#09263F";
 const teal = "#1DE5B5";
 
 export default function ThankYouPage({ heading, subCopy, conversionId, verifiedConversionId, isBrochureDownload }: ThankYouProps) {
+  // Move variable evaluations inside render scope
+  const WEBINAR_URL = process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
+  const BROCHURE_PDF_URL = process.env.NEXT_PUBLIC_BROCHURE_URL || 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
+
+  const COURSE_BROCHURE_URLS: Record<string, string | undefined> = {
+    'agentic-ai':         process.env.NEXT_PUBLIC_BROCHURE_AGENTIC_AI,
+    'data-analytics':     process.env.NEXT_PUBLIC_BROCHURE_DATA_ANALYTICS,
+    'data-science':       process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE,
+    'business-analytics': process.env.NEXT_PUBLIC_BROCHURE_BUSINESS_ANALYTICS,
+    'full-stack-ai':      process.env.NEXT_PUBLIC_BROCHURE_FULL_STACK_AI,
+    'data-visualization': process.env.NEXT_PUBLIC_BROCHURE_DATA_VISUALIZATION,
+    'data-science-python':process.env.NEXT_PUBLIC_BROCHURE_DATA_SCIENCE_PYTHON,
+  };
+
   const searchParams = useSearchParams();
   const rawEmail = searchParams.get('email') || '';
   const rawName = searchParams.get('name') || '';

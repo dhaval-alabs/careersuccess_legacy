@@ -3,7 +3,6 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const LOGO_URL = 'https://www.analytixlabs.co.in/wp-content/uploads/2024/04/logo.png';
-const WEBINAR_URL = process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
 const WHATSAPP_URL = 'https://api.whatsapp.com/send?phone=919555525908&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F';
 
 const COURSE_MAP: Record<string, string> = {
@@ -30,6 +29,7 @@ export async function sendBrochureEmail(email: string, name: string, courseSlug?
         const envKey = `NEXT_PUBLIC_BROCHURE_${courseSlug?.toUpperCase().replace(/-/g, '_')}`;
         const brochureUrl = (courseSlug && process.env[envKey]) || process.env.NEXT_PUBLIC_BROCHURE_URL || 'https://www.analytixlabs.co.in/pdf/Nasscom_(ACDS)_Advanced_Certification_in_Data_Science_Alabs280126.pdf';
         
+        const WEBINAR_URL = process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
         const currentYear = new Date().getFullYear();
 
         await resend.emails.send({
@@ -82,6 +82,7 @@ export async function sendRegistrationEmail(email: string, name: string) {
     if (!process.env.RESEND_API_KEY) return;
 
     try {
+        const WEBINAR_URL = process.env.NEXT_PUBLIC_ZOOM_WEBINAR_URL || 'https://us06web.zoom.us/webinar/register/7517736425815/WN_MwlIZpQCRcmKz_LG4Y3OwQ';
         const currentYear = new Date().getFullYear();
 
         await resend.emails.send({
