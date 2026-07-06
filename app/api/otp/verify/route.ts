@@ -53,20 +53,41 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   return sheetsTokenCache.token;
 }
 
-async function updateLeadSquaredToVerified(cleanPhone: string, preferredCallbackTime?: string) {
+async function updateLeadSquaredToVerified(cleanPhone: string, email?: string, preferredCallbackTime?: string) {
   try {
-    // 1. Retrieve Prospect ID - Using the same phone search pattern
-    const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(cleanPhone)}`;
+    let searchPhone = cleanPhone.trim();
+    if (searchPhone.startsWith('+91')) {
+      searchPhone = searchPhone.substring(3);
+    } else if (searchPhone.startsWith('91') && searchPhone.length > 10) {
+      searchPhone = searchPhone.substring(2);
+    }
+
+    // 1. Retrieve Prospect ID - Using the normalized phone search pattern
+    const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(searchPhone)}`;
     const searchRes = await fetch(searchUrl);
     const searchData = await searchRes.json();
 
-    if (!searchRes.ok || !searchData || searchData.length === 0) {
-      console.warn('[Verify] LSQ Search: No lead found for phone', cleanPhone);
-      return;
+    let prospectId = null;
+    if (searchRes.ok && searchData && searchData.length > 0) {
+      prospectId = searchData[0].ProspectID;
+    } else if (email) {
+      // Fallback search by email
+      const searchEmailUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(email)}`;
+      const searchEmailRes = await fetch(searchEmailUrl);
+      const searchEmailData = await searchEmailRes.json();
+      if (searchEmailRes.ok && searchEmailData) {
+        if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
+          prospectId = searchEmailData[0].ProspectID;
+        } else if (searchEmailData.ProspectID) {
+          prospectId = searchEmailData.ProspectID;
+        }
+      }
     }
 
-    const prospectId = searchData[0].ProspectID;
-    if (!prospectId) return;
+    if (!prospectId) {
+      console.warn('[Verify] LSQ Search: No lead found for phone/email', cleanPhone, email);
+      return;
+    }
 
     // 2. Update Lead status to Verified
     const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
@@ -206,7 +227,7 @@ export async function POST(req: NextRequest) {
     const { name: fullName, email, typeFilter, course } = parsedToken; // Extract from token
 
     // Await updates to ensure they complete on Vercel
-    await updateLeadSquaredToVerified(lsqPhone, preferredCallbackTime).catch(console.error);
+    await updateLeadSquaredToVerified(lsqPhone, email || body.email, preferredCallbackTime).catch(console.error);
     const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone);
 
     // ── TRIGGER EMAIL FLOW (Async) ──

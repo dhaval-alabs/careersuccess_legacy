@@ -51,7 +51,14 @@ export async function POST(req: NextRequest) {
 
     // 1. LeadSquared Update
     try {
-      const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(phone)}`;
+      let searchPhone = phone.trim();
+      if (searchPhone.startsWith('+91')) {
+        searchPhone = searchPhone.substring(3);
+      } else if (searchPhone.startsWith('91') && searchPhone.length > 10) {
+        searchPhone = searchPhone.substring(2);
+      }
+
+      const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(searchPhone)}`;
       const searchRes = await fetch(searchUrl);
       const searchData = await searchRes.json();
       
@@ -78,6 +85,7 @@ export async function POST(req: NextRequest) {
         const payload = [
           { Attribute: scoreField, Value: score },
           { Attribute: notesField, Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` },
+          { Attribute: 'mx_Extra_Notes', Value: `Score Reason: ${reason}\n\nConversation:\n${convText}` },
           { Attribute: 'mx_conv_form', Value: convText }
         ];
 

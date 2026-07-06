@@ -321,13 +321,14 @@ export default function Home() {
             </div>
 
             <div id="enroll" className="hidden lg:block bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm 
+              <HeroLeadCaptureForm 
                 title="Get Free Career Counselling" 
                 sourceName="PPC_BLR_Hero_DownloadBrochure" 
                 typeFilter="PPC_DownloadBrochure" 
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion('lp_Hero_DownloadBrochure', email)}
+                qualificationConfigKey="data-science-specialization"
                 course="data-science"
               />
             </div>

@@ -104,11 +104,11 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
           />
           <div style={{ width: '1px', height: '30px', background: '#D6ECEB' }} />
           <Image
-            src="/lp/images/logo-nasscom-ministry.webp"
-            alt="NASSCOM"
-            width={260}
-            height={50}
-            style={{ objectFit: 'contain', width: '260px', height: 'auto' }}
+            src="/lp/images/Final-Logo-IITP-IITB-2026.webp"
+            alt="IIT Bombay, IIT Patna and Nasscom — Partners"
+            width={300}
+            height={60}
+            style={{ objectFit: 'contain', width: '300px', height: 'auto' }}
           />
         </div>
       </header>

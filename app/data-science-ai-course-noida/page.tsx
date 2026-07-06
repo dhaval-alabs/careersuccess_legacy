@@ -269,13 +269,14 @@ export default function NoidaDSAIPage() {
             </div>
 
             <div id="enroll" className="hidden lg:block bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] overflow-hidden border border-[#D6ECEB]">
-              <LeadCaptureForm
+              <HeroLeadCaptureForm
                 title="Get Free Career Counselling"
                 sourceName={`${config.crmPrefix}_Hero_DownloadBrochure`}
                 typeFilter="PPC_DownloadBrochure"
                 buttonText="Download Brochure"
                 thankYouPath="/thankyou-download-brochure"
                 onSuccess={(email) => fireConversion(`${config.cityPrefix}_Hero_DownloadBrochure`, email)}
+                qualificationConfigKey="data-science-ai"
                 course="data-science"
               />
             </div>
