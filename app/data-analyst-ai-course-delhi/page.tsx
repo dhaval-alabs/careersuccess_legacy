@@ -8,6 +8,7 @@ import LeadCaptureForm from "../../components/forms/LeadCaptureForm";
 import HeroLeadCaptureForm from "../../components/HeroLeadCaptureForm";
 import Modal from "../../components/Modal";
 import StatsBar from "../../components/StatsBar";
+import { buildWhatsAppLink } from "../../utils/captureUtm";
 import DACurriculumSection from "../../components/DACurriculumSection";
 import ToolsMasteryStrip from "../../components/ToolsMasteryStrip";
 import WhoIsThisFor from "../../components/WhoIsThisFor";
@@ -569,7 +570,7 @@ export default function DelhiDAAIPage() {
               className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9555525908
             </a>
-            <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+            <a href={buildWhatsAppLink("919555525908")} target="_blank" rel="noreferrer"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp

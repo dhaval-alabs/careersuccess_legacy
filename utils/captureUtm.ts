@@ -58,3 +58,29 @@ export const getStoredUtm = (): Record<string, string> => {
   return utms;
 };
 
+export const isValidGclid = (value: any): boolean => {
+  if (!value) return false;
+  const v = String(value).trim();
+  const placeholders = ['-', 'n/a', 'null', 'none', 'na', 'undefined'];
+  if (placeholders.includes(v.toLowerCase())) return false;
+  return v.length > 20 && /^[A-Za-z0-9_-]+$/.test(v);
+};
+
+export const buildWhatsAppLink = (phoneNumber: string, baseMessage: string = ''): string => {
+  const utms = getStoredUtm();
+  const gclid = utms.gclid;
+
+  if (isValidGclid(gclid)) {
+    const refTag = ` [ref:${gclid}]`;
+    const message = baseMessage + refTag;
+    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+  }
+
+  // Non-PPC visitor or invalid GCLID: return exact production URL format
+  if (baseMessage) {
+    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(baseMessage)}`;
+  }
+  return `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+};
+
+
