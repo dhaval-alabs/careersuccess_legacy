@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import { buildWhatsAppLink } from '../utils/captureUtm';
 
 
 
@@ -213,7 +214,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
             <div style={iconStyle}>💬</div>
             <h3 style={cardTitle}>Chat on WhatsApp</h3>
             <p style={cardBody}>Connect with our counsellor instantly on WhatsApp.</p>
-            <a href={`https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${WA_MESSAGE}`}
+            <a href={buildWhatsAppLink(PHONE_NUMBER, decodeURIComponent(WA_MESSAGE))}
               target="_blank" rel="noopener noreferrer" style={btnWhatsapp}>
               Chat Now
             </a>

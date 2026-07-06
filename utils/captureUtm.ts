@@ -73,14 +73,14 @@ export const buildWhatsAppLink = (phoneNumber: string, baseMessage: string = '')
   if (isValidGclid(gclid)) {
     const refTag = ` [ref:${gclid}]`;
     const message = baseMessage + refTag;
-    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   }
 
-  // Non-PPC visitor or invalid GCLID: return exact production URL format
+  // Non-PPC visitor or invalid GCLID: return clean wa.me format
   if (baseMessage) {
-    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(baseMessage)}`;
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(baseMessage)}`;
   }
-  return `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+  return `https://wa.me/${phoneNumber}`;
 };
 
 
