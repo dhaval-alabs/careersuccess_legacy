@@ -140,67 +140,50 @@ export async function POST(req: NextRequest) {
     const lsqPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
     const cleanPhoneForSheets = `${countryCode}${mobile}`;
 
-    // 1. Generate OTP & HMAC
-    const otp = String(crypto.randomInt(1000, 9999));
-    const expiry = Date.now() + 10 * 60 * 1000;
-    const payloadSignature = `${mobile}:${otp}:${expiry}`;
-    
-    if (!process.env.OTP_HMAC_SECRET) {
-      console.error('[OTP] Error: OTP_HMAC_SECRET is missing!');
-      return NextResponse.json({ success: false, error: 'Server misconfiguration' }, { status: 500, headers: corsHeaders });
-    }
-
-    const hmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
+    // 1. Generate secure metadata token for verification phase
+    const payloadSignature = `${mobile}:${name || ''}:${email || ''}`;
+    const hmacSecret = process.env.OTP_HMAC_SECRET || 'fallback-secret';
+    const hmac = crypto.createHmac('sha256', hmacSecret).update(payloadSignature).digest('hex');
     const token = Buffer.from(JSON.stringify({ 
-      expiry, 
       hmac,
       name: body.name,
       email: body.email,
       typeFilter: body.typeFilter,
-      course: body.course
+      course: body.course,
+      mobile,
+      countryCode
     })).toString('base64');
 
-    // 2. Call xBot Webhook API
+    // 2. Call WABA OTP Send API
     const debug = body.debug === true;
 
     let waSuccess = false;
     let debugInfo = null;
 
     try {
-      const params = new URLSearchParams();
-      params.append('Name', name || 'Lead');
-      params.append('mobile', mobile);
-      params.append('email', email || '');
-      params.append('city', city || '');
-      params.append('countryCode', countryCode || '+91');
-      params.append('mobilecc', `${countryCode}${mobile}`);
-      params.append('otp', otp);
-      params.append('status', 'not varified');
-
-      const xbotRes = await fetch(
-        'https://chat-xbot.webspecia.in/api/iwh/08c86dc50ec3914c2fdf14a39ab3acb8',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: params.toString(),
-          signal: AbortSignal.timeout(8000),
-        }
-      );
-      waSuccess = xbotRes.ok;
-      if (!xbotRes.ok) {
-        const xbotErr = await xbotRes.text();
-        console.error('[OTP] xBot API error:', xbotErr);
+      const phone = `${countryCode}${mobile}`.replace('+', '');
+      const wabaRes = await fetch("https://waba.analytixlabs.co.in/api/otp/send", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json", 
+          "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
+        },
+        body: JSON.stringify({ phone }),
+        signal: AbortSignal.timeout(8000),
+      });
+      waSuccess = wabaRes.ok;
+      if (!wabaRes.ok) {
+        const wabaErr = await wabaRes.text();
+        console.error('[OTP] WABA API error:', wabaErr);
         if (debug) {
-          debugInfo = `xBot Error: ${xbotRes.status} ${xbotErr}`;
+          debugInfo = `WABA Error: ${wabaRes.status} ${wabaErr}`;
         }
       }
     } catch (err: any) {
-      console.error('[OTP] xBot API delivery failed:', err);
+      console.error('[OTP] WABA API delivery failed:', err);
       waSuccess = false;
       if (debug) {
-        debugInfo = `Fetch Error: ${err.message || String(err)}`;
+        debugInfo = `WABA Fetch Error: ${err.message || String(err)}`;
       }
     }
 

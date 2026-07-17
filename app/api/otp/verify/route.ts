@@ -195,26 +195,43 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid token format' }, { status: 400, headers: corsHeaders });
     }
 
-    const { expiry, hmac } = parsedToken;
-
-    if (!expiry || !hmac) {
-      return NextResponse.json({ success: false, error: 'Malformed token' }, { status: 400, headers: corsHeaders });
-    }
-
-    // 1. Check expiry
-    if (Date.now() > expiry) {
-      return NextResponse.json({ success: false, error: 'OTP expired. Please request a new one.' }, { status: 400, headers: corsHeaders });
-    }
-
-    // 2. Recompute HMAC and validate
-    const payloadSignature = `${mobile}:${otp_entered}:${expiry}`;
-    const expectedHmac = crypto.createHmac('sha256', process.env.OTP_HMAC_SECRET).update(payloadSignature).digest('hex');
+    // 1. Validate token integrity
+    const { hmac, name: fullName, email, typeFilter, course } = parsedToken;
+    const payloadSignature = `${mobile}:${fullName || ''}:${email || ''}`;
+    const hmacSecret = process.env.OTP_HMAC_SECRET || 'fallback-secret';
+    const expectedHmac = crypto.createHmac('sha256', hmacSecret).update(payloadSignature).digest('hex');
 
     const expectedBuf = Buffer.from(expectedHmac, 'hex');
-    const actualBuf = Buffer.from(hmac, 'hex');
+    const actualBuf = Buffer.from(hmac || '', 'hex');
 
-    // timingSafeEqual protects against timing attacks
     if (expectedBuf.length !== actualBuf.length || !crypto.timingSafeEqual(expectedBuf, actualBuf)) {
+      return NextResponse.json({ success: false, error: 'Session invalid or tampered' }, { status: 400, headers: corsHeaders });
+    }
+
+    // 2. Verify OTP code via WABA API
+    let isValid = false;
+    try {
+      const phone = `${countryCode}${mobile}`.replace('+', '');
+      const verifyRes = await fetch("https://waba.analytixlabs.co.in/api/otp/verify", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json", 
+          "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
+        },
+        body: JSON.stringify({ phone, code: otp_entered }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const verifyData = await verifyRes.json();
+      isValid = verifyRes.ok && (verifyData.valid === true || verifyData.success === true);
+      if (!isValid) {
+        console.warn('[Verify] WABA verification failed response:', verifyData);
+      }
+    } catch (err) {
+      console.error('[Verify] WABA verification API failed:', err);
+      isValid = false;
+    }
+
+    if (!isValid) {
       return NextResponse.json({ success: false, error: 'Incorrect OTP. Please try again.' }, { status: 400, headers: corsHeaders });
     }
 
@@ -223,8 +240,6 @@ export async function POST(req: NextRequest) {
     const sheetsPhone = `${countryCode}${mobile}`; 
     const debug = body.debug === true;
     let debugInfo = null;
-    
-    const { name: fullName, email, typeFilter, course } = parsedToken; // Extract from token
 
     // Await updates to ensure they complete on Vercel
     await updateLeadSquaredToVerified(lsqPhone, email || body.email, preferredCallbackTime).catch(console.error);
