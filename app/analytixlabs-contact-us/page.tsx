@@ -98,13 +98,13 @@ export default function ContactUsPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4 mb-6">
                   <a
-                    href="tel:9555525908"
+                    href="tel:9667772573"
                     className="inline-flex items-center justify-center gap-2 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-6 py-3.5 rounded-full text-sm transition-all shadow-[0_4px_14px_rgba(29,229,181,0.3)] active:scale-95"
                   >
-                    📞 +91 95555 25908
+                    📞 +91 96677 72573
                   </a>
                   <a
-                    href="https://api.whatsapp.com/send?phone=919555525908"
+                    href="https://api.whatsapp.com/send?phone=919667772573"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b957] text-white font-bold px-6 py-3.5 rounded-full text-sm transition-all shadow-[0_4px_14px_rgba(37,211,102,0.3)] active:scale-95"
@@ -155,7 +155,7 @@ export default function ContactUsPage() {
                   <div className="space-y-3 mb-6">
                     <p className="text-[#4A6275] text-sm flex items-start gap-2">
                       <span className="flex-shrink-0">📞</span>
-                      <span>+91 9555525908</span>
+                      <span>+91 9667772573</span>
                     </p>
                     <p className="text-[#4A6275] text-sm flex items-start gap-2">
                       <span className="flex-shrink-0">📍</span>
@@ -205,11 +205,11 @@ export default function ContactUsPage() {
         {/* ── UNIVERSAL STICKY BAR ── */}
         <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-all duration-500 transform ${showSticky ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
           <div className="max-w-[1600px] mx-auto w-full flex gap-3">
-            <a href="tel:9555525908"
+            <a href="tel:9667772573"
               className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
-              📞 <span className="hidden sm:inline ml-1">Call:</span> 9555525908
+              📞 <span className="hidden sm:inline ml-1">Call:</span> 9667772573
             </a>
-            <a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+            <a href="https://api.whatsapp.com/send?phone=919667772573" target="_blank" rel="noreferrer"
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">WhatsApp</span>
             </a>

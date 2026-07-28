@@ -308,7 +308,7 @@ export default function Home() {
                   Check Your Eligibility →
                 </button>
                 <a
-                  href="tel:9555525908"
+                  href="tel:9667772573"
                   onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
                   className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_4px_14px_rgba(255,234,121,0.4)] text-center flex items-center justify-center gap-2 active:scale-95"
                 >
@@ -618,12 +618,12 @@ export default function Home() {
           }`}
         >
           <div className="max-w-[1600px] mx-auto w-full flex gap-3">
-            <a href="tel:9555525908"
+            <a href="tel:9667772573"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
-              📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9555525908
+              📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9667772573
             </a>
-            <a href={buildWhatsAppLink("919555525908")} target="_blank" rel="noreferrer"
+            <a href={buildWhatsAppLink("919667772573")} target="_blank" rel="noreferrer"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp

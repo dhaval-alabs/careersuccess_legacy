@@ -23,7 +23,7 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm mb-4 uppercase tracking-widest">Support</h4>
             <ul className="text-[#4A6275] text-sm space-y-2">
               <li>Email: info@analytixlabs.co.in</li>
-              <li>Phone: +91 95555 25908</li>
+              <li>Phone: +91 96677 72573</li>
             </ul>
           </div>
         </div>

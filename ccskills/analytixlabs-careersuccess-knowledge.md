@@ -152,8 +152,8 @@ All four Thank You pages share one `ThankYouPage` component with variant props:
 | Box | Content | Link |
 |---|---|---|
 | 🎥 Upcoming Webinar | "Join Our Upcoming Webinar" — CTA: **Save My Spot** | Managed via `NEXT_PUBLIC_ZOOM_WEBINAR_URL` (Vercel) — `_blank` |
-| 📞 Call Us | "Need Help? Talk to Us." Mon–Sat 9AM–7PM — CTA: **Call +91 95555 25908** | `tel:919555525908` |
-| 💬 WhatsApp | "Chat on WhatsApp" — CTA: **Chat Now** | `https://api.whatsapp.com/send?phone=919555525908&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F` — `_blank` |
+| 📞 Call Us | "Need Help? Talk to Us." Mon–Sat 9AM–7PM — CTA: **Call +91 96677 72573** | `tel:919667772573` |
+| 💬 WhatsApp | "Chat on WhatsApp" — CTA: **Chat Now** | `https://api.whatsapp.com/send?phone=919667772573&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F` — `_blank` |
 
 ### 5.4 Per-Variant Headings & Sub-copy
 
@@ -192,8 +192,8 @@ The `gclid` captured in LeadSquared (`mx_GCLID`) can also be used separately for
 | Role | Detail |
 |---|---|
 | Development agency | Antigravity (handles Git commits + Vercel deployments) |
-| Phone (sales/support) | +91 95555 25908 |
-| WhatsApp number | 919555525908 |
+| Phone (sales/support) | +91 96677 72573 |
+| WhatsApp number | 919667772573 |
 | Google Ads account | AW-783236209 |
 | Webinar registration | Managed via `NEXT_PUBLIC_ZOOM_WEBINAR_URL` environment variable |
 

@@ -19,8 +19,8 @@ export default function Header({ onOpenForm }: Props) {
           />
         </div>
         <div className="flex items-center gap-3 sm:gap-6">
-          <a href="tel:9555525908" className="hidden md:flex items-center gap-2 text-sm font-bold text-[#09263F]">
-            <span className="text-[#1DE5B5]">📞</span> 95555 25908
+          <a href="tel:9667772573" className="hidden md:flex items-center gap-2 text-sm font-bold text-[#09263F]">
+            <span className="text-[#1DE5B5]">📞</span> 96677 72573
           </a>
           <button
             onClick={onOpenForm}

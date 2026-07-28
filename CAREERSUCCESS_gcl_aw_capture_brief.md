@@ -117,10 +117,10 @@ Import `readGclidFromGclAwCookie` from wherever you place the helper (e.g. a `ut
 Both buttons are plain anchors that fire a gtag conversion (CS-Calls / CS-WhatsApp, which go directly to Google Ads and ARE attributed to the ad click), then send the user off-site:
 
 ```tsx
-<a href="tel:9555525908"
+<a href="tel:9667772573"
    onClick={() => window.gtag?.('event','conversion',{ send_to:'AW-783236209/3q4MCJXktaobEPH4vPUC' })}>…</a>
 
-<a href="https://api.whatsapp.com/send?phone=919555525908" target="_blank" rel="noreferrer"
+<a href="https://api.whatsapp.com/send?phone=919667772573" target="_blank" rel="noreferrer"
    onClick={() => window.gtag?.('event','conversion',{ send_to:'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}>…</a>
 ```
 
@@ -161,7 +161,7 @@ const buildWhatsAppHref = (phone: string, course: string): string => {
 };
 ```
 
-Then in each page, replace the static WhatsApp `href` with `buildWhatsAppHref('919555525908', '<course for this page>')`, computed client-side (e.g. via `useState`/`useEffect` so it picks up the gclid after hydration). Keep the existing `onClick` gtag call and `target="_blank" rel="noreferrer"` unchanged.
+Then in each page, replace the static WhatsApp `href` with `buildWhatsAppHref('919667772573', '<course for this page>')`, computed client-side (e.g. via `useState`/`useEffect` so it picks up the gclid after hydration). Keep the existing `onClick` gtag call and `target="_blank" rel="noreferrer"` unchanged.
 
 ### ⚠️ Hard dependency — this only pays off if the receiving end extracts the token
 

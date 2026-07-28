@@ -295,7 +295,7 @@ export default function DelhiDAAIPage() {
                   Check Your Eligibility →
                 </button>
                 <a
-                  href="tel:9555525908"
+                  href="tel:9667772573"
                   onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
                   className="bg-[#FFEA79] hover:bg-[#FFD700] text-[#09263F] font-bold px-8 py-4 rounded-xl text-base transition-all shadow-[0_4px_14px_rgba(255,234,121,0.4)] text-center flex items-center justify-center gap-2 active:scale-95"
                 >
@@ -565,12 +565,12 @@ export default function DelhiDAAIPage() {
         {/* UNIVERSAL STICKY BAR */}
         <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-[#D6ECEB] px-4 py-3 flex gap-3 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-all duration-500 transform ${showSticky ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
           <div className="max-w-[1600px] mx-auto w-full flex gap-3">
-            <a href="tel:9555525908"
+            <a href="tel:9667772573"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/3q4MCJXktaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
-              📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9555525908
+              📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9667772573
             </a>
-            <a href={buildWhatsAppLink("919555525908")} target="_blank" rel="noreferrer"
+            <a href={buildWhatsAppLink("919667772573")} target="_blank" rel="noreferrer"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp

@@ -1,7 +1,7 @@
 // lib/emailTemplates.ts
 
-const ANALYTIXLABS_PHONE = '+91 95555 25908'
-const ANALYTIXLABS_WHATSAPP_LINK = 'https://wa.me/919555525908'
+const ANALYTIXLABS_PHONE = '+91 96677 72573'
+const ANALYTIXLABS_WHATSAPP_LINK = 'https://wa.me/919667772573'
 const LOGO_URL = 'https://www.analytixlabs.co.in/wp-content/uploads/2024/04/logo.png'
 
 interface BrochureEmailParams {
@@ -42,7 +42,7 @@ export function brochureEmailHtml({ recipientName, brochureUrl, masterclassUrl, 
           <a href="${ANALYTIXLABS_WHATSAPP_LINK}" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; margin: 5px;">Chat on WhatsApp</a>
         </div>
       </div>
-      <p>Alternatively, you can call us at <a href="tel:9555525908" style="color: #239bf5; font-weight: bold; text-decoration: none;">${ANALYTIXLABS_PHONE}</a>.</p>
+      <p>Alternatively, you can call us at <a href="tel:9667772573" style="color: #239bf5; font-weight: bold; text-decoration: none;">${ANALYTIXLABS_PHONE}</a>.</p>
       <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
       <p style="font-size: 14px; color: #666;">Regards,<br>Team AnalytixLabs</p>
     </div>
@@ -77,7 +77,7 @@ export function confirmationEmailHtml({ recipientName, masterclassUrl, ctaType, 
           <a href="${ANALYTIXLABS_WHATSAPP_LINK}" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; margin: 5px;">Chat on WhatsApp</a>
         </div>
       </div>
-      <p>Have an urgent question? Call us at <a href="tel:9555525908" style="color: #239bf5; font-weight: bold; text-decoration: none;">${ANALYTIXLABS_PHONE}</a>.</p>
+      <p>Have an urgent question? Call us at <a href="tel:9667772573" style="color: #239bf5; font-weight: bold; text-decoration: none;">${ANALYTIXLABS_PHONE}</a>.</p>
       <hr style="border: 0; border-top: 1px solid #eee; margin: 35px 0;">
       <p style="font-size: 14px; color: #666;">Regards,<br>Team AnalytixLabs</p>
     </div>

@@ -168,9 +168,9 @@ Show only the meta fields that are present for each course (some courses have no
 ```
 H2: Need help? Call Us
 
-[Call button]:  📞 +91 9555525908  → tel:9555525908   ← .btn-primary
+[Call button]:  📞 +91 9667772573  → tel:9667772573   ← .btn-primary
 
-[WhatsApp button]:  💬 WhatsApp  → https://api.whatsapp.com/send?phone=919555525908   ← .btn-primary (teal)
+[WhatsApp button]:  💬 WhatsApp  → https://api.whatsapp.com/send?phone=919667772573   ← .btn-primary (teal)
 ```
 
 ---
@@ -269,8 +269,8 @@ Subheading:
 AnalytixLabs is here to support you at every step of your journey.
 
 [CTA buttons row]:
-  [📞 +91 95555 25908]   → tel:9555525908    ← .btn-primary (teal)
-  [💬 WhatsApp]          → https://api.whatsapp.com/send?phone=919555525908   ← .btn-primary (teal)
+  [📞 +91 96677 72573]   → tel:9667772573    ← .btn-primary (teal)
+  [💬 WhatsApp]          → https://api.whatsapp.com/send?phone=919667772573   ← .btn-primary (teal)
 
 Hours line:
   * (10:00 AM to 07:00 PM, Monday to Saturday)
@@ -316,7 +316,7 @@ Card structure:
 ```
 [City name — h3, Outfit font, navy]
 
-[Phone row]:    📞 +91 9555525908
+[Phone row]:    📞 +91 9667772573
 
 [Address row]:  📍 {full address}
 
@@ -332,21 +332,21 @@ Card structure:
 **Location data:**
 
 **Gurgaon:**
-- Phone: +91 9555525908
+- Phone: +91 9667772573
 - Address: 2nd Floor, Sidhartha House, Building No. 6, Sector 44, Gurugram, Haryana 122003 (600 metres from HUDA City Metro)
 - Hours: 10:00 AM - 7:00 PM
 - Maps link: https://maps.app.goo.gl/gurgaon-analytixlabs *(use the actual Google Maps pin URL visible in the iframe on the WP page — copy from browser)*
 - Maps embed: `https://www.google.com/maps/embed?pb=!1m18!1m12...` *(copy iframe src from WP page source)*
 
 **Bangalore:**
-- Phone: +91 9555525908
+- Phone: +91 9667772573
 - Address: Bldg 51/2, 1st Floor, 12th Main Rd, Near BDA Complex, Sector 6, HSR Layout Back Gate of BDA, Opp. A2B (Adyar Ananda Bhawan), Bengaluru, Karnataka 560102
 - Hours: 10:00 AM - 7:00 PM
 - Maps link: *(copy from WP page)*
 - Maps embed: *(copy iframe src from WP page source)*
 
 **Noida:**
-- Phone: +91 9555525908
+- Phone: +91 9667772573
 - Address: 1st Floor, A 78, A Block, Sector 2, Metro Gate 3, Noida, Uttar Pradesh 201301
 - Hours: 10:00 AM - 7:00 PM
 - Maps link: *(copy from WP page)*
@@ -591,7 +591,7 @@ Talk to our team or visit us at a centre near you.
 (colour: muted white, rgba(255,255,255,0.6))
 
 [Call button]:
-  📞 +91 95555 25908   → tel:9555525908   ← .btn-primary (teal)
+  📞 +91 96677 72573   → tel:9667772573   ← .btn-primary (teal)
 
 [3 directions buttons in a row — sm:flex-row, gap-4]:
 ```
@@ -630,7 +630,7 @@ All 3 map links open in `_blank`. No lead capture, no modal, no conversion event
 - [ ] If dynamic brochure implemented: thank-you page shows course-specific download link when `course` param is present
 
 ### Contact page:
-- [ ] Phone CTA button fires `tel:9555525908`
+- [ ] Phone CTA button fires `tel:9667772573`
 - [ ] WhatsApp button opens correct WA link
 - [ ] "Download Brochure" card button opens modal, `sourceName = "DownloadBrochure"`
 - [ ] All 3 Google Maps iframes load correctly

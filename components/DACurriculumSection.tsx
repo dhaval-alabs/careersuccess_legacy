@@ -242,7 +242,7 @@ export default function DACurriculumSection({ onOpenBrochure }: Props) {
             </p>
           </div>
           <a
-            href="tel:9555525908"
+            href="tel:9667772573"
             className="relative z-10 bg-[#1DE5B5] hover:bg-[#19cf9e] text-[#09263F] font-bold px-10 py-4 rounded-xl text-base transition-all shadow-lg active:scale-95 whitespace-nowrap"
           >
             Talk to Advisor →

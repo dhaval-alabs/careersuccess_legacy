@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const LOGO_URL = 'https://www.analytixlabs.co.in/wp-content/uploads/2024/04/logo.png';
-const WHATSAPP_URL = 'https://api.whatsapp.com/send?phone=919555525908&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F';
+const WHATSAPP_URL = 'https://api.whatsapp.com/send?phone=919667772573&text=Hello%2C%20I%20just%20submitted%20my%20details%20on%20the%20AnalytixLabs%20website.%20Can%20you%20help%20me%3F';
 
 const COURSE_MAP: Record<string, string> = {
     'agentic-ai': 'Agentic AI Course',
@@ -59,7 +59,7 @@ export async function sendBrochureEmail(email: string, name: string, courseSlug?
                             </div>
                         </div>
 
-                        <p>Alternatively, you can call us at <a href="tel:9555525908" style="color: #239bf5; font-weight: bold; text-decoration: none;">+91 95555 25908</a>.</p>
+                        <p>Alternatively, you can call us at <a href="tel:9667772573" style="color: #239bf5; font-weight: bold; text-decoration: none;">+91 96677 72573</a>.</p>
                         <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
                         <p style="font-size: 14px; color: #666;">Regards,<br>Team AnalytixLabs</p>
                     </div>

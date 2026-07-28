@@ -26,7 +26,7 @@ interface ThankYouProps {
   isBrochureDownload?: boolean;
 }
 
-const PHONE_NUMBER = '919555525908';
+const PHONE_NUMBER = '919667772573';
 const WA_MESSAGE = encodeURIComponent(
   'Hello, I just submitted my details on the AnalytixLabs website. Can you help me?'
 );
@@ -205,7 +205,7 @@ export default function ThankYouPage({ heading, subCopy, conversionId, verifiedC
             <h3 style={cardTitle}>Need Help? Talk to Us</h3>
             <p style={cardBody}>Advisors available Mon–Sat, 9 AM to 7 PM.</p>
             <a href={`tel:${PHONE_NUMBER}`} style={btnOutline}>
-              Call 95555 25908
+              Call 96677 72573
             </a>
           </div>
 

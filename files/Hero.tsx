@@ -92,7 +92,7 @@ export default function Hero() {
                 Check Your Eligibility →
               </button>
               <a
-                href="tel:9555525908"
+                href="tel:9667772573"
                 className="flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/25 text-white font-semibold text-[0.95rem] hover:bg-white/10 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
