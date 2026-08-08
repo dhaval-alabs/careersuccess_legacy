@@ -556,7 +556,7 @@ export default function DelhiDSAIPage() {
               className="flex-1 flex items-center justify-center py-3 sm:py-4 border border-[#D6ECEB] text-[#09263F] font-bold rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               📞 <span className="hidden sm:inline ml-1">Call Now:</span> 9667772573
             </a>
-            <a href={buildWhatsAppLink("919667772573")} target="_blank" rel="noreferrer"
+            <a href={buildWhatsAppLink("9555525908", "Hi! I'd like to learn more about the courses offered by AnalytixLabs.‍‍‍​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​")} target="_blank" rel="noreferrer"
               onClick={() => window.gtag?.('event', 'conversion', { send_to: 'AW-783236209/p4XvCI3TtaobEPH4vPUC' })}
               className="flex-1 flex items-center justify-center border border-[#D6ECEB] text-[#09263F] font-bold py-3 sm:py-4 rounded-xl text-xs sm:text-sm hover:bg-[#F4FAFA] transition-colors bg-white">
               💬 <span className="hidden sm:inline ml-1">Chat on</span> WhatsApp
