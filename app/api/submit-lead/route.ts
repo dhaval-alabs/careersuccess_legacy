@@ -142,7 +142,10 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
       '', // R: score
       '', // S: preferredCallbackTime
       '', // T: reason
-      body.status || '' // U: Profile/Status
+      body.status || '', // U: Profile/Status
+      body.landing_page_url || '', // V: Landing Page URL
+      body.utm_content || '', // W: UTM Content
+      body.form_source || '' // X: Raw Source CTA (unformatted)
     ];
 
     // Using the tab name provided by user
@@ -220,6 +223,7 @@ export async function POST(req: NextRequest) {
       { Attribute: 'Phone',                    Value: lsqPhone },
       { Attribute: 'mx_City_name',             Value: body.city },
       { Attribute: 'mx_GCLID',                 Value: body.gclid || '' }, // GCLID didn't error, so keeping as field
+      { Attribute: 'mx_Page_Url',              Value: body.landing_page_url || '' },
       { Attribute: 'Source',                  Value: body.typeFilter || 'PPC_CheckEligibility' },
 
       // All other technical/attribution data consolidated here

@@ -106,7 +106,10 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
       '', // R: score
       '', // S: preferredCallbackTime
       '', // T: reason
-      body.status || '' // U: Profile/Status
+      body.status || '', // U: Profile/Status
+      body.landing_page_url || '', // V: Landing Page URL
+      body.utm_content || '', // W: UTM Content
+      body.form_source || '' // X: Raw Source CTA (unformatted)
     ];
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
