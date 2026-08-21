@@ -109,7 +109,12 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
       body.status || '', // U: Profile/Status
       body.landing_page_url || '', // V: Landing Page URL
       body.utm_content || '', // W: UTM Content
-      body.form_source || '' // X: Raw Source CTA (unformatted)
+      body.form_source || '', // X: Raw Source CTA (unformatted)
+      body.sclx_id || '', // Y: ScaleX ID
+      body.click_timestamp // Z: Click Timestamp (ISO)
+        ? new Date(body.click_timestamp * 1000).toISOString()
+        : '',
+      body.click_id_source || '' // AA: Click ID Source
     ];
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
+import { captureIdentity } from '../../utils/captureIdentity';
 import SearchableCitySelect from '../SearchableCitySelect';
 
 const COUNTRY_CODES = [
@@ -89,6 +90,7 @@ export default function LeadCaptureFormContactUs({
 
     const utms = getStoredUtm();
     const behaviour = getBehaviourSnapshot();
+    const identity = captureIdentity();
 
     try {
       const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
@@ -102,6 +104,9 @@ export default function LeadCaptureFormContactUs({
           ...behaviour,
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+          sclx_id: identity.sclxId,
+          click_timestamp: identity.clickTimestamp,
+          click_id_source: identity.clickIdSource,
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
           debug,
         }),

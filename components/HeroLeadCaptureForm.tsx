@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../utils/trackBehaviour';
 import { getStoredUtm } from '../utils/captureUtm';
+import { captureIdentity } from '../utils/captureIdentity';
 import SearchableCitySelect from './SearchableCitySelect';
 import { QUALIFICATION_CONFIG } from '../lib/qualification-config';
 
@@ -229,6 +230,7 @@ export default function HeroLeadCaptureForm({
 
     const utms = getStoredUtm();
     const behaviour = getBehaviourSnapshot();
+    const identity = captureIdentity();
 
     // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
     try {
@@ -248,6 +250,9 @@ export default function HeroLeadCaptureForm({
           ...behaviour,
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+          sclx_id: identity.sclxId,
+          click_timestamp: identity.clickTimestamp,
+          click_id_source: identity.clickIdSource,
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
           debug,
         })
@@ -275,6 +280,9 @@ export default function HeroLeadCaptureForm({
           ...behaviour,
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+          sclx_id: identity.sclxId,
+          click_timestamp: identity.clickTimestamp,
+          click_id_source: identity.clickIdSource,
           referrer_url: typeof document !== 'undefined' ? document.referrer : '',
           debug,
           skipSheets: true,
