@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Outfit } from 'next/font/google';
 import ClientInit from '../components/ClientInit';
+import WebAnalytics from '../components/WebAnalytics';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         <ClientInit />
+        <WebAnalytics />
         {children}
       </body>
     </html>
