@@ -17,6 +17,7 @@ const config: Config = {
             fontFamily: {
                 sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
                 display: ['var(--font-outfit)', 'Outfit', 'system-ui', 'sans-serif'],
+                'dm-sans': ['var(--font-dm-sans)', 'DM Sans', 'sans-serif'],
             },
         },
     },

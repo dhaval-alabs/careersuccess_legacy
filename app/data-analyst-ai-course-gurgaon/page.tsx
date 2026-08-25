@@ -188,7 +188,7 @@ export default function GurgaonDAAIPage() {
   };
 
   const FAQS = [
-    { q: "How much does the Data Analyst + AI course cost?", a: "The Data Analyst + AI programme starts at Rs.47,200 (incl. taxes) for Blended eLearning, Rs.53,100 for Interactive Live Online, and Rs.61,360 for Classroom and Bootcamp. 0% interest EMI available." },
+    { q: "How much does the Data Analyst + AI course cost?", a: "The Data Analyst + AI programme is Rs.53,100 (incl. taxes) for Blended eLearning, Rs.59,000 for Interactive Live Online, and Rs.68,440 for Classroom and Bootcamp. TIH at IIT Bombay or IIT Patna co-certified tracks are Rs.70,800, Rs.80,240 and Rs.87,320 respectively. 0% interest EMI available." },
     { q: "Does this course come with a placement guarantee?", a: "Yes. Placement with Fee-Back Guarantee. Complete the programme, meet the requirements, and if you are not placed within 6 months, we refund 50% of your course fee." },
     { q: "What is the eligibility for this Data Analytics course?", a: "No prior coding experience required. The programme starts from foundations. 20,000+ candidates trained, including many from non-technical backgrounds." },
     { q: "What is covered in the syllabus?", a: "SQL, Power BI, Tableau, Excel, Python foundations, and AI-assisted analytics including prompt engineering for data workflows." },

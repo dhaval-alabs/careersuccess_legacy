@@ -221,7 +221,7 @@ export default function LearningModes({ onOpenDemo }: { onOpenDemo?: () => void 
 
         {/* Footnote */}
         <p className="mt-6 text-[12px] text-[#4A6275] max-w-2xl leading-relaxed">
-          * Fees shown are for the NASSCOM FutureSkills Prime certified programme. An upgrade to the TIH at IIT Bombay or TIH at IIT Patna co-certified tracks is available at an additional fee — speak to your learning advisor for details.
+          * Fees shown are for the NASSCOM FutureSkills Prime certified programme (Blended ₹53,100, Live Online ₹59,000, Classroom ₹68,440). TIH at IIT Bombay or IIT Patna co-certified tracks are ₹70,800, ₹80,240 and ₹87,320 respectively. All fees include taxes with 0% interest EMI options available.
         </p>
 
         {/* Demo CTA */}

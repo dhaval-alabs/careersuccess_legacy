@@ -93,16 +93,60 @@ const getEnvDate = (loc: BatchLocation): string => {
 const parseBatchDate = (str: string) => {
     const trimmed = str.trim();
     if (!trimmed) return { date: 'TBD', month: '' };
-    
-    // Pattern 1: "16 Aug" or "16th August"
-    const p1 = trimmed.match(/^(\d{1,2}(?:st|nd|rd|th)?)\s+([A-Za-z]+)$/);
-    if (p1) return { date: p1[1], month: p1[2] };
-    
-    // Pattern 2: "Aug 16" or "August 16th"
-    const p2 = trimmed.match(/^([A-Za-z]+)\s+(\d{1,2}(?:st|nd|rd|th)?)$/);
-    if (p2) return { date: p2[2], month: p2[1] };
-    
-    // Fallback: Use string as date
+
+    const MONTHS: Record<string, number> = {
+        jan: 0, january: 0,
+        feb: 1, february: 1,
+        mar: 2, march: 2,
+        apr: 3, april: 3,
+        may: 4,
+        jun: 5, june: 5,
+        jul: 6, july: 6,
+        aug: 7, august: 7,
+        sep: 8, sept: 8, september: 8,
+        oct: 9, october: 9,
+        nov: 10, november: 10,
+        dec: 11, december: 11,
+    };
+
+    let dayNum: number | null = null;
+    let dayStr = '';
+    let monthStr = '';
+    let yearNum: number | null = null;
+
+    // Pattern 1: "07 Sept 2026", "07 Sept", "7th September"
+    const p1 = trimmed.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)(?:\s+(\d{4}))?$/);
+    if (p1) {
+        dayNum = parseInt(p1[1], 10);
+        dayStr = p1[1];
+        monthStr = p1[2];
+        if (p1[3]) yearNum = parseInt(p1[3], 10);
+    } else {
+        // Pattern 2: "Sept 07 2026", "Sept 07", "September 7th"
+        const p2 = trimmed.match(/^([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?(?:\s+(\d{4}))?$/);
+        if (p2) {
+            dayNum = parseInt(p2[2], 10);
+            dayStr = p2[2];
+            monthStr = p2[1];
+            if (p2[3]) yearNum = parseInt(p2[3], 10);
+        }
+    }
+
+    if (dayNum !== null && monthStr) {
+        const mKey = monthStr.toLowerCase();
+        const monthIndex = MONTHS[mKey];
+        if (monthIndex !== undefined) {
+            const currentYear = new Date().getFullYear();
+            const year = yearNum || currentYear;
+            const batchDate = new Date(year, monthIndex, dayNum, 23, 59, 59);
+            // If date is in the past, return TBD
+            if (batchDate.getTime() < Date.now()) {
+                return { date: 'TBD', month: '' };
+            }
+            return { date: dayStr, month: monthStr };
+        }
+    }
+
     return { date: trimmed, month: '' };
 };
 

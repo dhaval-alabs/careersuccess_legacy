@@ -1,30 +1,33 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { COURSE_FACTS } from "../constants/courseFacts";
+
+const defaultFacts = COURSE_FACTS['data-science'];
 
 const stats = [
   {
-    value: 20000,
+    value: defaultFacts.candidatesTrainedNumber,
     suffix: "+",
     label: "Candidates Trained",
     bg: "#87F0D780",
     text: "#09263F",
   },
   {
-    value: 50,
+    value: defaultFacts.companiesHiredNumber,
     suffix: "+",
     label: "Companies Hired From Us",
     bg: "#FFF38580",
     text: "#09263F",
   },
   {
-    value: 9.6,
+    value: parseFloat(defaultFacts.avgRating),
     suffix: "/10",
     label: "Avg Student Rating",
     bg: "#88E2FF80",
     text: "#09263F",
   },
   {
-    value: 12,
+    value: defaultFacts.yearsOfExcellenceNumber,
     suffix: "+",
     label: "Years of Excellence",
     bg: "#B7F2BA80",

@@ -100,7 +100,6 @@ export default function CourseInfoSection({ locations = ['noida', 'gurgaon'], co
     return (
         <section className="relative -mt-8 mb-8 px-4 sm:px-6">
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap');
         .divider-line { width: 1px; background: linear-gradient(to bottom, transparent, #d0dae8, transparent); align-self: stretch; margin: 20px 0; }
         @media (max-width: 700px) {
           .stats-row { flex-direction: column !important; }
