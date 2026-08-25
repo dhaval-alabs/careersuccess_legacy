@@ -35,7 +35,7 @@ const config = {
 const HIGHLIGHTS = [
   { icon: "🏅", title: "Certified by NASSCOM, TIH at IIT Bombay / Patna", desc: "NASSCOM-FutureSkills Prime certified, supported by MeitY, Government of India. Backed by Technology Innovation Hubs at IIT Bombay and IIT Patna — among India's most respected research institutions." },
   { icon: "🔒", title: "Placement with Fee-Back Guarantee", desc: "Complete the programme and meet the requirements. If you are not placed within 6 months, we refund 50% of your fee. Minimum annual package assured." },
-  { icon: "🏛️", title: "Real Classroom and Flexible Learning", desc: "Learn in-person in Gurgaon Sector 44. Or join live online sessions with the same faculty. Blend modes as your schedule demands." },
+  { icon: "🏛️", title: "Real Classroom and Flexible Learning", desc: `${config.classroomBullet} Or join live online sessions with the same faculty. Blend modes as your schedule demands.` },
   { icon: "🤖", title: "AI-Assisted Analytics Built In", desc: "Master prompt engineering for SQL and Python, and use Generative AI tools to automate reporting and data cleaning. Stay ahead of the curve." },
   { icon: "🎥", title: "Live and Recorded Classes", desc: "Attend live instructor-led sessions or rewatch anytime via your personal LMS. 1 year of access included." },
   { icon: "🤝", title: "Mentorship Beyond the Class", desc: "Dedicated mentor support for projects, doubt resolution, and practical guidance between sessions. You are never stuck." },
