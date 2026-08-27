@@ -93,7 +93,7 @@ async function updateLeadSquaredToVerified(cleanPhone: string, email?: string, p
     const updateUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Lead.Update?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&leadId=${prospectId}`;
     const payload = [{ Attribute: 'mx_OTP_Status', Value: 'Verified' }];
     if (preferredCallbackTime) {
-      payload.push({ Attribute: 'mx_Preferred_Callback_Time', Value: preferredCallbackTime });
+      payload.push({ Attribute: 'mx_Preferred_Date_Time', Value: preferredCallbackTime });
     }
 
     const updateRes = await fetch(updateUrl, {
