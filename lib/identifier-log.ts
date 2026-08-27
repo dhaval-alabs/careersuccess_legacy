@@ -51,6 +51,23 @@
 import crypto from 'crypto';
 
 const FIRESTORE_PROJECT_ID = process.env.FIRESTORE_PROJECT_ID || 'analytixlabs-ads';
+
+/**
+ * Database id — literally `default`, NOT `(default)`.
+ *
+ * The REST docs use `(default)` as the conventional id for a project's default
+ * database, and the first version of this module used it. This project's
+ * database is genuinely NAMED `default`, so every write 404'd and — because
+ * writes here are deliberately swallowed — did so silently. Verified in the
+ * console: Database ID `default`, Firestore Native, asia-south2.
+ *
+ * The relay has always used the correct form:
+ *   'https://firestore.googleapis.com/v1/projects/' + PROJECT + '/databases/default/documents'
+ * A working reference implementation was sitting in the same project and a
+ * generic convention was used instead of matching it. Named as a constant so
+ * the two cannot drift again.
+ */
+const FIRESTORE_DATABASE_ID = 'default';
 const CUSTOMER_ID = process.env.SCALEX_CUSTOMER_ID || '4064995850';
 
 export type IdentifierType =
@@ -227,7 +244,7 @@ export async function writeObservation(obs: Observation): Promise<boolean> {
   try {
     const url =
       `https://firestore.googleapis.com/v1/projects/${FIRESTORE_PROJECT_ID}` +
-      `/databases/(default)/documents/${observationsPath(obs.sclxId)}`;
+      `/databases/${FIRESTORE_DATABASE_ID}/documents/${observationsPath(obs.sclxId)}`;
 
     const resp = await fetch(url, {
       method: 'PATCH',
