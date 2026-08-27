@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { recordSubmissionIdentifiers } from '@/lib/identifier-log';
 
 const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
@@ -19,6 +20,25 @@ export async function OPTIONS() {
     status: 204,
     headers: corsHeaders,
   });
+}
+
+/** Path only — the query string can carry PII on some entry points. */
+function pagePathOf(url?: string): string | undefined {
+  if (!url) return undefined;
+  try { return new URL(url).pathname; } catch { return undefined; }
+}
+
+/**
+ * Read a single query parameter from the captured landing URL.
+ * hsa_cam / hsa_grp resolve to the exact Google Ads campaign and ad group, and
+ * are correct on all six enabled campaigns — unlike utm_campaign, which is
+ * EMPTY on Brand and Bangalore because both reference an undefined
+ * {_utmcampaign} custom parameter. Keying on hsa_* rather than utm_campaign is
+ * load-bearing, not a preference.
+ */
+function urlParam(url: string | undefined, key: string): string | undefined {
+  if (!url) return undefined;
+  try { return new URL(url).searchParams.get(key) ?? undefined; } catch { return undefined; }
 }
 
 function formatLeadNotesFriendly(source: string): string {
@@ -290,6 +310,21 @@ export async function POST(req: NextRequest) {
     } else {
       console.log('[OTP] Skipping Google Sheets push since lead was already submitted');
     }
+
+    // ── NEW: append-only identifier log ──────────────────────────────────
+    // Deliberately NOT awaited and never allowed to throw. This is analytics;
+    // it must not be able to fail a lead capture. `prospectId` is in scope here
+    // from the LSQ create/update above.
+    recordSubmissionIdentifiers({
+      sclxId:         body.sclx_id,
+      gclid:          body.gclid,
+      clickTimestamp: body.click_timestamp,
+      clickIdSource:  body.click_id_source,
+      prospectId:     prospectId ?? undefined,
+      pagePath:       pagePathOf(body.landing_page_url),
+      hsaCam:         urlParam(body.landing_page_url, 'hsa_cam'),
+      hsaGrp:         urlParam(body.landing_page_url, 'hsa_grp'),
+    }).catch(() => { /* already logged internally */ });
 
     // 5. Automated Brochure Email (Resend)
     // Send immediately on registration for all brochure requests
