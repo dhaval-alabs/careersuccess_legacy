@@ -60,6 +60,12 @@ export default function HeroLeadCaptureForm({
   const [mobile, setMobile] = useState('');
   const [preferredCallbackTime, setPreferredCallbackTime] = useState('');
 
+  // In-flight lock. A useRef, not useState, deliberately: refs update
+  // synchronously, so two clicks in the same tick cannot both read `false`.
+  // State updates are batched and closures capture stale values, which is why
+  // the existing isSendingOtp flag did not prevent 8 submissions on 22 Aug.
+  const submissionInFlightRef = useRef(false);
+
   // OTP and Verification States
   const [otpValue, setOtpValue] = useState('');
   const [token, setToken] = useState('');
@@ -224,98 +230,153 @@ export default function HeroLeadCaptureForm({
 
   // Performs initial lead capture API followed by OTP sending API
   const processLeadSubmissionAndSendOtp = async (targetPhone: string, targetCallback: string) => {
+    // Guard BOTH entry points — the initial submit and handleResendOtp — with
+    // one lock, because both call this function and both were unguarded.
+    if (submissionInFlightRef.current) {
+      console.warn('[ConversationalForm] submission already in flight — ignoring duplicate');
+      return;
+    }
+    submissionInFlightRef.current = true;
+
     setIsSendingOtp(true);
     setFormError('');
     setErrorMsg('');
 
-    const utms = getStoredUtm();
-    const behaviour = getBehaviourSnapshot();
-    const identity = captureIdentity();
-
-    // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
     try {
-      await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          city,
-          status,
-          countryCode,
-          mobile: targetPhone,
-          form_source: sourceName,
-          typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
-          ...utms,
-          ...behaviour,
-          submission_timestamp: new Date().toISOString(),
-          landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
-          sclx_id: identity.sclxId,
-          click_timestamp: identity.clickTimestamp,
-          click_id_source: identity.clickIdSource,
-          referrer_url: typeof document !== 'undefined' ? document.referrer : '',
-          debug,
-        })
-      });
-    } catch (err) {
-      console.error('[ConversationalForm] submit-lead error:', err);
+      const utms = getStoredUtm();
+      const behaviour = getBehaviourSnapshot();
+      const identity = captureIdentity();
+
+      // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
+      try {
+        await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            city,
+            status,
+            countryCode,
+            mobile: targetPhone,
+            form_source: sourceName,
+            typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
+            ...utms,
+            ...behaviour,
+            submission_timestamp: new Date().toISOString(),
+            landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+            sclx_id: identity.sclxId,
+            click_timestamp: identity.clickTimestamp,
+            click_id_source: identity.clickIdSource,
+            referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+            debug,
+          })
+        });
+      } catch (err) {
+        console.error('[ConversationalForm] submit-lead error:', err);
+      }
+
+      // 2. Send OTP with skipSheets: true (since the lead row already got appended above)
+      try {
+        const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            city,
+            status,
+            countryCode,
+            mobile: targetPhone,
+            form_source: sourceName,
+            typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
+            course,
+            ...utms,
+            ...behaviour,
+            submission_timestamp: new Date().toISOString(),
+            landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+            sclx_id: identity.sclxId,
+            click_timestamp: identity.clickTimestamp,
+            click_id_source: identity.clickIdSource,
+            referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+            debug,
+            skipSheets: true,
+          }),
+        });
+
+        const data = await res.json();
+        setIsSendingOtp(false);
+
+        if (!data.success) {
+          setFormError(data.error || 'Something went wrong while sending the verification code. Please try again.');
+          return;
+        }
+
+        if (data.fallback) {
+          if (debug && data.debugInfo) {
+            setFormError(`[DEBUG] OTP Delivery Failed: ${data.debugInfo}`);
+            return;
+          }
+          // WhatsApp API failed -> fallback silently to success immediately (no block)
+          onSuccess?.(email);
+          const params = new URLSearchParams({ email, name, phone: targetPhone });
+          window.location.href = `${thankYouPath}?${params.toString()}`;
+          return;
+        }
+
+        // OTP sent successfully
+        setToken(data.token);
+        setResendTimer(30);
+        setShowInputs(true); // show OTP verification inputs inside the chat area
+      } catch (err) {
+        setIsSendingOtp(false);
+        setFormError('Connection error. Please check your internet and try again.');
+      }
+    } finally {
+      submissionInFlightRef.current = false;
     }
+  };
 
-    // 2. Send OTP with skipSheets: true (since the lead row already got appended above)
+  // OTP-only resend. Mirrors step 2 of processLeadSubmissionAndSendOtp with
+  // skipSheets: true — the sheet row and CRM record already exist.
+  const sendOtpOnly = async (targetPhone: string) => {
+    if (submissionInFlightRef.current) return;
+    submissionInFlightRef.current = true;
+    setIsSendingOtp(true);
     try {
+      const utms = getStoredUtm();
+      const identity = captureIdentity();
       const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name,
-          email,
-          city,
-          status,
-          countryCode,
+          name, email, city, status, countryCode,
           mobile: targetPhone,
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
           course,
           ...utms,
-          ...behaviour,
           submission_timestamp: new Date().toISOString(),
           landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
           sclx_id: identity.sclxId,
           click_timestamp: identity.clickTimestamp,
           click_id_source: identity.clickIdSource,
-          referrer_url: typeof document !== 'undefined' ? document.referrer : '',
-          debug,
           skipSheets: true,
         }),
       });
-
       const data = await res.json();
-      setIsSendingOtp(false);
-
       if (!data.success) {
-        setFormError(data.error || 'Something went wrong while sending the verification code. Please try again.');
-        return;
+        setErrorMsg(data.error || 'Could not resend the code. Please try again.');
+      } else {
+        if (data.token) setToken(data.token);
+        setResendTimer(30);
       }
-
-      if (data.fallback) {
-        if (debug && data.debugInfo) {
-          setFormError(`[DEBUG] OTP Delivery Failed: ${data.debugInfo}`);
-          return;
-        }
-        // WhatsApp API failed -> fallback silently to success immediately (no block)
-        onSuccess?.(email);
-        const params = new URLSearchParams({ email, name, phone: targetPhone });
-        window.location.href = `${thankYouPath}?${params.toString()}`;
-        return;
-      }
-
-      // OTP sent successfully
-      setToken(data.token);
-      setResendTimer(30);
-      setShowInputs(true); // show OTP verification inputs inside the chat area
     } catch (err) {
+      console.error('[ConversationalForm] resend error:', err);
+      setErrorMsg('Could not resend the code. Please try again.');
+    } finally {
       setIsSendingOtp(false);
-      setFormError('Connection error. Please check your internet and try again.');
+      submissionInFlightRef.current = false;
     }
   };
 
@@ -391,7 +452,10 @@ export default function HeroLeadCaptureForm({
     setOtpValue('');
     setErrorMsg('');
     setToken('');
-    await processLeadSubmissionAndSendOtp(mobile, preferredCallbackTime);
+    // Resend must NOT re-submit the lead. The lead was already created on the
+    // first pass; sending it again produces a duplicate CRM record and a
+    // duplicate sheet row. Only the OTP is re-requested.
+    await sendOtpOnly(mobile);
   };
 
   const handleSpecificTimePickerSubmit = () => {
@@ -727,7 +791,12 @@ export default function HeroLeadCaptureForm({
                   {resendTimer > 0 ? (
                     <span className="font-semibold">Resend in {resendTimer}s</span>
                   ) : (
-                    <button type="button" onClick={handleResendOtp} className="text-[#239bf5] font-bold hover:underline">
+                    <button
+                      type="button"
+                      onClick={handleResendOtp}
+                      disabled={isSendingOtp}
+                      className="text-[#239bf5] font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
                       Resend Now
                     </button>
                   )}

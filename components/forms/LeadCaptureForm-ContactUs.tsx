@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
 import { captureIdentity } from '../../utils/captureIdentity';
@@ -60,6 +60,10 @@ export default function LeadCaptureFormContactUs({
   const [countryCode, setCountryCode] = useState('+91');
   const [mobile, setMobile]           = useState('');
 
+  // In-flight lock for synchronous deduplication
+  const submissionInFlightRef = useRef(false);
+
+  const [isResending, setIsResending] = useState(false);
   const [otpState, setOtpState]       = useState<OtpState>('idle');
   const [otpValue, setOtpValue]       = useState('');
   const [token, setToken]             = useState('');
@@ -79,11 +83,16 @@ export default function LeadCaptureFormContactUs({
   }, [resendTimer]);
 
   async function handleSendOtp() {
+    if (submissionInFlightRef.current) {
+      console.warn('[LeadCaptureFormContactUs] submission already in flight — ignoring duplicate');
+      return;
+    }
     if (!name || !email || !city || !course || mobile.length !== 10) {
       setFormError('Please fill all fields before requesting OTP.');
       return;
     }
 
+    submissionInFlightRef.current = true;
     setOtpState('sending');
     setErrorMsg('');
     setFormError('');
@@ -133,6 +142,51 @@ export default function LeadCaptureFormContactUs({
     } catch (err) {
       setOtpState('idle');
       setFormError('Connection error. Please check your internet and try again.');
+    } finally {
+      submissionInFlightRef.current = false;
+    }
+  }
+
+  // OTP-only resend. Avoids duplicating the sheet row and CRM lead record.
+  async function sendOtpOnly() {
+    if (submissionInFlightRef.current) return;
+    submissionInFlightRef.current = true;
+    setIsResending(true);
+    try {
+      const utms = getStoredUtm();
+      const identity = captureIdentity();
+      const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, city, course, countryCode, mobile,
+          form_source: sourceName,
+          typeFilter: typeFilter,
+          ...utms,
+          submission_timestamp: new Date().toISOString(),
+          landing_page_url: typeof window !== 'undefined' ? window.location.href : '',
+          sclx_id: identity.sclxId,
+          click_timestamp: identity.clickTimestamp,
+          click_id_source: identity.clickIdSource,
+          skipSheets: true,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) {
+        setErrorMsg(data.error || 'Could not resend the code. Please try again.');
+        setOtpState('error');
+      } else {
+        if (data.token) setToken(data.token);
+        setOtpState('otp_sent');
+        setResendTimer(30);
+      }
+    } catch (err) {
+      console.error('[LeadCaptureFormContactUs] resend error:', err);
+      setErrorMsg('Could not resend the code. Please try again.');
+      setOtpState('error');
+    } finally {
+      setIsResending(false);
+      submissionInFlightRef.current = false;
     }
   }
 
@@ -183,8 +237,8 @@ export default function LeadCaptureFormContactUs({
     setOtpValue('');
     setErrorMsg('');
     setToken('');
-    setOtpState('idle');
-    await handleSendOtp();
+    // Resend must NOT re-submit the lead.
+    await sendOtpOnly();
   }
 
   return (
@@ -358,7 +412,12 @@ export default function LeadCaptureFormContactUs({
                 {resendTimer > 0 ? (
                   <span className="text-[#4A6275]">Resend in {resendTimer}s</span>
                 ) : (
-                  <button type="button" onClick={handleResend} className="text-[#239bf5] font-bold hover:underline">
+                  <button
+                    type="button"
+                    onClick={handleResend}
+                    disabled={isResending || otpState === 'verifying'}
+                    className="text-[#239bf5] font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     Resend OTP
                   </button>
                 )}
