@@ -291,11 +291,19 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify(updatePayload)
       });
     } else {
-      await fetch(CRM_WEBHOOK_URL, {
+      const response = await fetch(CRM_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(corePayload)
       });
+
+      // Lead.Capture returns { "Status": "Success", "Message": { "Id": "<prospect-id>" } }
+      const captureJson = await response.clone().json().catch(() => null);
+      const capturedId = captureJson?.Message?.Id;
+      if (!prospectId && typeof capturedId === 'string' && capturedId.length > 0) {
+        prospectId = capturedId;
+        console.log(`[OTP][LeadSquared] Captured new lead with ProspectID: ${prospectId}`);
+      }
     }
 
     // 4. Google Sheets (Column Q)

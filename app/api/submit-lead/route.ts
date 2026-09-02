@@ -343,6 +343,14 @@ export async function POST(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+
+      // Lead.Capture returns { "Status": "Success", "Message": { "Id": "<prospect-id>" } }
+      const captureJson = await response.clone().json().catch(() => null);
+      const capturedId = captureJson?.Message?.Id;
+      if (!prospectId && typeof capturedId === 'string' && capturedId.length > 0) {
+        prospectId = capturedId;
+        console.log(`[LeadSquared] Captured new lead with ProspectID: ${prospectId}`);
+      }
     }
 
     // Await to ensure it completes on Vercel
