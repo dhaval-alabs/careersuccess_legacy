@@ -252,6 +252,7 @@ export async function POST(req: NextRequest) {
       { Attribute: 'Source',                  Value: body.typeFilter || 'PPC_CheckEligibility' },
 
       // All other technical/attribution data consolidated here
+      { Attribute: 'mx_sclx_id',               Value: body.sclx_id ?? '' },
       { Attribute: 'mx_Extra_Notes',           Value: extraNotes },
       { Attribute: 'Notes',                    Value: `Alabs landing page submission: ${formatLeadNotesFriendly(body.form_source)}` }
     ];

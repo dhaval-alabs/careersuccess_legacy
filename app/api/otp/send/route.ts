@@ -272,6 +272,7 @@ export async function POST(req: NextRequest) {
       { Attribute: 'Phone',                    Value: lsqPhone },
       { Attribute: 'mx_City_name',             Value: city },
       { Attribute: 'Source',                   Value: body.typeFilter || 'PPC_CheckEligibility' },
+      { Attribute: 'mx_sclx_id',               Value: body.sclx_id ?? '' },
       { Attribute: 'mx_GCLID',                 Value: body.gclid || '' },
       { Attribute: 'mx_Extra_Notes',           Value: extraNotes },
       { Attribute: 'mx_OTP_Status',            Value: otpStatus }
