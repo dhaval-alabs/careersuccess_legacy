@@ -306,7 +306,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 4. Google Sheets (Column Q)
+    // 4. Google Sheets (Column Q) & Identifier Observation Log
     if (!body.skipSheets) {
       const friendlyNotes = formatLeadNotesFriendly(body.form_source);
       const sheetResult = await pushToGoogleSheetsOtp(body, cleanPhoneForSheets, friendlyNotes, otpStatus, debug);
@@ -316,23 +316,23 @@ export async function POST(req: NextRequest) {
       } else if (debug && sheetResult.success) {
         debugInfo = `${debugInfo || ''} | Sheets OK (${sheetResult.sheetIdMasked})`.trim();
       }
-    } else {
-      console.log('[OTP] Skipping Google Sheets push since lead was already submitted');
-    }
 
-    // ── NEW: append-only identifier log ──────────────────────────────────
-    // Awaited to ensure completion on Vercel serverless functions.
-    // The internal implementation and catch guarantee this cannot throw or fail lead capture.
-    await recordSubmissionIdentifiers({
-      sclxId:         body.sclx_id,
-      gclid:          body.gclid,
-      clickTimestamp: body.click_timestamp,
-      clickIdSource:  body.click_id_source,
-      prospectId:     prospectId ?? undefined,
-      pagePath:       pagePathOf(body.landing_page_url),
-      hsaCam:         urlParam(body.landing_page_url, 'hsa_cam'),
-      hsaGrp:         urlParam(body.landing_page_url, 'hsa_grp'),
-    }).catch(() => { /* already logged internally */ });
+      // ── Append-only identifier log ──────────────────────────────────
+      // Awaited to ensure completion on Vercel serverless functions.
+      // The internal implementation and catch guarantee this cannot throw or fail lead capture.
+      await recordSubmissionIdentifiers({
+        sclxId:         body.sclx_id,
+        gclid:          body.gclid,
+        clickTimestamp: body.click_timestamp,
+        clickIdSource:  body.click_id_source,
+        prospectId:     prospectId ?? undefined,
+        pagePath:       pagePathOf(body.landing_page_url),
+        hsaCam:         urlParam(body.landing_page_url, 'hsa_cam'),
+        hsaGrp:         urlParam(body.landing_page_url, 'hsa_grp'),
+      }).catch(() => { /* already logged internally */ });
+    } else {
+      console.log('[OTP] Skipping Google Sheets push and identifier logging since lead was already submitted');
+    }
 
     // 5. Automated Brochure Email (Resend)
     // Send immediately on registration for all brochure requests
