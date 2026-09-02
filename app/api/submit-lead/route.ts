@@ -358,11 +358,9 @@ export async function POST(req: NextRequest) {
     await pushToGoogleSheets(body, cleanPhone, friendlyNotes).catch(console.error);
 
     // ── NEW: append-only identifier log ──────────────────────────────────
-    // Deliberately NOT awaited and never allowed to throw. This is analytics;
-    // it must not be able to fail a lead capture. `prospectId` is in scope here
-    // from the LSQ create/update above, which is the point of placing it after
-    // that block rather than earlier — the observation carries the CRM id.
-    recordSubmissionIdentifiers({
+    // Awaited to ensure completion on Vercel serverless functions.
+    // The internal implementation and catch guarantee this cannot throw or fail lead capture.
+    await recordSubmissionIdentifiers({
       sclxId:         body.sclx_id,
       gclid:          body.gclid,
       clickTimestamp: body.click_timestamp,
