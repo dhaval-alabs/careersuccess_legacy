@@ -228,17 +228,21 @@ export async function POST(req: NextRequest) {
 
     // 2. Call WABA OTP Verify API
     const phone = `${countryCode}${mobile}`.replace('+', '');
-    const wabaRes = await fetchWithRetry("https://waba.analytixlabs.co.in/api/otp/verify", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json", 
-        "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
-      },
-      body: JSON.stringify({ phone, otp: otp_entered }),
-      signal: AbortSignal.timeout(8000),
-      label: 'WABA OTP Verify',
-      context: { phone },
-    });
+    let wabaRes;
+    try {
+      wabaRes = await fetch("https://waba.analytixlabs.co.in/api/otp/verify", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json", 
+          "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
+        },
+        body: JSON.stringify({ phone, otp: otp_entered }),
+        signal: AbortSignal.timeout(8000),
+      });
+    } catch (err: any) {
+      console.error('[Verify] WABA verification API network failure:', err);
+      return NextResponse.json({ success: false, error: 'Verification service temporarily unavailable. Please try again.' }, { status: 500, headers: corsHeaders });
+    }
 
     const wabaData = await wabaRes.json().catch(() => ({}));
 

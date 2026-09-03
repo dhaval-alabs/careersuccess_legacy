@@ -74,7 +74,7 @@ export async function fetchWithRetry(
 
       lastResponse = res;
       console.warn(
-        `[fetchRetry] ${label} returned HTTP ${res.status} on attempt ${attempt}/${maxRetries + 1}. Retrying in ${delay}ms...`,
+        `[fetchRetry] RETRY FIRED — ${label} returned HTTP ${res.status} (attempt ${attempt}/${maxRetries + 1}). Retrying in ${delay}ms...`,
         context
       );
     } catch (err) {
@@ -87,7 +87,7 @@ export async function fetchWithRetry(
 
       const errMsg = err instanceof Error ? err.message : String(err);
       console.warn(
-        `[fetchRetry] ${label} network failure on attempt ${attempt}/${maxRetries + 1} (${errMsg}). Retrying in ${delay}ms...`,
+        `[fetchRetry] RETRY FIRED — ${label} network failure (${errMsg}) (attempt ${attempt}/${maxRetries + 1}). Retrying in ${delay}ms...`,
         context
       );
     }

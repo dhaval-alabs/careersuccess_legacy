@@ -140,12 +140,10 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     ];
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
-    const res = await fetchWithRetry(url, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ values: [row] }),
-      label: 'GoogleSheets Append (otp/send)',
-      context: { sclx_id: body.sclx_id, email: body.email }
+      body: JSON.stringify({ values: [row] })
     });
 
     if (res.ok) {
@@ -234,7 +232,10 @@ export async function POST(req: NextRequest) {
     let matchedLead: any = null;
     try {
       const searchPhoneUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(lsqPhone)}`;
-      const searchPhoneRes = await fetch(searchPhoneUrl);
+      const searchPhoneRes = await fetchWithRetry(searchPhoneUrl, {
+        label: 'LSQ RetrieveLeadByPhoneNumber (otp/send)',
+        context: { phone: lsqPhone, email, sclx_id: body.sclx_id },
+      });
       const searchPhoneData = await searchPhoneRes.json();
       
       if (searchPhoneRes.ok && searchPhoneData && searchPhoneData.length > 0) {
@@ -242,7 +243,10 @@ export async function POST(req: NextRequest) {
         prospectId = matchedLead.ProspectID;
       } else {
         const searchEmailUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(email)}`;
-        const searchEmailRes = await fetch(searchEmailUrl);
+        const searchEmailRes = await fetchWithRetry(searchEmailUrl, {
+          label: 'LSQ Leads.GetByEmailaddress (otp/send)',
+          context: { phone: lsqPhone, email, sclx_id: body.sclx_id },
+        });
         const searchEmailData = await searchEmailRes.json();
         
         if (searchEmailRes.ok && searchEmailData) {
