@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { recordSubmissionIdentifiers } from '@/lib/identifier-log';
+import { fetchWithRetry } from '@/lib/fetch-retry';
 
 const LSQ_ACCESS = "u$rfdb83f05f0b66fc1db816ac810a2e0d3";
 const LSQ_SECRET = "5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4";
@@ -110,10 +111,11 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
 
   const jwt = `${signatureInput}.${signature}`;
 
-  const response = await fetch('https://oauth2.googleapis.com/token', {
+  const response = await fetchWithRetry('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+    label: 'GoogleSheets OAuth Token',
   });
 
   const data = await response.json();
@@ -175,61 +177,28 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
 
     // Using the tab name provided by user
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
-    // v-sep03: retry transient append failures.
-    //
-    // Why: this function swallowed every failure. A non-2xx logged and returned
-    // normally, so a lead could complete in LSQ and Firestore while its sheet
-    // row silently never appeared. Measured on 2 Sep 2026: 1 of 15 post-deploy
-    // leads (sclx_01M1H17R1BT2Z4A3P9JHPVET2K, khanfairy318@gmail.com, 12:24 UTC)
-    // reached the CRM and the identifier log with no sheet row at all.
-    //
-    // Sheets rate-limits appends and the NextJS tab is ~4,900 rows, so a 429 or
-    // 5xx is the expected failure mode and is transient.
-    //
-    // The swallow is DELIBERATELY RETAINED. A lead reaching LSQ without a sheet
-    // row is far better than losing the lead. The change is that failures now
-    // retry, and when they still fail they log enough identity to be recovered
-    // by hand instead of being uncountable after the fact.
-    const MAX_ATTEMPTS = 3;
-    let lastStatus = 0;
-    let lastBody = '';
+    const res = await fetchWithRetry(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ values: [row] }),
+      label: 'GoogleSheets Append (submit-lead)',
+      context: { sclx_id: body.sclx_id, email: body.email }
+    });
 
-    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ values: [row] })
-      });
-
-      if (res.ok) {
-        if (attempt > 1) {
-          console.log(`[GoogleSheets] Pushed lead on attempt ${attempt} sclx_id=${body.sclx_id || 'none'}`);
-        } else {
-          console.log('[GoogleSheets] Successfully pushed lead');
-        }
-        return;
-      }
-
-      lastStatus = res.status;
-      lastBody = await res.text();
-
-      const retryable = res.status === 429 || res.status >= 500;
-      if (!retryable || attempt === MAX_ATTEMPTS) break;
-
-      console.warn(`[GoogleSheets] Append ${res.status}, retrying (attempt ${attempt + 1}/${MAX_ATTEMPTS})`);
-      await new Promise(r => setTimeout(r, attempt === 1 ? 500 : 1500));
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error(
+        '[GoogleSheets] APPEND FAILED — row not written. ' +
+        `status=${res.status} sclx_id=${body.sclx_id || 'none'} ` +
+        `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
+        `body=${errorText.slice(0, 500)}`
+      );
+    } else {
+      console.log('[GoogleSheets] Successfully pushed lead');
     }
-
-    // Exhausted, or a non-retryable status. Grep for APPEND FAILED to count these.
-    console.error(
-      '[GoogleSheets] APPEND FAILED — row not written. ' +
-      `status=${lastStatus} sclx_id=${body.sclx_id || 'none'} ` +
-      `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
-      `body=${lastBody.slice(0, 500)}`
-    );
   } catch (error) {
     console.error(
       '[GoogleSheets] EXCEPTION — row not written. ' +

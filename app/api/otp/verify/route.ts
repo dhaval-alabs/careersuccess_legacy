@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { fetchWithRetry } from '@/lib/fetch-retry';
 
 const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
@@ -42,10 +43,11 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   if (formattedKey.startsWith('"') && formattedKey.endsWith('"')) formattedKey = formattedKey.slice(1, -1);
   const signature = sign.sign(formattedKey, 'base64url');
   const jwt = `${signatureInput}.${signature}`;
-  const res = await fetch('https://oauth2.googleapis.com/token', {
+  const res = await fetchWithRetry('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+    label: 'GoogleSheets Auth Token (otp/verify)'
   });
   const data = await res.json();
   if (!res.ok) throw new Error('Failed Google Sheets Auth');
@@ -64,7 +66,10 @@ async function updateLeadSquaredToVerified(cleanPhone: string, email?: string, p
 
     // 1. Retrieve Prospect ID - Using the normalized phone search pattern
     const searchUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&phone=${encodeURIComponent(searchPhone)}`;
-    const searchRes = await fetch(searchUrl);
+    const searchRes = await fetchWithRetry(searchUrl, {
+      label: 'LSQ RetrieveLeadByPhoneNumber (otp/verify)',
+      context: { phone: searchPhone, email },
+    });
     const searchData = await searchRes.json();
 
     let prospectId = null;
@@ -73,7 +78,10 @@ async function updateLeadSquaredToVerified(cleanPhone: string, email?: string, p
     } else if (email) {
       // Fallback search by email
       const searchEmailUrl = `https://api-in21.leadsquared.com/v2/LeadManagement.svc/Leads.GetByEmailaddress?accessKey=${LSQ_ACCESS}&secretKey=${LSQ_SECRET}&emailaddress=${encodeURIComponent(email)}`;
-      const searchEmailRes = await fetch(searchEmailUrl);
+      const searchEmailRes = await fetchWithRetry(searchEmailUrl, {
+        label: 'LSQ Leads.GetByEmailaddress (otp/verify)',
+        context: { phone: searchPhone, email },
+      });
       const searchEmailData = await searchEmailRes.json();
       if (searchEmailRes.ok && searchEmailData) {
         if (Array.isArray(searchEmailData) && searchEmailData.length > 0) {
@@ -96,23 +104,29 @@ async function updateLeadSquaredToVerified(cleanPhone: string, email?: string, p
       payload.push({ Attribute: 'mx_Preferred_Date_Time', Value: preferredCallbackTime });
     }
 
-    const updateRes = await fetch(updateUrl, {
+    const updateRes = await fetchWithRetry(updateUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      label: 'LSQ Lead.Update (otp/verify)',
+      context: { leadId: prospectId, phone: cleanPhone, email },
     });
 
     if (!updateRes.ok) {
-      console.error('[Verify] LSQ Update Failed:', await updateRes.text());
+      console.error('[Verify] LSQ Update Failed:', await updateRes.text(), {
+        phone: cleanPhone,
+        email,
+        prospectId,
+      });
     } else {
       console.log('[Verify] LeadSquared status updated to Verified for Prospect:', prospectId);
     }
   } catch (error) {
-    console.error('[Verify] Exception updating LSQ:', error);
+    console.error('[Verify] Exception updating LSQ:', error, { phone: cleanPhone, email });
   }
 }
 
-async function updateGoogleSheetRowToVerified(cleanPhone: string) {
+async function updateGoogleSheetRowToVerified(cleanPhone: string, context: { email?: string } = {}) {
   try {
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -125,8 +139,10 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
     
     // 1. Fetch values to find row index - Phone is in Column D
     const getUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!D:D`;
-    const getRes = await fetch(getUrl, {
-      headers: { 'Authorization': `Bearer ${token}` }
+    const getRes = await fetchWithRetry(getUrl, {
+      headers: { 'Authorization': `Bearer ${token}` },
+      label: 'GoogleSheets Read Column D (otp/verify)',
+      context: { phone: cleanPhone, ...context },
     });
     
     if (!getRes.ok) {
@@ -155,13 +171,15 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
 
     // 2. Update Column Q for identified row
     const updateUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!Q${rowIndex}?valueInputOption=USER_ENTERED`;
-    const updateRes = await fetch(updateUrl, {
+    const updateRes = await fetchWithRetry(updateUrl, {
       method: 'PUT',
       headers: { 
         'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json' 
       },
-      body: JSON.stringify({ values: [['Verified']] })
+      body: JSON.stringify({ values: [['Verified']] }),
+      label: `GoogleSheets Update Row Q${rowIndex} (otp/verify)`,
+      context: { phone: cleanPhone, row: rowIndex, ...context },
     });
 
     if (!updateRes.ok) {
@@ -177,7 +195,7 @@ async function updateGoogleSheetRowToVerified(cleanPhone: string) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { token, otp_entered, mobile, countryCode, preferredCallbackTime } = body;
+    const { token, otp_entered, mobile, countryCode, preferredCallbackTime, sclx_id } = body;
 
     if (!token || !otp_entered || !mobile) {
       return NextResponse.json({ success: false, error: 'Missing required parameters' }, { status: 400, headers: corsHeaders });
@@ -208,31 +226,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Session invalid or tampered' }, { status: 400, headers: corsHeaders });
     }
 
-    // 2. Verify OTP code via WABA API
-    let isValid = false;
-    try {
-      const phone = `${countryCode}${mobile}`.replace('+', '');
-      const verifyRes = await fetch("https://waba.analytixlabs.co.in/api/otp/verify", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json", 
-          "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
-        },
-        body: JSON.stringify({ phone, code: otp_entered }),
-        signal: AbortSignal.timeout(8000),
-      });
-      const verifyData = await verifyRes.json();
-      isValid = verifyRes.ok && (verifyData.valid === true || verifyData.success === true);
-      if (!isValid) {
-        console.warn('[Verify] WABA verification failed response:', verifyData);
-      }
-    } catch (err) {
-      console.error('[Verify] WABA verification API failed:', err);
-      isValid = false;
-    }
+    // 2. Call WABA OTP Verify API
+    const phone = `${countryCode}${mobile}`.replace('+', '');
+    const wabaRes = await fetchWithRetry("https://waba.analytixlabs.co.in/api/otp/verify", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json", 
+        "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
+      },
+      body: JSON.stringify({ phone, otp: otp_entered }),
+      signal: AbortSignal.timeout(8000),
+      label: 'WABA OTP Verify',
+      context: { phone },
+    });
 
-    if (!isValid) {
-      return NextResponse.json({ success: false, error: 'Incorrect OTP. Please try again.' }, { status: 400, headers: corsHeaders });
+    const wabaData = await wabaRes.json().catch(() => ({}));
+
+    if (!wabaRes.ok || !wabaData.verified) {
+      console.warn('[OTP] Verification failed:', wabaData);
+      return NextResponse.json({ 
+        success: false, 
+        error: wabaData.message || 'Invalid or expired OTP code.' 
+      }, { status: 400, headers: corsHeaders });
     }
 
     // 3. Successful verification - Update CRM and Sheets
@@ -243,7 +258,7 @@ export async function POST(req: NextRequest) {
 
     // Await updates to ensure they complete on Vercel
     await updateLeadSquaredToVerified(lsqPhone, email || body.email, preferredCallbackTime).catch(console.error);
-    const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone);
+    const sheetRes = await updateGoogleSheetRowToVerified(sheetsPhone, { email: email || body.email });
 
     // ── TRIGGER EMAIL FLOW (Async) ──
     const { sendLeadEmail } = await import('@/lib/sendLeadEmail');
@@ -262,6 +277,8 @@ export async function POST(req: NextRequest) {
           await updateEmailStatus({
             phone: lsqPhone,
             emailStatus: sendResult.status as 'Sent' | 'Failed',
+            sclxId: sclx_id || body.sclx_id,
+            email: email || body.email,
           });
         }
         console.log(`[Verify] Email flow complete | phone=${mobile} | type=${sendResult.emailType} | status=${sendResult.status}`);

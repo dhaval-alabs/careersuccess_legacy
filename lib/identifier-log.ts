@@ -49,6 +49,7 @@
  */
 
 import crypto from 'crypto';
+import { fetchWithRetry } from './fetch-retry';
 
 const FIRESTORE_PROJECT_ID = process.env.FIRESTORE_PROJECT_ID || 'analytixlabs-ads';
 
@@ -136,12 +137,13 @@ async function getFirestoreToken(): Promise<string | null> {
     sign.end();
     const signature = sign.sign(formattedKey, 'base64url');
 
-    const resp = await fetch('https://oauth2.googleapis.com/token', {
+    const resp = await fetchWithRetry('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body:
         'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' +
         `${signatureInput}.${signature}`,
+      label: 'Firestore Auth Token',
     });
 
     const data = await resp.json();
@@ -246,19 +248,27 @@ export async function writeObservation(obs: Observation): Promise<boolean> {
       `https://firestore.googleapis.com/v1/projects/${FIRESTORE_PROJECT_ID}` +
       `/databases/${FIRESTORE_DATABASE_ID}/documents/${observationsPath(obs.sclxId)}`;
 
-    const resp = await fetch(url, {
+    const resp = await fetchWithRetry(url, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ fields: fsFields(doc) }),
+      label: `Firestore Observation (${obs.identifierType})`,
+      context: { sclx_id: obs.sclxId, identifierType: obs.identifierType },
     });
 
     if (!resp.ok) {
-      console.error('[identifier-log] write failed', resp.status, await resp.text());
+      console.error('[identifier-log] write failed', resp.status, await resp.text(), {
+        sclx_id: obs.sclxId,
+        identifierType: obs.identifierType,
+      });
       return false;
     }
     return true;
   } catch (err) {
-    console.error('[identifier-log] write exception:', err);
+    console.error('[identifier-log] write exception:', err, {
+      sclx_id: obs.sclxId,
+      identifierType: obs.identifierType,
+    });
     return false;
   }
 }

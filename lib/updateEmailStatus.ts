@@ -1,22 +1,26 @@
 // lib/updateEmailStatus.ts
 
+import { fetchWithRetry } from './fetch-retry'
+
 interface UpdateEmailStatusParams {
   leadId?: string
   phone: string
   emailStatus: 'Sent' | 'Failed'
+  sclxId?: string
+  email?: string
 }
 
-export async function updateEmailStatus({ leadId, phone, emailStatus }: UpdateEmailStatusParams) {
+export async function updateEmailStatus({ leadId, phone, emailStatus, sclxId, email }: UpdateEmailStatusParams) {
   const results = await Promise.allSettled([
     updateLSQEmailStatus(leadId, phone, emailStatus),
-    updateSheetEmailStatus(phone, emailStatus),
+    updateSheetEmailStatus(phone, emailStatus, { sclxId, email }),
   ])
 
   if (results[0].status === 'rejected') {
-    console.error(`[updateEmailStatus] LSQ update failed for ${phone}: ${results[0].reason}`)
+    console.error(`[updateEmailStatus] LSQ update failed for phone=${phone} sclx_id=${sclxId || 'none'} email=${email || 'none'}: ${results[0].reason}`)
   }
   if (results[1].status === 'rejected') {
-    console.error(`[updateEmailStatus] Sheets update failed for ${phone}: ${results[1].reason}`)
+    console.error(`[updateEmailStatus] Sheets update failed for phone=${phone} sclx_id=${sclxId || 'none'} email=${email || 'none'}: ${results[1].reason}`)
   }
 
   return {
@@ -35,17 +39,22 @@ async function updateLSQEmailStatus(leadId: string | undefined, phone: string, e
   if (!resolvedLeadId) {
     // Search for lead by phone
     const searchUrl = `https://${host}/v2/LeadManagement.svc/RetrieveLeadByPhoneNumber?accessKey=${accessKey}&secretKey=${secretKey}&phone=${encodeURIComponent(phone)}`
-    const searchRes = await fetch(searchUrl)
+    const searchRes = await fetchWithRetry(searchUrl, {
+      label: 'LSQ RetrieveLeadByPhoneNumber (updateEmailStatus)',
+      context: { phone },
+    })
     const searchData = await searchRes.json()
     resolvedLeadId = searchData?.[0]?.ProspectID
     if (!resolvedLeadId) throw new Error(`No LSQ lead found for phone ${phone}`)
   }
 
   const updateUrl = `https://${host}/v2/LeadManagement.svc/Lead.Update?accessKey=${accessKey}&secretKey=${secretKey}&leadId=${resolvedLeadId}`
-  const updateRes = await fetch(updateUrl, {
+  const updateRes = await fetchWithRetry(updateUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify([{ Attribute: 'mx_Email_Status', Value: emailStatus }]),
+    label: 'LSQ Lead.Update (updateEmailStatus)',
+    context: { leadId: resolvedLeadId, phone, emailStatus },
   })
   
   if (!updateRes.ok) {
@@ -54,25 +63,21 @@ async function updateLSQEmailStatus(leadId: string | undefined, phone: string, e
   }
 }
 
-// Minimal implementation using fetch to avoid heavy googleapis dependency if possible, 
-// but since the project already uses googleapis patterns in other files, I'll check if it's in package.json
-// Wait, the existing verify route uses raw fetch for sheets too! I'll stick to that.
-
-async function updateSheetEmailStatus(phone: string, emailStatus: string) {
+async function updateSheetEmailStatus(phone: string, emailStatus: string, context: { sclxId?: string; email?: string } = {}) {
   const sheetId = process.env.GOOGLE_SHEET_ID || process.env.GOOGLE_SHEETS_SPREADSHEET_ID
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_SHEETS_CLIENT_EMAIL
   const privateKey = process.env.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_SHEETS_PRIVATE_KEY
   
   if (!sheetId || !clientEmail || !privateKey) throw new Error('Google Sheets credentials not configured')
 
-  // We need a token. We can reuse the logic from the verify route or just use the same pattern.
-  // To keep it simple and independent, I'll implement a minimal JWT fetch here.
   const token = await getMinimalGoogleToken(clientEmail, privateKey)
 
   // 1. Find the row
   const getUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!D:D`
-  const getRes = await fetch(getUrl, {
-    headers: { 'Authorization': `Bearer ${token}` }
+  const getRes = await fetchWithRetry(getUrl, {
+    headers: { 'Authorization': `Bearer ${token}` },
+    label: 'GoogleSheets Read Column D (updateEmailStatus)',
+    context: { phone, ...context },
   })
   const getData = await getRes.json()
   const rows = getData.values || []
@@ -91,13 +96,15 @@ async function updateSheetEmailStatus(phone: string, emailStatus: string) {
 
   // 2. Update Column R
   const updateUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!R${targetRow}?valueInputOption=RAW`
-  const updateRes = await fetch(updateUrl, {
+  const updateRes = await fetchWithRetry(updateUrl, {
     method: 'PUT',
     headers: { 
-      'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`, 
       'Content-Type': 'application/json' 
     },
-    body: JSON.stringify({ values: [[emailStatus]] })
+    body: JSON.stringify({ values: [[emailStatus]] }),
+    label: `GoogleSheets Update Row R${targetRow} (updateEmailStatus)`,
+    context: { phone, emailStatus, row: targetRow, ...context },
   })
 
   if (!updateRes.ok) {
@@ -126,10 +133,11 @@ async function getMinimalGoogleToken(clientEmail: string, privateKey: string): P
   const signature = sign.sign(formattedKey, 'base64url')
   const jwt = `${signatureInput}.${signature}`
   
-  const res = await fetch('https://oauth2.googleapis.com/token', {
+  const res = await fetchWithRetry('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+    label: 'GoogleSheets Auth Token (updateEmailStatus)'
   })
   const data = await res.json()
   return data.access_token

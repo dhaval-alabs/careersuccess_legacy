@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { recordSubmissionIdentifiers } from '@/lib/identifier-log';
+import { fetchWithRetry } from '@/lib/fetch-retry';
 
 const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
@@ -78,10 +79,11 @@ async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Pr
   if (formattedKey.startsWith('"') && formattedKey.endsWith('"')) formattedKey = formattedKey.slice(1, -1);
   const signature = sign.sign(formattedKey, 'base64url');
   const jwt = `${signatureInput}.${signature}`;
-  const res = await fetch('https://oauth2.googleapis.com/token', {
+  const res = await fetchWithRetry('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
+    label: 'GoogleSheets Auth (otp/send)'
   });
   const data = await res.json();
   if (!res.ok) {
@@ -138,53 +140,27 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     ];
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
-    
-    // v-sep03: retry transient append failures. Same change as
-    // pushToGoogleSheets() in app/api/submit-lead/route.ts — applied to BOTH
-    // sheet-append paths deliberately. Fixing one member of a class and not the
-    // other is the recurring defect shape in this project.
-    //
-    // Sheets rate-limits appends and the NextJS tab is ~4,900 rows, so a 429 or
-    // 5xx is transient. The swallow is retained: this function's return value is
-    // advisory and a failed sheet write must never fail a lead capture.
-    const MAX_ATTEMPTS = 3;
-    let lastStatus = 0;
-    let lastBody = '';
+    const res = await fetchWithRetry(url, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ values: [row] }),
+      label: 'GoogleSheets Append (otp/send)',
+      context: { sclx_id: body.sclx_id, email: body.email }
+    });
 
-    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ values: [row] })
-      });
-
-      if (res.ok) {
-        if (attempt > 1) {
-          console.log(`[Sheets] Appended row on attempt ${attempt} sclx_id=${body.sclx_id || 'none'}`);
-        } else {
-          console.log('[Sheets] Successfully appended row!');
-        }
-        return { success: true, sheetIdMasked: `${sheetId.substring(0, 3)}...${sheetId.substring(sheetId.length - 4)}` };
-      }
-
-      lastStatus = res.status;
-      lastBody = await res.text();
-
-      const retryable = res.status === 429 || res.status >= 500;
-      if (!retryable || attempt === MAX_ATTEMPTS) break;
-
-      console.warn(`[Sheets] Append ${res.status}, retrying (attempt ${attempt + 1}/${MAX_ATTEMPTS})`);
-      await new Promise(r => setTimeout(r, attempt === 1 ? 500 : 1500));
+    if (res.ok) {
+      console.log('[Sheets] Successfully appended row!');
+      return { success: true, sheetIdMasked: `${sheetId.substring(0, 3)}...${sheetId.substring(sheetId.length - 4)}` };
+    } else {
+      const errorText = await res.text();
+      console.error(
+        '[Sheets] APPEND FAILED — row not written. ' +
+        `status=${res.status} sclx_id=${body.sclx_id || 'none'} ` +
+        `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
+        `body=${errorText.slice(0, 500)}`
+      );
+      return { success: false, error: `Google API Error: ${res.status} ${errorText}` };
     }
-
-    // Exhausted, or a non-retryable status. Grep for APPEND FAILED to count these.
-    console.error(
-      '[Sheets] APPEND FAILED — row not written. ' +
-      `status=${lastStatus} sclx_id=${body.sclx_id || 'none'} ` +
-      `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
-      `body=${lastBody.slice(0, 500)}`
-    );
-    return { success: false, error: `Google API Error: ${lastStatus} ${lastBody}` };
   } catch (error: any) {
     console.error(
       '[Sheets] EXCEPTION — row not written. ' +
