@@ -139,22 +139,58 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
     
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
     
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ values: [row] })
-    });
-    
-    if (res.ok) {
-      console.log('[Sheets] Successfully appended row!');
-      return { success: true, sheetIdMasked: `${sheetId.substring(0, 3)}...${sheetId.substring(sheetId.length - 4)}` };
-    } else {
-      const errorText = await res.text();
-      console.error('[Sheets] Failed to append:', errorText);
-      return { success: false, error: `Google API Error: ${res.status} ${errorText}` };
+    // v-sep03: retry transient append failures. Same change as
+    // pushToGoogleSheets() in app/api/submit-lead/route.ts — applied to BOTH
+    // sheet-append paths deliberately. Fixing one member of a class and not the
+    // other is the recurring defect shape in this project.
+    //
+    // Sheets rate-limits appends and the NextJS tab is ~4,900 rows, so a 429 or
+    // 5xx is transient. The swallow is retained: this function's return value is
+    // advisory and a failed sheet write must never fail a lead capture.
+    const MAX_ATTEMPTS = 3;
+    let lastStatus = 0;
+    let lastBody = '';
+
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ values: [row] })
+      });
+
+      if (res.ok) {
+        if (attempt > 1) {
+          console.log(`[Sheets] Appended row on attempt ${attempt} sclx_id=${body.sclx_id || 'none'}`);
+        } else {
+          console.log('[Sheets] Successfully appended row!');
+        }
+        return { success: true, sheetIdMasked: `${sheetId.substring(0, 3)}...${sheetId.substring(sheetId.length - 4)}` };
+      }
+
+      lastStatus = res.status;
+      lastBody = await res.text();
+
+      const retryable = res.status === 429 || res.status >= 500;
+      if (!retryable || attempt === MAX_ATTEMPTS) break;
+
+      console.warn(`[Sheets] Append ${res.status}, retrying (attempt ${attempt + 1}/${MAX_ATTEMPTS})`);
+      await new Promise(r => setTimeout(r, attempt === 1 ? 500 : 1500));
     }
+
+    // Exhausted, or a non-retryable status. Grep for APPEND FAILED to count these.
+    console.error(
+      '[Sheets] APPEND FAILED — row not written. ' +
+      `status=${lastStatus} sclx_id=${body.sclx_id || 'none'} ` +
+      `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
+      `body=${lastBody.slice(0, 500)}`
+    );
+    return { success: false, error: `Google API Error: ${lastStatus} ${lastBody}` };
   } catch (error: any) {
-    console.error('[Sheets] Exception:', error);
+    console.error(
+      '[Sheets] EXCEPTION — row not written. ' +
+      `sclx_id=${body.sclx_id || 'none'} email=${body.email || 'none'}`,
+      error
+    );
     return { success: false, error: `Exception: ${error.message || String(error)}` };
   }
 }

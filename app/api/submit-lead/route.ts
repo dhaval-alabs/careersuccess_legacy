@@ -175,22 +175,67 @@ async function pushToGoogleSheets(body: any, cleanPhone: string, formattedSource
 
     // Using the tab name provided by user
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/NextJS!A:A:append?valueInputOption=USER_ENTERED`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ values: [row] })
-    });
+    // v-sep03: retry transient append failures.
+    //
+    // Why: this function swallowed every failure. A non-2xx logged and returned
+    // normally, so a lead could complete in LSQ and Firestore while its sheet
+    // row silently never appeared. Measured on 2 Sep 2026: 1 of 15 post-deploy
+    // leads (sclx_01M1H17R1BT2Z4A3P9JHPVET2K, khanfairy318@gmail.com, 12:24 UTC)
+    // reached the CRM and the identifier log with no sheet row at all.
+    //
+    // Sheets rate-limits appends and the NextJS tab is ~4,900 rows, so a 429 or
+    // 5xx is the expected failure mode and is transient.
+    //
+    // The swallow is DELIBERATELY RETAINED. A lead reaching LSQ without a sheet
+    // row is far better than losing the lead. The change is that failures now
+    // retry, and when they still fail they log enough identity to be recovered
+    // by hand instead of being uncountable after the fact.
+    const MAX_ATTEMPTS = 3;
+    let lastStatus = 0;
+    let lastBody = '';
 
-    if (!res.ok) {
-      console.error('[GoogleSheets] Append error:', await res.text());
-    } else {
-      console.log('[GoogleSheets] Successfully pushed lead');
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ values: [row] })
+      });
+
+      if (res.ok) {
+        if (attempt > 1) {
+          console.log(`[GoogleSheets] Pushed lead on attempt ${attempt} sclx_id=${body.sclx_id || 'none'}`);
+        } else {
+          console.log('[GoogleSheets] Successfully pushed lead');
+        }
+        return;
+      }
+
+      lastStatus = res.status;
+      lastBody = await res.text();
+
+      const retryable = res.status === 429 || res.status >= 500;
+      if (!retryable || attempt === MAX_ATTEMPTS) break;
+
+      console.warn(`[GoogleSheets] Append ${res.status}, retrying (attempt ${attempt + 1}/${MAX_ATTEMPTS})`);
+      await new Promise(r => setTimeout(r, attempt === 1 ? 500 : 1500));
     }
+
+    // Exhausted, or a non-retryable status. Grep for APPEND FAILED to count these.
+    console.error(
+      '[GoogleSheets] APPEND FAILED — row not written. ' +
+      `status=${lastStatus} sclx_id=${body.sclx_id || 'none'} ` +
+      `email=${body.email || 'none'} ts=${body.submission_timestamp || ''} ` +
+      `body=${lastBody.slice(0, 500)}`
+    );
   } catch (error) {
-    console.error('[GoogleSheets] Exception:', error);
+    console.error(
+      '[GoogleSheets] EXCEPTION — row not written. ' +
+      `sclx_id=${body.sclx_id || 'none'} email=${body.email || 'none'}`,
+      error
+    );
   }
 }
 
