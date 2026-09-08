@@ -5,6 +5,22 @@ import { scoreConversation } from '@/lib/qualify';
 const LSQ_ACCESS = 'u$rfdb83f05f0b66fc1db816ac810a2e0d3';
 const LSQ_SECRET = '5d1e931f0b5e3bbbdf4bfa24a3486e133c46cbb4';
 
+// ── CORS Configuration ──
+const ALLOWED_ORIGIN = 'https://careersuccess.analytixlabs.co.in';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 let sheetsTokenCache: { token: string; expiresAt: number } | null = null;
 async function getGoogleSheetsToken(clientEmail: string, privateKey: string): Promise<string> {
   if (sheetsTokenCache && Date.now() < sheetsTokenCache.expiresAt) return sheetsTokenCache.token;
@@ -43,7 +59,7 @@ export async function POST(req: NextRequest) {
     const { phone, email, conversation, preferredCallbackTime } = await req.json();
 
     if (!phone || !conversation) {
-      return NextResponse.json({ success: false, error: 'Missing required params' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Missing required params' }, { status: 400, headers: corsHeaders });
     }
 
     const { score, reason } = await scoreConversation(conversation);
@@ -138,9 +154,9 @@ export async function POST(req: NextRequest) {
       console.error('[Qualify] Sheets update failed', e);
     }
 
-    return NextResponse.json({ success: true, score, reason });
+    return NextResponse.json({ success: true, score, reason }, { headers: corsHeaders });
   } catch (error) {
     console.error('[Qualify] Error:', error);
-    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500, headers: corsHeaders });
   }
 }
