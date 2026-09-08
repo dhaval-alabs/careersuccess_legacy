@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
     let debugInfo = null;
 
     try {
-      const phone = `${countryCode}${mobile}`.replace('+', '');
+      const phone = `${countryCode || '+91'}${mobile}`.replace(/\D/g, '');
       const wabaRes = await fetch("https://waba.analytixlabs.co.in/api/otp/send", {
         method: "POST",
         headers: { 

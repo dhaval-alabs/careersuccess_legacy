@@ -227,7 +227,8 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Call WABA OTP Verify API
-    const phone = `${countryCode}${mobile}`.replace('+', '');
+    const phone = `${countryCode || '+91'}${mobile}`.replace(/\D/g, '');
+    const cleanOtp = String(otp_entered).trim();
     let wabaRes;
     try {
       wabaRes = await fetch("https://waba.analytixlabs.co.in/api/otp/verify", {
@@ -236,7 +237,11 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json", 
           "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
         },
-        body: JSON.stringify({ phone, otp: otp_entered }),
+        body: JSON.stringify({ 
+          phone, 
+          code: cleanOtp, 
+          otp: cleanOtp 
+        }),
         signal: AbortSignal.timeout(8000),
       });
     } catch (err: any) {
@@ -245,12 +250,13 @@ export async function POST(req: NextRequest) {
     }
 
     const wabaData = await wabaRes.json().catch(() => ({}));
+    const isValid = wabaRes.ok && (wabaData.verified === true || wabaData.valid === true || wabaData.success === true);
 
-    if (!wabaRes.ok || !wabaData.verified) {
+    if (!isValid) {
       console.warn('[OTP] Verification failed:', wabaData);
       return NextResponse.json({ 
         success: false, 
-        error: wabaData.message || 'Invalid or expired OTP code.' 
+        error: wabaData.message || wabaData.error || 'Invalid or expired OTP code.' 
       }, { status: 400, headers: corsHeaders });
     }
 
