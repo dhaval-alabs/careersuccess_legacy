@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../../utils/trackBehaviour';
 import { getStoredUtm } from '../../utils/captureUtm';
 import { captureIdentity } from '../../utils/captureIdentity';
+import { alStoreIdentity } from '../../utils/metaPixel';
 import SearchableCitySelect from '../SearchableCitySelect';
 
 const COUNTRY_CODES = [
@@ -100,6 +101,14 @@ export default function LeadCaptureFormContactUs({
     const utms = getStoredUtm();
     const behaviour = getBehaviourSnapshot();
     const identity = captureIdentity();
+
+    // Store identity for Meta Pixel Advanced Matching
+    alStoreIdentity({
+      name,
+      email,
+      phone: `${countryCode}${mobile}`,
+      city,
+    });
 
     try {
       const res = await fetch('https://lp-vercel.analytixlabs.co.in/api/otp/send', {
@@ -220,6 +229,14 @@ export default function LeadCaptureFormContactUs({
         setOtpValue('');
         return;
       }
+
+      // Verified successfully!
+      alStoreIdentity({
+        name,
+        email,
+        phone: `${countryCode}${mobile}`,
+        city,
+      });
 
       onSuccess?.(email);
       const params = new URLSearchParams({ email, name, phone: mobile, course });

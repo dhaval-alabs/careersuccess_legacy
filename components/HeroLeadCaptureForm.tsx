@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { recordFirstField, getBehaviourSnapshot } from '../utils/trackBehaviour';
 import { getStoredUtm } from '../utils/captureUtm';
 import { captureIdentity } from '../utils/captureIdentity';
+import { alStoreIdentity } from '../utils/metaPixel';
 import SearchableCitySelect from './SearchableCitySelect';
 import { QUALIFICATION_CONFIG } from '../lib/qualification-config';
 
@@ -247,6 +248,14 @@ export default function HeroLeadCaptureForm({
       const behaviour = getBehaviourSnapshot();
       const identity = captureIdentity();
 
+      // Store identity for Meta Pixel Advanced Matching
+      alStoreIdentity({
+        name,
+        email,
+        phone: `${countryCode}${targetPhone}`,
+        city,
+      });
+
       // 1. Submit lead details as Unverified (so they are registered in Sheets and CRM immediately)
       try {
         await fetch('https://lp-vercel.analytixlabs.co.in/api/submit-lead', {
@@ -433,6 +442,13 @@ export default function HeroLeadCaptureForm({
           keepalive: true
         }).catch(console.error);
       }
+
+      alStoreIdentity({
+        name,
+        email,
+        phone: `${countryCode}${mobile}`,
+        city,
+      });
 
       onSuccess?.(email);
       const params = new URLSearchParams({ email, name, phone: mobile });
