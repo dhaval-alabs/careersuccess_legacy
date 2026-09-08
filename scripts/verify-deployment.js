@@ -103,6 +103,7 @@ async function checkCorsAndOptions() {
 async function checkOtpFlowHandshake() {
   console.log('\n\x1b[1m[3/4] Checking OTP Send & Verify Handshake Contract...\x1b[0m');
   let token = null;
+  const testPhone = '98' + Math.floor(10000000 + Math.random() * 90000000);
 
   // 1. Send OTP dry-run check (skipSheets: true)
   try {
@@ -117,7 +118,7 @@ async function checkOtpFlowHandshake() {
         email: 'deployment-test@analytixlabs.co.in',
         city: 'Delhi',
         countryCode: '+91',
-        mobile: '9999999999',
+        mobile: testPhone,
         skipSheets: true,
         debug: true,
       }),
@@ -147,7 +148,7 @@ async function checkOtpFlowHandshake() {
         body: JSON.stringify({
           token,
           otp_entered: '0000',
-          mobile: '9999999999',
+          mobile: testPhone,
           countryCode: '+91',
           name: 'Deployment HealthCheck',
           email: 'deployment-test@analytixlabs.co.in',
