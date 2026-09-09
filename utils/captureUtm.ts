@@ -117,8 +117,15 @@ const WA_SRC_BY_PATH: Record<string, string> = {
 
 function currentSrc(): string {
   if (typeof window === 'undefined') return '';
-  const seg = window.location.pathname.split('/').filter(Boolean)[0] || '';
-  return WA_SRC_BY_PATH[seg] || '';
+  // Pages live under /lp/<page>/ — an earlier cut read the FIRST segment, which
+  // is always "lp", so nothing ever matched and every link fell through to the
+  // plain wa.me fallback. Match against any segment instead of a fixed index,
+  // so this survives a future path change too.
+  const segs = window.location.pathname.split('/').filter(Boolean);
+  for (const seg of segs) {
+    if (WA_SRC_BY_PATH[seg]) return WA_SRC_BY_PATH[seg];
+  }
+  return '';
 }
 
 export const buildWhatsAppLink = (phoneNumber: string, baseMessage: string = ''): string => {
