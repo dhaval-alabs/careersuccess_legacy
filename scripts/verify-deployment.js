@@ -119,6 +119,7 @@ async function checkOtpFlowHandshake() {
         city: 'Delhi',
         countryCode: '+91',
         mobile: testPhone,
+        area: 'PPC',
         skipSheets: true,
         debug: true,
       }),

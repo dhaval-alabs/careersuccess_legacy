@@ -116,6 +116,7 @@ export default function LeadCaptureFormContactUs({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, city, course, countryCode, mobile,
+          area: 'PPC',
           form_source: sourceName,
           typeFilter: typeFilter,
           ...utms,
@@ -169,6 +170,7 @@ export default function LeadCaptureFormContactUs({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, city, course, countryCode, mobile,
+          area: 'PPC',
           form_source: sourceName,
           typeFilter: typeFilter,
           ...utms,

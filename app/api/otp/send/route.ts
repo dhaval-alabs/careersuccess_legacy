@@ -172,7 +172,7 @@ async function pushToGoogleSheetsOtp(body: any, cleanPhone: string, formattedSou
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, city, countryCode, mobile } = body;
+    const { name, email, city, countryCode, mobile, area } = body;
     
     // Normalize phone for LeadSquared
     const lsqPhone = countryCode === '+91' ? mobile : `${countryCode}${mobile}`;
@@ -200,13 +200,14 @@ export async function POST(req: NextRequest) {
 
     try {
       const phone = `${countryCode || '+91'}${mobile}`.replace(/\D/g, '');
+      const otpArea = area || 'PPC';
       const wabaRes = await fetch("https://waba.analytixlabs.co.in/api/otp/send", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json", 
           "x-otp-secret": (process.env.OTP_API_SECRET || '').trim()
         },
-        body: JSON.stringify({ phone }),
+        body: JSON.stringify({ phone, area: otpArea }),
         signal: AbortSignal.timeout(8000),
       });
       waSuccess = wabaRes.ok;

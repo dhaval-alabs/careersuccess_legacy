@@ -108,6 +108,7 @@ export default function LeadCaptureForm({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, city, status, countryCode, mobile,
+          area: 'PPC',
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_ModalForm',
           course,
@@ -169,6 +170,7 @@ export default function LeadCaptureForm({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name, email, city, status, countryCode, mobile,
+          area: 'PPC',
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_ModalForm',
           course,

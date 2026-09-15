@@ -297,6 +297,7 @@ export default function HeroLeadCaptureForm({
             status,
             countryCode,
             mobile: targetPhone,
+            area: 'PPC',
             form_source: sourceName,
             typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
             course,
@@ -361,6 +362,7 @@ export default function HeroLeadCaptureForm({
         body: JSON.stringify({
           name, email, city, status, countryCode,
           mobile: targetPhone,
+          area: 'PPC',
           form_source: sourceName,
           typeFilter: typeFilter || 'PPC_HeroForm_Conversational',
           course,
